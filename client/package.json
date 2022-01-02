@@ -6,15 +6,19 @@
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
+    "env-cmd": "^10.1.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
     "web-vitals": "^2.1.2"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "start-public": "env-cmd -f ./environments/.env.public react-scripts start",
+    "start-private": "env-cmd -f ./environments/.env.private react-scripts start",
+    "build-public": "env-cmd -f ./environments/.env.public react-scripts build",
+    "build-private": "env-cmd -f ./environments/.env.private react-scripts build",
+    "jest-public": "env-cmd -f ./environments/.env.public react-scripts test",
+    "jest-private": "env-cmd -f ./environments/.env.private react-scripts test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

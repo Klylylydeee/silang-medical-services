@@ -1,0 +1,1 @@
+Environment Variables are all listed in .env.sample but please contact the system administrator for the variable value

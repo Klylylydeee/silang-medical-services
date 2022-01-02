@@ -1,0 +1,25 @@
+{
+  "name": "silang-medical-services",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start-public": "cd client && yarn start-public",
+    "start-private": "cd client && yarn start-private",
+    "build-public": "cd client && yarn build-public",
+    "build-private": "cd client && yarn build-private",
+    "start-api": "cd server/api && pipenv run python main.py",
+    "start-comms": "cd server/connection"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Klylylydeee/silang-medical-services.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Klylylydeee/silang-medical-services/issues"
+  },
+  "homepage": "https://github.com/Klylylydeee/silang-medical-services#readme"
+}
