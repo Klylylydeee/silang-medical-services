@@ -8,6 +8,7 @@ function App() {
   useEffect(() => {
     console.log(process.env)
   }, [] )
+  const red = ""
   return (
     <div className="App">
       { name }
