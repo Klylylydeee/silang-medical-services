@@ -6,10 +6,14 @@
   "scripts": {
     "start-public": "cd client && yarn start-public",
     "start-private": "cd client && yarn start-private",
-    "build-public": "cd client && yarn build-public",
-    "build-private": "cd client && yarn build-private",
     "start-api": "cd server/api && pipenv run python main.py",
-    "start-comms": "cd server/connection"
+    "start-server-rpi": "cd server/connection/rpi4-socket && yarn start",
+    "start-server-vps": "cd server/connection/vps-socket && yarn start",
+    "update-client": "cd client && yarn update --latest",
+    "update-server-rpi": "cd server/connection/rpi4-socket && yarn update --latest",
+    "update-server-vps": "cd server/connection/vps-socket && yarn update --latest",
+    "build-public": "cd client && yarn build-public",
+    "build-private": "cd client && yarn build-private"
   },
   "repository": {
     "type": "git",
