@@ -1,3 +1,4 @@
 {
-    "greetings.user": "Maligayang pagbabalik, {name} {role}"
+    "test.message": "Maligayang pagbabalik!",
+    "test.message_with_props": "Maligayang pagbabalik, {name} {role}!"
 }

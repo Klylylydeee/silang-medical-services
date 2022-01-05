@@ -1,52 +1,58 @@
 {
-  "name": "silang-medical-services",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@reduxjs/toolkit": "^1.7.1",
-    "@testing-library/jest-dom": "^5.16.1",
-    "@testing-library/react": "^12.1.2",
-    "@testing-library/user-event": "^13.5.0",
-    "axios": "^0.24.0",
-    "env-cmd": "^10.1.0",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-error-overlay": "6.0.10",
-    "react-intl": "^5.24.1",
-    "react-redux": "^7.2.6",
-    "react-router-dom": "6",
-    "react-scripts": "5.0.0",
-    "redux-logger": "^3.0.6",
-    "web-vitals": "^2.1.2"
-  },
-  "scripts": {
-    "start-public": "env-cmd -f ./environments/.env.public react-scripts start",
-    "start-private": "env-cmd -f ./environments/.env.private react-scripts start",
-    "build-public": "env-cmd -f ./environments/.env.public react-scripts build",
-    "build-private": "env-cmd -f ./environments/.env.private react-scripts build",
-    "jest-public": "env-cmd -f ./environments/.env.public react-scripts test",
-    "jest-private": "env-cmd -f ./environments/.env.private react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
-  "resolutions": {
-    "react-error-overlay": "6.0.9"
-  }
+    "name": "silang-medical-services",
+    "version": "0.1.0",
+    "private": true,
+    "dependencies": {
+        "@ant-design/icons": "^4.7.0",
+        "@craco/craco": "^6.4.3",
+        "@reduxjs/toolkit": "^1.7.1",
+        "@testing-library/jest-dom": "^5.16.1",
+        "@testing-library/react": "^12.1.2",
+        "@testing-library/user-event": "^13.5.0",
+        "antd": "^4.18.2",
+        "axios": "^0.24.0",
+        "craco-less": "^2.0.0",
+        "env-cmd": "^10.1.0",
+        "moment": "^2.29.1",
+        "react": "^17.0.2",
+        "react-dom": "^17.0.2",
+        "react-error-overlay": "6.0.10",
+        "react-intl": "^5.24.1",
+        "react-redux": "^7.2.6",
+        "react-router-dom": "^6.2.1",
+        "react-scripts": "5.0.0",
+        "redux-logger": "^3.0.6",
+        "sass": "^1.45.2",
+        "web-vitals": "^2.1.2"
+    },
+    "scripts": {
+        "start-public": "env-cmd -f ./environments/.env.public craco start",
+        "start-private": "env-cmd -f ./environments/.env.private craco start",
+        "build-public": "env-cmd -f ./environments/.env.public craco build",
+        "build-private": "env-cmd -f ./environments/.env.private craco build",
+        "jest-public": "env-cmd -f ./environments/.env.public craco test",
+        "jest-private": "env-cmd -f ./environments/.env.private craco test",
+        "eject": "craco eject"
+    },
+    "eslintConfig": {
+        "extends": [
+            "react-app",
+            "react-app/jest"
+        ]
+    },
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
+    },
+    "resolutions": {
+        "react-error-overlay": "6.0.10"
+    }
 }

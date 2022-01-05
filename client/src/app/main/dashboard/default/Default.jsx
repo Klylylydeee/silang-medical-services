@@ -1,11 +1,11 @@
 import React from 'react'
 
-function SignUp() {
+function Default() {
     return (
         <div>
-            this is sign up
+            private route example
         </div>
     )
 }
 
-export default SignUp
+export default Default

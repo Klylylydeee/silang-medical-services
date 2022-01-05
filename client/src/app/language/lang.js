@@ -1,9 +1,9 @@
-import englishLanguage from "./locales/en_US.json";
-import tagalogLanguage from "./locales/tl_PH.json";
+import englishLanguage from "./locale/en_US.json";
+import tagalogLanguage from "./locale/tl_PH.json";
 
 const AppLocale = {
-  en: englishLanguage,
-  ph: tagalogLanguage
+    en: englishLanguage,
+    tl: tagalogLanguage,
 };
 
 export default AppLocale;

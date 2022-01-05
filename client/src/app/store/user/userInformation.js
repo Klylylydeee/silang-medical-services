@@ -1,6 +1,17 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { axiosAPI } from "src/app/util/axios";
-import { changeStatus } from "src/app/store/loading/loadingStatus"
+
+export const post_userLogin = createAsyncThunk(
+    "user/api/login",
+    async(formUserData, { dispatch, getState, rejectWithValue, fulfillWithValue }) => {
+        try {
+            
+        }
+        catch (err) {
+            return rejectWithValue(err.response.data)
+        }
+    }
+)
 
 export const myAsyncInSlice = createAsyncThunk(
     'user/login',
@@ -62,7 +73,6 @@ export const userInformation = createSlice({
         builder.addCase(myAsyncInSlice.fulfilled, (state, action) => {
             console.log("finished")
             console.log(action)
-            changeStatus()
             // state.name = action.payload.body
         });
         builder.addCase(myAsyncInSlice.rejected, (state, action) => {

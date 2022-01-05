@@ -1,11 +1,11 @@
 import React from 'react'
 
-function SignUp() {
+function NotFound() {
     return (
         <div>
-            this is sign up
+            Page is not found
         </div>
     )
 }
 
-export default SignUp
+export default NotFound

@@ -3,14 +3,14 @@ import { configureStore } from "@reduxjs/toolkit";
 import logger from "redux-logger"
 
 import userInformation from "src/app/store/user/userInformation";
-import loadingStatus from "src/app/store/loading/loadingStatus";
-
+import webApplicationConfiguration from "src/app/store/webApplicationConfiguration/webApplicationConfiguration";
+ 
 const reducer = configureStore({
     reducer: {
-        user: userInformation,
-        load: loadingStatus
+        webApp: webApplicationConfiguration,
+        user: userInformation
     },
-    // middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
     devTools: process.env.NODE_ENV !== "production",
 })
 

@@ -1,3 +1,4 @@
 {
-    "greetings.user": "Welcome back, {name} {role}"
+    "test.message": "Welcome back!",
+    "test.message_with_props": "Welcome back, {name} {role}!"
 }
