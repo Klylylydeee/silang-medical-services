@@ -5,34 +5,60 @@ import {
     CalendarOutlined,
     MailOutlined,
     SettingOutlined,
-    HomeOutlined
+    HomeOutlined,
+    LogoutOutlined
 } from "@ant-design/icons";
 
 const drawerNavigation = [
     {
         name: "Dashboard",
         icon: <HomeOutlined />,
-        redirect: ""
+        redirect: "",
+        roles: [
+            "Barangay Chairman",
+            "Barangay Nurse",
+            "Medical Doctor"
+        ]
     },
     {
         name: "Analytics",
         icon: <BarChartOutlined />,
-        redirect: "analytics"
+        redirect: "analytics",
+        roles: [
+            "Barangay Chairman",
+            "Barangay Nurse",
+            "Medical Doctor"
+        ]
     },
     {
         name: "Medical Records",
         icon: <MedicineBoxOutlined />,
-        redirect: "medical-records"
+        redirect: "medical-records",
+        roles: [
+            "Barangay Chairman",
+            "Barangay Nurse",
+            "Medical Doctor"
+        ]
     },
     {
         name: "Event Listing",
         icon: <CalendarOutlined />,
-        redirect: "event-listing"
+        redirect: "event-listing",
+        roles: [
+            "Barangay Chairman",
+            "Barangay Nurse",
+            "Medical Doctor"
+        ]
     },
     {
         name: "Communication",
         icon: <MailOutlined />,
-        redirect: "communication"
+        redirect: "communication",
+        roles: [
+            "Barangay Chairman",
+            "Barangay Nurse",
+            "Medical Doctor"
+        ]
     },
     {
         name: "Users",
@@ -43,13 +69,33 @@ const drawerNavigation = [
                 component: "",
                 redirect: "users"
             }
+        ],
+        roles: [
+            "Barangay Chairman",
+            "Barangay Nurse",
+            "Medical Doctor"
         ]
     },
     {
         name: "Settings",
         icon: <SettingOutlined />,
-        redirect: "settings"
+        redirect: "settings",
+        roles: [
+            "Barangay Chairman",
+            "Barangay Nurse",
+            "Medical Doctor"
+        ]
     },
+    {
+        name: "Sign out",
+        icon: <LogoutOutlined />,
+        redirect: "",
+        roles: [
+            "Barangay Chairman",
+            "Barangay Nurse",
+            "Medical Doctor"
+        ]
+    }
 ];
 
 export default drawerNavigation;

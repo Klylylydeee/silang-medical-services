@@ -2,6 +2,8 @@
     "prettier.tabWidth": 4,
     "window.zoomLevel": 0,
     "editor.tabSize": 4,
-    "python.pythonPath": "/home/klyly/.virtualenvs/api-YwYu5oTz/Lib/site-packages",
-    "python.analysis.extraPaths": ["api", "server/api"]
+    // "python.pythonPath": "/home/klyly/.virtualenvs/api-YwYu5oTz/Lib/site-packages",
+    "python.pythonPath": "C:/Users/klyly/.virtualenvs/api-pn2KODXx/Lib/site-packages",
+    "python.defaultInterpreterPath": "C:/Users/klyly/.virtualenvs/api-pn2KODXx"
+   
 }

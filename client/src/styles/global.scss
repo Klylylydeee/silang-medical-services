@@ -2,6 +2,16 @@
     min-height: 100vh;
 }
 
+.ant-menu-root {
+    height: calc(100vh - 63.8px);
+    display: flex;
+    flex-direction: column;
+}
+
+.ant-menu-item:last-child {
+    margin-top: auto;
+}
+
 .logo {
     height: 32px;
     margin: 16px;

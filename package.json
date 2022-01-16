@@ -13,7 +13,8 @@
     "update-server-rpi": "cd server/connection/rpi4-socket && yarn update --latest",
     "update-server-vps": "cd server/connection/vps-socket && yarn update --latest",
     "build-public": "cd client && yarn build-public",
-    "build-private": "cd client && yarn build-private"
+    "build-private": "cd client && yarn build-private",
+    "build-api": "cd server/api && pipenv run pip freeze > requirements.txt"
   },
   "repository": {
     "type": "git",

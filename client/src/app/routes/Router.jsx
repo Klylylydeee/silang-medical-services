@@ -1,17 +1,22 @@
-import React, { useEffect } from "react";
-import { Routes, Route, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import React from "react";
+import { Routes, Route } from "react-router-dom";
 
-import Home from "src/app/main/local/Home";
-import NotFound from "../main/404/NotFound";
+// Public route
+import Home from "src/app/main/local/landing/Home";
 
-import BuildUnsuccessful from "../main/general/builder/BuildUnsuccessful";
-import SignIn from "../main/dashboard/sign-in/SignIn";
-import Default from "../main/dashboard/default/Default";
-import Analytics from "../main/dashboard/analytics/Analytics";
+// Private - Unprotected route
+import SignIn from "src/app/main/dashboard/sign-in/SignIn";
+// Private - Protected route
+import Default from "src/app/main/dashboard/default/Default";
+import Analytics from "src/app/main/dashboard/analytics/Analytics";
 
+// General route
+import NotFound from "src/app/main/general/404/NotFound";
+import BuildUnsuccessful from "src/app/main/general/builder/BuildUnsuccessful";
+
+// Layout and Authentication
 import AuthWrapper from "src/app/routes/template/AuthWrapper";
-import Layout from "./template/Layout";
+import Layout from "src/app/routes/template/Layout";
 
 function Router() {
 
