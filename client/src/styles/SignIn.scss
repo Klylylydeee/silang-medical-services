@@ -1,0 +1,161 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
+
+h1, h2, h3, h4, p{
+    font-family: Quicksand;
+    font-style: normal;
+}
+
+//-----------------Header Row-----------------//
+.header{
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    text-align: left;
+}
+
+.SHISLogo{
+    position: relative;
+    width: 134px;
+    height: 103px;
+    margin-right :390px;
+}
+
+.Box-Asset{
+    position: absolute;
+    width: 428px;
+    height: 84px;
+    left: 350px;
+    top: -12px;
+    background: #AD72B7;
+    border-radius: 5px;
+}
+
+//-----------------Welcome Text-----------------//
+.desc-text{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+}
+
+.desc-text h1{
+    width: 317px;
+    height: 90px;
+    margin: 100px 0px 0px 150px;
+    font-weight: 600 !important;
+    font-size: 72px;
+    line-height: 90px;
+}
+
+.desc-text h3{
+    width: 452px;
+    height: 42px;
+    margin: 5px 0px 0px 90px;
+    font-weight: 400 !important;
+    font-size: 17px;
+    line-height: 21px;
+    text-align: center;
+    color: #AD72B7 !important;
+}
+
+//-----------------Sign In Form-----------------//
+.form-body{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: left;
+    padding: 65px 0px 0px 50px;
+}
+
+.signInForm{
+    width: 438px;
+    height: 85px;
+    font-family: Quicksand;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 30px;
+}
+
+.form-body h4{
+    margin: 150px 0px 0px 40px;
+    width: 431px;
+    height: 21px;
+    font-weight: normal !important;
+    font-size: 15px;
+    line-height: 21px;
+    text-align: center;
+    color: #292929;
+}
+
+//-----------------Pin Code Form-----------------//
+
+.pinCode{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    margin: 70px 0px 0px 100px;
+}
+
+.formPin{
+    width: 438px;
+    height: 85px;
+    font-family: Quicksand;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 13px;
+}
+
+.pin-form-submit{
+    position: relative;
+    margin: 10px;
+}
+
+.resetAccount{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    margin: 70px 0px 0px 100px;
+    padding: 20px;
+}
+
+//-----------------Barangay Logo-----------------//
+.logos{
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    text-align: center;
+    margin: 150px 0px 0px 100px;
+}
+
+.LumilLogo{
+    width: 125px;
+    height: 105px;
+    margin-left: 20px;
+}
+
+.PKLogo{
+    width: 125px;
+    height: 105px;
+}
+
+//-----------------Grid Assets-----------------//
+.black-grid{
+    position: absolute;
+    width: 129px;
+    height: 129px;
+    right: -145px;
+    top: 110px;
+    z-index: 10;
+}
+
+.black-grid-2{
+    position: absolute;
+    width: 129px;
+    height: 129px;
+    left: -40px;
+    top: 780px;
+    transform: matrix(-1, 0, 0, 1, 0, 0);
+}
+

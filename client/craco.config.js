@@ -10,7 +10,7 @@ module.exports = {
                         // check documentation
                         // https://github.com/ant-design/ant-design/blob/master/components/style/themes/default.less
                         modifyVars: { 
-                            "@primary-color": "red" 
+                            "@primary-color": "#AD72B7" 
                         },
                         javascriptEnabled: true,
                     },
