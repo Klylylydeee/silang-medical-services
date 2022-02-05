@@ -84,7 +84,8 @@ class User:
             },
             # Reference: https://pymongo.readthedocs.io/en/stable/api/pymongo/collection.html#pymongo.collection.Collection.find
             projection={
-                "password": True
+                "password": True,
+                "updated_at": True
             }
         )
 
@@ -111,6 +112,7 @@ class User:
         })
     
     def signUp(self):
+        print(moment.utcnow().locale('asia/singapore').datetime)
         return userCollection.insert_one({ 
             "first_name": self.first_name, 
             "last_name": self.last_name, 
@@ -124,7 +126,7 @@ class User:
             "status": True, 
             "profile_picture": "default.png", 
             "created_at": moment.utcnow().locale('asia/singapore').__str__(),
-            "updated_at": moment.utcnow().locale('asia/singapore').__str__()
+            "updated_at": moment.utcnow().locale('asia/singapore')
         }).inserted_id
 
     def editUserDetail():

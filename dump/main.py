@@ -6,7 +6,6 @@ import json
 
 # MongoDB 
 from database.db import databaseConnection
-import moment
 
 # Middlewares
 from middleware.cors import corsConfig
@@ -79,17 +78,17 @@ def dataEntry():
         #     print("available")
         # else:
         #     print("ready to send")
-        msg = EmailMessage(
-            subject='Hello',
-            body='<p style="color: red;">This is an <strong>important</strong> message.</p>',
-            from_email='xtremeworks.inquiry@gmail.com',
-            to=['klylylydeee@gmail.com']
-        )
-        msg.content_subtype = "html"  
-        msg.send()
+        # msg = EmailMessage(
+        #     subject='Hello',
+        #     body='<p style="color: red;">This is an <strong>important</strong> message.</p>',
+        #     from_email='xtremeworks.inquiry@gmail.com',
+        #     to=['klylylydeee@gmail.com']
+        # )
+        # msg.content_subtype = "html"  
+        # msg.send()
         return {
             # "users": data
-            "users": "sent"
+            "users": "nice"
         }
     except Exception as err:
         print(err)

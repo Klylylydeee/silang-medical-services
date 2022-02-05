@@ -12,6 +12,8 @@ moment = "==0.12.1"
 passlib = "==1.7.4"
 pymongo = "==4.0.1"
 flask-mailman = "==0.3.0"
+requests = "==2.27.1"
+pyopenssl = "==21.0.0"
 
 [dev-packages]
 

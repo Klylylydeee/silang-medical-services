@@ -7,7 +7,10 @@ import Router from "src/app/routes/Router";
 
 // Language
 import { IntlProvider } from "react-intl";
-import AppLocale from "./app/language/lang";
+import AppLocale from "src/app/language/lang";
+
+// Responsive
+// import AppDimension from "src/app/util/responsive";
 
 // Global styles
 import "antd/dist/antd.less";
@@ -16,6 +19,8 @@ import "src/styles/global.scss";
 function App() {
     
     const { language } = useSelector((state) => state.webApp);
+
+    // AppDimension();
 
     // Check if a user has a JWT existing in the browser's localStorage
     // which will determine if he will be re-authenticated

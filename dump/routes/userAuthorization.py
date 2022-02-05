@@ -6,6 +6,8 @@ from middleware.raiseErr import ErrorWithArgs
 from middleware.hashingAlgo import cryptingAlgo
 from flask_mailman import EmailMessage
 import re
+import requests
+import moment
 
 userRouter = Blueprint("userAuthRouter", __name__)
 
@@ -49,19 +51,31 @@ def authenticateUser():
 
         # Validate if user account exists
         if userData == None:
-            raise ErrorWithArgs(404, f"User {request.json['email']} does not exists.")
+            raise ErrorWithArgs(401, f"User {request.json['email']} does not exists.")
         elif cryptingAlgo.verify(request.json["password"], userData["password"]) == False:
             raise ErrorWithArgs(401, f"Password incorrect.")
         else:
-            userData = User(**request.json).createSession()
-            msg = EmailMessage(
-                subject='Hello',
-                body=f'<p style="color: red;">This is an <strong>{userData["generated_pin"]}</strong> message.</p>',
-                from_email='xtremeworks.inquiry@gmail.com',
-                to=[userData["email"]]
-            )
-            msg.content_subtype = "html"  
-            msg.send()
+            test = moment.now().locale('asia/singapore')
+            readable = moment.date(userData["updated_at"]).date
+            print(readable)
+            # readable = moment.date(test).format("MMMM DD YYYY hh:mm:ss")
+            # compare = moment.now().locale('ASIA/SINGAPORE').add(minutes=5)
+            # trial = moment.date(compare).diff(test)
+            # trial = moment.date(userData["updated_at"]).diff(test)
+            # print(trial)
+            # userData = User(**request.json).createSession()
+            # print(userData)
+            # response = requests.get(url=f"https://flask.klylylydeee.xyz/?num={userData['phone_number']}&msg=Your PIN code is {userData['generated_pin']} \n Silang Medical Services", verify=False)
+            # json_data = response.json()
+            # print(json_data)
+            # msg = EmailMessage(
+            #     subject='Hello',
+            #     body=f'<p style="color: red;">This is an <strong>{userData["generated_pin"]}</strong> message.</p>',
+            #     from_email='xtremeworks.inquiry@gmail.com',
+            #     to=[userData["email"]]
+            # )
+            # msg.content_subtype = "html"  
+            # msg.send()
         return {
             "payload": "nice"
         }

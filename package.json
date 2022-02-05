@@ -1,30 +1,27 @@
 {
-  "name": "silang-medical-services",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "start-public": "cd client && yarn start-public",
-    "start-private": "cd client && yarn start-private",
-    "start-api": "cd server/api && pipenv run python main.py",
-    "start-server-rpi": "cd server/connection/rpi4-socket && yarn start",
-    "start-server-vps": "cd server/connection/vps-socket && yarn start",
-    "update-client": "cd client && yarn update --latest",
-    "update-server-rpi": "cd server/connection/rpi4-socket && yarn update --latest",
-    "update-server-vps": "cd server/connection/vps-socket && yarn update --latest",
-    "build-public": "cd client && yarn build-public",
-    "build-private": "cd client && yarn build-private",
-    "build-api": "cd server/api && pipenv run pip freeze > requirements.txt"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Klylylydeee/silang-medical-services.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Klylylydeee/silang-medical-services/issues"
-  },
-  "homepage": "https://github.com/Klylylydeee/silang-medical-services#readme"
+    "name": "silang-medical-services",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "start-public": "cd client && yarn start-public",
+        "start-private": "cd client && yarn start-private",
+        "start-python-deprecated": "cd dump && pipenv run python main.py",
+        "start-client-rpi": "cd server/web-socket/vps-client && yarn start",
+        "update-client": "cd client && yarn update --latest",
+        "build-public": "cd client && yarn build-public",
+        "build-private": "cd client && yarn build-private",
+        "build-api": "cd server/api && pipenv run pip freeze > requirements.txt"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Klylylydeee/silang-medical-services.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/Klylylydeee/silang-medical-services/issues"
+    },
+    "homepage": "https://github.com/Klylylydeee/silang-medical-services#readme"
 }
