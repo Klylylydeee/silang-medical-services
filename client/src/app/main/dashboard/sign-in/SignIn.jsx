@@ -23,9 +23,9 @@ import '../../../../styles/SignIn.scss'
 
 function SignIn() {
 
-//useState for the Login Form, Pin Input and Reset Account
+    //useState for the Login Form, Pin Input and Reset Account
     const [step, setStep] = useState(1);
-    const loginClick = () => { 
+    const loginClick = () => {
         setStep(2) //set state into Pin Input form
     }
 
@@ -177,15 +177,18 @@ function SignIn() {
             {/*Carousel Col*/}
             <Col push={1} xs={{ span: 0 }} sm={{ span: 0 }} md={{ span: 0 }} lg={{ span: 16 }} >
                 <div className="carousel">
-                    <Carousel autoplay style={{height: '965px', width: '1450px',}}>
+                    <Carousel autoplay>
                         <div>
-                            <Image src={CarouselItem1} /> {/*Items that will be shown in the carousel*/}
+                            <Image style={{ height: '965px', width: '1450px', }}
+                                src={CarouselItem1} /> {/*Items that will be shown in the carousel*/}
                         </div>
                         <div>
-                            <Image src={CarouselItem2} /> {/*Items that will be shown in the carousel*/}
+                            <Image style={{ height: '965px', width: '1450px', }}
+                                src={CarouselItem2} /> {/*Items that will be shown in the carousel*/}
                         </div>
                         <div>
-                            <Image src={CarouselItem3} /> {/*Items that will be shown in the carousel*/}
+                            <Image style={{ height: '965px', width: '1450px', }}
+                                src={CarouselItem3} /> {/*Items that will be shown in the carousel*/}
                         </div>
                     </Carousel>
                 </div>
