@@ -19,14 +19,7 @@ import BrgyLogo from '../sign-in/sign-in-assets/barangay-lumil.png'
 import BlackGrid from '../sign-in/sign-in-assets/black-grid.png'
 
 //Scss Styling
-import styles from '../../../../styles/SignIn.scss'
-
-//Carousel Styling
-const contentStyle = {
-    height: '965px',
-    width: '1450px',
-};
-
+import '../../../../styles/SignIn.scss'
 
 function SignIn() {
 
@@ -184,18 +177,15 @@ function SignIn() {
             {/*Carousel Col*/}
             <Col push={1} xs={{ span: 0 }} sm={{ span: 0 }} md={{ span: 0 }} lg={{ span: 16 }} >
                 <div className="carousel">
-                    <Carousel autoplay>
+                    <Carousel autoplay style={{height: '965px', width: '1450px',}}>
                         <div>
-                            <Image style={contentStyle}
-                                src={CarouselItem1} /> {/*Items that will be shown in the carousel*/}
+                            <Image src={CarouselItem1} /> {/*Items that will be shown in the carousel*/}
                         </div>
                         <div>
-                            <Image style={contentStyle}
-                                src={CarouselItem2} /> {/*Items that will be shown in the carousel*/}
+                            <Image src={CarouselItem2} /> {/*Items that will be shown in the carousel*/}
                         </div>
                         <div>
-                            <Image style={contentStyle}
-                                src={CarouselItem3} /> {/*Items that will be shown in the carousel*/}
+                            <Image src={CarouselItem3} /> {/*Items that will be shown in the carousel*/}
                         </div>
                     </Carousel>
                 </div>
