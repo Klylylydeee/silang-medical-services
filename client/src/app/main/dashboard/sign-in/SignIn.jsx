@@ -6,14 +6,11 @@ import PinInput from "react-pin-input";
 //Ant Design layout
 import { Row, Col } from 'antd';
 import { Carousel } from 'antd';
-import { Image } from 'antd';
 import { Form, Input, Button, Checkbox, Tooltip } from 'antd';
 import { InfoCircleOutlined, UserOutlined } from '@ant-design/icons';
 
 //Page Assets
-import CarouselItem1 from '../sign-in/sign-in-assets/dustin.png'
-import CarouselItem2 from '../sign-in/sign-in-assets/DustinFries.png'
-import CarouselItem3 from '../sign-in/sign-in-assets/DustinShawart.jpg'
+import Rectangle from '../sign-in/sign-in-assets/Rectangle.png'
 import SHISLogo from '../sign-in/sign-in-assets/SHIS-logo.png'
 import BrgyLogo from '../sign-in/sign-in-assets/barangay-lumil.png'
 import BlackGrid from '../sign-in/sign-in-assets/black-grid.png'
@@ -36,16 +33,19 @@ function SignIn() {
     const resetClick = () => {
         setStep(3) //set state into Reset Account form
     }
+
     return (
-        <Row>
+        <Row style={{minHeight: "100vh"}}>
 
             {/*Login Form Col*/}
-            <Col xs={{ span: 24 }} sm={{ span: 20 }} md={{ span: 17 }} lg={{ span: 7 }} >
+            <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 7 }} xl={{ span: 7}} xxl={{ span: 7}} className="left-container">
 
                 {/*Header Div, change href link to public landing page*/}
                 <div className="header">
                     <a href='https://www.facebook.com/dustin.amoda'><img src={SHISLogo} alt='SHIS Logo' className="SHISLogo" /></a>
-                    <div className="Box-Asset"></div>
+                    <div className="Box-Asset">
+                        <img src={Rectangle} alt="this is a box"></img>
+                    </div>
                 </div>
 
                 <img src={BlackGrid} alt='Grid Design' className="black-grid" />
@@ -70,10 +70,10 @@ function SignIn() {
 
                                 {/*Username Form Item*/}
                                 <Form.Item
-                                    label="Username"
-                                    name="username"
+                                    label="Email"
+                                    name="email"
                                     className="form-group"
-                                    rules={[{ required: true, message: 'Please input your username!' }]}>
+                                    rules={[{ required: true, message: 'Please input your email!' }]}>
                                     <Input />
                                 </Form.Item>
 
@@ -175,21 +175,19 @@ function SignIn() {
 
 
             {/*Carousel Col*/}
-            <Col push={1} xs={{ span: 0 }} sm={{ span: 0 }} md={{ span: 0 }} lg={{ span: 16 }} >
+            <Col push={1} xs={{ span: 0 }} sm={{ span: 0 }} md={{ span: 0 }} lg={{ span: 16 }} xl={{ span: 16}} xxl={{ span: 16}} className="right-container">
                 <div className="carousel">
                     <Carousel autoplay>
-                        <div>
-                            <Image style={{ height: '965px', width: '1450px', }}
-                                src={CarouselItem1} /> {/*Items that will be shown in the carousel*/}
+
+                        <div className="contentStyle1">
                         </div>
-                        <div>
-                            <Image style={{ height: '965px', width: '1450px', }}
-                                src={CarouselItem2} /> {/*Items that will be shown in the carousel*/}
+
+                        <div className="contentStyle2">
                         </div>
-                        <div>
-                            <Image style={{ height: '965px', width: '1450px', }}
-                                src={CarouselItem3} /> {/*Items that will be shown in the carousel*/}
+
+                        <div className="contentStyle3">
                         </div>
+
                     </Carousel>
                 </div>
             </Col>

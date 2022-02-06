@@ -5,6 +5,17 @@ h1, h2, h3, h4, p{
     font-style: normal;
 }
 
+.left-container{
+    display:flex !important;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.right-container{
+    display:flex;
+}
+
 //-----------------Header Row-----------------//
 .header{
     display: flex;
@@ -17,14 +28,14 @@ h1, h2, h3, h4, p{
     position: relative;
     width: 134px;
     height: 103px;
-    margin-right :390px;
+    margin-left: 30px;
 }
 
 .Box-Asset{
-    position: absolute;
+    position: relative;
     width: 428px;
     height: 84px;
-    left: 350px;
+    left: 120px;
     top: -12px;
     background: #AD72B7;
     border-radius: 5px;
@@ -68,6 +79,7 @@ h1, h2, h3, h4, p{
 }
 
 .signInForm{
+    position: relative;
     width: 438px;
     height: 85px;
     font-family: Quicksand;
@@ -145,8 +157,8 @@ h1, h2, h3, h4, p{
     position: absolute;
     width: 129px;
     height: 129px;
-    right: -145px;
-    top: 110px;
+    right: -7vw;
+    top: 5vh;
     z-index: 10;
 }
 
@@ -154,8 +166,33 @@ h1, h2, h3, h4, p{
     position: absolute;
     width: 129px;
     height: 129px;
-    left: -40px;
-    top: 780px;
+    left: -3vw;
+    top: 60vh;
     transform: matrix(-1, 0, 0, 1, 0, 0);
 }
+
+.contentStyle1{
+    background-image: url("../app/main/dashboard/sign-in/sign-in-assets/lumil1.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100vh;
+    width: 1450px;
+}
+
+.contentStyle2{
+    background-image: url("../app/main/dashboard/sign-in/sign-in-assets/lumil2.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100vh;
+    width: 1450px;
+}
+
+.contentStyle3{
+    background-image: url("../app/main/dashboard/sign-in/sign-in-assets/lumil3.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100vh;
+    width: 1450px;
+}
+
 
