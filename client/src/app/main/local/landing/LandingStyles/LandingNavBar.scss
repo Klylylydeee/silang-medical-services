@@ -1,0 +1,70 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
+
+//-----------------NavBar-----------------//
+.portfolio-hero {
+    font-family: Quicksand;
+    color:black;
+}
+
+.portfolio-menu ul {
+    display: flex;
+    padding-top: 15px;
+    font-size: 1.50rem;    
+}
+
+.portfolio-menu ul li {
+    margin: 20px 30px;
+    list-style: none;
+}
+
+.portfolio-menu .menu-item a{
+    color: black;
+    font-weight: 600;
+    
+}
+.nav-menu {
+    margin: 0;
+    padding: 0;
+}
+
+//-----------------NavBar hover-----------------//
+
+nav ul li a:after,
+nav ul li a:before {
+  transition: all .5s;
+}
+
+nav ul li a:hover {
+  color: #ad72b7;
+}
+
+nav.stroke ul li a,
+nav.fill ul li a {
+  position: relative;
+}
+
+nav.stroke ul li a:after,
+nav.fill ul li a:after {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  width: 0%;
+  content: '.';
+  color: transparent;
+  background: #ad72b7;
+  height: 2px;
+}
+
+nav.stroke ul li a:hover:after {
+  width: 100%;
+}
+
+//-----------------NavBar Logo-----------------//
+
+.portfolio-menu img {
+    max-height: 90px;
+    max-width: 100px;
+    margin-right: 50px;
+}

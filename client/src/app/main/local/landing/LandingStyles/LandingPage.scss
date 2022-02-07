@@ -1,0 +1,288 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    display: flex;
+    background-color: white;
+    font-family: Quicksand;
+    overflow-x: hidden;
+}
+
+
+//-----------------Header Row-----------------//
+
+.HomeTitle {
+    height: 80vh;
+    margin-top: 15vh;
+}
+
+#LandingTitle  {
+   font-size: 90px;
+   font-weight: 700;
+   margin-bottom: -10px;
+   display: flex;
+   color: #ad72b7;
+}
+
+#SecondaryTitle {
+    font-size: 90px;
+    font-weight: 700;
+    margin-bottom: -5px;
+}
+
+#LandingDescription {
+    font-size: 20px;
+    margin-left: 9vh;
+    width: 65vh;
+}
+
+//-----------------Header Row-----------------/
+
+.ShisPurple {
+    position: absolute;
+    z-index: 1;
+    left: -20px;
+    top: 100px;
+}
+
+//-----------------Landing Page Main Images-----------------/
+
+.VectorImage2 {
+    position: absolute;
+    top: 0;
+    left: 60vh;
+    height: 1208px;
+    width: 1168px;
+}
+
+.VectorImage1 {
+    position: absolute;
+    top: 0;
+    left: 105vh;
+    height: 1100px;
+    width: 1168px;
+    z-index: 1;
+}
+
+//-----------------Scroll Button-----------------/
+
+section {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    scroll-behavior: smooth;
+  }
+
+section::after {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    content: '';
+    width: 100%;
+    height: 80%;
+    background: -webkit-linear-gradient(top,rgba(0,0,0,0) 0,rgba(0,0,0,.8) 80%,rgba(0,0,0,.8) 100%);
+    background: linear-gradient(to bottom,rgba(0,0,0,0) 0,rgba(0,0,0,.8) 80%,rgba(0,0,0,.8) 100%);
+  }
+
+  .demo a {
+    position: absolute;
+    left: 3vh;
+    z-index: 2;
+    display: inline-block;
+    -webkit-transform: translate(0, -50%);
+    transform: translate(0, -50%);
+    color: black;
+    font-family: Quicksand;
+    font-size: 20px;
+    letter-spacing: .1em;
+    transition: opacity .3s;
+  }
+
+  .demo a:hover {
+    opacity: .5;
+  }
+
+  #section07 a {
+    padding-top: 80px;
+    bottom: 0px;
+  }
+
+  #section07 a span {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 30px;
+    height: 30px;
+    margin-left: -12px;
+    border-left: 1px solid black;
+    border-bottom: 1px solid black;
+    -webkit-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+    -webkit-animation: sdb07 2s infinite;
+    animation: sdb07 2s infinite;
+    opacity: 0;
+    box-sizing: border-box;
+  }
+
+  #section07 a span:nth-of-type(1) {
+    -webkit-animation-delay: 0s;
+    animation-delay: 0s;
+  }
+
+  #section07 a span:nth-of-type(2) {
+    top: 16px;
+    -webkit-animation-delay: .15s;
+    animation-delay: .15s;
+  }
+
+  #section07 a span:nth-of-type(3) {
+    top: 32px;
+    -webkit-animation-delay: .3s;
+    animation-delay: .3s;
+  }
+  
+  @-webkit-keyframes sdb07 {
+    0% {
+      opacity: 0;
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+  @keyframes sdb07 {
+    0% {
+      opacity: 0;
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+  
+
+//-----------------Mobile Responsive-----------------/
+@media screen and (max-width: 1440px){
+
+.VectorImage2 {
+  width: 750px;
+  height: 820px;
+  left: 53vh;
+}
+
+.VectorImage1 {
+    width: 750px;
+    height: 900px;
+    left: 80vh;
+    z-index: 1;
+}
+
+.HomeTitle {
+  margin-left: -8vh;
+}
+
+#LandingTitle  {
+ font-size: 70px;
+ margin-bottom: -10px;
+ 
+}
+
+#SecondaryTitle {
+  font-size: 70px;
+  margin-bottom: -5px;
+}
+
+#LandingDescription {
+  font-size: 15px;
+  margin-left: 5vh;
+  width: 50vh;
+}
+
+#section07 a {
+  bottom: 15vh;
+}
+}
+
+@media screen and (max-width: 1024px){
+  .VectorImage2 {
+    width: 550px;
+    height: 820px;
+    left: 53vh;
+  }
+  
+  .VectorImage1 {
+      width: 500px;
+      height: 850px;
+      left: 75vh;
+  }
+
+  .ShisPurple {
+      left: 70vh;
+  }
+
+  .VectorImage1 {
+    display: none;
+}
+
+  .VectorImage2 {
+    display: none;
+}
+}  
+
+@media screen and (max-width: 768px){
+  #LandingTitle  {
+    font-size: 95px;
+   }
+   
+   #SecondaryTitle {
+     font-size: 90px;
+   }
+   
+   #LandingDescription {
+     font-size: 25px;
+     width: 70vh;
+   }
+
+   #section07 a {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 425px){
+
+  .HomeTitle { 
+    min-height: 140vh;
+    margin-left: 5vh;
+  }
+
+  .ShisPurple { 
+    top: 35vh;
+    left: 100vh;
+  }
+
+  #LandingTitle  {
+    font-size: 10rem;
+   }
+   
+   #SecondaryTitle {
+     font-size: 10rem;
+   }
+   
+   #LandingDescription {
+     font-size: 2.8rem;
+     width: 120vh;
+   }
+
+   #section07 a {
+    display: none;
+  }
+
+  
+}
