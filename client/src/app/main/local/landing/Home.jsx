@@ -13,7 +13,9 @@ import Vector2 from '../landing/LandingPage-assets/Vector2.png'
 import Vector1 from '../landing/LandingPage-assets/Vector1.png'
 
 //Styles
-import '../../local/landing/LandingStyles/LandingPage.scss'
+if(process.env.REACT_APP_ENVIRONMENT_STAGE === "Public Build") {
+    require( '../../local/landing/LandingStyles/LandingPage.scss');
+}
 
 function Home() {
     return (

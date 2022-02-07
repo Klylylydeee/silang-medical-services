@@ -1,6 +1,12 @@
 // Yarn packages
 import { Navigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+
+import jwt from "jsonwebtoken";
+
+import { signIn } from "src/app/store/user/userInformation";
+import { authorizeUser, unauthorizeUser } from "src/app/store/web/webInformation";
+import toasterRequest from "src/app/util/toaster";
 
 // The AuthWrapper component contains three parameters which are as follow inside the brackets
 // component: Is a JSX Component that will be rendered once authorization succeeds
@@ -11,8 +17,42 @@ import { useSelector } from "react-redux";
 
 function AuthWrapper({ component, redirectTo, authStatus }) {
 
-    // Redux state value
-    const { authorization } = useSelector((state) => state.webApp);
+    const dispatch = useDispatch();
+    const { authorization } = useSelector((state) => state.web);
+    
+    if(localStorage.getItem("Authorization") && authorization === true) {
+        try {
+            jwt.verify(localStorage.getItem("Authorization"), process.env.REACT_APP_JWT_BACKEND);
+        } catch(err) {
+            dispatch(unauthorizeUser());
+            toasterRequest({ payloadType: "error", textString: "Authorization has expired."})
+        }
+    } else if(localStorage.getItem("Authorization") && authorization === false){
+        try {
+            let decodedData = jwt.verify(localStorage.getItem("Authorization"), process.env.REACT_APP_JWT_BACKEND);
+            dispatch(
+                signIn({
+                    first_name : decodedData.first_name,
+                    last_name : decodedData.last_name,
+                    email : decodedData.email,
+                    phone_number : decodedData.phone_number,
+                    barangay : decodedData.barangay,
+                    designation : decodedData.designation
+                })
+            );
+            dispatch(authorizeUser({
+                language : decodedData.language
+            }));
+        } catch(err) {
+            localStorage.removeItem("Authorization");
+            err.response ? 
+                toasterRequest({ payloadType: "error", textString: err.response.data.message})
+            :
+                toasterRequest({ payloadType: "error", textString: err.message});
+        }
+    } else if (authorization !== authStatus && !localStorage.getItem("Authorization")) {
+        toasterRequest({ payloadType: "warning", textString: "Route is restricted!"})
+    }
 
     // Returns the JSX Component back to the Router to be rendered
     return authorization === authStatus ? component : <Navigate to={redirectTo} />;

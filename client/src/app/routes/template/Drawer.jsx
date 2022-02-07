@@ -15,9 +15,9 @@ const drawerNavigation = [
         icon: <HomeOutlined />,
         redirect: "",
         roles: [
-            "Barangay Chairman",
-            "Barangay Nurse",
-            "Medical Doctor"
+            "Chairman",
+            "Nurse",
+            "Doctor"
         ]
     },
     {
@@ -25,19 +25,19 @@ const drawerNavigation = [
         icon: <BarChartOutlined />,
         redirect: "analytics",
         roles: [
-            "Barangay Chairman",
-            "Barangay Nurse",
-            "Medical Doctor"
+            "Chairman",
+            "Nurse",
+            "Doctor"
         ]
     },
     {
-        name: "Medical Records",
+        name: "Records",
         icon: <MedicineBoxOutlined />,
         redirect: "medical-records",
         roles: [
-            "Barangay Chairman",
-            "Barangay Nurse",
-            "Medical Doctor"
+            "Chairman",
+            "Nurse",
+            "Doctor"
         ]
     },
     {
@@ -45,9 +45,9 @@ const drawerNavigation = [
         icon: <CalendarOutlined />,
         redirect: "event-listing",
         roles: [
-            "Barangay Chairman",
-            "Barangay Nurse",
-            "Medical Doctor"
+            "Chairman",
+            "Nurse",
+            "Doctor"
         ]
     },
     {
@@ -55,9 +55,9 @@ const drawerNavigation = [
         icon: <MailOutlined />,
         redirect: "communication",
         roles: [
-            "Barangay Chairman",
-            "Barangay Nurse",
-            "Medical Doctor"
+            "Chairman",
+            "Nurse",
+            "Doctor"
         ]
     },
     {
@@ -71,9 +71,9 @@ const drawerNavigation = [
             }
         ],
         roles: [
-            "Barangay Chairman",
-            "Barangay Nurse",
-            "Medical Doctor"
+            "Chairman",
+            "Nurse",
+            "Doctor"
         ]
     },
     {
@@ -81,9 +81,9 @@ const drawerNavigation = [
         icon: <SettingOutlined />,
         redirect: "settings",
         roles: [
-            "Barangay Chairman",
-            "Barangay Nurse",
-            "Medical Doctor"
+            "Chairman",
+            "Nurse",
+            "Doctor"
         ]
     },
     {
@@ -91,9 +91,9 @@ const drawerNavigation = [
         icon: <LogoutOutlined />,
         redirect: "",
         roles: [
-            "Barangay Chairman",
-            "Barangay Nurse",
-            "Medical Doctor"
+            "Chairman",
+            "Nurse",
+            "Doctor"
         ]
     }
 ];

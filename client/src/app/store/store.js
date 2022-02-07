@@ -3,11 +3,11 @@ import { configureStore } from "@reduxjs/toolkit";
 // import logger from "redux-logger"
 
 import userInformation from "src/app/store/user/userInformation";
-import webApplicationConfiguration from "src/app/store/webApplicationConfiguration/webApplicationConfiguration";
+import webApplicationConfiguration from "src/app/store/web/webInformation";
  
 const reducer = configureStore({
     reducer: {
-        webApp: webApplicationConfiguration,
+        web: webApplicationConfiguration,
         user: userInformation
     },
     // middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),

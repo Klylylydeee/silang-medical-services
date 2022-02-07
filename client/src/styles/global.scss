@@ -3,7 +3,10 @@
 }
 
 .ant-menu-root {
-    height: calc(100vh - 63.8px);
+    height: calc(78.6vh);
+    @media screen and (max-width: 1200px) {
+        height: calc(84vh);
+    }
     display: flex;
     flex-direction: column;
 }
@@ -12,10 +15,9 @@
     margin-top: auto;
 }
 
-.logo {
-    height: 32px;
-    margin: 16px;
-    background: rgba(255, 255, 255, 0.3);
+.logoImage {
+    margin: auto;
+    display: block;
 }
 
 .site-layout .site-layout-background {

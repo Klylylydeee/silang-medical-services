@@ -13,15 +13,18 @@
         "axios": "^0.24.0",
         "craco-less": "^2.0.0",
         "env-cmd": "^10.1.0",
+        "jsonwebtoken": "^8.5.1",
         "moment": "^2.29.1",
         "react": "^17.0.2",
         "react-dom": "^17.0.2",
-        "react-error-overlay": "6.0.10",
+        "react-error-overlay": "6.0.9",
         "react-intl": "^5.24.1",
         "react-pin-input": "^1.0.1",
         "react-redux": "^7.2.6",
+        "react-responsive": "9.0.0-beta.6",
         "react-router-dom": "^6.2.1",
-        "react-scripts": "5.0.0",
+        "react-scoped-style": "^0.3.0",
+        "react-scripts": "4.0.3",
         "redux-logger": "^3.0.6",
         "sass": "^1.45.2",
         "web-vitals": "^2.1.2"
@@ -29,8 +32,8 @@
     "scripts": {
         "start-public": "env-cmd -f ./environments/.env.public craco start",
         "start-private": "env-cmd -f ./environments/.env.private craco start",
-        "build-public": "env-cmd -f ./environments/.env.public craco build",
-        "build-private": "env-cmd -f ./environments/.env.private craco build",
+        "build-public": "env-cmd -f ./environments/.env.build.public craco build",
+        "build-private": "env-cmd -f ./environments/.env.build.private craco build",
         "jest-public": "env-cmd -f ./environments/.env.public craco test",
         "jest-private": "env-cmd -f ./environments/.env.private craco test",
         "eject": "craco eject"
@@ -54,6 +57,6 @@
         ]
     },
     "resolutions": {
-        "react-error-overlay": "6.0.10"
+        "react-error-overlay": "6.0.9"
     }
 }
