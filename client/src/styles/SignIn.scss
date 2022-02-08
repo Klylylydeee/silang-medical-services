@@ -21,22 +21,21 @@ h1, h2, h3, h4, p{
     display: flex;
     justify-content: center;
     flex-direction: row;
-    text-align: left;
 }
 
 .SHISLogo{
     position: relative;
     width: 134px;
     height: 103px;
-    margin-left: 30px;
+    margin-left: 1vw;
 }
 
 .Box-Asset{
     position: relative;
     width: 428px;
     height: 84px;
-    left: 120px;
-    top: -12px;
+    left: 10vw;
+    top: -2vw;
     background: #AD72B7;
     border-radius: 5px;
 }
@@ -74,8 +73,8 @@ h1, h2, h3, h4, p{
     display: flex;
     justify-content: center;
     flex-direction: column;
-    text-align: left;
-    padding: 65px 0px 0px 50px;
+    text-align: center;
+    padding: 4vh;
 }
 
 .signInForm{
@@ -88,16 +87,6 @@ h1, h2, h3, h4, p{
     font-size: 30px;
 }
 
-.form-body h4{
-    margin: 150px 0px 0px 40px;
-    width: 431px;
-    height: 21px;
-    font-weight: normal !important;
-    font-size: 15px;
-    line-height: 21px;
-    text-align: center;
-    color: #292929;
-}
 
 //-----------------Pin Code Form-----------------//
 
@@ -138,13 +127,13 @@ h1, h2, h3, h4, p{
     justify-content: center;
     flex-direction: row;
     text-align: center;
-    margin: 150px 0px 0px 100px;
+    margin: 30vh 0vw 0vh 8vw;
 }
 
 .LumilLogo{
     width: 125px;
     height: 105px;
-    margin-left: 20px;
+    margin-left: 2vw;
 }
 
 .PKLogo{
@@ -157,8 +146,8 @@ h1, h2, h3, h4, p{
     position: absolute;
     width: 129px;
     height: 129px;
-    right: -7vw;
-    top: 5vh;
+    right: -12vw;
+    top: 18vh;
     z-index: 10;
 }
 
@@ -167,7 +156,7 @@ h1, h2, h3, h4, p{
     width: 129px;
     height: 129px;
     left: -3vw;
-    top: 60vh;
+    top: 70vh;
     transform: matrix(-1, 0, 0, 1, 0, 0);
 }
 
@@ -175,6 +164,7 @@ h1, h2, h3, h4, p{
     background-image: url("../app/main/dashboard/sign-in/sign-in-assets/lumil1.png");
     background-size: cover;
     background-repeat: no-repeat;
+    object-fit: scale-down;
     height: 100vh;
     width: 1450px;
 }
@@ -183,6 +173,7 @@ h1, h2, h3, h4, p{
     background-image: url("../app/main/dashboard/sign-in/sign-in-assets/lumil2.png");
     background-size: cover;
     background-repeat: no-repeat;
+    object-fit: scale-down;
     height: 100vh;
     width: 1450px;
 }
@@ -191,8 +182,86 @@ h1, h2, h3, h4, p{
     background-image: url("../app/main/dashboard/sign-in/sign-in-assets/lumil3.png");
     background-size: cover;
     background-repeat: no-repeat;
+    object-fit: scale-down;
     height: 100vh;
     width: 1450px;
 }
 
+// Small devices (landscape phones, 576px and up)
+@media (max-width: 375.99px) { 
+    .SHISLogo{
+        width: 110px;
+        height: 85px;
+        margin-left: 50vw;
+    }
+    
+    .Box-Asset{
+        left: 40vw;
+    }
 
+    .desc-text h1{
+        margin: 20px 0px 0px 90px;
+        font-size: 50px;
+    }
+    
+    .desc-text h3{
+        margin: 5px 0px 0px 20px;
+        font-size: 13px;
+    }
+    
+    .form-body{
+        justify-content: left;
+        padding: 2vh;
+    }
+
+    .loginButton{
+        margin-right: 300px;
+    }
+    
+    .signInForm{
+        width: 195px;
+        height: 85px;
+    }
+    
+    .pinCode{
+        margin: 23px 0px 0px 5px;
+    }
+
+    .formPin{
+        width: 438px;
+        height: 85px;
+        font-size: 13px;
+    }
+
+    .pin-form-submit{
+        margin: 10px;
+    }
+
+    .resetAccount{
+        margin: 70px 0px 0px 10px;
+        padding: 20px;
+    }
+
+    .black-grid{
+        visibility: hidden;
+    }
+    
+    .black-grid-2{
+        visibility: hidden;
+    }
+
+    .LumilLogo{
+        width: 60px;
+        height: 60px;
+    }
+    
+    .PKLogo{
+        width: 60px;
+        height: 60px;
+    }
+
+    .logos{
+        margin: 30vh 0vw 0vh 1vw;
+    }
+
+}

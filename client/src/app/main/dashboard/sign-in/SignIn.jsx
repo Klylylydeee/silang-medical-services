@@ -38,7 +38,7 @@ function SignIn() {
         <Row style={{minHeight: "100vh"}}>
 
             {/*Login Form Col*/}
-            <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 7 }} xl={{ span: 7}} xxl={{ span: 7}} className="left-container">
+            <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 11 }} xl={{ span: 8}} xxl={{ span: 8}} className="left-container">
 
                 {/*Header Div, change href link to public landing page*/}
                 <div className="header">
@@ -88,19 +88,16 @@ function SignIn() {
 
                                 {/*Remember-Me Checkbox Form Item, can be removed if not needed*/}
                                 <Form.Item name="remember" valuePropName="checked" wrapperCol={{ offset: 8, span: 16 }} className="form-group">
-                                    <Checkbox>Remember me</Checkbox>
+                                    <Checkbox className="rememberMe">Remember me</Checkbox>
                                 </Form.Item>
 
                                 {/*Submit Button for the form*/}
                                 <Form.Item wrapperCol={{ offset: 8, span: 16 }} className="form-group">
-                                    <Button type="primary" htmlType="submit" className="form-group" onClick={loginClick}>
+                                    <Button type="primary" htmlType="submit" className="loginButton" onClick={loginClick}>
                                         Login
                                     </Button>
                                 </Form.Item>
                             </Form>
-
-
-                            <h4>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h4>
                         </div>
 
                         //Step 2 will take over
@@ -175,7 +172,7 @@ function SignIn() {
 
 
             {/*Carousel Col*/}
-            <Col push={1} xs={{ span: 0 }} sm={{ span: 0 }} md={{ span: 0 }} lg={{ span: 16 }} xl={{ span: 16}} xxl={{ span: 16}} className="right-container">
+            <Col push={2} xs={{ span: 0 }} sm={{ span: 0 }} md={{ span: 0 }} lg={{ span: 11 }} xl={{ span: 14}} xxl={{ span: 14}} className="right-container">
                 <div className="carousel">
                     <Carousel autoplay>
 
