@@ -27,8 +27,6 @@ exports.userSignUp = async (req, res, next) => {
             text: `Please open the following link to verify your account: ${process.env.SERVER_ENDPOINT}/authentication/sign-up-verification?payload=${userData.id}`
         });
 
-        await axios.get(`${process.env.VPS_SOCKET}/?num=${req.body.phone_number}&msg=Please open the following link to verify your account: ${process.env.SERVER_ENDPOINT}/authentication/sign-up-verification?payload=${userData.id}\n Silang Medical Services`);
-
         res.status(200).send({
             message: "Account has been created.",
             payload: userData
@@ -127,7 +125,7 @@ exports.userSignIn = async (req, res, next) => {
             throw error;
         };
 
-        if(moment(findUser.updatedAt).add(15, "minutes").isBefore(moment())){
+        if(findUser.createdAt.toString() === findUser.updatedAt.toString() || moment(findUser.updatedAt).add(15, "minutes").isBefore(moment())){
 
             let generatePIN = await Users.findOneAndUpdate(
                 { 
@@ -158,7 +156,7 @@ exports.userSignIn = async (req, res, next) => {
                 text: `Verification PIN: ${generatePIN.pin}\n Silang Medical Services`
             });
 
-            await axios.get(`${process.env.VPS_SOCKET}/?num=${generatedPIN.phone_number}&msg=Verification PIN: ${generatePIN.pin}\n Silang Medical Services`);
+            await axios.get(`${process.env.VPS_SOCKET}/?num=${generatePIN.phone_number}&msg=Verification PIN: ${generatePIN.pin}\n Silang Medical Services`);
 
             res.status(200).send({
                 message: "Authentication successful. Please verify the generated pin sent to your email and phone number before 15 minutes."
@@ -213,6 +211,7 @@ exports.userPINVerification = async (req, res, next) => {
                 {
                     $set: {
                         "pin_threshold": 3,
+                        "pin": generatePin(),
                         "updatedAt": moment().subtract(3, "hours").format()
                     },
                 },
@@ -306,10 +305,8 @@ exports.userAccountReset = async (req, res, next) => {
             from: process.env.NODEMAILER_ACCOUNT_USERNAME,
             to: findUser.email,
             subject: `Silang Medical Services - Account Reset`,
-            text: `Please open the following link to reset your account: ${process.env.SERVER_ENDPOINT}/authentication/account-reset?payload=${token}`
+            text: `Please open the following link to reset your account: ${process.env.SERVER_ENDPOINT}/authentication/verify-reset?payload=${token}`
         });
-
-        await axios.get(`${process.env.VPS_SOCKET}/?num=${findUser.phone_number}&msg=Please open the following link to reset your account: ${process.env.SERVER_ENDPOINT}/authentication/account-reset?payload=${token}\n Silang Medical Services`);
 
         res.status(200).send({
             message: "Account reset verification has been sent to your email and phone number."

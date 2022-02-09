@@ -1,5 +1,6 @@
 const { Schema, model } = require("mongoose");
 const mongoose = require("mongoose");
+const momentRandom = require('moment-random');
 
 const moment = require("moment");
 
@@ -129,7 +130,7 @@ const medicalRecordSchema = new Schema(
     {
         timestamps: { 
             currentTime: () => {
-                return moment().format();
+                return moment(momentRandom("2022-12-31", "2021-01-01")).utc("Asia/Singapore").format();
             }
         }
     }

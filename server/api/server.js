@@ -99,6 +99,7 @@ app.get('/', (req, res) => {
 
 app.use('/api-documentation', swaggerUI.serve, swaggerUI.setup(swaggerConfig));
 app.use('/authentication', require("./routes/route.authentication"));
+app.use('/dashboard', require("./routes/route.dashboard"));
 app.use('/medical-record', require("./routes/route.medicalRecord"));
 app.use('/analytics', require("./routes/route.analytics"));
 app.use(require("./routes/errorHandler").notFoundHandler);
