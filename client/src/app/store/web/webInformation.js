@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 export const webApplicationConfiguration = createSlice({
     name: "web",
     initialState: {
-        authorization: true,
+        authorization: false,
         loading: false,
         language: "en",
         drawer: false,

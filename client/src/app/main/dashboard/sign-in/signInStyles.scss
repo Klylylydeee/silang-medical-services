@@ -1,0 +1,21 @@
+.bg-red {
+    min-height: 100vh;
+}
+
+.ant-form-item-explain-error {
+    font-size: 12px;
+}
+
+.ant-carousel,
+.ant-carousel .slick-slider, 
+.ant-carousel .slick-slider .slick-list,
+.ant-carousel .slick-slider .slick-list .slick-track,
+.ant-carousel .slick-slider .slick-list .slick-track .slick-slide,
+.ant-carousel .slick-slider .slick-list .slick-track .slick-slide div,
+.ant-carousel .slick-slider .slick-list .slick-track .slick-slide div .ant-image
+.ant-carousel .slick-slider .slick-list .slick-track .slick-slide div .ant-image .ant-image-img {
+    height: 100%;
+    width: 100%;
+    max-height: 100vh !important;
+    object-fit: contain !important;
+}
