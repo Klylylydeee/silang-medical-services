@@ -1,27 +1,21 @@
 {
     "name": "silang-medical-services",
-    "version": "1.0.0",
-    "description": "",
-    "main": "index.js",
     "scripts": {
         "start-public": "cd client && yarn start-public",
         "start-private": "cd client && yarn start-private",
-        "start-python-deprecated": "cd dump && pipenv run python main.py",
-        "start-client-rpi": "cd server/web-socket/vps-client && yarn start",
-        "update-client": "cd client && yarn update --latest",
+        "start-api": "cd server/api && yarn start",
+        "start-socket-host": "cd server/web-socket/vps-host && yarn start",
+        "start-socket-client": "cd server/web-socket/vps-client && yarn start",
+        "start-socket-raspberry": "cd server/web-socket/rpi4-client && yarn start",
+        "start-flask-deprecated": "cd dump && pipenv run python main.py",
+        "update-public": "cd client && yarn update --latest",
+        "update-private": "cd client && yarn update --latest",
+        "update-api": "cd server/api && yarn update --latest",
+        "update-socket-host": "cd server/web-socket/vps-host && yarn update --latest",
+        "update-socket-client": "cd server/web-socket/vps-client && yarn update --latest",
+        "update-socket-raspberry": "cd server/web-socket/rpi4-client && yarn update --latest",
         "build-public": "cd client && yarn build-public",
         "build-private": "cd client && yarn build-private",
-        "build-api": "cd server/api && pipenv run pip freeze > requirements.txt"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/Klylylydeee/silang-medical-services.git"
-    },
-    "keywords": [],
-    "author": "",
-    "license": "ISC",
-    "bugs": {
-        "url": "https://github.com/Klylylydeee/silang-medical-services/issues"
-    },
-    "homepage": "https://github.com/Klylylydeee/silang-medical-services#readme"
+        "build-flask-deprecated": "cd dump && pipenv run pip freeze > requirements.txt"
+    }
 }
