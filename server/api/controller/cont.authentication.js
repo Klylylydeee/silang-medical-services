@@ -55,7 +55,7 @@ exports.userSignUpVerification = async (req, res, next) => {
 
         let findUser = await Users.findOneAndUpdate(
             { 
-                id: req.query.payload
+                _id: req.query.payload
             },
             {
                 $set: {
@@ -73,6 +73,8 @@ exports.userSignUpVerification = async (req, res, next) => {
                 }
             }
         );
+
+        console.lo
 
         if(findUser === null){
             let error = new Error("Account does not exists.");
@@ -337,7 +339,7 @@ exports.userVerifyReset = async (req, res, next) => {
 
         let findUser = await Users.findOneAndUpdate(
             { 
-                id: decodedData.id
+                _id: decodedData.id
             },
             {
                 $set: {
