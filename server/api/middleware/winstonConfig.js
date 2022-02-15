@@ -41,7 +41,7 @@ process.env.LOGGER_TYPE === "LOCAL" ?
                 options: {
                     useUnifiedTopology: true
                 },
-                collection: "logs",
+                collection: "error-logs",
                 format: format.combine(
                 format.timestamp(),
                 format.json())

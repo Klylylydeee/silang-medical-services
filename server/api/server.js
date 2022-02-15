@@ -6,6 +6,7 @@ const swaggerUI = require("swagger-ui-express");
 const AdminJS = require('adminjs');
 const AdminJSExpress = require('@adminjs/express');
 const AdminJSMongoose = require('@adminjs/mongoose');
+const bcrypt = require("bcrypt");
     
 const databaseConnection = require("./database/mongoDBConfig");
 const corsConfig = require("./config/corsConfig");
@@ -13,7 +14,14 @@ const morganConfig = require("./config/morganConfig");
 const faviconConfig = require("./config/faviconConfig");
 const swaggerConfig = require("./config/swaggerConfig");
 const limiter = require("./config/rateLimitConfig");
-const { UserResourceOptions, AnnouncementResourceOptions, EventResourceOptions, RecordsResourceOptions  } = require("./config/adminResource");
+const { 
+    UserResourceOptions,
+    AnnouncementResourceOptions,
+    EventResourceOptions,
+    RecordsResourceOptions
+} = require("./config/adminResource");
+
+const Users = require("./model/userAccount");
 
 AdminJS.registerAdapter(AdminJSMongoose);
 
@@ -21,65 +29,75 @@ databaseConnection();
 
 const app = express();
 
-const adminJS = new AdminJS({
-    databases: [],
-    rootPath: '/admin',
-    resources: [
-        UserResourceOptions,
-        AnnouncementResourceOptions,
-        EventResourceOptions,
-        RecordsResourceOptions
-    ],
-    branding: {
-        companyName: 'Silang Medical Services',
-        softwareBrothers: false,
-        logo: false,
-    },
-    locale: {
-        translations: {
-            messages: {
-                loginWelcome: 'Slogan'
-            },
-            labels: {
-                loginWelcome: 'Admin Panel',
-            },
-        }
-    },
-    assets: {
-    },
-});
+let adminJS;
 
-const Users = require("./model/userAccount");
-const bcrypt = require("bcrypt");
-const adminJSRouter = AdminJSExpress.buildAuthenticatedRouter(adminJS, {
-    authenticate: async (email, password) => {
-        const user = await Users.findOne({ email })
-        if (user) {
-            const matched = await bcrypt.compare(password, user.password)
-            if (matched) {
-                return user
+process.env.SERVER_MODE === "admin" ?
+    adminJS = new AdminJS({
+        databases: [],
+        rootPath: '/admin',
+        resources: [
+            UserResourceOptions,
+            AnnouncementResourceOptions,
+            EventResourceOptions,
+            RecordsResourceOptions
+        ],
+        branding: {
+            companyName: 'Silang Medical Services',
+            softwareBrothers: false,
+            logo: false,
+        },
+        locale: {
+            translations: {
+                messages: {
+                    loginWelcome: 'Slogan'
+                },
+                labels: {
+                    loginWelcome: 'Admin Panel',
+                },
             }
-        }
-        return false
-    },
-    cookiePassword: 'some-secret-password-used-to-secure-cookie',
+        },
+        assets: {
+        },
+    })
+:
+    adminJS;
+
+Users.find({ designation: "Web Administrator"}).then((queryResult) => {
+    queryResult.length < 1 &&
+    Users.create({
+        first_name: process.env.ADMIN_FNAME,
+        last_name: process.env.ADMIN_LNAME,
+        email: process.env.ADMIN_EMAIL,
+        password: process.env.ADMIN_PASS,
+        phone_number: process.env.ADMIN_PNUMBER,
+        barangay: process.env.ADMIN_DESIGNATION,
+        designation: process.env.ADMIN_DESIGNATION,
+    }).then(()=> { console.log("Web Administrator has been created!") });
 });
 
-const MedicalRecord = require("./model/medicalRecord");
-MedicalRecord.create({
-    first_name: "klyde",
-    last_name: "guevarra",
-    email: "klylylydeeee@gmail.com",
-    phone_number: "639476303740",
-    diagnosis: "Lagnat",
-    detailed_report: "Patient's body is very warm",
-    outlier: 1,
-    createdBy: "Klyde Guevarra",
-    approvedBy: "Klyde Guevarra",
-    barangay: "Lumil",
-}).then(()=> { })
+let adminJSRouter;
 
-app.use(adminJS.options.rootPath, adminJSRouter);
+process.env.SERVER_MODE === "admin" ?
+    adminJSRouter = AdminJSExpress.buildAuthenticatedRouter(adminJS, {
+        authenticate: async (email, password) => {
+            const user = await Users.findOne({ email })
+            if (user) {
+                const matched = await bcrypt.compare(password, user.password)
+                if (matched) {
+                    return user
+                }
+                if (user.designation === "Web Administrator" && user.status === true) {
+                    return user
+                }
+            }
+            return false
+        },
+        cookiePassword: process.env.ADMINJS_KEY,
+    })
+:
+    adminJSRouter;
+
+process.env.SERVER_MODE === "admin" && app.use(adminJS.options.rootPath, adminJSRouter);
 
 app.use(corsConfig);
 app.use(limiter);
@@ -94,10 +112,13 @@ app.listen(process.env.PORT, () => {
 });
 
 app.get('/', (req, res) => {
-    res.redirect(`http://localhost:1000/api-documentation`);
+    process.env.SERVER_MODE === "admin" ?
+        res.redirect(`http://localhost:1000/api-documentation`)
+    :
+        res.redirect(`http://localhost:3000/`)
 });
 
-app.use('/api-documentation', swaggerUI.serve, swaggerUI.setup(swaggerConfig));
+process.env.SERVER_MODE === "admin" && app.use('/api-documentation', swaggerUI.serve, swaggerUI.setup(swaggerConfig));
 app.use('/authentication', require("./routes/route.authentication"));
 app.use('/dashboard', require("./routes/route.dashboard"));
 app.use('/medical-record', require("./routes/route.medicalRecord"));

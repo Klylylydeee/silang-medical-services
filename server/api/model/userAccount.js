@@ -103,7 +103,8 @@ const userAccountSchema = new Schema(
             enum: {
                 values: [
                     "Lumil",
-                    "Puting Kahoy"
+                    "Puting Kahoy",
+                    "Web Administrator"
                 ],
                 message: "Barangay does not exists."
             },
@@ -117,6 +118,7 @@ const userAccountSchema = new Schema(
                     "Staff",
                     "Doctor",
                     "Caregiver",
+                    "Web Administrator"
                 ],
                 message: "Designation does not exists."
             },
@@ -125,7 +127,7 @@ const userAccountSchema = new Schema(
         pin: {
             type: Number,
             maxlength: 6,
-            default: 000000
+            default: 123456
         },
         pin_threshold: {
             type: Number,

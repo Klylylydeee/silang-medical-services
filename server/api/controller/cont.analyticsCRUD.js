@@ -266,3 +266,15 @@ exports.analyticsByYear = async (req, res, next) => {
     }
 
 }
+
+exports.analyticsBySpecificDate = async (req, res, next) => {
+
+    try {
+
+    } catch(err) {
+
+        err.statusCode === undefined ? err.statusCode = 500 : "";
+        return next(err);
+
+    }
+}

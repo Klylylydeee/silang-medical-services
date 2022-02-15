@@ -16,6 +16,8 @@ import drawerNavigation from "src/app/routes/template/Drawer";
 
 import { firstCharacterUppercase } from "src/app/helper/characters";
 
+import silangMedicalLogo from "src/app/main/dashboard/sign-in/sign-in-assets/SHIS-logo.png"
+
 function Dashboard() {
     // Enables redux reducer actions to be used
     const dispatch = useDispatch();
@@ -53,14 +55,14 @@ function Dashboard() {
                 collapsed={drawer}
             >
                 <Affix offsetTop={0}>
-                    {/* <Image
-                        src={barangayLogo}
+                    <Image
+                        src={silangMedicalLogo}
                         style={{
                             width: "60%",
                             padding: "10px 0"
                         }}
                         className="logoImage"
-                    /> */}
+                    />
                     <Menu 
                         theme="dark"
                         mode="inline"

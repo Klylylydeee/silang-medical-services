@@ -1,6 +1,6 @@
 const nodemailer = require('nodemailer');
 
-const mailerConfig = () => {
+exports.transport = () =>{
     return nodemailer.createTransport(
         {
             host: process.env.NODEMAILER_HOST,
@@ -14,6 +14,4 @@ const mailerConfig = () => {
             }
         }
     );
-};
-
-module.exports = mailerConfig
+}

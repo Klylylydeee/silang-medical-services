@@ -16,8 +16,8 @@ const socket = io.connect(`${process.env.WS_SERVER}`, {
 });
 
 // NodeJS Port Instance
-app.listen(process.env.PORT || 5000, () =>{
-    console.log(`Running at port http://localhost:${process.env.PORT || 5000}/`)
+app.listen(process.env.PORT, () =>{
+    console.log(`Running at port http://localhost:${process.env.PORT}/`)
 });
 
 // Routes and Rooms
