@@ -11,8 +11,8 @@ module.exports = {
                         // https://github.com/ant-design/ant-design/blob/master/components/style/themes/default.less
                         modifyVars: { 
                             "@primary-color": "#AD72B7",
-                            // "@layout-body-background": "red",
-                            // "@layout-header-background": "yellow"
+                            "@layout-body-background": "#F4F4F4",
+                            "@layout-header-background": "#5E3964"
                         },
                         javascriptEnabled: true,
                     },

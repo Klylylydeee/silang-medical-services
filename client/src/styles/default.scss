@@ -1,0 +1,505 @@
+
+.header-container{
+    display:flex !important;
+    justify-content: center;
+    flex-direction: row;
+    align-items: center;
+    margin-right: 2vw;
+}
+
+.total-reg-citizen, .total-med-created{
+    position: relative;
+    height: 179px;
+    width: 548px;
+    background-color: #AD72B7;
+    border-radius: 5px;
+    margin-left: 2vw;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden; 
+}
+
+.total-users{
+    position: relative;
+    height: 179px;
+    width: 548px;
+    background-color: #8C5C94;
+    border-radius: 5px;
+    margin-left: 2vw;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden; 
+}
+
+//------------------TOTAL REGISTERED CITIZEN PANEL--------------//
+
+.total-reg-citizen h3{
+    position:absolute;
+    left: 1vw;
+    bottom:0;
+    width: 239px;
+    color: white;
+    font-weight: 500 !important;
+    font-size: 23px;
+    line-height: 37px;
+}
+
+.total-reg-citizen h1{
+    position: absolute;
+    width: 182px;
+    height: 144px;
+    top: 3vh;
+    left: 14vw;
+    color: white;
+    font-weight: bold;
+    font-size: 130px;
+    line-height: 144px;
+    z-index: 10;
+}
+
+.total-reg-citizen h2{
+    position: absolute;
+    width: 301px;
+    height: 238px;
+    top: 5vh;
+    left: 13vw;
+    color: #D488E1;
+    font-weight: bold;
+    font-size: 190px;
+    line-height: 144px;
+}
+
+//------------------TOTAL USERS PANEL--------------//
+
+.total-users h3{
+    position:absolute;
+    left: 1vw;
+    bottom:0;
+    width: 239px;
+    color: white;
+    font-weight: 500 !important;
+    font-size: 23px;
+    line-height: 37px;
+}
+
+.total-users h1{
+    position: absolute;
+    width: 182px;
+    height: 144px;
+    top: 3vh;
+    left: 14vw;
+    color: white;
+    font-weight: bold;
+    font-size: 130px;
+    line-height: 144px;
+    z-index: 10;
+}
+
+.total-users h2{
+    position: absolute;
+    width: 301px;
+    height: 238px;
+    top: 5vh;
+    left: 13vw;
+    color: #A76FB0;
+    font-weight: bold;
+    font-size: 190px;
+    line-height: 144px;
+}
+
+//------------------TOTAL MEDICAL CREATED PANEL--------------//
+
+.total-med-created h3{
+    position:absolute;
+    left: 1vw;
+    bottom:0;
+    width: 239px;
+    color: white;
+    font-weight: 500 !important;
+    font-size: 23px;
+    line-height: 37px;
+}
+
+.total-med-created h1{
+    position: absolute;
+    width: 182px;
+    height: 144px;
+    top: 3vh;
+    left: 14vw;
+    color: white;
+    font-weight: bold;
+    font-size: 130px;
+    line-height: 144px;
+    z-index: 10;
+}
+
+.total-med-created h2{
+    position: absolute;
+    width: 301px;
+    height: 238px;
+    top: 5vh;
+    left: 13vw;
+    color: #D488E1;
+    font-weight: bold;
+    font-size: 190px;
+    line-height: 144px;
+}
+//------------------RECENT AND PREVIOUS EVETS PANEL--------------//
+
+.second-row{
+    display:flex !important;
+    flex-direction: row;
+}
+
+.recent-events{
+    display:flex !important;
+    flex-direction: column;
+    align-items: center;
+    width: 55vw;
+    height: 45vh;
+    margin-top: 3vh;
+    margin-left: 2vw;
+}
+
+.recent-events h1{
+    font-size: 32px;
+    color: rgb(44, 44, 44);
+    font-weight: 600 !important;
+    border-bottom: 5px solid #A76FB0;
+    border-radius: 5px;
+}
+
+.recent-events h2{
+    font-size: 18px;
+    margin-left: 1vw;
+}
+
+.events-list{
+    display:flex !important;
+    justify-content: left;
+    flex-direction: column;
+    align-items: left;
+}
+
+.listed-events{
+    width: auto;
+    margin-top: 2vh;
+    margin-left: 3vw;
+    border-radius: 10px;
+    background-color: white;
+    border-style: solid;
+    border-width: 2px;
+    border-color: rgb(233, 233, 233);
+}
+
+.listed-events h1{
+    padding-left: 10px;
+    font-size: 20px;
+    color: white;
+    background-color: #A76FB0;
+}
+
+.listed-events p{
+    padding: 2vh;
+    color: black;
+    font-size: 15px;
+}
+
+//------------------DATE AND TIME PANEL--------------//
+.date-time{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    background-color: #AD72B7;
+    width: 281px;
+    height: 255px;
+    border-radius: 5px;
+    margin-left: 9vw;
+    margin-top: 2vh;
+}
+
+.timeToday{
+    width: 195px;
+    height: 75px;
+    font-weight: 600 !important;
+    font-size: 45px;
+    line-height: 75px;
+    color: white;
+}
+
+.dateToday{
+    width: 155px;
+    height: 38px;
+    font-weight: 500 !important;
+    font-size: 25px;
+    line-height: 37px;
+    color: white;
+}
+
+//------------------PATIENT LIST PANEL--------------//
+
+.patient-panel{
+    display:flex !important;
+    justify-content: left;
+    flex-direction: column;
+    width: 30vw;
+    margin-top: 3vh;
+}
+
+.patient-panel h1{
+    font-size: 32px;
+    color: rgb(44, 44, 44);
+    font-weight: 600 !important;
+    border-bottom: 5px solid #A76FB0;
+    border-radius: 5px;
+}
+
+.listed-patient{
+    width: auto;
+    margin-top: 2vh;
+    margin-left: 3vw;
+    border-radius: 10px;
+    background-color: white;
+    border-style: solid;
+    border-width: 2px;
+    border-color: rgb(233, 233, 233);
+}
+
+.listed-patient h1{
+    padding-left: 10px;
+    font-size: 20px;
+    color: white;
+    background-color: #A76FB0;
+}
+
+.listed-patient p{
+    padding: 2vh;
+    color: black;
+    font-size: 15px;
+}
+
+
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 576px) { 
+
+}
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) { 
+    .header-container{
+        margin-right: 1vw;
+    }
+
+    .total-reg-citizen, .total-med-created{
+        height: 179px;
+        width: 520px;
+        margin-left: 0vw;
+        margin-right: 1vw;
+    }
+    
+    .total-users{
+        height: 179px;
+        width: 520px;
+        margin-left: 0vw;
+        margin-right: 1vw;
+    }
+    
+//------------------TOTAL REGISTERED CITIZEN PANEL--------------//
+
+    .total-reg-citizen h3{
+        font-size: 12px;
+        z-index: 10;
+    }
+    
+    .total-reg-citizen h1{
+        font-size: 60px;
+    }
+    
+    .total-reg-citizen h2{
+        top: 4vh;
+        left: 14vw;
+        font-size: 70px;
+    }
+    
+    //------------------TOTAL USERS PANEL--------------//
+    
+    .total-users h3{
+        font-size: 12px;
+        z-index: 10;
+    }
+    
+    .total-users h1{
+        font-size: 60px;
+    }
+    
+    .total-users h2{
+        top: 4vh;
+        left: 14vw;
+        font-size: 70px;
+    }
+    
+    //------------------TOTAL MEDICAL CREATED PANEL--------------//
+    
+    .total-med-created h3{
+        font-size: 12px;
+        z-index: 10;
+    }
+    
+    .total-med-created h1{
+        font-size: 60px;
+    }
+    
+    .total-med-created h2{
+        top: 4vh;
+        left: 14vw;
+        font-size: 70px;
+    }
+    
+    //------------------DATE AND TIME PANEL--------------//
+    .timeToday{
+        padding-left: 2vw;
+    }
+
+    .dateToday{
+        padding-left: 3vw;
+        font-size: 18px;
+    }
+    
+}
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) { 
+    .header-container{
+        margin-right: 1vw;
+    }
+
+    .total-reg-citizen, .total-med-created{
+        height: 179px;
+        width: 520px;
+        margin-left: 0vw;
+        margin-right: 1vw;
+    }
+    
+    .total-users{
+        height: 179px;
+        width: 520px;
+        margin-left: 0vw;
+        margin-right: 1vw;
+    }
+    
+//------------------TOTAL REGISTERED CITIZEN PANEL--------------//
+
+    .total-reg-citizen h3{
+        font-size: 12px;
+    }
+    
+    .total-reg-citizen h1{
+        font-size: 95px;
+    }
+    
+    .total-reg-citizen h2{
+        top: 4vh;
+        left: 14vw;
+        font-size: 105px;
+    }
+    
+    //------------------TOTAL USERS PANEL--------------//
+    
+    .total-users h3{
+        font-size: 12px;
+    }
+    
+    .total-users h1{
+        font-size: 95px;
+    }
+    
+    .total-users h2{
+        top: 4vh;
+        left: 14vw;
+        font-size: 105px;
+    }
+    
+    //------------------TOTAL MEDICAL CREATED PANEL--------------//
+    
+    .total-med-created h3{
+        font-size: 12px;
+    }
+    
+    .total-med-created h1{
+        font-size: 95px;
+    }
+    
+    .total-med-created h2{
+        top: 4vh;
+        left: 14vw;
+        font-size: 105px;
+    }
+    
+    //------------------DATE AND TIME PANEL--------------//
+    .timeToday{
+        padding-left: 1vw;
+    }
+
+}
+
+// Extra large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) { 
+    //------------------TOTAL REGISTERED CITIZEN PANEL--------------//
+
+.total-reg-citizen h3{
+    font-size: 17px;
+}
+
+.total-reg-citizen h1{
+    font-size: 115px;
+}
+
+.total-reg-citizen h2{
+    top: 4vh;
+    left: 14vw;
+    font-size: 145px;
+}
+
+//------------------TOTAL USERS PANEL--------------//
+
+.total-users h3{
+    font-size: 17px;
+}
+
+.total-users h1{
+    font-size: 115px;
+}
+
+.total-users h2{
+    top: 4vh;
+    left: 14vw;
+    font-size: 145px;
+}
+
+//------------------TOTAL MEDICAL CREATED PANEL--------------//
+
+.total-med-created h3{
+    font-size: 17px;
+}
+
+.total-med-created h1{
+    font-size: 115px;
+}
+
+.total-med-created h2{
+    top: 4vh;
+    left: 14vw;
+    font-size: 145px;
+}
+
+//------------------DATE AND TIME PANEL--------------//
+.timeToday{
+    padding-left: 1vw;
+}
+
+.dateToday{
+    padding-left: 1.5vw;
+}
+
+}
