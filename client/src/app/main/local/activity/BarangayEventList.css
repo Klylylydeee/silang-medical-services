@@ -1,0 +1,199 @@
+body {
+    width: 100%;
+    
+}
+
+/* Responsive Mobile S 320px *********************************************************/
+.event-body {
+    width: 320px;
+    padding: 20px 0px 30px;
+}
+
+.ant-card-head-title {
+    font-size: 20px;
+}
+
+.header-title h1{
+    text-align: center;
+    text-decoration-line: underline;
+    text-underline-position: under;
+    font-weight: bolder;
+}
+
+.card-wrapper1 {
+    width: 100%;
+    padding: 10px;
+    background-color: #AD72B7;
+    border-radius: 10px;
+    margin-bottom: 20px;
+  }
+
+.card-wrapper2 {
+    width: 100%;
+    padding: 10px;
+    background-color: #AD72B7;
+    border-radius: 10px;
+  }
+
+.card-wrapper1 .c1 {
+    margin-bottom: 10px;
+    background-color: #AD72B7;
+    border-radius: 10px;
+  }
+
+.card-wrapper2 .c2 {
+    margin-bottom: 10px;
+    background-color: #AD72B7;
+    border-radius: 10px;
+  }
+
+p {
+    color:black;
+    font-size: 15px;
+}
+
+/* Responsive Mobile M 375px *********************************************************/
+@media only screen and (min-width: 375px) {
+    .event-body {
+        width: 375px;
+    }
+
+    .header-title h1{
+        font-size: 30px;
+    }
+
+}
+
+/* Responsive Mobile L 425px *********************************************************/
+@media only screen and (min-width: 425px) {
+    .event-body {
+        width: 425px;
+    }
+
+    .header-title h1{
+        font-size: 40px;
+    }
+
+}
+
+
+
+/* Responsive Tablet 768px *********************************************************/
+@media only screen and (min-width: 768px) {
+    .event-body {
+        width: 768px;
+    }
+
+    .header-title h1{
+        font-size: 55px;
+    }
+
+    .card-wrapper1 .c1 {
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    .card-wrapper2 .c2 {
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    p {
+        font-size: 20px;
+    }
+
+}
+
+/* Responsive Laptop 954px *********************************************************/
+@media only screen and (min-width: 954px) {
+    .event-body {
+        width: 954px;
+    }
+
+    .header-title h1{
+        font-size: 65px;
+    }
+
+    .card-wrapper1 {
+        padding: 20px;
+    }    
+
+    .card-wrapper2 {
+        padding: 20px;
+    }
+
+    .card-wrapper1 .c1 {
+        font-size: 25px;
+        font-weight: bold;
+    }
+
+    .card-wrapper2 .c2 {
+        font-size: 25px;
+        font-weight: bold;
+    }
+
+    p {
+        font-size: 25px;
+    }
+}
+
+/* Responsive Laptop 1024px *********************************************************/
+@media only screen and (min-width: 1024px) {
+    .event-body {
+        width: 1024px;
+    }
+
+    
+}
+
+/* Responsive Laptop L 1440px *********************************************************/
+@media only screen and (min-width: 1440px) {
+    .event-body {
+        width: 1440px;
+    }
+
+    .header-title h1{
+        font-size: 60px;
+    }
+
+    .card-wrapper1 .c1 {
+        border-radius: 15px;
+    }
+    
+    .card-wrapper2 .c2 {
+        border-radius: 15px;
+    }
+
+    p {
+        font-size: 30px;
+    }
+}
+
+/* Responsive 4K 2560px *********************************************************/
+@media only screen and (min-width: 2560px) {
+    .event-body {
+        width: 2560px;
+    }
+
+    .header-title h1{
+        font-size: 75px;
+    }
+
+    .ant-card-head-title {
+        font-size: 40px;
+    }
+
+    .card-wrapper1 .c1 {
+        font-size: 50px;
+        border-radius: 20px;
+    }
+
+    .card-wrapper2 .c2 {
+        font-size: 50px;
+        border-radius: 20px;
+    }
+
+    p {
+        font-size: 40px;
+    }
+}
