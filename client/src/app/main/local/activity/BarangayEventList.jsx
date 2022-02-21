@@ -2,6 +2,7 @@ import React from "react";
 import './BarangayEventList.css';
 import { Collapse } from 'antd';
 import { Card } from 'antd';
+import { Button } from 'antd';
 
 
 const BarangayEventList = () => {
@@ -24,26 +25,18 @@ const BarangayEventList = () => {
                             <Collapse className="c1" defaultActiveKey={['1']} onChange={callback}>
                                 <Panel  showArrow={false} header="Libreng Tuli sa Puting Kahoy" key="1">
                                     <p> Lorem ipsum dolor sit amet. Id earum quia quo perspiciatis commodi sed cupiditate libero. Aut aperiam sunt sed quia consequatur qui numquam itaque vel quibusdam temporibus. In possimus nisi ut voluptatem accusantium id omnis consequatur qui fugiat aspernatur 33 totam galisum!</p>
+                                    <Button type="link">See More...</Button>
+                                    
                                 </Panel>
                             </Collapse>
 
                             <Collapse className="c1" defaultActiveKey={['']} onChange={callback}>
                                 <Panel  showArrow={false} header="Libreng Bakuna sa Puting Kahoy" key="2">
                                     <p> Lorem ipsum dolor sit amet. Id earum quia quo perspiciatis commodi sed cupiditate libero. Aut aperiam sunt sed quia consequatur qui numquam itaque vel quibusdam temporibus. In possimus nisi ut voluptatem accusantium id omnis consequatur qui fugiat aspernatur 33 totam galisum!</p>
+                                    <Button type="link">See More...</Button>
                                 </Panel>
                             </Collapse>
 
-                            <Collapse className="c1" defaultActiveKey={['']} onChange={callback}>
-                                <Panel  showArrow={false} header="Libreng Tuli sa Puting Kahoy" key="1">
-                                    <p> Lorem ipsum dolor sit amet. Id earum quia quo perspiciatis commodi sed cupiditate libero. Aut aperiam sunt sed quia consequatur qui numquam itaque vel quibusdam temporibus. In possimus nisi ut voluptatem accusantium id omnis consequatur qui fugiat aspernatur 33 totam galisum!</p>
-                                </Panel>
-                            </Collapse>
-
-                            <Collapse className="c1" defaultActiveKey={['']} onChange={callback}>
-                                <Panel  showArrow={false} header="Libreng Bakuna sa Puting Kahoy" key="2">
-                                    <p> Lorem ipsum dolor sit amet. Id earum quia quo perspiciatis commodi sed cupiditate libero. Aut aperiam sunt sed quia consequatur qui numquam itaque vel quibusdam temporibus. In possimus nisi ut voluptatem accusantium id omnis consequatur qui fugiat aspernatur 33 totam galisum!</p>
-                                </Panel>
-                            </Collapse>
 
                             </Card>
                         </div>
@@ -55,24 +48,14 @@ const BarangayEventList = () => {
                             <Collapse className="c2" defaultActiveKey={['1']} onChange={callback}>
                                 <Panel  showArrow={false} header="Libreng Tuli sa Puting Kahoy" key="1">
                                     <p> Lorem ipsum dolor sit amet. Id earum quia quo perspiciatis commodi sed cupiditate libero. Aut aperiam sunt sed quia consequatur qui numquam itaque vel quibusdam temporibus. In possimus nisi ut voluptatem accusantium id omnis consequatur qui fugiat aspernatur 33 totam galisum!</p>
+                                    <Button type="link">See More...</Button>
                                 </Panel>
                             </Collapse>
 
                             <Collapse className="c2" defaultActiveKey={['']} onChange={callback}>
                                 <Panel  showArrow={false} header="Libreng Bakuna sa Puting Kahoy" key="2">
                                     <p> Lorem ipsum dolor sit amet. Id earum quia quo perspiciatis commodi sed cupiditate libero. Aut aperiam sunt sed quia consequatur qui numquam itaque vel quibusdam temporibus. In possimus nisi ut voluptatem accusantium id omnis consequatur qui fugiat aspernatur 33 totam galisum!</p>
-                                </Panel>
-                            </Collapse>
-
-                            <Collapse className="c2" defaultActiveKey={['']} onChange={callback}>
-                                <Panel  showArrow={false} header="Libreng Tuli sa Puting Kahoy" key="1">
-                                    <p> Lorem ipsum dolor sit amet. Id earum quia quo perspiciatis commodi sed cupiditate libero. Aut aperiam sunt sed quia consequatur qui numquam itaque vel quibusdam temporibus. In possimus nisi ut voluptatem accusantium id omnis consequatur qui fugiat aspernatur 33 totam galisum!</p>
-                                </Panel>
-                            </Collapse>
-
-                            <Collapse className="c2" defaultActiveKey={['']} onChange={callback}>
-                                <Panel  showArrow={false} header="Libreng Bakuna sa Puting Kahoy" key="2">
-                                    <p> Lorem ipsum dolor sit amet. Id earum quia quo perspiciatis commodi sed cupiditate libero. Aut aperiam sunt sed quia consequatur qui numquam itaque vel quibusdam temporibus. In possimus nisi ut voluptatem accusantium id omnis consequatur qui fugiat aspernatur 33 totam galisum!</p>
+                                    <Button type="link">See More...</Button>
                                 </Panel>
                             </Collapse>
 

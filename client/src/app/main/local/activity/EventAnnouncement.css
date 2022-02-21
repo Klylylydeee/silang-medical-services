@@ -1,0 +1,19 @@
+body {
+    width: 100%;
+    display: block;
+}
+
+.EventAnnouncement-body {
+    max-width: 100%;
+}
+
+/* Event List css *********************************************************/
+.event-list {
+    text-align: center;
+}
+
+
+/* Event List css *********************************************************/
+.announcement-list {
+    text-align: center;
+}

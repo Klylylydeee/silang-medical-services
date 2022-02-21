@@ -1,11 +1,14 @@
 body {
     width: 100%;
+    display: block;
     
 }
 
+
+
 /* Responsive Mobile S 320px *********************************************************/
 .event-body {
-    width: 320px;
+    width: 100%;
     padding: 20px 0px 30px;
 }
 
@@ -55,7 +58,7 @@ p {
 /* Responsive Mobile M 375px *********************************************************/
 @media only screen and (min-width: 375px) {
     .event-body {
-        width: 375px;
+        width: 100%;
     }
 
     .header-title h1{
@@ -67,7 +70,7 @@ p {
 /* Responsive Mobile L 425px *********************************************************/
 @media only screen and (min-width: 425px) {
     .event-body {
-        width: 425px;
+        width: 100%;
     }
 
     .header-title h1{
@@ -81,7 +84,7 @@ p {
 /* Responsive Tablet 768px *********************************************************/
 @media only screen and (min-width: 768px) {
     .event-body {
-        width: 768px;
+        width: 100%;
     }
 
     .header-title h1{
@@ -107,7 +110,7 @@ p {
 /* Responsive Laptop 954px *********************************************************/
 @media only screen and (min-width: 954px) {
     .event-body {
-        width: 954px;
+        width: 100%;
     }
 
     .header-title h1{
@@ -140,7 +143,7 @@ p {
 /* Responsive Laptop 1024px *********************************************************/
 @media only screen and (min-width: 1024px) {
     .event-body {
-        width: 1024px;
+        width: 100%;
     }
 
     
@@ -149,7 +152,7 @@ p {
 /* Responsive Laptop L 1440px *********************************************************/
 @media only screen and (min-width: 1440px) {
     .event-body {
-        width: 1440px;
+        width: 100%;
     }
 
     .header-title h1{
@@ -172,7 +175,7 @@ p {
 /* Responsive 4K 2560px *********************************************************/
 @media only screen and (min-width: 2560px) {
     .event-body {
-        width: 2560px;
+        width: 100%;
     }
 
     .header-title h1{
