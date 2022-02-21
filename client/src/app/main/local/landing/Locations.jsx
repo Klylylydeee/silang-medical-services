@@ -4,22 +4,24 @@ import React from 'react';
 import { Row, Col } from 'antd'
 import { Carousel } from 'antd';
 
-//Styles
-import "../../local/landing/LandingStyles/LandingLocation.scss"
-
 //Images 
 import BlackGrid from '../landing/LandingPage-assets/black-grid.png'
 import RectangleA from '../landing/LandingPage-assets/RectangleA.png'
 
-function Locations() {
-    return <div id="Locations">
-        <Row style={{position: "relative"}}>
+//Styles
+if(process.env.REACT_APP_ENVIRONMENT_STAGE === "Public Build" && window.location.pathname === "/") {
+    require( '../../local/landing/LandingStyles/LandingLocation.scss');
+}
 
-            <Col xs={{ span: 20 }} sm={{ span: 20 }} md={{ span: 20 }} lg={{ span: 16 }}>
-                <div className="LocationMain">
+function Locations() {
+
+    return (
+        <Row>
+            <Col xs={{ span: 15 }} sm={{ span: 24 }} md={{ span: 16 }} lg={{ span: 24 }}>
+                <div className="LocationMain" id="Locations">
+
                     {/* Left Side Barangay Info */}
                     <div className="LocLeft">
-
                         {/* Location Title Title */}
                         <div className="BarangayInfo">
                             <h1 id="BarangayTitle1">Barangay</h1>
@@ -29,23 +31,17 @@ function Locations() {
                                 Phasellus posuere viverra nisl, et consectetur nisl ullamcorper id. </h3>
                         </div>
                     </div>
-                </div>
-            </Col>
 
-            {/* Images seen in Location Section */}
-            <img src={BlackGrid} alt='Grid Design' className="black-gridLoc" />
-
-            {/* Right Side Carousel */}
-            <Carousel>
-                <div className="BarangayCarousel">
-                    <div>
-                        <img src={RectangleA} alt="BarangayImage1" className="ImageCaro" />
+                    {/* Right Side Carousel */}
+                    <div className="BarangayCarousel">
+                            {/* Images seen in Location Section */}
+                            <img src={BlackGrid} alt='Grid Design' className="black-gridLoc" />
                     </div>
                 </div>
-            </Carousel>
-        </Row>
-    </div >
+            </Col >
+        </Row >
 
+    )
 }
 
 export default Locations;

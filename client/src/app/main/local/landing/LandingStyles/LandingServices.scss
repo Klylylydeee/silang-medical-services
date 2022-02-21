@@ -52,7 +52,7 @@
 #Communication p, #MedicalRecord p, #Analytics p{
     margin-top: -5px;
     margin-left: 15px;
-    font-size: 15px;
+    font-size: 18px;
     font-weight: 300;
     text-align: left;
     justify-content: center;
@@ -63,15 +63,19 @@
 .Laptop1 {
     position: absolute;
     z-index: 20;
-    right: 20vh;
+    right: 10vh;
     top: 15vh;
+    width: 800px;
+    height: 500px;
 }
 
 .Phone {
     position: absolute;
     z-index: 20;
-    right: 5vh;
+    right: -5vh;
     top: 20vh;
+    width: 500px;
+    height: 650px;
 }
 
 .black-grid1{
@@ -96,19 +100,21 @@
 @media screen and (max-width: 1440px){
 
     .black-grid1 {
-        left: 75vh;
+        left: 65vh;
     }
 
     .Laptop1 {
         width: 570px;
         height: 350px;
         top: 25vh;
+        left: 90vh;
     }
 
     .Phone {
         width: 320px;
         height: 400px;
         top: 30vh;
+        left: 130vh;
     }
 
 }
@@ -125,12 +131,12 @@
 
     .Laptop1 {
         top: 35vh;
-        left: 70vh;
+        left: 80vh;
     }
 
     .Phone {
         top: 45vh;
-        left: 110vh;
+        left: 120vh;
     }    
 
     .ServicesInfo {
@@ -243,12 +249,22 @@
 
 @media screen and (max-width: 375px){
     .ServicesInfo {
-        margin-left: 25vh;
+        margin-left: 15vh;
+    }
+
+    .Laptop1 {
+        left: 40vh;
+        top: 70vh;
+    }
+
+    .Phone {
+        left: 90vh;
+        top: 75vh;
     }
 }
 
 @media screen and (max-width: 320px){
     .ServicesInfo {
-        margin-left: 15vh;
+        margin-left: 0vh;
     }
 }

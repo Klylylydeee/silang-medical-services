@@ -43,7 +43,7 @@ body {
 
 .ShisPurple {
     position: absolute;
-    z-index: 1;
+    z-index: -1;
     left: -20px;
     top: 100px;
 }
@@ -53,15 +53,16 @@ body {
 .VectorImage2 {
     position: absolute;
     top: 0;
-    left: 60vh;
+    left: 55vh;
     height: 1208px;
     width: 1168px;
+    z-index: -1;
 }
 
 .VectorImage1 {
     position: absolute;
     top: 0;
-    left: 105vh;
+    left: 100vh;
     height: 1100px;
     width: 1168px;
     z-index: 1;
@@ -169,6 +170,42 @@ section::after {
   
 
 //-----------------Mobile Responsive-----------------/
+@media screen and (max-width: 1536px){
+  .VectorImage2 {
+    width: 750px;
+    height: 820px;
+    left: 80vh;
+  }
+  
+  .VectorImage1 {
+    width: 750px;
+    height: 900px;
+    left: 115vh;
+    z-index: 1;
+  }
+
+  .HomeTitle {
+    margin-left: -5vh;
+  }
+  
+  #LandingTitle  {
+   font-size: 80px;
+   margin-bottom: -10px;
+   
+  }
+  
+  #SecondaryTitle {
+    font-size: 80px;
+    margin-bottom: -5px;
+  }
+  
+  #LandingDescription {
+    font-size: 18px;
+    margin-left: 5vh;
+    width: 60vh;
+  }
+}
+
 @media screen and (max-width: 1440px){
 
 .VectorImage2 {

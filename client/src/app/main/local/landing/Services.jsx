@@ -8,15 +8,16 @@ import laptop1 from '../landing/LandingPage-assets/laptop1.png'
 import Phone1 from '../landing/LandingPage-assets/Phone1.png'
 import BlackGrid from '../landing/LandingPage-assets/black-grid.png'
 
-//Scss
-import "../../local/landing/LandingStyles/LandingServices.scss"
-
+//Styles
+if(process.env.REACT_APP_ENVIRONMENT_STAGE === "Public Build" && window.location.pathname === "/") {
+    require( '../../local/landing/LandingStyles/LandingServices.scss');
+}
 
 function Services() {
     return <div className="ServicesPage">
         <div id="Services">
             <Row>
-                <Col xs={{ span: 24 }} sm={{ span: 12 }} md={{ span: 16 }} lg={{ span: 12 }}>
+                <Col xs={{ span: 24 }} sm={{ span: 12 }} md={{ span: 16 }} lg={{ span: 16 }} xl = {{span: 12}}>
                     {/* Services Title */}
                     <Col>
                         <div className="ServicesTitle">

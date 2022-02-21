@@ -36,10 +36,11 @@
 .AboutTitle h1 {
    font-size: 100px;
    font-weight: 300;
+   margin-left: 50px;
+   width: 55vh;
    display: flex;
    color: white;
    justify-content: center;
-   margin-left: 50px;
 }
 
 .AboutTitle h3{
@@ -69,6 +70,9 @@
 }
 
 //-----------------Right Side-----------------//
+@media screen and (max-width: 1536px){
+
+}
 
 .WhiteDivTop {
     position: absolute;
@@ -76,14 +80,13 @@
     height: 50px;
     left: 170vh;
     top: 0px;
-    background: white;
+    background: red;
     
 }
 
 .AboutInfo {
     margin-top: 20vh;
-    width: 100%;
-    
+    width: 100%; 
 }
 
 #Mission h2, #Vision h2, #Core h2 {
@@ -92,7 +95,7 @@
     color: white;
 }
 
-p {
+.AboutInfo p {
     font-size: 20px;
     font-weight: 300;
     text-align: left;
@@ -108,7 +111,7 @@ p {
     }
     
     .AboutTitle h1 {
-        font-size: 70px;
+        font-size: 80px;
         width: 50vh;
     }
 
@@ -131,8 +134,8 @@ p {
     }
 
     .WhiteDivTop {
-        left: 124vh;
-        width: 46.6vh;
+        left: 123vh;
+        width: 47.6vh;
         top: -15vh;
     }
 }
@@ -140,7 +143,7 @@ p {
 @media screen and (max-width: 1024px){
     
     .AboutLayer { 
-        min-width: 150vh;
+        min-width: 135%;
         overflow-x: hidden;
     }
     
@@ -153,7 +156,7 @@ p {
     }
 
     .AboutInfo {
-        margin-top: 10vh;
+        margin-top: 5vh;
     }
 
     .AboutTitle h1 {
@@ -170,8 +173,9 @@ p {
     }
 
     .WhiteDivTop {
-        left: 103.5vh;
+        left: 106vh;
         top: -16vh;
+        width: 488px;
     }
 
     
@@ -211,20 +215,20 @@ p {
         bottom: -2px;
     }
 
-    p { 
-        font-size: 23px;
+    .AboutInfo p { 
+        font-size: 25px;
     }
 }
 
 @media screen and (max-width: 425px){
 
     .AboutLayer { 
-        min-height: 100%;
+        min-height: 110%;
         min-width: 144%;
     }
 
     .WhiteDivTop {
-        width: 90.8vh;
+        width: 91.8vh;
         left: 96vh;
     }
 
@@ -234,19 +238,19 @@ p {
     }
 
     .AboutInfo {
-        margin-left: -115vh;
-        margin-top: 80vh;
+        margin-left: -192vh;
+        margin-top: 85vh;
     }
 
     .AboutTitle h1 {
-        font-size: 130px;
+        font-size: 135px;
         margin-left: 15vh;
         width: 90vh;
     }
 
     .AboutTitle h3 {
         margin-left: 65vh;
-        font-size: 75px;
+        font-size: 73px;
         width: 70vh;
     }
 
@@ -255,7 +259,7 @@ p {
     }
 
     .WhiteDiv { 
-        bottom: -2px;
+        bottom: -85px;
     }
 
     #Mission h2, #Vision h2, #Core h2 {
@@ -263,7 +267,7 @@ p {
         text-align: center;
     }
 
-    p { 
+    .AboutInfo p { 
         font-size: 50px;
         text-align: justify;
     }
@@ -275,11 +279,11 @@ p {
 
 @media screen and (max-width: 375px){
     .AboutInfo {
-        margin-left: -115vh;
+        margin-left: -127vh;
     }
 }
 @media screen and (max-width: 320px){
     .AboutInfo {
-        margin-left: -128vh;
+        margin-left: -140vh;
     }
 }

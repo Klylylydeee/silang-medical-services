@@ -29,22 +29,22 @@
 
 //-----------------NavBar hover-----------------//
 
-nav ul li a:after,
-nav ul li a:before {
+.portfolio-hero nav ul li a:after,
+.portfolio-hero nav ul li a:before {
   transition: all .5s;
 }
 
-nav ul li a:hover {
+.portfolio-hero nav ul li a:hover {
   color: #ad72b7;
 }
 
-nav.stroke ul li a,
-nav.fill ul li a {
+.portfolio-hero nav.stroke ul li a,
+.portfolio-hero nav.fill ul li a {
   position: relative;
 }
 
-nav.stroke ul li a:after,
-nav.fill ul li a:after {
+.portfolio-hero nav.stroke ul li a:after,
+.portfolio-hero nav.fill ul li a:after {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -57,7 +57,7 @@ nav.fill ul li a:after {
   height: 2px;
 }
 
-nav.stroke ul li a:hover:after {
+.portfolio-hero nav.stroke ul li a:hover:after {
   width: 100%;
 }
 

@@ -3,11 +3,13 @@ import React from 'react';
 //Ant Design
 import { Row, Col } from 'antd'
 
-//Scss
-import '../../local/landing/LandingStyles/About.scss'
-
 //Image
 import TransparentLogo from '../landing/LandingPage-assets/TransparentLogo.png'
+
+//Styles
+if(process.env.REACT_APP_ENVIRONMENT_STAGE === "Public Build" && window.location.pathname === "/") {
+    require( '../../local/landing/LandingStyles/About.scss');
+}
 
 function AboutUs() {
     return <div id="About">

@@ -3,7 +3,9 @@ import { Row } from 'antd';
 import SHISLogo from '../../../../styles/SHISLogo.png'
 
 //Styles
-import '../../local/landing/LandingStyles/LandingNavBar.scss'
+if(process.env.REACT_APP_ENVIRONMENT_STAGE === "Public Build" && window.location.pathname === "/") {
+    require( '../../local/landing/LandingStyles/LandingNavBar.scss');
+}
 
 function Navigation() {
     return (

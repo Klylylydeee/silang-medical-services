@@ -3,6 +3,7 @@ import Navigation from './Navigation'
 import AboutUs from './AboutUs'
 import Services from './Services'
 import Locations from './Locations'
+import LandingForm from './LandingForm'
 
 //Ant Design
 import { Row, Col } from 'antd'
@@ -11,9 +12,10 @@ import { Row, Col } from 'antd'
 import PurpleLogo from '../landing/LandingPage-assets/PurpleLogo.png'
 import Vector2 from '../landing/LandingPage-assets/Vector2.png'
 import Vector1 from '../landing/LandingPage-assets/Vector1.png'
+import LandingFooter from './LandingFooter'
 
 //Styles
-if(process.env.REACT_APP_ENVIRONMENT_STAGE === "Public Build") {
+if(process.env.REACT_APP_ENVIRONMENT_STAGE === "Public Build" && window.location.pathname === "/") {
     require( '../../local/landing/LandingStyles/LandingPage.scss');
 }
 
@@ -65,6 +67,16 @@ function Home() {
                 {/* Locations Section */}
                 <Col>
                      <Locations />                
+                </Col>
+
+                {/* Landing Form */}
+                <Col>
+                    <LandingForm />
+                </Col>
+                
+                {/* Landing Page Footer */}
+                <Col>
+                    <LandingFooter />
                 </Col>
         </div>
 

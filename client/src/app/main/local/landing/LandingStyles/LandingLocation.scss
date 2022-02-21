@@ -1,15 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
 
-.Loc {
-    font-family: Quicksand;
-    display: flex;
-}
-
 .LocationMain {
-    background-color: #ad72b7;
-    position: absolute;
-    width: 115vh;
-    height: 700px;
+    min-height: 100vh;
+    min-width: 100%;
     display: flex;
     font-family: Quicksand;
 }
@@ -17,7 +10,8 @@
 //-----------------Left Side-----------------//
 
 .LocLeft {
-    width: 50%;
+    width: 55%;
+    background-color: #ad72b7;
 }
 
 .BarangayInfo {
@@ -38,7 +32,7 @@
 #BarangayTitle2  {
     margin-top: -10vh;
     margin-left: 10vh;
-    width: 70vh;
+    width: 75vh;
 }
 
 #BarangayDescription {
@@ -55,13 +49,15 @@
     position: relative;
     width: 129px;
     height: 129px;
-    left: 50vh;
-    top: 0px;
+    left: 60vh;
+    top: 0vh;
     z-index: 10;
 }
 
-.BarnagayCarousel {
-    width: 50%;
+.BarangayCarousel {
+    width: 45%;
+    background-color: red;
+    left: 10vh;
 }
 
 .ImageCaro {
@@ -70,6 +66,7 @@
     display: absolute;
     left: -10px;
 }
+
 
 /*Moibile Responsive*/
 @media screen and (max-width: 1440px){
