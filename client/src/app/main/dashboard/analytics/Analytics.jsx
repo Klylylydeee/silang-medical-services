@@ -23,7 +23,7 @@ function Analytics() {
       "year": "2009",
       "value": 146,
       "category": "Low"
-    },{
+    }, {
       "year": "2010",
       "value": 3107,
       "category": "High"
@@ -112,21 +112,18 @@ function Analytics() {
       end: 0.9,
     },
   };
-  
-    return (
-      <Layout.Content>
-            <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }} xxl={{ span: 24 }} className="analytics-container">
-                <div className="header">
-                    <h1>Welcome to the Barangay Analytics</h1>
-                    <h2>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam neque tellus, maximus ut tristique et, rutrum ut quam. Curabitur eu odio metus. Pellentesque scelerisque risus id turpis rutrum, et vulputate lectus fermentum.</h2>
-                </div>
-                <Area  height={500} width={500} {...config}  />
-                <div>
-                
-                </div>
-            </Col>
-        </Layout.Content>
-    )
+
+  return (
+    <Layout.Content>
+      <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }} xxl={{ span: 24 }} className="analytics-container">
+        <div className="header">
+          <h1>Welcome to the Barangay Analytics</h1>
+          <h2>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam neque tellus, maximus ut tristique et, rutrum ut quam. Curabitur eu odio metus. Pellentesque scelerisque risus id turpis rutrum, et vulputate lectus fermentum.</h2>
+        </div>
+        <Area height={500} width={500} {...config} />
+      </Col>
+    </Layout.Content>
+  )
 }
 
 export default Analytics
