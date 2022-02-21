@@ -148,7 +148,7 @@ function Dashboard() {
                         {
                             location.pathname.split("/")[1] === "dashboard" && location.pathname.split("/").length === 2 ?
                                 <React.Fragment>
-                                    <Breadcrumb.Item href="/dashboard">
+                                    <Breadcrumb.Item onClick={() => { history("/dashboard") }}>
                                         <HomeOutlined />
                                         <span>{firstCharacterUppercase(location.pathname.split("/")[1])}</span>
                                     </Breadcrumb.Item>

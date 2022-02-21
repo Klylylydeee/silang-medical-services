@@ -1,8 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
 
-h1, h2, h3, h4, p{
+* {
     font-family: Quicksand;
     font-style: normal;
+    -webkit-touch-callout: none; /* iOS Safari */
+      -webkit-user-select: none; /* Safari */
+       -khtml-user-select: none; /* Konqueror HTML */
+         -moz-user-select: none; /* Old versions of Firefox */
+          -ms-user-select: none; /* Internet Explorer/Edge */
+              user-select: none; /* Non-prefixed version, currently
+                                    supported by Chrome, Edge, Opera and Firefox */
 }
 
 .ant-layout {
@@ -29,4 +36,30 @@ h1, h2, h3, h4, p{
 
 .site-layout .site-layout-background {
     background: #fff;
+}
+
+.ant-menu-inline.ant-menu-sub {
+    background: none !important;
+}
+
+.ant-layout-sider-children > div,
+.ant-layout-sider-children > div > div{
+    height: 100%;
+}
+
+.ant-layout-sider-children > div > div{
+    display: flex;
+    flex-direction: column;
+}
+
+.ant-layout-sider-children > div > div > .ant-menu{
+    flex: 1
+}
+
+.ant-page-header-heading-title {
+    color: white;
+}
+
+.ant-page-header-heading-sub-title {
+    color: rgba(255, 255, 255, 0.5)
 }

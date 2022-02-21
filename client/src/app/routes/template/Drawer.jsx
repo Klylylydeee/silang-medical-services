@@ -65,9 +65,14 @@ const drawerNavigation = [
         icon: <UserOutlined />,
         childrens: [
             {
-                name: "Create new user",
+                name: "Barangay users",
                 component: "",
                 redirect: "users"
+            },
+            {
+                name: "Create new user",
+                component: "",
+                redirect: "users/create/invitation"
             }
         ],
         roles: [
