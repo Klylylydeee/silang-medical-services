@@ -8,12 +8,227 @@ body {
 }
 
 /* Event List css *********************************************************/
-.event-list {
-    text-align: center;
+/* Event List Mobile Responsive S *********************************************************/
+.event-card {
+    padding: 10px;
+    background-color: #AD72B7;
+}
+
+.event-itemsRow {
+    display: flex;
+    flex-direction: row;
+    padding-bottom: 10px;
+}
+
+.event-itemsRow p {
+    font-size: 15px;
+    padding: 7px 0px 0px 10px;
+    margin: 0;
+}
+
+.event-itemsRow h2 {
+    margin: 0;
+}
+
+.event-details {
+    display: flex;
+    flex-direction: column;
+    max-width: 100%;
+}
+
+/* Announcement List css *********************************************************
+*******************************************************
+****************************/
+/* Event List Mobile Responsive S *********************************************************/
+.announcement-card {
+    padding: 10px;
+    background-color: #AD72B7;
+}
+
+.announcement-itemsRow {
+    display: flex;
+    flex-direction: row;
+    padding-bottom: 10px;
+}
+
+.announcement-itemsRow p {
+    font-size: 15px;
+    padding: 2px 0px 0px 10px;
+    margin: 0;
+}
+
+.announcement-itemsRow h2 {
+    margin: 0;
+    font-size: 15px;
+}
+
+.announcement-details {
+    display: flex;
+    flex-direction: column;
+    max-width: 100%;
+    padding-bottom: 10px;
 }
 
 
-/* Event List css *********************************************************/
-.announcement-list {
-    text-align: center;
+/* Announcement/Event List Mobile Responsive M *********************************************************/
+@media only screen and (min-width: 375px) {
+    .event-card {
+        padding: 12px;
+    }
+    .announcement-card {
+        padding: 12px;
+    }
+
+    .announcement-itemsRow p {
+        padding: 1px 0px 0px 10px;
+    }
+
 }
+
+/* Announcement/Event List Mobile Responsive L *********************************************************/
+@media only screen and (min-width: 425px) {
+    .event-card {
+        padding: 14px;
+    }
+    .announcement-card {
+        padding: 14px;
+    }
+
+    .event-itemsRow p {
+        font-size: 17px;
+        padding: 6px 0px 0px 10px;
+    }
+
+    .announcement-itemsRow h2 {
+        font-size: 18px;
+    }
+    
+    .announcement-itemsRow p {
+        font-size: 17px;
+        padding: 2px 0px 0px 10px;
+    }
+
+}
+
+/* Announcement/Event List Tablet Responsive  *********************************************************/
+@media only screen and (min-width: 768px) {
+    .event-card {
+        padding: 35px;
+    }
+    .announcement-card {
+        padding: 35px;
+    }
+
+    .event-details {
+        flex-direction: row;
+    }
+    .announcement-details {
+        flex-direction: row;
+    }
+
+    .event-details1 {
+        width: 50%;
+    }
+    .announcement-details1 {
+        width: 50%;
+    }
+    
+    .event-details2 {
+        width: 50%;
+    }
+    .announcement-details2 {
+        width: 50%;
+    }
+
+}
+
+/* Announcement/Event List Laptop Responsive  *********************************************************/
+@media only screen and (min-width: 1024px) {
+    .event-itemsRow p {
+        font-size: 20px;
+        padding: 9px 0px 0px 10px;
+    }
+    
+    .event-itemsRow h2 {
+        font-size: 27px;
+    }
+
+    .event-details {
+        font-size: 17px;
+    }
+
+    .announcement-itemsRow p {
+        font-size: 20px;
+        padding: 9px 0px 0px 10px;
+    }
+    
+    .announcement-itemsRow h2 {
+        font-size: 27px;
+    }
+
+    .announcement-details {
+        font-size: 17px;
+    }
+}
+
+/* Announcement/Event List Laptop Responsive L *********************************************************/
+@media only screen and (min-width: 1440px) {
+    .event-itemsRow p {
+        font-size: 35px;
+        padding: 15px 0px 0px 10px;
+    }
+    
+    .event-itemsRow h2 {
+        font-size: 45px;
+    }
+
+    .event-details {
+        font-size: 30px;
+    }
+
+    .announcement-itemsRow p {
+        font-size: 35px;
+        padding: 15px 0px 0px 10px;
+    }
+    
+    .announcement-itemsRow h2 {
+        font-size: 45px;
+    }
+
+    .announcement-details {
+        font-size: 30px;
+    }
+
+}
+
+/* Announcement/Event List 4K Responsive  *********************************************************/
+@media only screen and (min-width: 2560px) {
+    .event-itemsRow p {
+        font-size: 40px;
+        padding: 14px 0px 0px 10px;
+    }
+    
+    .event-itemsRow h2 {
+        font-size: 50px;
+    }
+
+    .event-details {
+        font-size: 33px;
+    }
+
+    .announcement-itemsRow p {
+        font-size: 40px;
+        padding: 14px 0px 0px 10px;
+    }
+    
+    .announcement-itemsRow h2 {
+        font-size: 50px;
+    }
+
+    .announcement-details {
+        font-size: 33px;
+    }
+
+}
+
+

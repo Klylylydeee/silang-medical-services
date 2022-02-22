@@ -1,5 +1,6 @@
 import React from "react";
 import './EventAnnouncement.css';
+import { Card } from 'antd';
 
 
 
@@ -13,79 +14,144 @@ const EventListing = () => {
                         <h1>Event Listing</h1>
                     </div>
 
-                    <div className="event-list">
-                        <h2>
-                            Event:
-                        </h2>
-
-                        <h2>
-                            Description:
-                        </h2>
-
-                        <h2>
-                            Barangay:
-                        </h2>
-
-                        <h2>
-                            Requestor:
-                        </h2>
-                            <div>
-                                first_name:
-                            </div>
-                            <div>
-                                last_name:
-                            </div>
-                            <div>
-                                email:
-                            </div>
-                            <div>
-                                phone_number:
-                            </div>
-                            
+                    <div className="event-card">
+                        <Card title="Event" bordered={false} style={{ width: "100%" }}>
+                        <div className="event-itemsRow">
+                            <h2>
+                                Event:
+                            </h2>
+                            <p>
+                                Lorem ipsum dolor sit amet.
+                            </p>
+                        </div>
                         
-                        <h2>
-                            Attendee:
-                        </h2>
-                        <div>
-                                first_name:
-                            </div>
-                            <div>
-                                last_name:
-                            </div>
-                            <div>
-                                email:
-                            </div>
-                            <div>
-                                phone_number:
+                        <div className="event-itemsRow">
+                            <h2>
+                                Description:  
+                            </h2>
+                            <p>
+                                Lorem ipsum dolor sit amet.
+                            </p>
+                        </div>
+
+                        <div className="event-itemsRow">
+                            <h2>
+                                Barangay:  
+                            </h2>
+                            <p>
+                                Lorem ipsum dolor sit amet.
+                            </p>
+                        </div>
+
+                        <div className="event-itemsRow">
+                            <h2>
+                                Requestor:
+                            </h2>
+                            <p>
+                                Lorem ipsum dolor sit amet.
+                            </p>
+                        </div>
+                            <div className="event-details">
+                                <div className="event-details1">
+                                    <div>
+                                        first name: Lorem
+                                    </div>
+                                    <div>
+                                        last name: Ipsum
+                                    </div>
+                                </div>
+                                <div className="event-details2">
+                                    <div>
+                                        email: dolor
+                                    </div>
+                                    <div>
+                                        phone number: 24
+                                    </div>
+                                </div>
                             </div>
 
-                        <h2>
-                            Officials:
-                        </h2>
-                        <div>
-                                first_name:
-                            </div>
-                            <div>
-                                last_name:
-                            </div>
-                            <div>
-                                email:
-                            </div>
-                            <div>
-                                phone_number:
+                        <div className="event-itemsRow">
+                            <h2>
+                                Attendee:  
+                            </h2>
+                            <p>
+                                Lorem ipsum dolor sit amet.
+                            </p>
+                        </div>
+                            <div className="event-details">
+                                <div className="event-details1">
+                                    <div>
+                                        first name: lorem
+                                    </div>
+                                    <div>
+                                        last name: Ipsum
+                                    </div>
+                                </div>
+                                <div className="event-details2">
+                                    <div>
+                                        email: dolor
+                                    </div>
+                                    <div>
+                                        phone number: 24
+                                    </div>
+                                </div>
                             </div>
 
-                        <h2>
-                            Start-datetime:
-                        </h2>
+                        <div className="event-itemsRow">
+                            <h2>
+                                Officials:  
+                            </h2>
+                            <p>
+                                Lorem ipsum dolor sit amet.
+                            </p>
+                        </div>
+                            <div className="event-details">
+                                <div className="event-details1">
+                                    <div>
+                                        first name: lorem
+                                    </div>
+                                    <div>
+                                        last name: Ipsum
+                                    </div>
+                                </div>
+                                <div className="event-details2">
+                                    <div>
+                                        email: dolor
+                                    </div>
+                                    <div>
+                                        phone number: 24
+                                    </div>
+                                </div>
+                            </div>
 
-                        <h2>
-                            End_datetime:
-                        </h2>
+                        <div className="event-itemsRow">
+                            <h2>
+                                Start-datetime: 
+                            </h2>
+                            <p>
+                                Lorem ipsum dolor sit amet.
+                            </p>
+                        </div>
 
-                        <h2>
-                            Status:
-                        </h2>
+                        <div className="event-itemsRow">
+                            <h2>
+                                End-datetime:  
+                            </h2>
+                            <p>
+                                Lorem ipsum dolor sit amet.
+                            </p>
+                        </div>
+
+                        <div className="event-itemsRow">
+                            <h2>
+                            Status:  
+                            </h2>
+                            <p>
+                                Lorem ipsum dolor sit amet.
+                            </p>
+                        </div>
+                        </Card>
+
                     </div>
 
                 </div>
