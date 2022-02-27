@@ -1,13 +1,29 @@
 import React from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 //Ant Design layout
-import { Col, Layout, Table, Tag, Space } from 'antd';
+import {
+    Col,
+    Layout,
+    Table,
+    Tag,
+    Space,
+    PageHeader,
+    Button
+} from 'antd';
 
 //Scss Styling
-import '../../../../styles/analytics.scss'
+import '../../../../styles/medical-list.scss'
 
 const medicalList = () => {
 
+    const { dimension } = useSelector((state) => state.web);
+    const { barangay } = useSelector((state) => state.user); 
+    const history = useNavigate();
+    
+
+    // Medical Table config
     const columns = [
         {
             title: 'Record ID',
@@ -130,10 +146,22 @@ const medicalList = () => {
     return (
         <Layout.Content>
             <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }} xxl={{ span: 24 }} className="record-container">
-                <div className="header">
-                    <h1>Welcome to the Medical Records</h1>
-                    <h2>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam neque tellus, maximus ut tristique et, rutrum ut quam. Curabitur eu odio metus. Pellentesque scelerisque risus id turpis rutrum, et vulputate lectus fermentum.</h2>
+                <div style={{ backgroundColor: "#AD72B7", padding: "10px 20px", marginBottom: "15px", borderRadius: "5px" }}>
+                    <PageHeader
+                        ghost={false}
+                        title="Medical Record"
+                        subTitle={dimension >= 4 ? `All users registered under Barangay ${barangay}.` : ""}
+                        style={{ padding: 0, backgroundColor: "#AD72B7", borderRadius: "5px" }}
+                        extra={[
+                            <Button key="3" onClick={() => {
+                                history({
+                                    pathname: `/dashboard/medical-records/create`
+                                })
+                            }} style={{ color: "#AD72B7" }}>New Record</Button>
+                        ]}
+                    />
                 </div>
+                {/*Medical Record Table*/}
                 <Table columns={columns} dataSource={data} />
             </Col>
         </Layout.Content>
