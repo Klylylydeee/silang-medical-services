@@ -42,9 +42,18 @@
     background: none !important;
 }
 
+.ant-layout-sider {
+    max-height: 100vh;
+    min-height: 400px;
+}
+
 .ant-layout-sider-children > div,
 .ant-layout-sider-children > div > div{
     height: 100%;
+}
+
+.ant-layout-sider-children > div > div > .ant-image {
+    background-color: #5E3964;
 }
 
 .ant-layout-sider-children > div > div{
@@ -62,4 +71,8 @@
 
 .ant-page-header-heading-sub-title {
     color: rgba(255, 255, 255, 0.5)
+}
+
+.ant-spin-nested-loading > div > .ant-spin {
+    max-height: none !important;
 }

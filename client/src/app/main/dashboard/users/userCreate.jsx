@@ -1,23 +1,51 @@
-import React from "react";
-import { Layout, PageHeader, Button, Select, Form, Row, Col, Input } from 'antd';
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { Layout, PageHeader, Button, Select, Form, Row, Col, Input, Divider } from 'antd';
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import toasterRequest from "src/app/util/toaster";
+import { axiosAPI } from "src/app/util/axios";
+import { changeLoader } from "src/app/store/web/webInformation";
 
 const UserCreate = () => {
 
     const { dimension } = useSelector((state) => state.web); 
-    const { designation } = useSelector((state) => state.user); 
+    const { designation, barangay } = useSelector((state) => state.user); 
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        console.log(barangay)
+    }, [])
 
     const [form] = Form.useForm();
+
+    const history = useNavigate();
 
     const onReset = () => {
       form.resetFields();
     };
 
-    const submitForm = ({ prefix, ...formData }) => {
-        console.log({
-            ...formData,
-            phone_number: prefix + formData.phone_number
-        })
+    const submitForm = async ({ prefix, ...formData }) => {
+        try {
+            dispatch(changeLoader({ loading: true }))
+            const submitData = {
+                ...formData,
+                password: "encrypted",
+                barangay: barangay,
+                phone_number: prefix + formData.phone_number
+            }
+            let userCreate = await axiosAPI.post(`settings/user-invitation`, submitData);
+            dispatch(changeLoader({ loading: false }));
+            toasterRequest({ payloadType: "success", textString: userCreate.data.message});
+            history({
+                pathname: `/dashboard/users/view/${userCreate.data.payload.id}`
+            })
+        } catch (err) {
+            dispatch(changeLoader({ loading: false }))
+            err.response ? 
+                toasterRequest({ payloadType: "error", textString: err.response.data.message})
+            :
+                toasterRequest({ payloadType: "error", textString: err.message});
+        }
     }
 
     return (
@@ -36,6 +64,9 @@ const UserCreate = () => {
                     layout="vertical"
                     form={form}
                 >
+                    <Divider orientation="left" plain orientationMargin={10}>
+                        Personal Details
+                    </Divider>
                     <Row gutter={[24, 0]} style={{ paddingTop: "10px" }}>
                         <Col xs={{ span: 24 }} lg={{ span: 12 }}>
                             <Form.Item
@@ -70,6 +101,9 @@ const UserCreate = () => {
                             </Form.Item>
                         </Col>
                     </Row>
+                    <Divider orientation="left" plain orientationMargin={10}>
+                        Digital Details
+                    </Divider>
                     <Row gutter={[24, 0]}>
                         <Col xs={{ span: 24 }} lg={{ span: 12 }}>
                             <Form.Item
@@ -118,6 +152,9 @@ const UserCreate = () => {
                             </Form.Item>
                         </Col>
                     </Row>
+                    <Divider orientation="left" plain orientationMargin={10}>
+                        Barangay Details
+                    </Divider>
                     <Form.Item
                         name="designation"
                         label="Designation"
@@ -148,7 +185,7 @@ const UserCreate = () => {
                             }
                         </Select>
                     </Form.Item>
-                    <Form.Item style={{ paddingTop: "5px" }}>
+                    <Form.Item style={{ paddingTop: "20px" }}>
                         <Button type="default" style={{ marginRight: dimension <= 4 ? "10px" : "20px" }}  onClick={() => onReset() }>
                             Reset
                         </Button>

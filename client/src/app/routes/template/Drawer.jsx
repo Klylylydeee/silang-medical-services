@@ -63,18 +63,19 @@ const drawerNavigation = [
     {
         name: "Users",
         icon: <UserOutlined />,
-        childrens: [
-            {
-                name: "Barangay users",
-                component: "",
-                redirect: "users"
-            },
-            {
-                name: "Create new user",
-                component: "",
-                redirect: "users/create/invitation"
-            }
-        ],
+        redirect: "users",
+        // childrens: [
+        //     {
+        //         name: "Barangay users",
+        //         component: "",
+        //         redirect: "users"
+        //     },
+        //     {
+        //         name: "Create new user",
+        //         component: "",
+        //         redirect: "users/create/invitation"
+        //     }
+        // ],
         roles: [
             "Chairman",
             "Nurse",
@@ -84,7 +85,7 @@ const drawerNavigation = [
     {
         name: "Settings",
         icon: <SettingOutlined />,
-        redirect: "settings",
+        redirect: "setting",
         roles: [
             "Chairman",
             "Nurse",

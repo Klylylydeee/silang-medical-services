@@ -15,17 +15,135 @@ import silangMedicalServicesLogo from "src/app/main/dashboard/sign-in/sign-in-as
 import toasterRequest from "src/app/util/toaster";
 import { axiosAPI } from "src/app/util/axios";
 import jwt from "jsonwebtoken";
+import { changeLoader } from "src/app/store/web/webInformation";
+import { useSearchParams } from "react-router-dom";
 
 function SignIn() {
     const dispatch = useDispatch();
     const { dimension } = useSelector((state) => state.web);
+    const [ searchParams ] = useSearchParams();
 
     const [stepper, currentStep] = useState(1);
     const [pin, currentPIN] = useState("");
     const [signForm, setSignForm] = useState("");
+    const [passVal, setPassVal] = useState({
+        password: "",
+        confirm_password: ""
+    });
+    const [passData, setPassData] = useState({});
+    const [passwordBtn, setPasswordBtn] = useState(true);
+
+    useEffect(() => {
+        if(passVal.password.length < 5 || passVal.confirm_password.length < 5  ) {
+            setPasswordBtn(true)
+        } else {
+            if(passVal.password === passVal.confirm_password){
+                setPasswordBtn(false)
+            } else {
+                setPasswordBtn(true)
+            }
+        }
+    }, [passVal]);
+
+    const validatePassConfirmation = async () => {
+        try {
+            let decodedData = await jwt.verify(searchParams.get("payload"), process.env.REACT_APP_JWT_BACKEND);
+            setPassData(decodedData.userData)
+        } catch (err) {
+            currentStep(1)
+        }
+    }
+
+    const confirmPassChange = async () => {
+        try {
+            dispatch(changeLoader({ loading: true }))
+            let decodedData = await jwt.verify(searchParams.get("reset"), process.env.REACT_APP_JWT_BACKEND);
+            const verifyPassword = await axiosAPI.post("authentication/accept-password", {
+                email: decodedData.email,
+                password: decodedData.password
+            });
+            toasterRequest({ payloadType: "success", textString: verifyPassword.data.message});
+            currentStep(1)
+            dispatch(changeLoader({ loading: false }))
+        } catch (err) {
+            dispatch(changeLoader({ loading: false }))
+        }
+    }
+
+    useEffect(() => {
+        if(searchParams.get("payload") !== null){
+            currentStep(5)
+            validatePassConfirmation()
+        } else if (searchParams.get("reset") !== null) {
+            currentStep(1)
+            confirmPassChange()
+        } else {
+            currentStep(1)
+        }
+    // eslint-disable-next-line
+    }, [])
+
+    const submitResetRequest = async () => {
+        
+        try {
+            dispatch(changeLoader({ loading: true }))
+            const verifyAndPassword = await axiosAPI.post(`settings/user-setting?id=${passData._id}`, {
+                password: passVal.password
+            });
+            toasterRequest({ payloadType: "success", textString: verifyAndPassword.data.message});
+            currentStep(1)
+            dispatch(changeLoader({ loading: false }))
+        } catch(err) {
+            dispatch(changeLoader({ loading: false }))
+            err.response ? 
+                toasterRequest({ payloadType: "error", textString: err.response.data.message})
+            :
+                toasterRequest({ payloadType: "error", textString: err.message});
+        };
+    } 
+
+    const submitPassVerify =  async () => {
+        
+        try {
+            dispatch(changeLoader({ loading: true }))
+            const verifyAndPassword = await axiosAPI.post("authentication/sign-up-verification", {
+                _id: passData._id,
+                password: passVal.password
+            });
+            toasterRequest({ payloadType: "success", textString: verifyAndPassword.data.message});
+            currentStep(1)
+            dispatch(changeLoader({ loading: false }))
+        } catch(err) {
+            dispatch(changeLoader({ loading: false }))
+            err.response ? 
+                toasterRequest({ payloadType: "error", textString: err.response.data.message})
+            :
+                toasterRequest({ payloadType: "error", textString: err.message});
+        };
+    } 
+
+    const submitNewPassword = async (formData) => {
+        try {
+            dispatch(changeLoader({ loading: true }))
+            const getConfirmation = await axiosAPI.post("authentication/lost-password", {
+                email: formData.email,
+                password: formData.password,
+            });
+            toasterRequest({ payloadType: "success", textString: getConfirmation.data.message});
+            currentStep(1)
+            dispatch(changeLoader({ loading: false }))
+        } catch(err) {
+            dispatch(changeLoader({ loading: false }))
+            err.response ? 
+                toasterRequest({ payloadType: "error", textString: err.response.data.message})
+            :
+                toasterRequest({ payloadType: "error", textString: err.message});
+        };
+    };
 
     const submitSignForm = async (formData) => {
         try {
+            dispatch(changeLoader({ loading: true }))
             const getAuthentication = await axiosAPI.post("authentication/sign-in", {
                 email: formData.email,
                 password: formData.password,
@@ -33,7 +151,9 @@ function SignIn() {
             toasterRequest({ payloadType: "success", textString: getAuthentication.data.message});
             currentStep(2)
             setSignForm(formData.email)
+            dispatch(changeLoader({ loading: false }))
         } catch(err) {
+            dispatch(changeLoader({ loading: false }))
             err.response ? 
                 toasterRequest({ payloadType: "error", textString: err.response.data.message})
             :
@@ -43,6 +163,7 @@ function SignIn() {
 
     const submitPINForm = async (pinPayload) => {
         try {
+            dispatch(changeLoader({ loading: true }))
             const getPINAuthentication = await axiosAPI.post("authentication/pin-verification", {
                 email: signForm,
                 pin: pinPayload,
@@ -63,7 +184,9 @@ function SignIn() {
             dispatch(authorizeUser({
                 language : decodedData.language
             }));
+            dispatch(changeLoader({ loading: false }))
         } catch(err) {
+            dispatch(changeLoader({ loading: false }))
             if(err.response) {
                 toasterRequest({ payloadType: "error", textString: err.response.data.message})
                 if(err.response.data.message === "Max pin threshold has been meet. Please reset your account's password.") {
@@ -77,12 +200,14 @@ function SignIn() {
 
     const submitThresholdReset = async (formData) => {
         try {
+            dispatch(changeLoader({ loading: true }))
             const getThresholdReset = await axiosAPI.post("authentication/account-reset", {
                 email: formData.email
             });
             toasterRequest({ payloadType: "success", textString: getThresholdReset.data.message});
             currentStep(1)
         } catch(err) {
+            dispatch(changeLoader({ loading: false }))
             err.response ? 
                 toasterRequest({ payloadType: "error", textString: err.response.data.message})
             :
@@ -233,7 +358,7 @@ function SignIn() {
                             </Form>
                             <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", paddingTop: "20px" }}>
                                 <p style={{ fontSize: "11px",  fontWeight: 600, color: "gray"}}>Request for threshold reset? Create a <span style={{ color: "#001529", cursor: "default" }} onClick={()=> { currentStep(4) }}>ticket request here</span>.</p>
-                                {/* <p style={{ fontSize: "11px",  fontWeight: 600, color: "gray"}}>Forgot your password? Let us help you <span style={{ color: "#001529", cursor: "default" }} onClick={()=> { currentStep(3) }}>reset it</span>.</p> */}
+                                <p style={{ fontSize: "11px",  fontWeight: 600, color: "gray"}}>Forgot your password? Let us help you <span style={{ color: "#001529", cursor: "default" }} onClick={()=> { currentStep(3) }}>reset it</span>.</p>
                             </div>
                         </div>
                     }
@@ -306,7 +431,7 @@ function SignIn() {
                                 </p>
                             </div>
                             <Form
-                                onFinish={submitSignForm}
+                                onFinish={submitNewPassword}
                                 layout={ dimension >= 3 ? "horizontal" : "vertical" }
                                 style={{
                                     padding: dimension >= 2 ? "20px 60px 0 60px" : "0px 30px"
@@ -333,10 +458,10 @@ function SignIn() {
                                     />
                                 </Form.Item>
                                 <Form.Item
-                                    label="Password"
+                                    label="New Password"
                                     name="password"
                                     tooltip="Please ensure that no one is behind you."
-                                    rules={[{ required: true, message: 'Please input your password!' }]}
+                                    rules={[{ required: true, message: 'Please input your password!' }, { min: 5, message: "Password length must be 5 characters long or longer"}]}
                                 >
                                     <Input.Password
                                         prefix={<LockOutlined className="site-form-item-icon" />}
@@ -411,6 +536,84 @@ function SignIn() {
                                     </Button>
                                     <Button type="primary" htmlType="submit" block={true} style={{ marginTop: "10px" }}>
                                         Request threshold reset
+                                    </Button>
+                                </div>
+                            </Form>
+                        </div>
+                    }
+                    {
+                        stepper === 5 &&
+                        <div>
+                            <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+                                <h1 style={{ fontSize: "50px", color: "black", lineHeight: "5px"}}>
+                                    Set Password
+                                </h1>
+                                <p style={{ 
+                                    fontSize: "12px",
+                                    fontWeight: 600,
+                                    color: "#AD72B7",
+                                    padding: dimension >= 2 ? "10px 60px 0 60px" : "0px 30px",
+                                    textAlign: "center"
+                                }}>
+                                    By accessing the Silang Medical Services Portal, you will have access to all participating data and accepting the Rules and Conditions.
+                                </p>
+                            </div>
+                            <Form
+                                layout={ dimension >= 3 ? "horizontal" : "vertical" }
+                                style={{
+                                    padding: dimension >= 2 ? "20px 60px 0 60px" : "0px 30px"
+                                }}
+                                onFinish={searchParams.get("reset") === null ? submitPassVerify : submitResetRequest}
+                                onValuesChange={({password, confirm_password, ...rest})=> {
+                                    if(password !== undefined){
+                                        setPassVal({
+                                            ...passVal,
+                                            password
+                                        })
+                                    } else if(confirm_password !== undefined){
+                                        setPassVal({
+                                            ...passVal,
+                                            confirm_password
+                                        })
+                                    }
+                                }}
+                            >
+                                <Form.Item
+                                    name="password"
+                                    label="Password"
+                                    tooltip="Typically used hosting address is @gmail.com"
+                                    rules={[
+                                        {
+                                            required: true,
+                                            message: 'Please fill out this field!',
+                                        }
+                                    ]}
+                                    required={true}
+                                >
+                                        <Input.Password
+                                            prefix={<LockOutlined className="site-form-item-icon" />}
+                                        />
+                                </Form.Item>
+                                <Form.Item
+                                    name="confirm_password"
+                                    label="Confrim Password"
+                                    tooltip="Please ensure that no one is behind you."
+                                    rules={[{ required: true, message: 'Please input your password!' }]}
+                                >
+                                    <Input.Password
+                                        prefix={<LockOutlined className="site-form-item-icon" />}
+                                    />
+                                </Form.Item>
+                                <div
+                                    style={{
+                                        display: "flex",
+                                    }}
+                                >
+                                    <Button type="default" onClick={() => { currentStep(1) }} block={true} style={{ marginTop: "10px", width: "40%", marginRight: "30px" }}>
+                                        Return
+                                    </Button>
+                                    <Button type="primary" htmlType="submit" block={true} disabled={passwordBtn} style={{ marginTop: "10px" }}>
+                                        Set password
                                     </Button>
                                 </div>
                             </Form>

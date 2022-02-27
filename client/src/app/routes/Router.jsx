@@ -25,7 +25,10 @@ import EventData from "src/app/main/dashboard/event-listing/EventData";
 import EventList from "src/app/main/dashboard/event-listing/EventList";
 import EventUpdate from "src/app/main/dashboard/event-listing/EventUpdate";
 import Communication from "src/app/main/dashboard/communication/Communication";
+import UsersData from "src/app/main/dashboard/users/UsersData";
 import UserCreate from "src/app/main/dashboard/users/UserCreate";
+import Users from "src/app/main/dashboard/users/User";
+import UserSetting from "src/app/main/dashboard/users/UserSetting";
 
 // General route
 import NotFound from "src/app/main/general/404/NotFound";
@@ -88,12 +91,12 @@ function Router() {
                                 {/* Communication Component */}
                                 <Route path="communication" element={ <AuthWrapper authStatus={true} redirectTo="/" component={<Communication />} /> } />
                                 {/* User Component */}
-                                <Route path="users" element={ <AuthWrapper authStatus={true} redirectTo="/" component={<AnalyticData />} /> } />
+                                <Route path="users" element={ <AuthWrapper authStatus={true} redirectTo="/" component={<UsersData />} /> } />
                                 <Route path="users/create/invitation" element={ <AuthWrapper authStatus={true} redirectTo="/" component={<UserCreate />} /> } />
                                 <Route path="users/update/:id" element={ <AuthWrapper authStatus={true} redirectTo="/" component={<AnalyticData />} /> } />
-                                <Route path="users/view/:id" element={ <AuthWrapper authStatus={true} redirectTo="/" component={<AnalyticData />} /> } />
+                                <Route path="users/view/:id" element={ <AuthWrapper authStatus={true} redirectTo="/" component={<Users />} /> } />
                                 {/* Setting Component */}
-                                <Route path="setting" element={ <AuthWrapper authStatus={true} redirectTo="/" component={<AnalyticData />} /> } />
+                                <Route path="setting" element={ <AuthWrapper authStatus={true} redirectTo="/" component={<UserSetting />} /> } />
                                 <Route path="*" element={ <NotFound /> }/>
                             </Route>
                             <Route path="*" element={ <NotFound /> }/>

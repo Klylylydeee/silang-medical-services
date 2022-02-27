@@ -4,7 +4,7 @@ import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 // Ant Design layout
-import { Layout, Menu, Image, Breadcrumb, Affix, BackTop } from "antd";
+import { Layout, Menu, Image, Breadcrumb, Affix, BackTop, Spin } from "antd";
 // import { MenuUnfoldOutlined, MenuFoldOutlined, } from "@ant-design/icons";
 import { HomeOutlined } from "@ant-design/icons";
 
@@ -23,7 +23,7 @@ function Dashboard() {
     const dispatch = useDispatch();
     // Redux slice variable/state
     const { designation } = useSelector((state) => state.user); 
-    const { drawer, dimension } = useSelector((state) => state.web); 
+    const { drawer, dimension, authorization, loading } = useSelector((state) => state.web); 
     // Ant design  deconstructed component
     const { SubMenu } = Menu;
     // eslint-disable-next-line
@@ -192,8 +192,12 @@ function Dashboard() {
                         <span className="c-pill c-pill--success">{designation}</span>
                     </div>
                 </Header>
-                <Content style={{ padding: "20px" }}>
-                    <Outlet />
+                <Content style={{ padding: "20px", display: "flex", justifyContent: "center" }}>
+                    <div style={{ width: "100%", maxWidth: "1500px"}}>
+                        <Spin tip="Loading..." spinning={authorization === false ? false : loading}>
+                            <Outlet />
+                        </Spin>
+                    </div>
                 </Content>
             </Layout>
             <BackTop>

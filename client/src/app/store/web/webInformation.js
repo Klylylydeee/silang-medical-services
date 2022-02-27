@@ -29,7 +29,6 @@ export const webApplicationConfiguration = createSlice({
         },
         changeDimension: (state, action) => {
             state.dimension = action.payload.dimension
-            console.log(state.dimension)
         },
         changeLoader: (state, action) => {
             state.loading = action.payload.loading

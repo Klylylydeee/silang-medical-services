@@ -24,7 +24,7 @@ import "src/styles/global.scss";
 function App() {
     
     const dispatch = useDispatch();
-    const { language, loading } = useSelector((state) => state.web);
+    const { authorization, language, loading } = useSelector((state) => state.web);
 
     AppDimension();
 
@@ -65,7 +65,7 @@ function App() {
     
     return (
         <IntlProvider locale={language} messages={AppLocale[language]}>
-            <Spin tip="Loading..." spinning={loading}>
+            <Spin tip="Loading..." spinning={authorization === true ? false : loading}>
                 <Router />
             </Spin>
         </IntlProvider>
