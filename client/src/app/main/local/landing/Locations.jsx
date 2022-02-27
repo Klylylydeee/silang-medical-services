@@ -1,47 +1,110 @@
-import React from 'react';
-
-//Ant Design
-import { Row, Col } from 'antd'
-import { Carousel } from 'antd';
+import React, { useState } from 'react'
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Row, Col } from "antd"
+import SwiperCore, { Autoplay, Pagination } from "swiper/core";
+import { useSelector } from "react-redux";
 
 //Images 
 import BlackGrid from '../landing/LandingPage-assets/black-grid.png'
 import RectangleA from '../landing/LandingPage-assets/RectangleA.png'
 
+SwiperCore.use([Autoplay, Pagination]);
+
 //Styles
-if(process.env.REACT_APP_ENVIRONMENT_STAGE === "Public Build" && window.location.pathname === "/") {
-    require( '../../local/landing/LandingStyles/LandingLocation.scss');
+if (process.env.REACT_APP_ENVIRONMENT_STAGE === "Public Build" && window.location.pathname === "/") {
+    require('../../local/landing/LandingStyles/LandingLocation.scss');
 }
 
-function Locations() {
+    function Locations() {
 
-    return (
-        <Row>
-            <Col xs={{ span: 15 }} sm={{ span: 24 }} md={{ span: 16 }} lg={{ span: 24 }}>
-                <div className="LocationMain" id="Locations">
+        const [swipperIndex, setIndex] = useState(1);
 
-                    {/* Left Side Barangay Info */}
-                    <div className="LocLeft">
-                        {/* Location Title Title */}
-                        <div className="BarangayInfo">
-                            <h1 id="BarangayTitle1">Barangay</h1>
-                            <h1 id="BarangayTitle2">Clinic Locations</h1>
-                            <h3 id="BarangayDescription">Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                Suspendisse et volutpat turpis, a sagittis nisl.
-                                Phasellus posuere viverra nisl, et consectetur nisl ullamcorper id. </h3>
+    const { dimension } = useSelector((state) => state.web);
+
+    const paginationSetting = {
+        "dynamicMainBullets": true,
+        "clickable": true
+    }
+    const autoplaySettting = {
+        "delay": 2500,
+        "disableOnInteraction": false
+    }
+
+    const swipperData = [
+        {
+            barangay: "Puting Kahoy",
+            image: RectangleA
+        },
+        {
+            barangay: "Lumil",
+            image: RectangleA
+        }
+    ]
+
+        return (
+            <div id = "Locations">
+                <Row style={{ minHeight: "70vh"}}>
+                    <Col xs={{ span: 24 }} lg={{ span: 16 }} style={{ backgroundColor: "#ad72b7", display: "flex", justifyContent: "center", flexDirection: "column", padding: dimension >= 4 ? "1.5% 3% 5% 3%" : "5% 3%", marginTop: dimension >= 4 ? "-10%" : "-5%", ...dimension >= 6 ? { alignItems: "left" } : {} }}>
+                        <div style={{ maxWidth: "1500px" }}>
+                            <p style={{ color: "white", fontSize: "70px", fontWeight: 500, marginBottom: "20px" }}>
+                                Barangay
+                                <br />
+                                <span style={{ paddingLeft: "40px" }}>Clinic Locations</span>
+                            </p>
+                            <div style={{ paddingLeft: "80px", paddingTop: 0, marginTop: 0 }}>
+                                <p style={{ color: "white", fontSize: "18px", fontWeight: 400, maxWidth: "700px" }}>
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                    Suspendisse et volutpat turpis, a sagittis nisl.
+                                    Phasellus posuere viverra nisl, et consectetur nisl ullamcorper id.
+                                </p>
+                            </div>
                         </div>
-                    </div>
+                    </Col>
+                    <Col xs={{ span: 24 }} lg={{ span: 8 }}>
+                        <div style={{ height: "100%", position: "relative", padding: "50px" }}>
+                            <Swiper
+                                slidesPerView={dimension >= 4 ? 2 : 1}
+                                pagination={paginationSetting}
+                                autoplay={autoplaySettting}
+                                loop={true}
+                                spaceBetween={50}
+                                onSlideChange={(data) => { setIndex(data.realIndex + 1) }}
+                                style={{ overflow: "hidden", position: "absolute", left: dimension >= 4 ? "-20%" : "0%", top: dimension >= 4 ? "30%" : "40%", width: dimension >= 4 ? "100%" : "50%", ...dimension < 4 ? { right: 0 } : {} }}
+                            >
+                                {
+                                    swipperData.map((index, key) => {
+                                        return (
+                                            <SwiperSlide key={key}>
+                                                <div style={{
+                                                    position: "relative",
+                                                    textAlign: "center",
+                                                    color: "white"
+                                                }} >
+                                                    <img src={RectangleA} alt="" style={{ maxWidth: "100%", padding: 0, margin: 0 }} />
+                                                    <p style={{
+                                                        color: "white",
+                                                        position: "absolute",
+                                                        bottom: "-20px",
+                                                        left: "16px"
+                                                    }}
+                                                    >
+                                                        {index.barangay}
+                                                    </p>
+                                                </div>
+                                            </SwiperSlide>
+                                        )
+                                    })
+                                }
+                            </Swiper>
+                            <p style={{ position: "absolute", left: "-20%", bottom: 0, color: "white", fontWeight: 600 }} >
+                                0{swipperIndex}/0{swipperData.length}
+                            </p>
+                        </div>
+                    </Col>
+                </Row>
+            </div>
 
-                    {/* Right Side Carousel */}
-                    <div className="BarangayCarousel">
-                            {/* Images seen in Location Section */}
-                            <img src={BlackGrid} alt='Grid Design' className="black-gridLoc" />
-                    </div>
-                </div>
-            </Col >
-        </Row >
+        )
+    }
 
-    )
-}
-
-export default Locations;
+    export default Locations;

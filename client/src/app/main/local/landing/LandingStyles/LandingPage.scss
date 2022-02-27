@@ -4,19 +4,21 @@ html {
     scroll-behavior: smooth;
 }
 
-body {
-    display: flex;
-    background-color: white;
-    font-family: Quicksand;
-    overflow-x: hidden;
+.landing {
+  width: 100%;
 }
 
+.Home {
+  display: flex;
+  height: 90vh;
+}
 
 //-----------------Header Row-----------------//
 
 .HomeTitle {
-    height: 80vh;
-    margin-top: 15vh;
+  position: relative;
+  padding-top: 15vh;
+  z-index: 2;
 }
 
 #LandingTitle  {
@@ -50,22 +52,15 @@ body {
 
 //-----------------Landing Page Main Images-----------------/
 
-.VectorImage2 {
-    position: absolute;
-    top: 0;
-    left: 55vh;
-    height: 1208px;
-    width: 1168px;
-    z-index: -1;
-}
-
 .VectorImage1 {
     position: absolute;
     top: 0;
-    left: 100vh;
-    height: 1100px;
-    width: 1168px;
+    left: 0;
+    right: 0;
+    height: auto;
+    width: 125.5vh;
     z-index: 1;
+    margin: 0 0 0 auto;
 }
 
 //-----------------Scroll Button-----------------/
@@ -171,22 +166,6 @@ section::after {
 
 //-----------------Mobile Responsive-----------------/
 @media screen and (max-width: 1536px){
-  .VectorImage2 {
-    width: 750px;
-    height: 820px;
-    left: 80vh;
-  }
-  
-  .VectorImage1 {
-    width: 750px;
-    height: 900px;
-    left: 115vh;
-    z-index: 1;
-  }
-
-  .HomeTitle {
-    margin-left: -5vh;
-  }
   
   #LandingTitle  {
    font-size: 80px;
@@ -208,88 +187,85 @@ section::after {
 
 @media screen and (max-width: 1440px){
 
-.VectorImage2 {
-  width: 750px;
-  height: 820px;
-  left: 53vh;
-}
-
-.VectorImage1 {
-    width: 750px;
-    height: 900px;
-    left: 80vh;
-    z-index: 1;
+.VectorImage1 { 
+  width: 105.7vh;
 }
 
 .HomeTitle {
-  margin-left: -8vh;
+  margin-left: -5vh;
 }
 
 #LandingTitle  {
- font-size: 70px;
- margin-bottom: -10px;
+    font-size: 70px;
+    margin-bottom: -10px;
  
 }
 
 #SecondaryTitle {
-  font-size: 70px;
-  margin-bottom: -5px;
+    font-size: 70px;
+    margin-bottom: -5px;
 }
 
 #LandingDescription {
-  font-size: 15px;
-  margin-left: 5vh;
-  width: 50vh;
+    font-size: 15px;
+    margin-left: 5vh;
 }
 
 #section07 a {
-  bottom: 15vh;
+    bottom: 15vh;
 }
 }
 
 @media screen and (max-width: 1024px){
-  .VectorImage2 {
-    width: 550px;
-    height: 820px;
-    left: 53vh;
-  }
   
+  .Home {
+    height: 115vh;
+  }
+
   .VectorImage1 {
-      width: 500px;
-      height: 850px;
-      left: 75vh;
+    display: none;
   }
 
   .ShisPurple {
-      left: 70vh;
+      left: 30vh;
   }
 
-  .VectorImage1 {
-    display: none;
+  #section07 a {
+    bottom: 23vh;
 }
 
-  .VectorImage2 {
-    display: none;
-}
 }  
 
 @media screen and (max-width: 768px){
+  
+  .Home {
+    width: auto;
+  }
+  
   #LandingTitle  {
-    font-size: 95px;
+    font-size: 80px;
    }
    
    #SecondaryTitle {
-     font-size: 90px;
+     font-size: 80px;
    }
    
    #LandingDescription {
-     font-size: 25px;
-     width: 70vh;
+     font-size: 17px;
    }
 
    #section07 a {
     display: none;
   }
+
+  .VectorImage1 {
+    display: none;
+  }
+
+  .ShisPurple {
+    left: 10vh;
+    top: 20vh;
+}
 }
 
 @media screen and (max-width: 425px){

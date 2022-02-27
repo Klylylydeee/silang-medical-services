@@ -7,56 +7,59 @@ import { Row, Col } from 'antd'
 import TransparentLogo from '../landing/LandingPage-assets/TransparentLogo.png'
 
 //Styles
-if(process.env.REACT_APP_ENVIRONMENT_STAGE === "Public Build" && window.location.pathname === "/") {
-    require( '../../local/landing/LandingStyles/About.scss');
+if (process.env.REACT_APP_ENVIRONMENT_STAGE === "Public Build" && window.location.pathname === "/") {
+    require('../../local/landing/LandingStyles/About.scss');
 }
 
 function AboutUs() {
-    return <div id="About">
-        <div className="Background"></div>
-        <Row>
-            <Col xs={{ span: 24 }}>
-                <div className="AboutLayer">
+    return<Row>
+            <Col>
+                <div className="AboutLayer" id="About">
                     <div className="AboutSection">
-                        <Col>
-                    {/* Left Side */}
-                            <div class="AboutTitle">
-                                <div className="SmallWhiteDiv"></div>
-                                <h1>What is <br />
-                                    this About?</h1>
-                                <h3>Know about us!</h3>
-                            </div>
-                        </Col>
+                        {/* Left Side */}
+                        <div class="AboutTitle">
+                            <div className="SmallWhiteDiv"></div>
+                            <h1>What is <br />
+                                this About?</h1>
+                            <h3>Know about us!</h3>
+                        </div>
                     </div>
 
                     {/* WhiteDiv bar at the top of about page */}
                     <div className="WhiteDivTop"></div>
 
-
-                {/* Right Side */}
+                    {/* Right Side */}
                     {/* Mission */}
-                    <div className="AboutInfo">
-                        <Col xs={{ span: 15 }} sm={{ span: 16 }} md={{ span: 14 }} lg={{ span: 14 }} offset={8} id="Mission">
-                            <h2>Mission</h2>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                Suspendisse et volutpat turpis, a sagittis nisl.
-                                Phasellus posuere viverra nisl, et consectetur nisl ullamcorper id. </p>
-                        </Col>
-                        {/* Vision */}
-                        <Col xs={{ span: 15 }} sm={{ span: 20 }} md={{ span: 14 }} lg={{ span: 14 }} offset={8} id="Vision">
-                            <h2>Vision</h2>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                Suspendisse et volutpat turpis, a sagittis nisl.
-                                Phasellus posuere viverra nisl, et consectetur nisl ullamcorper id. </p>
-                        </Col>
-                        {/* Core Values */}
-                        <Col xs={{ span: 15 }} sm={{ span: 20 }} md={{ span: 14 }} lg={{ span: 14 }} offset={8} id="Core">
-                            <h2>Core Values</h2>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                Suspendisse et volutpat turpis, a sagittis nisl.
-                                Phasellus posuere viverra nisl, et consectetur nisl ullamcorper id. </p>
-                        </Col>
-                    </div>
+                    <Col xs={{ span: 15 }} sm={{ span: 16 }} md={{ span: 12 }} lg={{ span: 10 }} xl={{ span: 11 }}>
+                        <div className="AboutInfo" >
+                            <Col>
+                                <div id="Mission">
+                                    <h2>Mission</h2>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                        Suspendisse et volutpat turpis, a sagittis nisl.
+                                        Phasellus posuere viverra nisl, et consectetur nisl ullamcorper id. </p>
+                                </div>
+
+                                {/* Vision */}
+                                <div id="Vision">
+                                    <h2>Vision</h2>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                        Suspendisse et volutpat turpis, a sagittis nisl.
+                                        Phasellus posuere viverra nisl, et consectetur nisl ullamcorper id. </p>
+                                </div>
+
+                                {/* Core Values */}
+                                <div id="Core">
+                                    <h2>Core Values</h2>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                        Suspendisse et volutpat turpis, a sagittis nisl.
+                                        Phasellus posuere viverra nisl, et consectetur nisl ullamcorper id. </p>
+                                </div>
+                            </Col>
+
+                        </div>
+                    </Col>
+
 
                     {/* Transparent Background Logo */}
                     <img src={TransparentLogo} alt='SHIS Transparent' className="ShisTransparent" />
@@ -66,10 +69,6 @@ function AboutUs() {
                 </div>
             </Col>
         </Row>
-
-
-    </div >
-
 }
 
 export default AboutUs;

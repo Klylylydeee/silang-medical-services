@@ -3,12 +3,12 @@
 .FooterPage {
     background-color: #ad72b7;
     min-height: 50vh;
+    width: 100%;
     max-width: 100%;
     display: flex;
 }
 //-----------------Footer Logo-----------------//
 .LogoSection {
-    // background-color: yellow;
     width: 20%;
 }
 
@@ -23,12 +23,7 @@
 //-----------------Footer Page Links-----------------//
 
 .LinkSection {
-    // background-color: green;
     width: 20%;
-}
-
-.footer-menu ul {
-    padding-left: 0;
 }
 
 .footer-menu li {
@@ -48,7 +43,7 @@
 .footer-menu h1 {
     font-size: 25px;
     text-align: center;
-    margin-top: 12vh;
+    margin-top: 10vh;
     margin-bottom: 5vh;
     color: white;
 }
@@ -56,19 +51,19 @@
 //-----------------SHIS Contact Info-----------------//
 
 .ContactSection {
-    // background-color: blue;
     width: 20%;
 }
 
 .ContactSection h1 {
     font-size: 25px;
     text-align: center;
-    margin-top: 12vh;
-    margin-bottom: 5vh;
+    padding-top: 10vh;
+    padding-bottom: 5vh;
     color: white;
 }
 
 .ContactSection h2 {
+    font-size: 20px;
     list-style: none;
     color: white;
     text-align: center;
@@ -78,43 +73,43 @@
 //-----------------SHIS Description-----------------//
 
 .DescriptionSection {
-    // background-color: red;
     width: 40%;
 }
-
 
 #FooterTitle {
     font-size: 65px;
     font-weight: 600;
-    color: white;
-    margin-left: 10vh;
+    padding-left: 20px;
     margin-top: 8vh;
+    color: white;
+    
 }
 
 #SecondTitle {
     margin-top: -3vh;
+    padding-left: 20px;
     font-size: 65px;
     font-weight: 300;
     color: white;
-    margin-left: 10vh;
+    
 }
 
 #FooterDescription {
-    font-size: 15px;
-    color: white;
-    width: 50vh;
-    margin-left: 120px;
     margin-top: -3vh;
+    padding-left: 30px;
+    font-size: 17px;
+    color: white;
 }
 
 //-----------------Bottom Footer-----------------//
 .FooterLineDiv {
-        position: absolute;
-        left: 50vh;
-        width: 100vh;
-        height: 1px;
-        bottom: 7vh;
-        background: #905D98; 
+    position: absolute;
+    left: 25%;
+    width: 100%;
+    max-width: 50%;
+    height: 1px;
+    bottom: 7vh;
+    background: #905D98;
 }
 
 .Copyright {
@@ -131,10 +126,6 @@
 //-----------------Mobile Responsive-----------------/
 @media screen and (max-width: 1440px){
 
-    .FooterPage {
-        min-width: 100%;
-    }
-
     #FooterTitle {
         font-size: 55px;
         
@@ -142,28 +133,37 @@
     
     #SecondTitle {
         font-size: 55px;
-       
     }
     
     .Shis-footer-logo {
         left: 35px;
-        top: 100px;
     }
 }
 
 @media screen and (max-width: 1024px){
-    .FooterPage {
-        min-width: 135%;
+    .Shis-footer-logo {
+        left: -45px;
+        top: 10vh;
     }
 
-    .Shis-footer-logo {
-        left: 30px;
-        top: 100px;
+    .ContactSection h2 {
+        font-size: 17px;
+    }
+
+    #FooterTitle {
+        font-size: 45px;
+    }
+    
+    #SecondTitle {
+        font-size: 45px;
+    }
+    
+    #FooterDescription {
+        margin-top: -3vh;
+        font-size: 15px;
     }
 }
 
 @media screen and (max-width: 768px){
-    .FooterPage {
-        min-width: 172%;
-    }
+    
 }

@@ -5,14 +5,14 @@ import SHISLogo from '../../../../styles/SHISLogo.png'
 import { Row, Col } from 'antd'
 
 //Styles
-if(process.env.REACT_APP_ENVIRONMENT_STAGE === "Public Build" && window.location.pathname === "/") {
-    require( '../../local/landing/LandingStyles/Footer.scss');
+if (process.env.REACT_APP_ENVIRONMENT_STAGE === "Public Build" && window.location.pathname === "/") {
+    require('../../local/landing/LandingStyles/Footer.scss');
 }
 
 function LandingFooter() {
     return (
         <Row>
-            <Col xs={{ span: 15 }} sm={{ span: 24 }} md={{ span: 14 }} lg={{ span: 24 }}>
+            <Col xs={{ span: 15 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 24 }}>
                 <div className="FooterPage">
                     <div className="LogoSection">
                         <Col>
@@ -54,14 +54,13 @@ function LandingFooter() {
                         </Col>
 
                     </div>
-
-                    <div className="FooterLineDiv"></div>
                 </div>
 
                 <footer>
                     <Col>
+                        <div className="FooterLineDiv"></div>
                         <div className="Copyright">
-                            <h3>Copyright &copy; 2021 All rights reserved.</h3>
+                            <h3>Copyright &copy; 2022 All rights reserved.</h3>
                         </div>
                     </Col>
                 </footer>

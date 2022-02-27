@@ -1,14 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
 
 .LandingForm {
-    min-height: 90vh;
-    min-width: 100%;
+    min-height: 100vh;
     display: flex;
+    width: 100%;
 }
 
 //-----------------Left Side-----------------//
 .TitleSection {
-    // background-color: blue;
+    padding-top: 25vh;
     width: 50%;
 }
 
@@ -24,14 +24,12 @@
 .FormTitle h1{
     font-weight: 300;
     font-size: 90px;
-    margin-top: 20vh;
-    margin-left: 10vh;
+    padding-left: 5vh;
 }
 
 .FormTitle p {
     font-size: 20px;
-    width: 55vh;
-    margin-left: 20vh;
+    padding-left: 10vh;
     margin-top: -3vh;
     color: black;
 }
@@ -42,12 +40,10 @@
     height: 129px;
     left: 20vh;
     top: -15vh;
-    // z-index: 10;
 }
 //-----------------Right Side-----------------//
 
 .FormSection {
-    // background-color: pink;
     width: 50%;
 }
 
@@ -68,41 +64,30 @@
     position: absolute;
     width: 129px;
     height: 129px;
-    left: 75vh;
     top: 25vh;
-    // z-index: 10;
 }
 
 //-----------------Mobile Responsive-----------------/
 @media screen and (max-width: 1440px){
-
-    .FormTitle h1 {
-        width: 100%;
-    }
-
     .black-gridForm2 {
-        left: 65vh;
         top: 30vh;
     }
 
-    .RightSection {
-        margin-left: 5vh;
+    .FormTitle h1 {
+        font-size: 70px;
     }
 }
 
 @media screen and (max-width: 1024px){
-
-    .LandingForm {
-        min-width: 134%;
+    .FormTitle h1 {
+        font-size: 60px;
     }
 
-    .FormTitle h1 {
-        width: 125%;
-        font-size: 80px;
+    .FormTitle p {
+        font-size: 17px;
     }
 
     .black-gridForm2 {
-        left: 60vh;
         top: 35vh;
     }
 
@@ -114,18 +99,12 @@
 
 @media screen and (max-width: 768px){
 
-    .LandingForm {
-        min-width: 168%;
-    }
-
     .FormTitle h1 {
-        width: 125%;
         font-size: 100px;
     }
 
     .FormTitle p {
         font-size: 27px;
-        width: 80vh;
     }
 
     .FormLabel .ant-row .ant-col label {
@@ -134,9 +113,7 @@
 }
 
 @media screen and (max-width: 425px){
-    .LandingForm {
-        min-width: 170%;
-    }
+    
 
     .FormTitle h1 {
         width: 155%;

@@ -10,8 +10,7 @@ import { Row, Col } from 'antd'
 
 //Image
 import PurpleLogo from '../landing/LandingPage-assets/PurpleLogo.png'
-import Vector2 from '../landing/LandingPage-assets/Vector2.png'
-import Vector1 from '../landing/LandingPage-assets/Vector1.png'
+import Vector1A from '../landing/LandingPage-assets/Vector1A.png'
 import LandingFooter from './LandingFooter'
 
 //Styles
@@ -32,7 +31,7 @@ function Home() {
 
                 {/* Home Page Title */}
                 <Row>
-                    <Col xs={{ span: 24 }} sm={{ span: 20 }} md={{ span: 16 }} lg={{ span: 16 }} offset={2}>
+                    <Col xs={{ span: 24 }} sm={{ span: 20 }} md={{ span: 24 }} lg={{ span: 16 }} offset={2}>
                         <div className="Home">
                             <div className="HomeTitle">
                                 <h1 id='LandingTitle'>Silang</h1>
@@ -49,10 +48,10 @@ function Home() {
                         <a href="#About">Learn More<span></span><span></span><span></span></a>
                     </section>
 
-                    <Row>
-                        <img src={Vector2} alt='Image2' className="VectorImage2" />
-                        <img src={Vector1} alt='Image1' className="VectorImage1" />
-                    </Row>
+                    <div>
+                        <img src={Vector1A} alt='Image1' className="VectorImage1" />
+                    </div>
+
                 </Row>
 
                 <Col>

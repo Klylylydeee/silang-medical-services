@@ -23,7 +23,7 @@ function LandingForm() {
     }
 
     return <Row>
-        <Col xs={{ span: 15 }} sm={{ span: 24 }} md={{ span: 14 }} lg={{ span: 24 }}>
+        <Col xs={{ span: 15 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 24 }}>
             <div className="LandingForm">
 
                 {/* Left Side of the Form Section */}
