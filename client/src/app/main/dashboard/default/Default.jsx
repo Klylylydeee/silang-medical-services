@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 
 //Ant Design layout
-import { Row, Col } from 'antd';
+import { Row, Col, Layout } from 'antd';
 import { Divider, Button } from 'antd';
 
 //Scss Styling
@@ -39,7 +39,7 @@ function Default() {
     }
 
     return (
-        <Row>
+        <Layout.Content>
             <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }} xxl={{ span: 24 }} className="dashboard-container" >
 
 
@@ -306,7 +306,7 @@ function Default() {
                                 </div>
                 }
             </Col>
-        </Row>
+        </Layout.Content>
     )
 }
 
