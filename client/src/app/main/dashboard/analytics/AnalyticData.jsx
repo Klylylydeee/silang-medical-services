@@ -1,45 +1,48 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 //Ant Design layout
 import { Pie } from '@ant-design/plots';
-import { Comment, Avatar, Form, Button, List, Input, Col, Layout } from "antd";
+import { Comment, Avatar, Form, Button, List, Input, Col, Layout, PageHeader } from "antd";
 import moment from "moment";
 import "antd/dist/antd.css";
 
 //Scss Styling
 import '../../../../styles/analytics-specific.scss'
 
-    //Comments Config
-    const { TextArea } = Input;
+//Comments Config
+const { TextArea } = Input;
 
-    const CommentList = ({ comments }) => (
-        <List
-            dataSource={comments}
-            itemLayout="horizontal"
-            renderItem={(props) => <Comment {...props} />}
-        />
-    );
+const CommentList = ({ comments }) => (
+    <List
+        dataSource={comments}
+        itemLayout="horizontal"
+        renderItem={(props) => <Comment {...props} />}
+    />
+);
 
-    const Editor = ({ onChange, onSubmit, submitting, value }) => (
-        <>
-            <Form.Item>
-                <TextArea rows={4} onChange={onChange} value={value} />
-            </Form.Item>
-            <Form.Item>
-                <Button
-                    htmlType="submit"
-                    loading={submitting}
-                    onClick={onSubmit}
-                    type="primary"
-                >
-                    Add Comment
-                </Button>
-            </Form.Item>
-        </>
-    );
+const Editor = ({ onChange, onSubmit, submitting, value }) => (
+    <>
+        <Form.Item>
+            <TextArea rows={4} onChange={onChange} value={value} />
+        </Form.Item>
+        <Form.Item>
+            <Button
+                htmlType="submit"
+                loading={submitting}
+                onClick={onSubmit}
+                type="primary"
+            >
+                Add Comment
+            </Button>
+        </Form.Item>
+    </>
+);
 
 const AnalyticData = () => {
+    const { dimension } = useSelector((state) => state.web);
+    const { barangay } = useSelector((state) => state.user); 
     const params = useParams();
 
     //Comments Config
@@ -47,41 +50,41 @@ const AnalyticData = () => {
         comments: [],
         submitting: false,
         value: ""
-      });
-    
-      useEffect(() => {
+    });
+
+    useEffect(() => {
         console.log(state);
-      }, [state]);
-    
-      const handleSubmit = () => {
+    }, [state]);
+
+    const handleSubmit = () => {
         setState({
-          ...state,
-          submitting: true
+            ...state,
+            submitting: true
         });
-    
+
         setTimeout(() => {
-          setState({
-            submitting: false,
-            value: "",
-            comments: [
-              ...state.comments,
-              {
-                author: "Jether Haniel",
-                avatar: "https://joeschmoe.io/api/v1/random",
-                content: <p>{state.value}</p>,
-                datetime: moment().fromNow()
-              }
-            ]
-          });
+            setState({
+                submitting: false,
+                value: "",
+                comments: [
+                    ...state.comments,
+                    {
+                        author: "Jether Haniel",
+                        avatar: "https://joeschmoe.io/api/v1/random",
+                        content: <p>{state.value}</p>,
+                        datetime: moment().fromNow()
+                    }
+                ]
+            });
         }, 1000);
-      };
-    
-      const handleChange = (e) => {
+    };
+
+    const handleChange = (e) => {
         setState({
-          ...state,
-          value: e.target.value
+            ...state,
+            value: e.target.value
         });
-      };
+    };
 
     //Pie chart config
     const data = [
@@ -130,34 +133,38 @@ const AnalyticData = () => {
         ],
     };
 
-        return (
-            <Layout.Content>
-                <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }} xxl={{ span: 24 }} className="analytics-monthly-container">
-                    <div className="header">
-                        <h1>Analytics for {params.year}-{params.month}</h1>
-                        <h2>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam neque tellus, maximus ut tristique et, rutrum ut quam. Curabitur eu odio metus. Pellentesque scelerisque risus id turpis rutrum, et vulputate lectus fermentum.</h2>
-                    </div>
-                    <Pie {...config} />
+    return (
+        <Layout.Content>
+            <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }} xxl={{ span: 24 }} className="analytics-monthly-container">
+                <div style={{ backgroundColor: "#AD72B7", padding: "10px 20px", marginBottom: "15px", borderRadius: "5px" }}>
+                    <PageHeader
+                        ghost={false}
+                        title="Monthly Analytics"
+                        subTitle={dimension >= 4 ? `Contains the analytics for Barangay ${barangay}.` : ""}
+                        style={{ padding: 0, backgroundColor: "#AD72B7", borderRadius: "5px" }}
+                    />
+                </div>
+                <Pie {...config} />
 
-                    <>
-                        <CommentList comments={state.comments} />
-                        <Comment
-                            avatar={
-                                <Avatar src="https://joeschmoe.io/api/v1/random" alt="Han Solo" />
-                            }
-                            content={
-                                <Editor
-                                    onChange={handleChange}
-                                    onSubmit={handleSubmit}
-                                    submitting={state.submitting}
-                                    value={state.value}
-                                />
-                            }
-                        />
-                    </>
-                </Col>
-            </Layout.Content>
-        )
-    }
+                <>
+                    <CommentList comments={state.comments} />
+                    <Comment
+                        avatar={
+                            <Avatar src="https://joeschmoe.io/api/v1/random" alt="Han Solo" />
+                        }
+                        content={
+                            <Editor
+                                onChange={handleChange}
+                                onSubmit={handleSubmit}
+                                submitting={state.submitting}
+                                value={state.value}
+                            />
+                        }
+                    />
+                </>
+            </Col>
+        </Layout.Content>
+    )
+}
 
-    export default AnalyticData
+export default AnalyticData

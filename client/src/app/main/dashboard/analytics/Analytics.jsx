@@ -1,13 +1,17 @@
 import React from 'react'
+import { useSelector } from "react-redux";
 
 //Ant Design layout
-import { Col, Layout } from 'antd';
+import { Col, Layout, PageHeader } from 'antd';
 import { Area } from '@ant-design/plots';
 
 //Scss Styling
 import '../../../../styles/analytics.scss'
 
 function Analytics() {
+  const { dimension } = useSelector((state) => state.web);
+  const { barangay } = useSelector((state) => state.user); 
+
   const data = [
     {
       "year": "2009",
@@ -116,54 +120,58 @@ function Analytics() {
   return (
     <Layout.Content>
       <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }} xxl={{ span: 24 }} className="analytics-container">
-        <div className="header">
-          <h1>Welcome to the Barangay Analytics</h1>
-          <h2>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam neque tellus, maximus ut tristique et, rutrum ut quam. Curabitur eu odio metus. Pellentesque scelerisque risus id turpis rutrum, et vulputate lectus fermentum.</h2>
+        <div style={{ backgroundColor: "#AD72B7", padding: "10px 20px", marginBottom: "15px", borderRadius: "5px" }}>
+          <PageHeader
+            ghost={false}
+            title="Yearly Analytics"
+            subTitle={dimension >= 4 ? `Contains the analytics for Barangay ${barangay}.` : ""}
+            style={{ padding: 0, backgroundColor: "#AD72B7", borderRadius: "5px" }}
+          />
         </div>
         <Area height={500} width={500} {...config} onReady={(plot) => {
-          
+
           plot.on('axis-label:click', (data) => {
             console.log(data.gEvent.target.attrs.text);
           });
           // Plot adds click events to the entire chart area
-        plot.on('plot:click', (...args) => {
-          console.log(...args);
-        });
+          plot.on('plot:click', (...args) => {
+            console.log(...args);
+          });
 
-// Element to add a click event, element represents the graphic elements, graphical elements, please see: https://g2.antv.vision/en/docs/manual/concepts/element
-plot.on('element:click', (...args) => {
-  console.log(...args);
-});
+          // Element to add a click event, element represents the graphic elements, graphical elements, please see: https://g2.antv.vision/en/docs/manual/concepts/element
+          plot.on('element:click', (...args) => {
+            console.log(...args);
+          });
 
-// Legend adds click events
-plot.on('legend-item:click', (...args) => {
-  console.log(...args);
-});
+          // Legend adds click events
+          plot.on('legend-item:click', (...args) => {
+            console.log(...args);
+          });
 
-// Legend name adds click event
-plot.on('legend-item-name:click', (...args) => {
-  console.log(...args);
-});
-// Label adds click events
-plot.on('label:click', (...args) => {
-  console.log(...args);
-});
+          // Legend name adds click event
+          plot.on('legend-item-name:click', (...args) => {
+            console.log(...args);
+          });
+          // Label adds click events
+          plot.on('label:click', (...args) => {
+            console.log(...args);
+          });
 
-// Mask adds click events
-plot.on('mask:click', (...args) => {
-  console.log(...args);
-});
+          // Mask adds click events
+          plot.on('mask:click', (...args) => {
+            console.log(...args);
+          });
 
-// Axis-label adds click events
-plot.on('axis-label:click', (...args) => {
-  console.log(...args);
-});
+          // Axis-label adds click events
+          plot.on('axis-label:click', (...args) => {
+            console.log(...args);
+          });
 
-// Add click events to the annotation
-plot.on('annotation:click', (...args) => {
-  console.log(...args);
-});
-        }} loading={false}/>
+          // Add click events to the annotation
+          plot.on('annotation:click', (...args) => {
+            console.log(...args);
+          });
+        }} loading={false} />
       </Col>
     </Layout.Content>
   )
