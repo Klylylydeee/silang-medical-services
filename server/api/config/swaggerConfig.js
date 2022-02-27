@@ -11,7 +11,7 @@ const options = {
         servers: [
             {
                 // url: `https://silang-medical-services-api.com`,
-                url: `http://localhost:1000`,
+                url: process.env.DEPLOYMENT_STATUS === "YES" ? "http://api.silangmedical.com" : "http://localhost:1000",
             },
         ],
     },

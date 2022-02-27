@@ -155,7 +155,8 @@ exports.analyticsByYear = async (req, res, next) => {
                     createdAt: {
                         $gte: new Date(`2021-01-01T00:00:00.0Z`),
                         $lt: new Date(`2022-12-31T15:58:26.000Z`)
-                    }
+                    },
+                    barangay: req.body.barangay
                 }
             },
             {
@@ -270,6 +271,48 @@ exports.analyticsByYear = async (req, res, next) => {
 exports.analyticsBySpecificDate = async (req, res, next) => {
 
     try {
+
+        let analyticsData = await MedicalRecord.find(
+            {
+                barangay: req.body.barangay,
+                createdAt: {
+                    $gte: new Date(`${req.query.year}-${req.query.month}-01T00:00:00.0Z`),
+                    $lt: new Date(`${req.query.year}-${req.query.month}-31T15:58:26.000Z`)
+                }
+            }
+        );
+
+        let analyticsEvaluated = {
+            high: 0,
+            medium: 0,
+            low: 0
+        };
+
+        analyticsData.map((currentData) => {
+            currentData.score >= 8 ?
+                analyticsEvaluated.high++
+            : currentData.score >= 5 ?
+                analyticsEvaluated.medium++
+            :
+                analyticsEvaluated.low++
+        });
+
+        const uniqueValue = (arr, prop) => {
+            return arr.reduce((a, d) => {
+                if (!a.includes(d[prop])) { a.push(d[prop]); }
+                return a;
+            }, []);
+        }
+
+        const uniqueDiagonisis = uniqueValue(analyticsData, "diagnosis");
+
+        res.send({
+            message: "Specific analytics data",
+            payload: {
+                severity: analyticsEvaluated,
+                diagnosis: uniqueDiagonisis
+            }
+        });
 
     } catch(err) {
 

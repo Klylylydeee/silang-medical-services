@@ -1,3 +1,4 @@
+const { Schema, model } = require("mongoose");
 
 /**
  * @swagger
@@ -31,3 +32,32 @@
  *               description: stack
  * 
  */
+
+ const ErrorSchema = new Schema(
+    {
+        timestamp: {
+            type: Date
+        },
+        level: {
+            type: String
+        },
+        message: {
+            type: String
+        },
+        meta: {
+            type: {
+                status: {
+                    type: Number
+                },
+                stack: {
+                    type: String
+                }
+            },
+            required: true
+        }
+    }
+);
+
+const ErrorLogs = model("error-logs", ErrorSchema);
+
+module.exports = ErrorLogs;

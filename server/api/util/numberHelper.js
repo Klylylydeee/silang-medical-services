@@ -6,5 +6,12 @@ const generatePin = () => {
         )
     ) + (Math.pow(10, 5));
 }
+const generatePhoneNum = () => {
+    return Math.floor(
+        Math.random() * (
+            9 * (Math.pow(10, 8))
+        )
+    ) + (Math.pow(10, 8));
+}
 
-module.exports = { generatePin };
+module.exports = { generatePin, generatePhoneNum };

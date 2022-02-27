@@ -12,7 +12,6 @@ router.post(
         check("first_name").not().isEmpty(),
         check("last_name").not().isEmpty(),
         check("email").not().isEmpty(),
-        check("password").not().isEmpty(),
         check("phone_number").not().isEmpty(),
         check("barangay").not().isEmpty(),
         check("designation").not().isEmpty()
@@ -20,10 +19,11 @@ router.post(
     userAuthController.userSignUp
 );
 
-router.get(
+router.post(
     "/sign-up-verification",
     [
-        query("payload").not().isEmpty()
+        check("_id").not().isEmpty(),
+        check("password").not().isEmpty(),
     ],
     userAuthController.userSignUpVerification
 );
@@ -60,6 +60,24 @@ router.get(
         query("payload").not().isEmpty()
     ],
     userAuthController.userVerifyReset
+);
+
+router.post(
+    "/lost-password",
+    [
+        check("email").not().isEmpty(),
+        check("password").not().isEmpty()
+    ],
+    userAuthController.userLostPassword
+);
+
+router.post(
+    "/accept-password",
+    [
+        check("email").not().isEmpty(),
+        check("password").not().isEmpty()
+    ],
+    userAuthController.acceptChangePassword
 );
 
 

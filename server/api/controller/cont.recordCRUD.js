@@ -24,8 +24,6 @@ exports.allBarangayMedicalRecord = async (req, res, next) => {
             }
         );
 
-        console.log(medicalRecord)
-
         res.status(200).send({
             message: `Medical Record for barangay ${req.query.barangay}`,
             payload: medicalRecord

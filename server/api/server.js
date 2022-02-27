@@ -9,6 +9,7 @@ const AdminJSMongoose = require('@adminjs/mongoose');
 const bcrypt = require("bcrypt");
     
 const databaseConnection = require("./database/mongoDBConfig");
+const createEventListing = require("./test/createDocInit");
 const corsConfig = require("./config/corsConfig");
 const morganConfig = require("./config/morganConfig");
 const faviconConfig = require("./config/faviconConfig");
@@ -18,14 +19,20 @@ const {
     UserResourceOptions,
     AnnouncementResourceOptions,
     EventResourceOptions,
-    RecordsResourceOptions
+    RecordsResourceOptions,
+    ErroresourceOptions,
+    CommentssourceOptions,
+    SubscribedsourceOptions,
+    MessagesourceOptions
 } = require("./config/adminResource");
 
 const Users = require("./model/userAccount");
 
 AdminJS.registerAdapter(AdminJSMongoose);
 
-databaseConnection();
+databaseConnection().then(() => { 
+    createEventListing();
+});
 
 const app = express();
 
@@ -36,27 +43,34 @@ process.env.SERVER_MODE === "admin" ?
         databases: [],
         rootPath: '/admin',
         resources: [
-            UserResourceOptions,
             AnnouncementResourceOptions,
+            CommentssourceOptions,
+            ErroresourceOptions,
             EventResourceOptions,
-            RecordsResourceOptions
+            RecordsResourceOptions,
+            MessagesourceOptions,
+            UserResourceOptions,
+            SubscribedsourceOptions
         ],
         branding: {
             companyName: 'Silang Medical Services',
             softwareBrothers: false,
-            logo: false,
+            logo: "/asset/app-logo.png",
         },
         locale: {
             translations: {
                 messages: {
-                    loginWelcome: 'Slogan'
+                    loginWelcome: false,
                 },
                 labels: {
-                    loginWelcome: 'Admin Panel',
+                    loginWelcome: 'Web Admin Portal',
                 },
             }
         },
         assets: {
+            styles: [
+                "/asset/adminStyles.css"
+            ]
         },
     })
 :
@@ -107,6 +121,8 @@ app.use(morganConfig);
 app.use(helmet());
 app.use(faviconConfig);
 
+app.use('/asset', express.static(__dirname +'/controller/handlebar/asset'));
+
 app.listen(process.env.PORT, () => {
     console.log(`Silang Medical Services Server: http://localhost:${process.env.PORT}`)
 });
@@ -123,5 +139,7 @@ app.use('/authentication', require("./routes/route.authentication"));
 app.use('/dashboard', require("./routes/route.dashboard"));
 app.use('/medical-record', require("./routes/route.medicalRecord"));
 app.use('/analytics', require("./routes/route.analytics"));
+app.use('/settings', require("./routes/route.userSetting"));
+app.use('/events', require("./routes/route.eventList"));
 app.use(require("./routes/errorHandler").notFoundHandler);
 app.use(require("./routes/errorHandler").catchHandler);

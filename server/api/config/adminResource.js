@@ -2,6 +2,10 @@ const Users = require("../model/userAccount");
 const Announcement = require("../model/announcement");
 const EventListing = require("../model/eventListing");
 const MedicalRecords = require("../model/medicalRecord");
+const ErrorLogs = require("../model/errorLogs");
+const AnalyticComment = require("../model/analyticComment");
+const SubscribedCitizen = require("../model/subscribedCitizen");
+const MessageLogs = require("../model/messageLog");
 
 const UserResourceOptions = {
     resource: Users,
@@ -53,9 +57,59 @@ const RecordsResourceOptions = {
     }
 };
 
+const ErroresourceOptions = {
+    resource: ErrorLogs,
+    options: {
+        listProperties: [
+            "timestamp",
+            "level",
+            "message"
+        ]
+    }
+};
+
+const CommentssourceOptions = {
+    resource: AnalyticComment,
+    options: {
+        listProperties: [
+            "comment",
+            "year",
+            "month"
+        ]
+    }
+};
+
+const SubscribedsourceOptions = {
+    resource: SubscribedCitizen,
+    options: {
+        listProperties: [
+            "first_name",
+            "last_name",
+            "email",
+            "phone_number"
+        ]
+    }
+};
+
+const MessagesourceOptions = {
+    resource: MessageLogs,
+    options: {
+        listProperties: [
+            "request_user_id",
+            "receiver_user_id",
+            "subject",
+            "message"
+        ]
+    }
+};
+
 module.exports = {
     UserResourceOptions,
     AnnouncementResourceOptions,
     EventResourceOptions,
-    RecordsResourceOptions
+    RecordsResourceOptions,
+    ErroresourceOptions,
+    CommentssourceOptions,
+    SubscribedsourceOptions,
+    MessagesourceOptions
 }
