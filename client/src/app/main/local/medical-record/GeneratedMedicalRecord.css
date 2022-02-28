@@ -1,0 +1,193 @@
+body {
+    width: 100%;
+    display: block;
+}
+
+.GeneratedMedicalRecord-body {
+    width: 100%;
+    padding: 40px 0px 40px;
+    background-color: #5c66c4;
+}
+
+/* GeneratedMedicalRecord List css *********************************************************
+*******************************************************
+****************************/
+/* GeneratedMedicalRecord List Mobile Responsive S *********************************************************/
+
+.header-title {
+    position: relative;
+    text-align: center;
+    color: black;
+    width: 100%;
+}
+
+.header-title .gen-header-img {
+    width: 100%;
+    text-align-last: center;
+    
+}
+
+.header-title .gen-header-text{
+    width: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.header-title h1{
+    text-align: center;
+    text-decoration-line: underline;
+    text-underline-position: under;
+    font-weight: bolder;
+    font-size: 35px;
+    padding: 0px 10px 0px;
+
+}
+
+.recordList-card {
+    padding: 10px;
+    background-color: #AD72B7;
+    border-radius: 10px;
+}
+
+.recordList-itemsRow {
+    display: flex;
+    flex-direction: row;
+    padding-bottom: 10px;
+}
+
+.recordList-itemsRow p {
+    font-size: 15px;
+    padding: 2px 0px 0px 10px;
+    margin: 0;
+}
+
+.recordList-itemsRow h2 {
+    margin: 0;
+    font-size: 15px;
+}
+
+
+
+/* GeneratedMedicalRecord List Mobile Responsive M *********************************************************/
+@media only screen and (min-width: 375px) {
+    
+    .recordList-card {
+        padding: 12px;
+    }
+
+    .recordList-itemsRow p {
+        padding: 1px 0px 0px 10px;
+    }
+
+}
+
+/* GeneratedMedicalRecord List Mobile Responsive L *********************************************************/
+@media only screen and (min-width: 425px) {
+    
+    .recordList-card {
+        padding: 14px;
+    }
+
+    
+
+    .recordList-itemsRow h2 {
+        font-size: 18px;
+    }
+    
+    .recordList-itemsRow p {
+        font-size: 17px;
+        padding: 2px 0px 0px 10px;
+    }
+
+}
+
+/* GeneratedMedicalRecord List Tablet Responsive  *********************************************************/
+@media only screen and (min-width: 768px) {
+    .GeneratedMedicalRecord-body {
+        background-image: url(./Vector1.png);
+        background-position: right top;
+        background-size: 850px 400px;
+        background-repeat: no-repeat;
+        background-position: -20% 0%;
+    }
+
+    .header-title h1{
+        font-size: 45px;
+    }
+
+    .header-title .gen-header-img {
+        text-align-last: left ;
+        
+    }
+
+    .recordList-card {
+        padding: 25px;
+    }
+
+
+}
+
+/* GeneratedMedicalRecord List Laptop Responsive  *********************************************************/
+@media only screen and (min-width: 1000px) {
+    .GeneratedMedicalRecord-body {
+        background-position: 120% 0%;
+    }
+
+    .recordList-itemsRow p {
+        font-size: 20px;
+        padding: 9px 0px 0px 10px;
+    }
+    
+    .recordList-itemsRow h2 {
+        font-size: 27px;
+    }
+}
+
+/* GeneratedMedicalRecord List Laptop Responsive L *********************************************************/
+@media only screen and (min-width: 1440px) {
+    .GeneratedMedicalRecord-body {
+        background-position: 100% 0%;
+    }
+
+    .header-title h1{
+        font-size: 65px;
+    }
+
+
+    .recordList-itemsRow p {
+        font-size: 35px;
+        padding: 15px 0px 0px 10px;
+    }
+    
+    .recordList-itemsRow h2 {
+        font-size: 40px;
+    }
+
+}
+
+/* GeneratedMedicalRecord List 4K Responsive  *********************************************************/
+@media only screen and (min-width: 2560px) {
+    .GeneratedMedicalRecord-body {
+        background-size: 1450px 400px;
+        background-position: 120% 0%;
+    }
+
+    .header-title h1{
+        font-size: 85px;
+    }
+
+    .recordList-itemsRow p {
+        font-size: 40px;
+        padding: 14px 0px 0px 10px;
+    }
+    
+    .recordList-itemsRow h2 {
+        font-size: 50px;
+    }
+
+
+}
+
+

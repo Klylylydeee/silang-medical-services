@@ -3,6 +3,7 @@ import './BarangayEventList.css';
 import { Collapse } from 'antd';
 import { Card } from 'antd';
 import { Button } from 'antd';
+import logo from './barangay-lumil.png';
 
 
 const BarangayEventList = () => {
@@ -15,8 +16,13 @@ const BarangayEventList = () => {
             return(
 
                     <div className="event-body">
-                        <div className="header-title">
-                            <h1>Puting Kahoy</h1>
+                        <div className="event-header-title">
+                            <div className="event-img">
+                                <img src={logo} alt="Logo" />
+                            </div>
+                            <div>
+                                <h1>Puting Kahoy</h1>
+                            </div>
                         </div>
 
                         <div className="card-wrapper1">

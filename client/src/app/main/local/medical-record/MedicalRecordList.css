@@ -1,0 +1,221 @@
+body {
+    width: 100%;
+    display: block;
+    
+}
+
+
+
+/* Responsive Mobile S 320px *********************************************************/
+.medicalRecord-body {
+    width: 100%;
+    padding: 40px 0px 40px;
+    background-color: #5c66c4;
+    
+
+}
+
+.ant-card-head-title {
+    font-size: 20px;
+}
+
+.medicalRecord-header-title {
+    position: relative;
+    text-align: center;
+    color: black;
+    width: 100%;
+}
+
+.medicalRecord-header-title .header-img {
+    width: 100%;
+    text-align-last: center;
+    
+}
+
+.medicalRecord-header-title .header-text{
+    width: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.medicalRecord-header-title h1{
+    text-align: center;
+    text-decoration-line: underline;
+    text-underline-position: under;
+    font-weight: bolder;
+    font-size: 35px;
+
+}
+
+.medicalRecord-card-wrapper1 {
+    width: 100%;
+    padding: 10px;
+    background-color: #AD72B7;
+    border-radius: 10px;
+    margin-bottom: 20px;
+  }
+
+
+.medicalRecord-card-wrapper1 .c1 {
+    margin-bottom: 10px;
+    background-color: #AD72B7;
+    border-radius: 10px;
+  }
+
+
+.medicalRecord-card-wrapper1 p {
+    color:black;
+    font-size: 15px;
+}
+
+/* Responsive Mobile M 375px *********************************************************/
+@media only screen and (min-width: 375px) {
+    .medicalRecord-body {
+        width: 100%;
+    }
+
+    .medicalRecord-header-title h1{
+        font-size: 38px;
+    }
+
+}
+
+/* Responsive Mobile L 425px *********************************************************/
+@media only screen and (min-width: 425px) {
+    .medicalRecord-body {
+        width: 100%;
+    }
+
+    .medicalRecord-header-title h1{
+        font-size: 40px;
+    }
+
+    .medicalRecord-card-wrapper1 p {
+        font-size: 20px;
+    }
+
+}
+
+
+
+/* Responsive Tablet 768px *********************************************************/
+@media only screen and (min-width: 768px) {
+    .medicalRecord-body {
+        width: 100%;
+        background-image: url(./Vector1.png);
+        background-position: right top;
+        background-size: 850px 400px;
+        background-repeat: no-repeat;
+        background-position: -20% 0%;
+    }
+
+    .medicalRecord-header-title h1{
+        font-size: 45px;
+    }
+
+    .medicalRecord-header-title .header-img {
+        text-align-last: left ;
+        
+    }
+
+    .medicalRecord-card-wrapper1 .c1 {
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+
+    .medicalRecord-card-wrapper1 p {
+        font-size: 20px;
+    }
+
+}
+
+/* Responsive Laptop 954px *********************************************************/
+@media only screen and (min-width: 954px) {
+    .medicalRecord-body {
+        width: 100%;
+        background-position: 190% 0%;
+    }
+
+    .medicalRecord-header-title h1{
+        font-size: 55px;
+    }
+
+    .medicalRecord-card-wrapper1 {
+        padding: 20px;
+    }    
+
+
+    .medicalRecord-card-wrapper1 .c1 {
+        font-size: 25px;
+        font-weight: bold;
+    }
+
+
+    .medicalRecord-card-wrapper1 p {
+        font-size: 25px;
+    }
+}
+
+/* Responsive Laptop 1024px *********************************************************/
+@media only screen and (min-width: 1024px) {
+    .medicalRecord-body {
+        width: 100%;
+        background-position: 120% 0%;
+    }
+
+    .medicalRecord-card-wrapper1 p {
+        font-size: 25px;
+    }
+
+    
+}
+
+/* Responsive Laptop L 1440px *********************************************************/
+@media only screen and (min-width: 1440px) {
+    .medicalRecord-body {
+        width: 100%;
+        background-position: 100% 0%;
+    }
+
+    .medicalRecord-header-title h1{
+        font-size: 60px;
+    }
+
+    .medicalRecord-card-wrapper1 .c1 {
+        border-radius: 15px;
+    }
+    
+
+    .medicalRecord-card-wrapper1 p {
+        font-size: 30px;
+    }
+}
+
+/* Responsive 4K 2560px *********************************************************/
+@media only screen and (min-width: 2560px) {
+    .medicalRecord-body {
+        width: 100%;
+        background-size: 1450px 400px;
+        background-position: 120% 0%;
+    }
+
+    .medicalRecord-header-title h1{
+        font-size: 85px;
+    }
+
+    .ant-card-head-title {
+        font-size: 40px;
+    }
+
+    .medicalRecord-card-wrapper1 .c1 {
+        font-size: 50px;
+        border-radius: 20px;
+    }
+
+    .medicalRecord-card-wrapper1 p {
+        font-size: 40px;
+    }
+}

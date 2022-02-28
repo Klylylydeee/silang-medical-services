@@ -1,6 +1,7 @@
 import React from "react";
 import './EventAnnouncement.css';
 import { Card } from 'antd';
+import logo from './barangay-lumil.png';
 
 
 
@@ -10,8 +11,14 @@ const EventListing = () => {
             return(
 
                 <div className="EventAnnouncement-body">
-                    <div className="header-title">
-                        <h1>Event Listing</h1>
+                    <div className="listing-header-title">
+                            <div className="listing-img">
+                                <img src={logo} alt="Logo" />
+                            </div>
+                            <div>
+                                <h1>Event Listing</h1>
+                            </div>
+                        
                     </div>
 
                     <div className="event-card">

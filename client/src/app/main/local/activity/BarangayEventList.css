@@ -10,17 +10,30 @@ body {
 .event-body {
     width: 100%;
     padding: 20px 0px 30px;
+    background-color: #5c66c4;
 }
 
 .ant-card-head-title {
     font-size: 20px;
 }
 
-.header-title h1{
+.event-header-title .event-img {
+    width: 100%;
+    text-align-last: center;
+    
+}
+
+.event-img img {
+    width: 130px;
+    height: 100px;
+}
+
+.event-header-title h1{
     text-align: center;
     text-decoration-line: underline;
     text-underline-position: under;
     font-weight: bolder;
+    
 }
 
 .card-wrapper1 {
@@ -39,42 +52,81 @@ body {
   }
 
 .card-wrapper1 .c1 {
+    font-size: 15px;
+    font-weight: bold;
     margin-bottom: 10px;
     background-color: #AD72B7;
     border-radius: 10px;
   }
 
 .card-wrapper2 .c2 {
+    font-size: 15px;
+    font-weight: bold;
     margin-bottom: 10px;
     background-color: #AD72B7;
     border-radius: 10px;
   }
 
-p {
+.card-wrapper1 p {
+    color:black;
+    font-size: 15px;
+}
+
+.card-wrapper2 p {
     color:black;
     font-size: 15px;
 }
 
 /* Responsive Mobile M 375px *********************************************************/
 @media only screen and (min-width: 375px) {
-    .event-body {
-        width: 100%;
+
+    .event-header-title h1{
+        font-size: 30px;
     }
 
-    .header-title h1{
-        font-size: 30px;
+    .card-wrapper1 .c1 {
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    .card-wrapper2 .c2 {
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    .card-wrapper1 p {
+        font-size: 16px;
+    }
+    
+    .card-wrapper2 p {
+        font-size: 16px;
     }
 
 }
 
 /* Responsive Mobile L 425px *********************************************************/
 @media only screen and (min-width: 425px) {
-    .event-body {
-        width: 100%;
+
+    .event-header-title h1{
+        font-size: 45px;
     }
 
-    .header-title h1{
-        font-size: 40px;
+    .card-wrapper1 .c1 {
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    .card-wrapper2 .c2 {
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    .card-wrapper1 p {
+        font-size: 17px;
+    }
+    
+    .card-wrapper2 p {
+        font-size: 17px;
     }
 
 }
@@ -85,9 +137,18 @@ p {
 @media only screen and (min-width: 768px) {
     .event-body {
         width: 100%;
+        background-image: url(./Vector2.png);
+        background-size: 100% 100%;
+        background-position: center;
+        background-repeat: no-repeat;
     }
 
-    .header-title h1{
+    .event-img img {
+        width: 150px;
+        height: 120px;
+    }
+
+    .event-header-title h1{
         font-size: 55px;
     }
 
@@ -101,20 +162,25 @@ p {
         font-weight: bold;
     }
 
-    p {
+    .card-wrapper1 p {
+        font-size: 20px;
+    }
+    
+    .card-wrapper2 p {
         font-size: 20px;
     }
 
 }
 
 /* Responsive Laptop 954px *********************************************************/
-@media only screen and (min-width: 954px) {
+@media only screen and (min-width: 800x) {
     .event-body {
         width: 100%;
+        
     }
 
-    .header-title h1{
-        font-size: 65px;
+    .event-header-title h1{
+        font-size: 75px;
     }
 
     .card-wrapper1 {
@@ -135,7 +201,11 @@ p {
         font-weight: bold;
     }
 
-    p {
+    .card-wrapper1 p {
+        font-size: 25px;
+    }
+    
+    .card-wrapper2 p {
         font-size: 25px;
     }
 }
@@ -144,6 +214,11 @@ p {
 @media only screen and (min-width: 1024px) {
     .event-body {
         width: 100%;
+        
+    }
+    .event-img img {
+        width: 180px;
+        height: 150px;
     }
 
     
@@ -153,10 +228,11 @@ p {
 @media only screen and (min-width: 1440px) {
     .event-body {
         width: 100%;
+        
     }
 
-    .header-title h1{
-        font-size: 60px;
+    .event-header-title h1{
+        font-size: 70px;
     }
 
     .card-wrapper1 .c1 {
@@ -167,7 +243,11 @@ p {
         border-radius: 15px;
     }
 
-    p {
+    .card-wrapper1 p {
+        font-size: 30px;
+    }
+    
+    .card-wrapper2 p {
         font-size: 30px;
     }
 }
@@ -176,10 +256,16 @@ p {
 @media only screen and (min-width: 2560px) {
     .event-body {
         width: 100%;
+        
     }
 
-    .header-title h1{
-        font-size: 75px;
+    .event-img img {
+        width: 300px;
+        height: 230px;
+    }
+
+    .event-header-title h1{
+        font-size: 85px;
     }
 
     .ant-card-head-title {
@@ -196,7 +282,11 @@ p {
         border-radius: 20px;
     }
 
-    p {
+    .card-wrapper1 p {
+        font-size: 40px;
+    }
+    
+    .card-wrapper2 p {
         font-size: 40px;
     }
 }

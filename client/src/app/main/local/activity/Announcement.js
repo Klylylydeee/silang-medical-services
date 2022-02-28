@@ -1,6 +1,7 @@
 import React from "react";
 import './EventAnnouncement.css';
 import { Card } from 'antd';
+import logo from './barangay-lumil.png';
 
 
 
@@ -11,8 +12,14 @@ const Announcement = () => {
             return(
 
                     <div className="EventAnnouncement-body">
-                        <div className="header-title">
-                            <h1>Announcement</h1>
+                        <div className="announcement-header-title">
+                            <div className="announcement-img">
+                                <img src={logo} alt="Logo" />
+                            </div>
+                            <div>
+                                <h1>Announcement</h1>
+                            </div>
+                            
                         </div>
 
                         <div className="announcement-card">
