@@ -144,46 +144,49 @@ function Dashboard() {
                         overflow: "hidden",
                     }}
                 >
-                    <Breadcrumb>
-                        {
-                            location.pathname.split("/")[1] === "dashboard" && location.pathname.split("/").length === 2 ?
+                    {
+                        dimension >= 3 &&
+                        <Breadcrumb>
+                            {
+                                location.pathname.split("/")[1] === "dashboard" && location.pathname.split("/").length === 2 ?
+                                    <React.Fragment>
+                                        <Breadcrumb.Item onClick={() => { history("/dashboard") }}>
+                                            <HomeOutlined />
+                                            <span>{firstCharacterUppercase(location.pathname.split("/")[1])}</span>
+                                        </Breadcrumb.Item>
+                                    </React.Fragment>
+                                :
                                 <React.Fragment>
-                                    <Breadcrumb.Item onClick={() => { history("/dashboard") }}>
+                                    <Breadcrumb.Item href="/dashboard">
                                         <HomeOutlined />
                                         <span>{firstCharacterUppercase(location.pathname.split("/")[1])}</span>
                                     </Breadcrumb.Item>
+                                    {
+                                        location.pathname.split("/").map((currentPath, pathKey) => {
+                                            return pathKey <= 0 || pathKey === 1 ?
+                                                null
+                                            :
+                                                location.pathname.split("/").length-1 === pathKey ?
+                                                <Breadcrumb.Item key={pathKey}>
+                                                    {firstCharacterUppercase(currentPath)}
+                                                </Breadcrumb.Item>
+                                            :
+                                                <Breadcrumb.Item key={pathKey}>
+                                                    <span>
+                                                        {
+                                                            location.pathname.split("/").length >= 3 && dimension <= 2 ?
+                                                                "..."
+                                                            :
+                                                                firstCharacterUppercase(currentPath)
+                                                        }
+                                                    </span>
+                                                </Breadcrumb.Item>
+                                        })
+                                    }
                                 </React.Fragment>
-                            :
-                            <React.Fragment>
-                                <Breadcrumb.Item href="/dashboard">
-                                    <HomeOutlined />
-                                    <span>{firstCharacterUppercase(location.pathname.split("/")[1])}</span>
-                                </Breadcrumb.Item>
-                                {
-                                    location.pathname.split("/").map((currentPath, pathKey) => {
-                                        return pathKey <= 0 || pathKey === 1 ?
-                                            null
-                                        :
-                                            location.pathname.split("/").length-1 === pathKey ?
-                                            <Breadcrumb.Item key={pathKey}>
-                                                {firstCharacterUppercase(currentPath)}
-                                            </Breadcrumb.Item>
-                                        :
-                                            <Breadcrumb.Item key={pathKey}>
-                                                <span>
-                                                    {
-                                                        location.pathname.split("/").length >= 3 && dimension <= 2 ?
-                                                            "..."
-                                                        :
-                                                            firstCharacterUppercase(currentPath)
-                                                    }
-                                                </span>
-                                            </Breadcrumb.Item>
-                                    })
-                                }
-                            </React.Fragment>
-                        }
-                    </Breadcrumb>
+                            }
+                        </Breadcrumb>
+                    }
                     <div
                         style={{
                             lineHeight: "5px"

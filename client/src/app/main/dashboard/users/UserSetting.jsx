@@ -28,12 +28,10 @@ const UserSetting = () => {
 
     const getUserData = async () => {
         try {
-
             dispatch(changeLoader({ loading: true }))
             let userCreate = await axiosAPI.post(`settings/user-data`, {
                 email: email
             });
-            console.log(userCreate)
             setUserData({
                 first_name: userCreate.data.payload.first_name, 
                 last_name: userCreate.data.payload.last_name, 

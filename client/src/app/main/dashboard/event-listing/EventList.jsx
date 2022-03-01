@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Calendar, Alert, Badge, Layout, PageHeader, Button } from 'antd';
+import { Calendar, Alert, Badge, Layout, PageHeader, Button, Modal, Empty, Row, Col, Card, Statistic} from 'antd';
 import moment from 'moment';
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -28,11 +28,18 @@ const DataCell = (value) => {
 const EventList = () => {
     const { dimension } = useSelector((state) => state.web); 
     const { barangay } = useSelector((state) => state.user); 
+    const { cell } = useSelector((state) => state.calendar);
+    const [cellModal, setCellModal] = useState(false);
     const history = useNavigate();
     const dispatch = useDispatch();
     const [eventsDate, setEventsDate] = useState({
         value: moment(new Date()),
         selectedValue: moment(new Date())
+    });
+    const [analyticsData, setAnalyticsData] = useState({
+        finished: 0,
+        upcoming: 0,
+        awaiting: 0
     });
     const onSelect = dateVal => {
         setEventsDate((prevData) => {
@@ -41,6 +48,7 @@ const EventList = () => {
                 selectedValue: dateVal
             }
         })
+        setCellModal(true)
     };
 
     const onPanelChange = value => {
@@ -55,12 +63,16 @@ const EventList = () => {
     const getCellData = async () => {
         try {
             dispatch(changeLoader({ loading: true }))
-            let eventData = await axiosAPI.get(`events/list?barangay=${barangay}`);
+            let eventData = await axiosAPI.get(`events/private-list?barangay=${barangay}`);
             dispatch(changeLoader({ loading: false }));
-            toasterRequest({ payloadType: "success", textString: eventData.data.message});
             dispatch(addCellData({
                 cell: eventData.data.payload
-            }))
+            }));
+            setAnalyticsData({
+                finished: eventData.data.analytics.finished,
+                upcoming: eventData.data.analytics.upcoming,
+                awaiting: eventData.data.analytics.awaiting
+            })
         } catch (err) {
             dispatch(changeLoader({ loading: false }))
             err.response ? 
@@ -86,16 +98,60 @@ const EventList = () => {
                     extra={[
                         <Button key="3" onClick={() => {
                             history({
-                                pathname: `/dashboard/users/create/invitation`
+                                pathname: `/dashboard/event-listing/create`
                             })
                         }} style={{ color: "#AD72B7" }}>Create Event</Button>
                     ]}
                 />
             </Layout.Content>
+            <Row gutter={[24, 0]} style={{ padding: dimension >= 4 ? "10px 0 10px 0" : "10px 0",  borderRadius: "5px" }}>
+                <Col xs={{ span: 24 }} lg={{ span: 12 }} style={{ marginBottom: "15px" }}>
+                    <Card title="Calendar Legend" bordered={false} style={{ width: "100%" }}>
+                        <Badge status="success" text="Event has occured or is currently on-going." />
+                        <br />
+                        <Badge status="default" text="Event has not been accepted or not yet approved." />
+                        <br />
+                        <Badge status="warning" text="Upcoming Events." />
+                    </Card>
+                </Col>
+                <Col xs={{ span: 24 }} lg={{ span: 12 }} style={{ marginBottom: "15px" }}>
+                    <Card title="Event Analytics" bordered={false} style={{ width: "100%" }}>
+                        <Row>
+                            <Col xs={{ span: 24 }} lg={{ span: 8 }}>
+                                <Statistic title="Finished" value={analyticsData.finished} />
+                            </Col>
+                            <Col xs={{ span: 24 }} lg={{ span: 8 }}>
+                                <Statistic title="Upcoming" value={analyticsData.upcoming} />
+                            </Col>
+                            <Col xs={{ span: 24 }} lg={{ span: 8 }}>
+                                <Statistic title="Awaiting Approval" value={analyticsData.awaiting} />
+                            </Col>
+                        </Row>
+                    </Card>
+                </Col>
+            </Row>
             <Layout.Content style={{ backgroundColor: "white", padding: "20px", marginBottom: "15px", borderRadius: "5px" }}>
                 {/* <Alert message={`You selected date: ${eventsDate.selectedValue && eventsDate.selectedValue.format('YYYY-MM-DD')}`}/> */}
                 <Calendar dateCellRender={DataCell} mode={"month"} value={eventsDate.value} onSelect={onSelect} onPanelChange={onPanelChange} />
             </Layout.Content>
+            <Modal title={moment(eventsDate.selectedValue).format("MMMM DD,YYYY")} visible={cellModal} closable={false}  onOk={() => { setCellModal(false) }} okText="Close" className="event-modal">
+                {
+                    cell[`${moment(eventsDate.selectedValue).format("YYYY/MM/DD")}`] !== undefined &&
+                    cell[`${moment(eventsDate.selectedValue).format("YYYY/MM/DD")}`].map((item) => (
+                        <li key={item.content}>
+                            <Badge status={item.type} text={item.content} className="hoverable-badge" onClick={() => {
+                                history({
+                                    pathname: `/dashboard/event-listing/view/${item.id}`
+                                })
+                            }}/>
+                        </li>
+                    ))
+                }
+                {
+                    cell[`${moment(eventsDate.selectedValue).format("YYYY/MM/DD")}`] === undefined &&
+                    <Empty />
+                }
+            </Modal>
         </React.Fragment>
     );
 };

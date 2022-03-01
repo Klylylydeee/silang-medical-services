@@ -16,7 +16,7 @@ import {
 //Scss Styling
 import '../../../../styles/medical-list.scss'
 
-const medicalList = () => {
+const MedicalList = () => {
 
     const { dimension } = useSelector((state) => state.web);
     const { barangay } = useSelector((state) => state.user); 
@@ -29,6 +29,7 @@ const medicalList = () => {
             title: 'Record ID',
             dataIndex: 'recordID',
             key: 'recordID',
+            responsive: ['md']
         },
 
         {
@@ -41,7 +42,6 @@ const medicalList = () => {
             title: 'Severity',
             key: 'tags',
             dataIndex: 'tags',
-            responsive: ['md'],
             render: tags => (
                 <>
                     {tags.map(tag => {
@@ -73,7 +73,6 @@ const medicalList = () => {
         {
             title: 'Action',
             key: 'action',
-            responsive: ['md'],
             render: (text, record) => (
                 <Space size="middle">
                     <a>View</a>
@@ -144,28 +143,28 @@ const medicalList = () => {
     ];
 
     return (
-        <Layout.Content>
-            <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }} xxl={{ span: 24 }} className="record-container">
-                <div style={{ backgroundColor: "#AD72B7", padding: "10px 20px", marginBottom: "15px", borderRadius: "5px" }}>
-                    <PageHeader
-                        ghost={false}
-                        title="Medical Record"
-                        subTitle={dimension >= 4 ? `All users registered under Barangay ${barangay}.` : ""}
-                        style={{ padding: 0, backgroundColor: "#AD72B7", borderRadius: "5px" }}
-                        extra={[
-                            <Button key="3" onClick={() => {
-                                history({
-                                    pathname: `/dashboard/medical-records/create`
-                                })
-                            }} style={{ color: "#AD72B7" }}>New Record</Button>
-                        ]}
-                    />
-                </div>
+        <React.Fragment>
+            <Layout.Content style={{ backgroundColor: "#AD72B7", padding: "10px 20px", marginBottom: "15px", borderRadius: "5px" }}>
+                <PageHeader
+                    ghost={false}
+                    title="Medical Record"
+                    subTitle={dimension >= 4 ? `All medical records under Barangay ${barangay}.` : ""}
+                    style={{ padding: 0, backgroundColor: "#AD72B7" }}
+                    extra={[
+                        <Button key="3" onClick={() => {
+                            history({
+                                pathname: `/dashboard/medical-records/create`
+                            })
+                        }} style={{ color: "#AD72B7" }}>New Record</Button>
+                    ]}
+                />
+            </Layout.Content>
+            <Layout.Content style={{ backgroundColor: "white", padding: "10px 20px", marginBottom: "15px", borderRadius: "5px" }}>
                 {/*Medical Record Table*/}
-                <Table columns={columns} dataSource={data} />
-            </Col>
-        </Layout.Content>
+                <Table columns={columns} dataSource={data} scroll={{ x: 500 }} />
+            </Layout.Content>
+        </React.Fragment>
     );
 };
 
-export default medicalList;
+export default MedicalList;

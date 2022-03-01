@@ -20,4 +20,16 @@
 
 .ant-radio-button-wrapper{
     display:none;
-  }
+}
+
+.event-modal > .ant-modal-content > .ant-modal-footer > button:first-child {
+    display: none;
+}
+
+.ant-picker-calendar-header > .ant-radio-group {
+    display: none;
+}
+
+.hoverable-badge {
+    cursor: pointer;
+}
