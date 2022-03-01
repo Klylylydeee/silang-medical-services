@@ -165,6 +165,14 @@ const eventListingSchema = new Schema(
             type: String,
             required: true
         },
+        createdBy: {
+            type: String,
+            required: true
+        },
+        approvedBy: {
+            type: String,
+            required: true
+        },
         status: {
             type: Boolean,
             default: true

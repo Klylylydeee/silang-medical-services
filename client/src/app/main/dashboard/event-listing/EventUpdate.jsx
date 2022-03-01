@@ -10,7 +10,7 @@ import moment from "moment";
 const EventUpdate = () => {
 
     const { dimension } = useSelector((state) => state.web); 
-    const { barangay } = useSelector((state) => state.user); 
+    const { barangay, first_name, last_name, designation } = useSelector((state) => state.user); 
     const dispatch = useDispatch();
     const params = useParams();
 
@@ -22,7 +22,7 @@ const EventUpdate = () => {
         form.resetFields()
     };
 
-    const submitForm = async ({ prefix, email, last_name, first_name, phone_number, ...formData}) => {
+    const submitForm = async ({ prefix, email, phone_number, ...formData}) => {
         try {
             dispatch(changeLoader({ loading: true }))
             if(formData.end_datetime < formData.start_datetime){
@@ -35,12 +35,14 @@ const EventUpdate = () => {
                 start_datetime: moment( formData.start_datetime, "YYYY-MM-DD HH:mm:ss"),
                 end_datetime: moment( formData.end_datetime, "YYYY-MM-DD HH:mm:ss"),
                 requestor: {
-                    first_name,
-                    last_name,
+                    first_name: formData.first_name,
+                    last_name: formData.last_name,
                     email,
                     phone_number: prefix + phone_number
                 },
-                barangay: barangay
+                barangay: barangay,
+                status: formData.status,
+                ...(formData.status === true) && { approvedBy: `${first_name} ${last_name} (${designation})`}
             });
             dispatch(changeLoader({ loading: false }));
             toasterRequest({ payloadType: "success", textString: userCreate.data.message});
@@ -69,6 +71,7 @@ const EventUpdate = () => {
                 email: eventListingData.data.payload.requestor.email,
                 start_datetime: moment(eventListingData.data.payload.start_datetime, "YYYY-MM-DD HH:mm:ss"),
                 end_datetime: moment(eventListingData.data.payload.end_datetime, "YYYY-MM-DD HH:mm:ss"),
+                status: eventListingData.data.payload.status
             })
             dispatch(changeLoader({ loading: false }))
         } catch (err) {
@@ -262,6 +265,32 @@ const EventUpdate = () => {
                                                 </Select>
                                             </Form.Item>
                                         )} />
+                                    </Form.Item>
+                                </Col>
+                            </Row>
+                        </Col>
+                        <Col xs={{ span: 24 }}>
+                            <Divider orientation="left" plain orientationMargin={10}>
+                                Event Status
+                            </Divider>
+                            <Row gutter={[24, 0]} style={{ paddingTop: "10px" }}>
+                                <Col xs={{ span: 24 }} >
+                                    <Form.Item
+                                        name="status"
+                                        label="Status"
+                                        tooltip="Basis whether the event is approved or not"
+                                        rules={[
+                                            {
+                                                required: true,
+                                                message: "Please fill out this field!",
+                                            },
+                                        ]}
+                                        required={true}
+                                    >
+                                        <Select >
+                                            <Select.Option value={true}>Active</Select.Option>
+                                            <Select.Option value={false}>Inactive</Select.Option>
+                                        </Select>
                                     </Form.Item>
                                 </Col>
                             </Row>

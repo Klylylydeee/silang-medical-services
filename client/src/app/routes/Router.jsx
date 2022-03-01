@@ -24,6 +24,7 @@ import EventCreate from "src/app/main/dashboard/event-listing/EventCreate";
 import EventData from "src/app/main/dashboard/event-listing/EventData";
 import EventList from "src/app/main/dashboard/event-listing/EventList";
 import EventUpdate from "src/app/main/dashboard/event-listing/EventUpdate";
+import EventAttendee from "src/app/main/dashboard/event-listing/EventAttendee";
 import Communication from "src/app/main/dashboard/communication/Communication";
 import UsersData from "src/app/main/dashboard/users/UsersData";
 import UserCreate from "src/app/main/dashboard/users/UserCreate";
@@ -87,6 +88,7 @@ function Router() {
                                 <Route path="event-listing" element={ <AuthWrapper authStatus={true} redirectTo="/" component={<EventList />} /> } />
                                 <Route path="event-listing/create" element={ <AuthWrapper authStatus={true} redirectTo="/" component={<EventCreate />} /> } />
                                 <Route path="event-listing/update/:id" element={ <AuthWrapper authStatus={true} redirectTo="/" component={<EventUpdate />} /> } />
+                                <Route path="event-listing/add-attendee/:id" element={ <AuthWrapper authStatus={true} redirectTo="/" component={<EventAttendee />} /> } />
                                 <Route path="event-listing/view/:id" element={ <AuthWrapper authStatus={true} redirectTo="/" component={<EventData />} /> } />
                                 {/* Communication Component */}
                                 <Route path="communication" element={ <AuthWrapper authStatus={true} redirectTo="/" component={<Communication />} /> } />

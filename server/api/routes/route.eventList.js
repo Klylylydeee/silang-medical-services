@@ -26,5 +26,14 @@ router.post(
     eventController.updateBarangayEvent
 );
 
+router.post(
+    "/update-listing-attendee",
+    eventController.updateBarangayEventAttendee
+);
+
+router.post(
+    "/remove-listing-attendee",
+    eventController.removeBarangayEventAttendee
+);
 
 module.exports = router;

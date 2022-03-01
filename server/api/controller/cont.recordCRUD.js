@@ -76,7 +76,6 @@ exports.createMedicalRecord = async (req, res, next) => {
         });
 
         mailerConfig().sendMail({
-            from: process.env.NODEMAILER_ACCOUNT_USERNAME,
             to: req.body.email,
             subject: `Silang Medical Services - Medical Record`,
             text: `Please open the following link to check your medical record update: ${process.env.SERVER_ENDPOINT}/authentication/sign-up-verification?payload=${medicalRecordData.id}`

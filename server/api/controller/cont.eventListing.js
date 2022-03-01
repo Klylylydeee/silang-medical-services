@@ -101,7 +101,7 @@ exports.addBarangayEvents  = async (req, res, next) => {
 
         let eventsData = await EventListing.create({
             ...req.body,
-            status: true
+            ...(req.body.status === true) && { approvedBy: req.body.createdBy }
         })
 
         res.status(200).send({
@@ -163,6 +163,9 @@ exports.updateBarangayEvent  = async (req, res, next) => {
             {
                 $set: {
                     ...req.body
+                },
+                $unset: {
+                    ...(req.body.status === false) && { approvedBy: 1 }
                 }
             },
             { 
@@ -179,6 +182,100 @@ exports.updateBarangayEvent  = async (req, res, next) => {
 
         res.status(200).send({
             message: "Event data updated!",
+            payload: eventsData
+        });
+
+    } catch(err) {
+
+        err.statusCode === undefined ? err.statusCode = 500 : "";
+        return next(err);
+
+    };
+
+};
+
+exports.updateBarangayEventAttendee  = async (req, res, next) => {
+
+    try {
+
+        validateRequest(req);
+
+        let eventsData = await EventListing.findOneAndUpdate(
+            { 
+                _id: req.query.id,
+                barangay: req.query.barangay
+            },
+            {
+                $push: {
+                    attendee: {
+                        ...req.body
+                    }
+                }
+            },
+            { 
+                new: true,
+                timestamps: true
+            }
+        )
+
+        console.log(eventsData)
+    
+        if(eventsData === null){
+            let error = new Error("Event does not exists.");
+            error.statusCode = 501;
+            throw error;
+        };
+
+        res.status(200).send({
+            message: "Attendee added!",
+            payload: eventsData
+        });
+
+    } catch(err) {
+
+        err.statusCode === undefined ? err.statusCode = 500 : "";
+        return next(err);
+
+    };
+
+};
+
+
+
+exports.removeBarangayEventAttendee  = async (req, res, next) => {
+
+    try {
+
+        validateRequest(req);
+
+        let eventsData = await EventListing.findOneAndUpdate(
+            { 
+                _id: req.query.id,
+                barangay: req.query.barangay
+            },
+            {
+                $pull: {
+                    attendee: {
+                        _id: req.body.id
+                    }
+                }
+            },
+            { 
+                new: true,
+                timestamps: true
+            }
+        )
+
+        console.log(eventsData)
+    
+        if(eventsData === null){
+            let error = new Error("Event does not exists.");
+            error.statusCode = 501;
+            throw error;
+        };
+
+        res.status(200).send({
+            message: "Attendee removed!",
             payload: eventsData
         });
 

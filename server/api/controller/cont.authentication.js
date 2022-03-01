@@ -47,7 +47,6 @@ exports.userSignUp = async (req, res, next) => {
 
         try {
             transporter.sendMail({
-                from: process.env.NODEMAILER_ACCOUNT_USERNAME,
                 to: req.body.email,
                 subject: `Silang Medical Services - Account Verification`,
                 template: "signup",
@@ -258,7 +257,6 @@ exports.userSignIn = async (req, res, next) => {
 
             try {
                 transporter.sendMail({
-                    from: process.env.NODEMAILER_ACCOUNT_USERNAME,
                     to: findUser.email,
                     subject: `Silang Medical Services - Verification PIN`,
                     template: "verify",
@@ -458,7 +456,6 @@ exports.userAccountReset = async (req, res, next) => {
         );
 
         transporter.sendMail({
-            from: process.env.NODEMAILER_ACCOUNT_USERNAME,
             to: findUser.email,
             subject: `Silang Medical Services - Account Reset`,
             template: "reset",
@@ -589,7 +586,6 @@ exports.userLostPassword = async (req, res, next) => {
 
         try {
             transporter.sendMail({
-                from: process.env.NODEMAILER_ACCOUNT_USERNAME,
                 to: req.body.email,
                 subject: `Silang Medical Services - Lost Password Request`,
                 template: "lost-password",

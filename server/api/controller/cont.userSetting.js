@@ -212,7 +212,6 @@ exports.requestPasswordChange = async (req, res, next) => {
 
         try {
             transporter.sendMail({
-                from: process.env.NODEMAILER_ACCOUNT_USERNAME,
                 to: userData.email,
                 subject: `Silang Medical Services - Reset Password Request`,
                 template: "password-request",
