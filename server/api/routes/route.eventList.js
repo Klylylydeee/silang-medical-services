@@ -7,8 +7,24 @@ const { validateAuthorization } = require("../middleware/authHandler");
 const router = express.Router();
 
 router.get(
-    "/list",
+    "/private-list",
     eventController.barangayEvents
 );
+
+router.post(
+    "/create-listing",
+    eventController.addBarangayEvents
+);
+
+router.get(
+    "/event",
+    eventController.getBarangayEvent
+)
+
+router.post(
+    "/update-listing",
+    eventController.updateBarangayEvent
+);
+
 
 module.exports = router;

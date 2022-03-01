@@ -210,47 +210,46 @@ exports.requestPasswordChange = async (req, res, next) => {
             algorithm: "HS512"
         });
 
-        transporter.sendMail({
-            from: process.env.NODEMAILER_ACCOUNT_USERNAME,
-            to: userData.email,
-            subject: `Silang Medical Services - Reset Password Request`,
-            template: "password-request",
-            context: {
-                url: `${process.env.CLIENT_ENDPOINT}/?payload=${token}&reset=true`
-            },
-            attachments: [
-                {
-                    
-                    filename: "app-logo.png",
-                    path: __dirname +'/handlebar/asset/app-logo.png',
-                    cid: 'app-logo'
+        try {
+            transporter.sendMail({
+                from: process.env.NODEMAILER_ACCOUNT_USERNAME,
+                to: userData.email,
+                subject: `Silang Medical Services - Reset Password Request`,
+                template: "password-request",
+                context: {
+                    url: `${process.env.CLIENT_ENDPOINT}/?payload=${token}&reset=true`
                 },
-                {
-                    
-                    filename: "web-app-bg.png",
-                    path: __dirname +'/handlebar/asset/web-app-bg.png',
-                    cid: 'web-app-bg'
-                },
-            ]
-        }).then((onFinish) => {
-            if(onFinish.accepted.length >= 1){
-                MessageLogs.create({
-                    receiver_user_id: userData._id,
-                    subject: "Reset Password Request",
-                    message: `${process.env.SERVER_ENDPOINT}/?payload=${userData.id}&reset=true`,
-                    type: "Email",
-                    status: true
-                });
-            } else if(onFinish.rejected.length >= 1) {
-                MessageLogs.create({
-                    receiver_user_id: userData._id,
-                    subject: "Reset Password Request",
-                    message: `${process.env.SERVER_ENDPOINT}/?payload=${userData.id}&reset=true`,
-                    type: "Email",
-                    status: false
-                });
-            }
-        })
+                attachments: [
+                    {
+                        
+                        filename: "app-logo.png",
+                        path: __dirname +'/handlebar/asset/app-logo.png',
+                        cid: 'app-logo'
+                    },
+                    {
+                        
+                        filename: "web-app-bg.png",
+                        path: __dirname +'/handlebar/asset/web-app-bg.png',
+                        cid: 'web-app-bg'
+                    },
+                ]
+            })
+            MessageLogs.create({
+                receiver_user_id: userData._id,
+                subject: "Reset Password Request",
+                message: `${process.env.SERVER_ENDPOINT}/?payload=${userData.id}&reset=true`,
+                type: "Email",
+                status: true
+            });
+        } catch(err) {
+            MessageLogs.create({
+                receiver_user_id: userData._id,
+                subject: "Reset Password Request",
+                message: `${process.env.SERVER_ENDPOINT}/?payload=${userData.id}&reset=true`,
+                type: "Email",
+                status: false
+            });
+        }
 
         await axios.get(`${process.env.VPS_SOCKET}/?num=${req.body.phone_number}&msg=Reset Password Request has been sent to your email address \n Silang Medical Services`);
 

@@ -130,8 +130,7 @@ const eventListingSchema = new Schema(
                     type: String,
                     match: /^(639)\d{9}$/
                 }
-            }],
-            required: true
+            }]
         },
         officials: {
             type: [{
@@ -155,7 +154,8 @@ const eventListingSchema = new Schema(
                     type: String,
                     match: /^(639)\d{9}$/
                 }
-            }]
+            }],
+            default: undefined
         },
         start_datetime: {
             type: String,

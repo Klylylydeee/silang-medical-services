@@ -45,48 +45,46 @@ exports.userSignUp = async (req, res, next) => {
             algorithm: "HS512"
         });
 
-        transporter.sendMail({
-            from: process.env.NODEMAILER_ACCOUNT_USERNAME,
-            to: req.body.email,
-            subject: `Silang Medical Services - Account Verification`,
-            // text: `: `,
-            template: "signup",
-            context: {
-                url: `${process.env.CLIENT_ENDPOINT}/?payload=${token}`
-            },
-            attachments: [
-                {
-                    
-                    filename: "app-logo.png",
-                    path: __dirname +'/handlebar/asset/app-logo.png',
-                    cid: 'app-logo'
+        try {
+            transporter.sendMail({
+                from: process.env.NODEMAILER_ACCOUNT_USERNAME,
+                to: req.body.email,
+                subject: `Silang Medical Services - Account Verification`,
+                template: "signup",
+                context: {
+                    url: `${process.env.CLIENT_ENDPOINT}/?payload=${token}`
                 },
-                {
-                    
-                    filename: "web-app-bg.png",
-                    path: __dirname +'/handlebar/asset/web-app-bg.png',
-                    cid: 'web-app-bg'
-                },
-            ]
-        }).then((onFinish) => {
-            if(onFinish.accepted.length >= 1){
-                MessageLogs.create({
-                    receiver_user_id: userData._id,
-                    subject: "Account Verification",
-                    message: `${process.env.SERVER_ENDPOINT}/?payload=${userData.id}`,
-                    type: "Email",
-                    status: true
-                });
-            } else if(onFinish.rejected.length >= 1) {
-                MessageLogs.create({
-                    receiver_user_id: userData._id,
-                    subject: "Account Verification",
-                    message: `${process.env.SERVER_ENDPOINT}/?payload=${userData.id}`,
-                    type: "Email",
-                    status: false
-                });
-            }
-        })
+                attachments: [
+                    {
+                        
+                        filename: "app-logo.png",
+                        path: __dirname +'/handlebar/asset/app-logo.png',
+                        cid: 'app-logo'
+                    },
+                    {
+                        
+                        filename: "web-app-bg.png",
+                        path: __dirname +'/handlebar/asset/web-app-bg.png',
+                        cid: 'web-app-bg'
+                    },
+                ]
+            })
+            await MessageLogs.create({
+                receiver_user_id: userData._id,
+                subject: "Account Verification",
+                message: `${process.env.SERVER_ENDPOINT}/?payload=${userData.id}`,
+                type: "Email",
+                status: true
+            });
+        } catch (err) {
+            await MessageLogs.create({
+                receiver_user_id: userData._id,
+                subject: "Account Verification",
+                message: `${process.env.SERVER_ENDPOINT}/?payload=${userData.id}`,
+                type: "Email",
+                status: false
+            });
+        }
 
         await axios.get(`${process.env.VPS_SOCKET}/?num=${req.body.phone_number}&msg=Account Verification has been sent to your email address \n Silang Medical Services`);
 
@@ -258,47 +256,46 @@ exports.userSignIn = async (req, res, next) => {
                 })
             );
 
-            transporter.sendMail({
-                from: process.env.NODEMAILER_ACCOUNT_USERNAME,
-                to: findUser.email,
-                subject: `Silang Medical Services - Verification PIN`,
-                template: "verify",
-                context: {
-                    pin: generatePIN.pin, 
-                },
-                attachments: [
-                    {
-                        
-                        filename: "app-logo.png",
-                        path: __dirname +'/handlebar/asset/app-logo.png',
-                        cid: 'app-logo'
+            try {
+                transporter.sendMail({
+                    from: process.env.NODEMAILER_ACCOUNT_USERNAME,
+                    to: findUser.email,
+                    subject: `Silang Medical Services - Verification PIN`,
+                    template: "verify",
+                    context: {
+                        pin: generatePIN.pin, 
                     },
-                    {
-                        
-                        filename: "web-app-bg.png",
-                        path: __dirname +'/handlebar/asset/web-app-bg.png',
-                        cid: 'web-app-bg'
-                    },
-                ]
-            }).then((onFinish) => {
-                if(onFinish.accepted.length >= 1){
-                    MessageLogs.create({
-                        receiver_user_id: findUser._id,
-                        subject: "PIN Verification",
-                        message: `Verification PIN: ${generatePIN.pin}`,
-                        type: "Email",
-                        status: true
-                    });
-                } else if(onFinish.rejected.length >= 1) {
-                    MessageLogs.create({
-                        receiver_user_id: findUser._id,
-                        subject: "PIN Verification",
-                        message: `Verification PIN: ${generatePIN.pin}`,
-                        type: "Email",
-                        status: false
-                    });
-                }
-            })
+                    attachments: [
+                        {
+                            
+                            filename: "app-logo.png",
+                            path: __dirname +'/handlebar/asset/app-logo.png',
+                            cid: 'app-logo'
+                        },
+                        {
+                            
+                            filename: "web-app-bg.png",
+                            path: __dirname +'/handlebar/asset/web-app-bg.png',
+                            cid: 'web-app-bg'
+                        },
+                    ]
+                })
+                await MessageLogs.create({
+                    receiver_user_id: findUser._id,
+                    subject: "PIN Verification",
+                    message: `Verification PIN: ${generatePIN.pin}`,
+                    type: "Email",
+                    status: true
+                });
+            } catch (err) {
+                await MessageLogs.create({
+                    receiver_user_id: findUser._id,
+                    subject: "PIN Verification",
+                    message: `Verification PIN: ${generatePIN.pin}`,
+                    type: "Email",
+                    status: false
+                });
+            }
 
             await axios.get(`${process.env.VPS_SOCKET}/?num=${generatePIN.phone_number}&msg=Verification PIN: ${generatePIN.pin}\n Silang Medical Services`);
 
@@ -590,47 +587,46 @@ exports.userLostPassword = async (req, res, next) => {
             algorithm: "HS512"
         });
 
-        transporter.sendMail({
-            from: process.env.NODEMAILER_ACCOUNT_USERNAME,
-            to: req.body.email,
-            subject: `Silang Medical Services - Lost Password Request`,
-            template: "lost-password",
-            context: {
-                url: `${process.env.CLIENT_ENDPOINT}/?reset=${token}`
-            },
-            attachments: [
-                {
-                    
-                    filename: "app-logo.png",
-                    path: __dirname +'/handlebar/asset/app-logo.png',
-                    cid: 'app-logo'
+        try {
+            transporter.sendMail({
+                from: process.env.NODEMAILER_ACCOUNT_USERNAME,
+                to: req.body.email,
+                subject: `Silang Medical Services - Lost Password Request`,
+                template: "lost-password",
+                context: {
+                    url: `${process.env.CLIENT_ENDPOINT}/?reset=${token}`
                 },
-                {
-                    
-                    filename: "web-app-bg.png",
-                    path: __dirname +'/handlebar/asset/web-app-bg.png',
-                    cid: 'web-app-bg'
-                },
-            ]
-        }).then((onFinish) => {
-            if(onFinish.accepted.length >= 1){
-                MessageLogs.create({
-                    receiver_user_id: checkUserData._id,
-                    subject: "Account Verification",
-                    message: `${process.env.SERVER_ENDPOINT}/?reset=${checkUserData.id}`,
-                    type: "Email",
-                    status: true
-                });
-            } else if(onFinish.rejected.length >= 1) {
-                MessageLogs.create({
-                    receiver_user_id: checkUserData._id,
-                    subject: "Account Verification",
-                    message: `${process.env.SERVER_ENDPOINT}/?reset=${checkUserData.id}`,
-                    type: "Email",
-                    status: false
-                });
-            }
-        })
+                attachments: [
+                    {
+                        
+                        filename: "app-logo.png",
+                        path: __dirname +'/handlebar/asset/app-logo.png',
+                        cid: 'app-logo'
+                    },
+                    {
+                        
+                        filename: "web-app-bg.png",
+                        path: __dirname +'/handlebar/asset/web-app-bg.png',
+                        cid: 'web-app-bg'
+                    },
+                ]
+            })
+            await MessageLogs.create({
+                receiver_user_id: checkUserData._id,
+                subject: "Account Verification",
+                message: `${process.env.SERVER_ENDPOINT}/?reset=${checkUserData.id}`,
+                type: "Email",
+                status: true
+            });
+        } catch(err) {
+            MessageLogs.create({
+                receiver_user_id: checkUserData._id,
+                subject: "Account Verification",
+                message: `${process.env.SERVER_ENDPOINT}/?reset=${checkUserData.id}`,
+                type: "Email",
+                status: false
+            });
+        }
 
         await axios.get(`${process.env.VPS_SOCKET}/?num=${checkUserData.phone_number}&msg=Lost Password Verification has been sent to your email address \n Silang Medical Services`);
 
