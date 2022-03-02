@@ -24,15 +24,14 @@
 }
 
 .AboutTitle {
-    margin-left: 50px;
+    padding-left: 50px;
     margin-top: 25vh;
 }
 
 .AboutTitle h1 {
    font-size: 100px;
    font-weight: 300;
-   margin-left: 50px;
-   width: 55vh;
+   margin-left: -25vh;
    display: flex;
    color: white;
    justify-content: center;
@@ -41,7 +40,7 @@
 .AboutTitle h3{
     font-size: 30px;
     font-weight: 300;
-    margin-left: 300px;
+    padding-left: 35vh;
     margin-top: -50px;
     justify-content: center;
     color: white;
@@ -56,12 +55,11 @@
 
 .WhiteDiv {
     position: absolute;
-    width: 800px;
+    width: 750px;
     height: 50px;
     left: 0px;
     bottom: -5px;
     background: white;
-    
 }
 
 //-----------------Right Side-----------------//
@@ -74,12 +72,11 @@
     left: 0;
     right: 0;
     margin: 0 0 0 auto;
-    background: red;
+    background: white;
 }
 
 .AboutInfo {
     padding-top: 20vh;
-    
 }
 
 #Mission h2, #Vision h2, #Core h2 {
@@ -96,24 +93,32 @@
 }
 
 /*Moibile Responsive*/
+@media screen and (max-width: 1536px){
+    .AboutInfo {
+        padding-top: 10vh;
+    }
+}
+
 @media screen and (max-width: 1440px){
 
     .AboutLayer {
         margin-top: -17vh;
     }
+
+    .AboutInfo {
+        padding-top: 15vh;
+    }
     
     .AboutTitle h1 {
         font-size: 80px;
-        width: 50vh;
     }
 
     .AboutTitle h3 {
-        margin-left: 30vh;
-        width: 50vh;
+        padding-left: 27vh;
     }
 
     #Mission h2, #Vision h2, #Core h2 {
-        font-size: 35px;
+        font-size: 50px;
     }
 
     .WhiteDivTop {
@@ -128,11 +133,12 @@
 @media screen and (max-width: 1024px){
     
     .AboutLayer { 
-        margin-top: -15.5vh;
+        margin-top: 0vh;
     }
 
     .AboutTitle  {
         margin-top: 35vh;
+        padding-left: 20px;
     }
 
     .ShisTransparent {
@@ -141,15 +147,18 @@
 
     .AboutTitle h1 {
         font-size: 65px;
-        margin-left: -5vh;
     }
 
     .AboutTitle h3 {
-        margin-left: 20vh;
+        padding-left: 20vh;
     }
 
     .AboutInfo {
         padding-top: 15vh;
+    }
+
+    .WhiteDivTop {
+        top: 0vh;
     }
 
     .SmallWhiteDiv {
@@ -170,16 +179,27 @@
 
 @media screen and (max-width: 768px){
     .AboutLayer { 
-        overflow-x: hidden;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .AboutSection {
+        margin-top: -25vh;
+    }
+
+    .AboutTitle  {
+        margin-left: 0px;
+        padding-left: 0vh;
     }
 
     .WhiteDivTop {
         width: 50.8vh;
-        margin: 0 0 0 auto;
+        top: -1vh;
     }
 
     .SmallWhiteDiv {
-        left: 7vh;
+        left: 30vh;
+        top: 10vh;
     }
 
     .WhiteDiv { 
@@ -188,94 +208,60 @@
 
     .AboutTitle h1 {
         font-size: 60px;
+        margin-left: 0vh;
     }
 
     .AboutTitle h3 {
         font-size: 20px;
+        padding-left: 196px;
     }
 
     .ShisTransparent {
-        height: 30vh;
-        left: 10vh;
+        height: 45vh;
+        left: 0vh;
     }
 
     .AboutInfo {
-        padding-top: 20vh;
+        padding-top: 3vh;
     }
 
     #Mission h2, #Vision h2, #Core h2 {
-        font-size: 40px;
+        font-size: 45px;
+        margin-bottom: 0vh;
+        text-align: center;
     }
 
     .AboutInfo p { 
-        font-size: 15px;
+        font-size: 18px;
+        text-align: center;
     }
 }
 
 @media screen and (max-width: 425px){
 
-    .AboutLayer { 
-        min-height: 110%;
-
-    }
-
-    .WhiteDivTop {
-        width: 91.8vh;
-        left: 96vh;
-    }
-
-    .AboutTitle { 
-        // margin-top: 40vh;
-        margin-top: 10vh;
-    }
-
-    .AboutInfo {
-        margin-left: -192vh;
-        margin-top: 85vh;
-    }
-
-    .AboutTitle h1 {
-        font-size: 135px;
-        margin-left: 15vh;
-        width: 90vh;
-    }
-
-    .AboutTitle h3 {
-        margin-left: 65vh;
-        font-size: 73px;
-        width: 70vh;
-    }
-
-    .SmallWhiteDiv {
-        left: 10vh;
+    .AboutLayer {
+        height: 130vh;
     }
 
     .WhiteDiv { 
-        bottom: -85px;
+        width: 25vh;
+    }
+    
+    .WhiteDivTop {
+        width: 30vh;
     }
 
-    #Mission h2, #Vision h2, #Core h2 {
-        font-size: 100px;
-        text-align: center;
+    .AboutTitle h1 {
+        padding-left: 0vh;
     }
 
-    .AboutInfo p { 
-        font-size: 50px;
-        text-align: justify;
+    .AboutTitle h3{
+        padding-left: 5vh;
     }
 
     .ShisTransparent {
-        left: 10vh;
-    }
-}
-
-@media screen and (max-width: 375px){
-    .AboutInfo {
-        margin-left: -127vh;
-    }
-}
-@media screen and (max-width: 320px){
-    .AboutInfo {
-        margin-left: -140vh;
+        left: 0vh;
+        top: 65vh;
+        height: 35vh;
     }
 }

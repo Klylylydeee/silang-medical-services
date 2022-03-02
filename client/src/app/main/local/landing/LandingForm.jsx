@@ -8,8 +8,8 @@ import { Form, Input, Button, Checkbox, Tooltip } from 'antd';
 import BlackGrid from '../landing/LandingPage-assets/black-grid.png'
 
 //Styles
-if(process.env.REACT_APP_ENVIRONMENT_STAGE === "Public Build" && window.location.pathname === "/") {
-    require( '../../local/landing/LandingStyles/LandingForm.scss');
+if (process.env.REACT_APP_ENVIRONMENT_STAGE === "Public Build" && window.location.pathname === "/") {
+    require('../../local/landing/LandingStyles/LandingForm.scss');
 }
 
 function LandingForm() {
@@ -23,7 +23,7 @@ function LandingForm() {
     }
 
     return <Row>
-        <Col xs={{ span: 15 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 24 }}>
+        <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 24 }}>
             <div className="LandingForm">
 
                 {/* Left Side of the Form Section */}
@@ -71,11 +71,15 @@ function LandingForm() {
                                     <Input />
                                 </Form.Item>
 
-                                <Form.Item name="remember" valuePropName="checked" wrapperCol={{ offset: 12, span: 16 }}>
-                                    {/* <Checkbox>Already requested? Check progress here!</Checkbox> */}
-                                </Form.Item>
+                                {/* <Form.Item name="remember" valuePropName="checked" className="FormLink" wrapperCol={{ offset: 8, span: 12 }}>
+                                    <Checkbox>Already requested? Check progress here!</Checkbox>
+                                </Form.Item> */}
 
-                                <Form.Item wrapperCol={{ offset: 11, span: 16 }}>
+                                <div className="CheckLink">
+                                    <a href="https://www.w3schools.com/">Already requested? Check progress here!</a>
+                                </div>
+
+                                <Form.Item wrapperCol={{ offset: 1, span: 4 }}>
                                     <Button type="primary" htmlType="submit" className="SubmitBtn" size={"large"}>
                                         Submit
                                     </Button>

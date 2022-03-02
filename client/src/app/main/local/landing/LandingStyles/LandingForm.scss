@@ -22,7 +22,7 @@
 }
 
 .FormTitle h1{
-    font-weight: 300;
+    font-weight: 400;
     font-size: 90px;
     padding-left: 5vh;
 }
@@ -39,7 +39,7 @@
     width: 129px;
     height: 129px;
     left: 20vh;
-    top: -15vh;
+    top: -20vh;
 }
 //-----------------Right Side-----------------//
 
@@ -55,26 +55,43 @@
     font-size: 20px !important;
 }
 
+.CheckLink a {
+    color: black;
+    font-size: 15px;
+    padding-left: 60vh;
+}
+
 .SubmitBtn  {
     font-size: 50px;
     width: 200px;
+    margin-right: 5vh;
 }
 
 .black-gridForm2 {
     position: absolute;
     width: 129px;
     height: 129px;
-    top: 25vh;
+    right: 0;
 }
 
 //-----------------Mobile Responsive-----------------/
 @media screen and (max-width: 1440px){
-    .black-gridForm2 {
-        top: 30vh;
-    }
 
     .FormTitle h1 {
         font-size: 70px;
+    }
+
+    .black-gridForm {
+        left: 30vh;
+        top: -20vh;
+    }
+
+    .CheckLink a {
+        padding-left: 40vh;
+    }
+
+    .SubmitBtn {
+        margin-top: 2vh;
     }
 }
 
@@ -87,50 +104,68 @@
         font-size: 17px;
     }
 
-    .black-gridForm2 {
-        top: 35vh;
-    }
-
     .black-gridForm {
         left: 20vh;
         top: -17vh;
+    }
+
+    .CheckLink a {
+        padding-left: 20vh;
     }
 }
 
 @media screen and (max-width: 768px){
 
+    .LandingForm {
+        margin-top: 40vh;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .TitleSection {
+        width: 100%;
+    }
+
     .FormTitle h1 {
-        font-size: 100px;
+        font-size: 50px;
+        padding-left: 0vh;
+        text-align: center;
     }
 
     .FormTitle p {
-        font-size: 27px;
+        font-size: 18px;
+        padding-left: 0vh;
+        text-align: center;
+    }
+
+    .FormSection {
+        width: 100%;
+        margin-top: -25vh;
     }
 
     .FormLabel .ant-row .ant-col label {
         font-size: 30px !important;
     }
+
+    .FormLink{
+        font-size: 10px;
+    }
+
+    .SubmitBtn  {
+        right: 0vh;
+    }
+
+    .CheckLink a {
+        padding-left: 50vh;
+    }
 }
 
 @media screen and (max-width: 425px){
-    
-
-    .FormTitle h1 {
-        width: 155%;
-        font-size: 125px;
-        
+    .LandingForm {
+        margin-top: 20vh;
     }
 
-    .FormTitle p {
-        font-size: 35px;
-        width: 126vh;
+    .CheckLink a {
+        padding-left: 0vh;
     }
-    
-    // .TitleSection {
-    //     width: 100%;
-    // }
-
-    // .FormSection {
-    //     width: 100%;
-    // }
 }

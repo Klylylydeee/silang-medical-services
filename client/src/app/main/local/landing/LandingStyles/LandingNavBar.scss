@@ -4,7 +4,8 @@
 .portfolio-hero {
     font-family: Quicksand;
     color:black;
-    z-index: 2;
+    width: 100%;
+    z-index: -1;
 }
 
 .portfolio-menu ul {
@@ -65,7 +66,20 @@
 //-----------------NavBar Logo-----------------//
 
 .portfolio-menu img {
-    max-height: 90px;
+    max-height: auto;
     max-width: 100px;
-    margin-right: 50px;
+}
+
+//-----------------Mobile Responsive-----------------//
+@media screen and (max-width: 1440px){
+//   .portfolio-hero nav ul li a:hover {
+//     color: #ad72b7;
+//   }
+}
+
+
+@media screen and (max-width: 425px){
+  .portfolio-menu ul {
+    flex-direction: column;
+  }
 }

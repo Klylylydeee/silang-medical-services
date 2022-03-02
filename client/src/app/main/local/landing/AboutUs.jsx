@@ -13,7 +13,7 @@ if (process.env.REACT_APP_ENVIRONMENT_STAGE === "Public Build" && window.locatio
 
 function AboutUs() {
     return<Row>
-            <Col>
+            <Col xs={{ span: 24 }}>
                 <div className="AboutLayer" id="About">
                     <div className="AboutSection">
                         {/* Left Side */}
@@ -30,7 +30,7 @@ function AboutUs() {
 
                     {/* Right Side */}
                     {/* Mission */}
-                    <Col xs={{ span: 15 }} sm={{ span: 16 }} md={{ span: 12 }} lg={{ span: 10 }} xl={{ span: 11 }}>
+                    <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 10 }} xl={{ span: 11 }}>
                         <div className="AboutInfo" >
                             <Col>
                                 <div id="Mission">

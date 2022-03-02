@@ -12,7 +12,7 @@ if (process.env.REACT_APP_ENVIRONMENT_STAGE === "Public Build" && window.locatio
 function LandingFooter() {
     return (
         <Row>
-            <Col xs={{ span: 15 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 24 }}>
+            <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 24 }}>
                 <div className="FooterPage">
                     <div className="LogoSection">
                         <Col>
@@ -56,7 +56,7 @@ function LandingFooter() {
                     </div>
                 </div>
 
-                <footer>
+                <footer className="footerLine"> 
                     <Col>
                         <div className="FooterLineDiv"></div>
                         <div className="Copyright">

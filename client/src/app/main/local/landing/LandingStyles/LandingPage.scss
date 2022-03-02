@@ -6,11 +6,13 @@ html {
 
 .landing {
   width: 100%;
+  // overflow-x: hidden;
 }
 
 .Home {
   display: flex;
   height: 90vh;
+  width: auto;
 }
 
 //-----------------Header Row-----------------//
@@ -18,6 +20,7 @@ html {
 .HomeTitle {
   position: relative;
   padding-top: 15vh;
+  padding-left: 5vh;
   z-index: 2;
 }
 
@@ -166,11 +169,13 @@ section::after {
 
 //-----------------Mobile Responsive-----------------/
 @media screen and (max-width: 1536px){
-  
+  .VectorImage1 {
+    width: 129.5vh;
+  }
+
   #LandingTitle  {
    font-size: 80px;
    margin-bottom: -10px;
-   
   }
   
   #SecondaryTitle {
@@ -181,7 +186,6 @@ section::after {
   #LandingDescription {
     font-size: 18px;
     margin-left: 5vh;
-    width: 60vh;
   }
 }
 
@@ -189,10 +193,6 @@ section::after {
 
 .VectorImage1 { 
   width: 105.7vh;
-}
-
-.HomeTitle {
-  margin-left: -5vh;
 }
 
 #LandingTitle  {
@@ -239,7 +239,11 @@ section::after {
 @media screen and (max-width: 768px){
   
   .Home {
-    width: auto;
+    height: 90vh;
+  }
+
+  .HomeTitle {
+    margin-left: 3vh;
   }
   
   #LandingTitle  {
@@ -263,34 +267,29 @@ section::after {
   }
 
   .ShisPurple {
-    left: 10vh;
+    left: 5vh;
     top: 20vh;
 }
 }
 
 @media screen and (max-width: 425px){
 
+
   .HomeTitle { 
-    min-height: 140vh;
-    margin-left: 5vh;
+    padding-left: 1vh;
+    margin-left: 0vh;
   }
 
   .ShisPurple { 
-    top: 35vh;
-    left: 100vh;
+    top: 70vh;
+    left: 0vh;
+    height: 45vh;
   }
 
-  #LandingTitle  {
-    font-size: 10rem;
-   }
-   
-   #SecondaryTitle {
-     font-size: 10rem;
-   }
-   
    #LandingDescription {
-     font-size: 2.8rem;
-     width: 120vh;
+    margin-left: 0vh;
+    padding-left: 0vh;
+    width: auto;
    }
 
    #section07 a {

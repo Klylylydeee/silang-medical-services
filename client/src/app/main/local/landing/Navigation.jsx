@@ -3,8 +3,8 @@ import { Row } from 'antd';
 import SHISLogo from '../../../../styles/SHISLogo.png'
 
 //Styles
-if(process.env.REACT_APP_ENVIRONMENT_STAGE === "Public Build" && window.location.pathname === "/") {
-    require( '../../local/landing/LandingStyles/LandingNavBar.scss');
+if (process.env.REACT_APP_ENVIRONMENT_STAGE === "Public Build" && window.location.pathname === "/") {
+    require('../../local/landing/LandingStyles/LandingNavBar.scss');
 }
 
 function Navigation() {
@@ -12,23 +12,28 @@ function Navigation() {
         <Row>
             {/* Navigation Section of Landing Page */}
             <Row span={12}>
-                <div className="portfolio-hero">
-                    <div className="portfolio-menu">
+                <header>
+                    <div className="portfolio-hero">
+                        <div className="portfolio-menu">
 
-                        {/* Navigation */}
-                        <nav className="stroke">
-                            <ul className="nav-menu">
-                                {/* NavBar Logo */}
-                                <img src={SHISLogo} alt='SHIS Logo' className="SHISLogo" />
+                            {/* Navigation */}
+                            <nav className="stroke">
+                                <ul className="nav-menu">
+                                    {/* NavBar Logo */}
+                                    <img src={SHISLogo} alt='SHIS Logo' className="SHISLogo" />
 
-                                <li className="menu-item"><a href="#Home">Home</a></li>
-                                <li className="menu-item"><a href="#About">About Us</a></li>
-                                <li className="menu-item"><a href="#Services">Services</a></li>
-                                <li className="menu-item"><a href="#Locations">Locations</a></li>
-                            </ul>
-                        </nav>
+                                    <li className="menu-item"><a href="#Home">Home</a></li>
+                                    <li className="menu-item"><a href="#About">About Us</a></li>
+                                    <li className="menu-item"><a href="#Services">Services</a></li>
+                                    <li className="menu-item"><a href="#Locations">Locations</a></li>
+                                </ul>
+                            </nav>
+
+                        </div>
                     </div>
-                </div>
+                </header>
+
+
             </Row>
         </Row>
 

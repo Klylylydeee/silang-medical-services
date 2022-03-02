@@ -4,6 +4,7 @@ import AboutUs from './AboutUs'
 import Services from './Services'
 import Locations from './Locations'
 import LandingForm from './LandingForm'
+import LandingFooter from './LandingFooter'
 
 //Ant Design
 import { Row, Col } from 'antd'
@@ -11,7 +12,7 @@ import { Row, Col } from 'antd'
 //Image
 import PurpleLogo from '../landing/LandingPage-assets/PurpleLogo.png'
 import Vector1A from '../landing/LandingPage-assets/Vector1A.png'
-import LandingFooter from './LandingFooter'
+
 
 //Styles
 if(process.env.REACT_APP_ENVIRONMENT_STAGE === "Public Build" && window.location.pathname === "/") {
@@ -22,7 +23,7 @@ function Home() {
     return (
         <div className='landing'>
                 {/* Navigation Section of Landing Page */}
-                <Row span={14}>
+                <Row>
                     <Navigation />
                 </Row>
 
@@ -31,7 +32,7 @@ function Home() {
 
                 {/* Home Page Title */}
                 <Row>
-                    <Col xs={{ span: 24 }} sm={{ span: 20 }} md={{ span: 24 }} lg={{ span: 16 }} offset={2}>
+                    <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 16 }} >
                         <div className="Home">
                             <div className="HomeTitle">
                                 <h1 id='LandingTitle'>Silang</h1>

@@ -18,7 +18,7 @@ function Services() {
             <div className="ServicesPage">
                 {/* Left Side of Services */}
                 <div className="ServicesSection" id="Services">
-                    <Col xs={{ span: 24 }} sm={{ span: 12 }} md={{ span: 24 }} lg={{ span: 20 }} xl={{ span: 24 }}>
+                    <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 20 }} xl={{ span: 24 }}>
 
                         <div className="ServicesTitle">
                             <h1 id="TextOne">Services</h1>
@@ -28,17 +28,17 @@ function Services() {
 
                         <div className="ServicesInfo">
                             {/* Communication */}
-                            <Col span={20} offset={4} id="Communication">
+                            <Col  id="Communication">
                                 <h2>Communication</h2>
                                 <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Impedit, amet sit vero numquam modi itaque officia similique at, quaerat, accusantium ab.</p>
                             </Col>
                             {/* Medical Record */}
-                            <Col span={20} offset={4} id="MedicalRecord">
+                            <Col id="MedicalRecord">
                                 <h2>Medical Record</h2>
                                 <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Impedit, amet sit vero numquam modi itaque officia similique at, quaerat, accusantium ab.</p>
                             </Col>
                             {/* Analytics */}
-                            <Col span={20} offset={4} id="Analytics">
+                            <Col id="Analytics">
                                 <h2>Analytics</h2>
                                 <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Impedit, amet sit vero numquam modi itaque officia similique at, quaerat, accusantium ab.</p>
                             </Col>

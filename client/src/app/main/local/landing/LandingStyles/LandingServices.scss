@@ -39,7 +39,7 @@
     position: absolute;
     width: 18vh;
     height: 2px;
-    right: 5vh;
+    right: 17vh;
     top: 27vh;
     background: black;
 }
@@ -49,17 +49,18 @@
 .ServicesInfo {
     margin-top: -3vh;
     margin-bottom: 22vh;
+    padding-left: 10vh;
 }
 
 #Communication h2, #MedicalRecord h2, #Analytics h2 {
-    font-size: 40px;
+    font-size: 50px;
     font-weight: 600;
     color: #ad72b7;
 }
 
 #Communication p, #MedicalRecord p, #Analytics p{
     padding-left: 15px;
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 300;
     text-align: left;
     justify-content: center;
@@ -87,34 +88,41 @@
     width: 129px;
     height: 129px;
     top: 10px;
-    left: 100vh;
+    right: 0;
     z-index: 10;
 }
 
 .black-grid2{
-    position: relative;
+    position: absolute;
     width: 129px;
     height: 129px;
-    top: -20vh;
-    left: 85vh;
+    bottom: 3vh;
+    right: 0;
     z-index: 10;
 }
 
 /*Moibile Responsive*/
+@media screen and (max-width: 1536px){
+    .SmallBlackDiv {
+        top: 37vh;
+    }
+}
+
 @media screen and (max-width: 1440px){
 
     .ServicesTitle {
-        margin-left: -5vh;
+        padding-left: -5vh;
     }
 
     .SmallBlackDiv {
-        right: 5vh;
+        right: 10vh;
         top: 31vh;
     }
 
     .black-grid1 {
-        left: 80vh;
+        left: 30vh;
     }
+
 
     .LaptopPhone {
         right: 15vh;
@@ -125,13 +133,12 @@
 @media screen and (max-width: 1024px){
 
     .black-grid1 {
-        left: 25vh;
+        left: 40vh;
     }
 
-    .black-grid2 {
-        top: -15vh;
-        left: 50vh;
-    }
+    // .black-grid2 {
+    //     left: 50vh;
+    // }
 
     .LaptopPhone {
         top: 35vh;
@@ -151,7 +158,6 @@
         margin-top: -8vh;
     }
 
-
     .ServicesInfo {
         padding-top: 2vh;
     }
@@ -170,6 +176,8 @@
     
     .ServicesSection {
         width: 100%;
+        display: flex;
+        align-items: center;
     }
 
     .ServicesImage {
@@ -183,6 +191,7 @@
 
     .ServicesInfo {
         padding-top: 35vh;
+        padding-left: 0vh;
     }
 
     #Communication h2, #MedicalRecord h2, #Analytics h2 {
@@ -192,12 +201,13 @@
     
     #Communication p, #MedicalRecord p, #Analytics p{
         font-size: 17px;
+        padding-left: 0vh;
         text-align: center;
     } 
 
     .SmallBlackDiv {
         left: 55vh;
-        bottom: 2vh;
+        top: 35vh;
     }
 
     .black-grid1 {
@@ -205,61 +215,55 @@
         left: 0vh;
     }
 
-    .black-grid2 {
-        top: -15vh;
-    }
+    // .black-grid2 {
+    //     top: 60vh;
+    //     left: -18vh;
+    // }
 
     .LaptopPhone {
         top: 40vh;
-        left: 30vh;
+        left: 23vh;
     }
 }
 
 @media screen and (max-width: 425px){
     .ServicesTitle { 
-        margin-left: -30vh;
+        text-align: center;
     }
 
     .ServicesInfo { 
-        margin-top: 80vh;
-        margin-left: 25vh;
-    }
-
-    #TextOne {
-        font-size: 150px;
+        margin-top: 5vh;
+        margin-left: 0vh;
     }
 
     #TextTwo {
-        font-size: 150px;
+        margin-left: 0vh;
     }
 
     #Communication h2, #MedicalRecord h2, #Analytics h2 {
-        font-size: 100px;
-        width: 100vh;
         text-align: center;
     }
     
     #Communication p, #MedicalRecord p, #Analytics p{
-        font-size: 50px;
-        width: 100vh;
+    
         text-align: justify;
     } 
 
     .SmallBlackDiv {
-        left: 60vh;
+        left: 25vh;
     }
 
     .black-grid1 {
-        width: 200px;
-        height: 200px;
-        top: -360vh;
+        top: 0vh;
     }
 
-    .black-grid2{
-        width: 200px;
-        height: 200px;
-        right: -85vh;
-        top: -15vh;
+    // .black-grid2{
+    //     left: -15vh;
+    //     top: 68vh;
+    // }
+
+    .LaptopPhone {
+        left: 0vh;
     }
 }
 
