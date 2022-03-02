@@ -27,7 +27,7 @@ import EventUpdate from "src/app/main/dashboard/event-listing/EventUpdate";
 import EventAttendee from "src/app/main/dashboard/event-listing/EventAttendee";
 import Communication from "src/app/main/dashboard/communication/Communication";
 import UsersData from "src/app/main/dashboard/users/UsersData";
-import UserCreate from "src/app/main/dashboard/users/UserCreate";
+import UserCreate from "src/app/main/dashboard/users/CreateUser";
 import Users from "src/app/main/dashboard/users/User";
 import UserSetting from "src/app/main/dashboard/users/UserSetting";
 
