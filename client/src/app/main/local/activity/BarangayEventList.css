@@ -77,6 +77,25 @@ body {
     font-size: 15px;
 }
 
+.event-btn {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 5px;
+}
+
+.attend-btn Button {
+    background-color: red;
+    border-radius: 20px;
+
+}
+
+.leave-btn Button {
+    background-color: grey;
+    border-radius: 20px;
+}
+
+
 /* Responsive Mobile M 375px *********************************************************/
 @media only screen and (min-width: 375px) {
 
@@ -228,8 +247,8 @@ body {
 @media only screen and (min-width: 1440px) {
     .event-body {
         width: 100%;
-        
     }
+
 
     .event-header-title h1{
         font-size: 70px;
