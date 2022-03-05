@@ -56,7 +56,9 @@ const UserSetting = () => {
     const [form] = Form.useForm();
 
     useEffect(() => {
-        getUserData()
+    // eslint-disable-next-line
+        getUserData();
+    // eslint-disable-next-line
     }, []);
 
     useEffect(() => {

@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 
 //Ant Design layout
 import {
-    Col,
     Layout,
     Table,
     Tag,
@@ -36,7 +35,7 @@ const MedicalList = () => {
             title: 'Name',
             dataIndex: 'name',
             key: 'name',
-            render: text => <a>{text}</a>,
+            render: text => <p>{text}</p>,
         },
         {
             title: 'Severity',
@@ -44,13 +43,13 @@ const MedicalList = () => {
             dataIndex: 'tags',
             render: tags => (
                 <>
-                    {tags.map(tag => {
+                    {tags.map((tag, index) => {
                         let color = tag.length > 6 ? 'geekblue' : 'green';
                         if (tag === 'severe') {
                             color = 'volcano';
                         }
                         return (
-                            <Tag color={color} key={tag}>
+                            <Tag color={color} key={index}>
                                 {tag.toUpperCase()}
                             </Tag>
                         );
@@ -75,8 +74,8 @@ const MedicalList = () => {
             key: 'action',
             render: (text, record) => (
                 <Space size="middle">
-                    <a>View</a>
-                    <a>Edit</a>
+                    <p>View</p>
+                    <p>Edit</p>
                 </Space>
             ),
         },

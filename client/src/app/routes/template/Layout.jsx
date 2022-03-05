@@ -22,7 +22,7 @@ function Dashboard() {
     // Enables redux reducer actions to be used
     const dispatch = useDispatch();
     // Redux slice variable/state
-    const { designation } = useSelector((state) => state.user); 
+    const { first_name, last_name, designation } = useSelector((state) => state.user); 
     const { drawer, dimension, authorization, loading } = useSelector((state) => state.web); 
     // Ant design  deconstructed component
     const { SubMenu } = Menu;
@@ -82,8 +82,7 @@ function Dashboard() {
                                     <React.Fragment key={navKey}>
                                         {
                                             currNav.roles.some((currData) => {
-                                                // return currData === designation
-                                                return true
+                                                return currData === designation
                                             }) ?
                                                 <React.Fragment>
                                                     {
@@ -192,7 +191,7 @@ function Dashboard() {
                             lineHeight: "5px"
                         }}
                     >
-                        <span className="c-pill c-pill--success">{designation}</span>
+                        <span className="c-pill c-pill--success">{first_name} {last_name} ({designation})</span>
                     </div>
                 </Header>
                 <Content style={{ padding: "20px", display: "flex", justifyContent: "center" }}>

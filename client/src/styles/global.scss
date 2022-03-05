@@ -17,10 +17,11 @@
 }
 
 .ant-menu-root {
-    height: calc(78.6vh);
-    @media screen and (max-width: 1200px) {
-        height: calc(89vh);
-    }
+    // temp remove for communication table
+    // height: calc(78.6vh);
+    // @media screen and (max-width: 1200px) {
+    //     height: calc(89vh);
+    // }
     display: flex;
     flex-direction: column;
 }

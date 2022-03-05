@@ -77,28 +77,185 @@ function Router() {
                                 {/* Landing Page of Dashboard */}
                                 <Route path="" element={ <AuthWrapper authStatus={true} redirectTo="/" component={<Default />} /> } />
                                 {/* Analytics Components */}
-                                <Route path="analytics" element={ <AuthWrapper authStatus={true} redirectTo="/" component={<Analytics />} /> } />
-                                <Route path="analytics/:year/:month" element={ <AuthWrapper authStatus={true} redirectTo="/" component={<AnalyticData />} /> } />
+                                <Route path="analytics" element={ 
+                                    <AuthWrapper 
+                                        authStatus={true}
+                                        redirectTo="/"
+                                        component={<Analytics />}
+                                        users={[
+                                            "Chairman",
+                                            "Nurse",
+                                            "Doctor"
+                                        ]}
+                                    />
+                                } />
+                                <Route path="analytics/:year/:month" element={ 
+                                    <AuthWrapper 
+                                        authStatus={true}
+                                        redirectTo="/"
+                                        component={<AnalyticData />} 
+                                        users={[
+                                            "Chairman",
+                                            "Nurse",
+                                            "Doctor"
+                                        ]}
+                                    />
+                                } />
                                 {/* Medical Record Components */}
-                                <Route path="medical-records" element={ <AuthWrapper authStatus={true} redirectTo="/" component={<MedicalListPrivate />} /> } />
-                                <Route path="medical-records/create" element={ <AuthWrapper authStatus={true} redirectTo="/" component={<MedicalCreate />} /> } />
-                                <Route path="medical-records/update/:id" element={ <AuthWrapper authStatus={true} redirectTo="/" component={<MedicalUpdate />} /> } />
-                                <Route path="medical-records/view/:id" element={ <AuthWrapper authStatus={true} redirectTo="/" component={<MedicalData />} /> } />
+                                <Route path="medical-records" element={
+                                    <AuthWrapper
+                                        authStatus={true}
+                                        redirectTo="/"
+                                        component={<MedicalListPrivate />}
+                                        users={[
+                                            "Chairman",
+                                            "Nurse",
+                                            "Doctor"
+                                        ]}
+                                    /> }
+                                />
+                                <Route path="medical-records/create" element={
+                                    <AuthWrapper 
+                                        authStatus={true}
+                                        redirectTo="/"
+                                        component={<MedicalCreate />}
+                                        users={[
+                                            "Nurse",
+                                            "Doctor"
+                                        ]}
+                                    /> }
+                                />
+                                <Route path="medical-records/update/:id" element={
+                                    <AuthWrapper
+                                        authStatus={true}
+                                        redirectTo="/"
+                                        component={<MedicalUpdate />}
+                                        users={[
+                                            "Nurse",
+                                            "Doctor"
+                                        ]}
+                                    /> }
+                                />
+                                <Route path="medical-records/view/:id" element={
+                                    <AuthWrapper
+                                        authStatus={true}
+                                        redirectTo="/"
+                                        component={<MedicalData />}
+                                        users={[
+                                            "Chairman",
+                                            "Nurse",
+                                            "Doctor"
+                                        ]}
+                                    /> }
+                                />
                                 {/* Event Listing Components */}
-                                <Route path="event-listing" element={ <AuthWrapper authStatus={true} redirectTo="/" component={<EventList />} /> } />
-                                <Route path="event-listing/create" element={ <AuthWrapper authStatus={true} redirectTo="/" component={<EventCreate />} /> } />
-                                <Route path="event-listing/update/:id" element={ <AuthWrapper authStatus={true} redirectTo="/" component={<EventUpdate />} /> } />
-                                <Route path="event-listing/add-attendee/:id" element={ <AuthWrapper authStatus={true} redirectTo="/" component={<EventAttendee />} /> } />
-                                <Route path="event-listing/view/:id" element={ <AuthWrapper authStatus={true} redirectTo="/" component={<EventData />} /> } />
+                                <Route path="event-listing" element={
+                                    <AuthWrapper
+                                        authStatus={true}
+                                        redirectTo="/"
+                                        component={<EventList />}
+                                        users={[
+                                            "Chairman",
+                                            "Staff",
+                                            "Nurse",
+                                            "Doctor"
+                                        ]}
+                                    /> }
+                                />
+                                <Route path="event-listing/create" element={
+                                    <AuthWrapper
+                                        authStatus={true}
+                                        redirectTo="/"
+                                        component={<EventCreate />}
+                                        users={[
+                                            "Chairman",
+                                            "Staff"
+                                        ]}
+                                    /> }
+                                />
+                                <Route path="event-listing/update/:id" element={
+                                    <AuthWrapper
+                                        authStatus={true}
+                                        redirectTo="/"
+                                        component={<EventUpdate />}
+                                        users={[
+                                            "Chairman",
+                                            "Staff"
+                                        ]}
+                                    /> }
+                                />
+                                <Route path="event-listing/add-attendee/:id" element={
+                                    <AuthWrapper
+                                        authStatus={true}
+                                        redirectTo="/"
+                                        component={<EventAttendee />}
+                                        users={[
+                                            "Chairman",
+                                            "Staff"
+                                        ]}
+                                    /> }
+                                />
+                                <Route path="event-listing/view/:id" element={
+                                    <AuthWrapper
+                                        authStatus={true}
+                                        redirectTo="/"
+                                        component={<EventData />}
+                                        users={[
+                                            "Chairman",
+                                            "Staff",
+                                            "Nurse",
+                                            "Doctor"
+                                        ]}
+                                    /> }
+                                />
                                 {/* Communication Component */}
-                                <Route path="communication" element={ <AuthWrapper authStatus={true} redirectTo="/" component={<Communication />} /> } />
+                                <Route path="communication" element={
+                                    <AuthWrapper
+                                        authStatus={true}
+                                        redirectTo="/"
+                                        component={<Communication />}
+                                        users={[
+                                            "Chairman",
+                                            "Staff"
+                                        ]}
+                                    /> }
+                                />
                                 {/* User Component */}
-                                <Route path="users" element={ <AuthWrapper authStatus={true} redirectTo="/" component={<UsersData />} /> } />
-                                <Route path="users/create/invitation" element={ <AuthWrapper authStatus={true} redirectTo="/" component={<UserCreate />} /> } />
-                                <Route path="users/update/:id" element={ <AuthWrapper authStatus={true} redirectTo="/" component={<AnalyticData />} /> } />
-                                <Route path="users/view/:id" element={ <AuthWrapper authStatus={true} redirectTo="/" component={<Users />} /> } />
+                                <Route path="users" element={
+                                    <AuthWrapper
+                                        authStatus={true}
+                                        redirectTo="/"
+                                        component={<UsersData />}
+                                        users={[
+                                            "Chairman",
+                                            "Staff"
+                                        ]}
+                                    /> }
+                                />
+                                <Route path="users/create/invitation" element={
+                                    <AuthWrapper
+                                        authStatus={true}
+                                        redirectTo="/"
+                                        component={<UserCreate />}
+                                        users={[
+                                            "Chairman",
+                                            "Staff"
+                                        ]}
+                                    /> }
+                                />
+                                <Route path="users/view/:id" element={
+                                    <AuthWrapper
+                                        authStatus={true}
+                                        redirectTo="/"
+                                        component={<Users />}
+                                        users={[
+                                            "Chairman",
+                                            "Staff"
+                                        ]}
+                                    /> }
+                                />
                                 {/* Setting Component */}
-                                <Route path="setting" element={ <AuthWrapper authStatus={true} redirectTo="/" component={<UserSetting />} /> } />
+                                <Route path="setting" element={<AuthWrapper authStatus={true} redirectTo="/" component={<UserSetting />} /> } />
                                 <Route path="*" element={ <NotFound /> }/>
                             </Route>
                             <Route path="*" element={ <NotFound /> }/>

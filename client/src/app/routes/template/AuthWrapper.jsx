@@ -1,6 +1,8 @@
 // Yarn packages
+import { useEffect } from "react";
 import { Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 import jwt from "jsonwebtoken";
 
@@ -15,10 +17,12 @@ import toasterRequest from "src/app/util/toaster";
 
 // For future reference: https://stackoverflow.com/a/69870303
 
-function AuthWrapper({ component, redirectTo, authStatus }) {
+function AuthWrapper({ component, redirectTo, authStatus, users }) {
 
     const dispatch = useDispatch();
+    const { designation } = useSelector((state) => state.user);
     const { authorization } = useSelector((state) => state.web);
+    const history = useNavigate();
     
     if(localStorage.getItem("Authorization") && authorization === true) {
         try {
@@ -53,6 +57,18 @@ function AuthWrapper({ component, redirectTo, authStatus }) {
     } else if (authorization !== authStatus && !localStorage.getItem("Authorization")) {
         toasterRequest({ payloadType: "warning", textString: "Route is restricted!"})
     }
+
+    useEffect(() => {
+        if(users !== undefined){
+            if(!users.some((wrapperDesignation) => {
+                return wrapperDesignation === designation
+            })){
+                history("/");
+                toasterRequest({ payloadType: "error", textString: "Current user designation does not have authority for this path!"})
+            }
+        }
+    // eslint-disable-next-line
+    }, []);
 
     // Returns the JSX Component back to the Router to be rendered
     return authorization === authStatus ? component : <Navigate to={redirectTo} />;

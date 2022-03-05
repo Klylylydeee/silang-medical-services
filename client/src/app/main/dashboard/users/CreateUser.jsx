@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Layout, PageHeader, Button, Select, Form, Row, Col, Input, Divider } from 'antd';
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -11,10 +11,6 @@ const UserCreate = () => {
     const { dimension } = useSelector((state) => state.web); 
     const { designation, barangay } = useSelector((state) => state.user); 
     const dispatch = useDispatch();
-
-    useEffect(() => {
-        console.log(barangay)
-    }, [])
 
     const [form] = Form.useForm();
 

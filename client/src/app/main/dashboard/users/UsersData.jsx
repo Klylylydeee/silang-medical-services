@@ -15,8 +15,8 @@ const { confirm } = Modal;
 const UsersData = () => {
 
     const { dimension } = useSelector((state) => state.web); 
-    const { barangay } = useSelector((state) => state.user); 
-    const [ selected, setSelected ] = useState(null);
+    const { barangay, designation } = useSelector((state) => state.user); // eslint-disable-next-line
+    // eslint-disable-next-line
 
     const history = useNavigate();
 
@@ -65,6 +65,7 @@ const UsersData = () => {
  
     useEffect(() => {
         getTableData();
+    // eslint-disable-next-line
     }, [])
 
     const showDelete = (data) => {
@@ -288,28 +289,33 @@ const UsersData = () => {
                             <SettingOutlined />
                         </Button>
                     </Tooltip>
-                    <Tooltip title={text.status === true ? "Disable User" : text.createdAt === text.updatedAt ? "User has not been verified" : "Enable User"}>
-                        {
-                            text.status === true ?
-                                <Button type="danger" style={{ background: "red", borderColor: "white" }}
-                                    onClick={()=> { 
-                                        showDelete(text)
-                                    }}
-                                >
-                                    <DisconnectOutlined />
-                                </Button>
-                            :
-                                <Button type="danger" style={{ background: "green", borderColor: "white" }}
-                                    onClick={()=> { 
-                                        showEnable(text)
-                                    }}
-                                    disabled={text.createdAt === text.updatedAt}
-                                >
-                                    <PlayCircleOutlined />
-                                </Button>
+                    {
+                        designation === "Staff" && text.designation === "Chairman" ? 
+                            <React.Fragment />
+                        :
+                            <Tooltip title={text.status === true ? "Disable User" : text.createdAt === text.updatedAt ? "User has not been verified" : "Enable User"}>
+                                {
+                                    text.status === true ?
+                                        <Button type="danger" style={{ background: "red", borderColor: "white" }}
+                                            onClick={()=> { 
+                                                showDelete(text)
+                                            }}
+                                        >
+                                            <DisconnectOutlined />
+                                        </Button>
+                                    :
+                                        <Button type="danger" style={{ background: "green", borderColor: "white" }}
+                                            onClick={()=> { 
+                                                showEnable(text)
+                                            }}
+                                            disabled={text.createdAt === text.updatedAt}
+                                        >
+                                            <PlayCircleOutlined />
+                                        </Button>
 
-                        }
-                    </Tooltip>
+                                }
+                            </Tooltip>
+                    }
                 </Space>
             ),
         }

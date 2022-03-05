@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Calendar, Alert, Badge, Layout, PageHeader, Button, Modal, Empty, Row, Col, Card, Statistic} from 'antd';
+import { Calendar, Badge, Layout, PageHeader, Button, Modal, Empty, Row, Col, Card, Statistic} from 'antd';
 import moment from 'moment';
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -85,6 +85,7 @@ const EventList = () => {
     useEffect(() => {
         dispatch(resetCell())
         getCellData()
+    // eslint-disable-next-line
     }, [])
     
     return (

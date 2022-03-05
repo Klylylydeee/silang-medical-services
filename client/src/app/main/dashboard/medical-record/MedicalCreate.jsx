@@ -13,7 +13,6 @@ import {
     Select,
     PageHeader,
     Divider,
-    Space,
     Modal
 } from 'antd';
 import { ExclamationCircleOutlined } from '@ant-design/icons';

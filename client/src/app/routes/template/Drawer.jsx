@@ -16,6 +16,7 @@ const drawerNavigation = [
         redirect: "",
         roles: [
             "Chairman",
+            "Staff",
             "Nurse",
             "Doctor"
         ]
@@ -46,8 +47,7 @@ const drawerNavigation = [
         redirect: "event-listing",
         roles: [
             "Chairman",
-            "Nurse",
-            "Doctor"
+            "Staff"
         ]
     },
     {
@@ -56,8 +56,7 @@ const drawerNavigation = [
         redirect: "communication",
         roles: [
             "Chairman",
-            "Nurse",
-            "Doctor"
+            "Staff"
         ]
     },
     {
@@ -78,8 +77,7 @@ const drawerNavigation = [
         // ],
         roles: [
             "Chairman",
-            "Nurse",
-            "Doctor"
+            "Staff"
         ]
     },
     {
@@ -88,6 +86,7 @@ const drawerNavigation = [
         redirect: "setting",
         roles: [
             "Chairman",
+            "Staff",
             "Nurse",
             "Doctor"
         ]
@@ -98,6 +97,7 @@ const drawerNavigation = [
         redirect: "",
         roles: [
             "Chairman",
+            "Staff",
             "Nurse",
             "Doctor"
         ]

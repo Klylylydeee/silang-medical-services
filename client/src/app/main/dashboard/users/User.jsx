@@ -52,11 +52,14 @@ const User = () => {
     const [form] = Form.useForm();
 
     useEffect(() => {
-        getUserData()
+        getUserData();
+    // eslint-disable-next-line
     }, []);
 
     useEffect(() => {
-        form.setFieldsValue(userData)
+    // eslint-disable-next-line
+        form.setFieldsValue(userData);
+    // eslint-disable-next-line
     }, [userData])
 
     return (

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Layout, PageHeader, Button, Select, Form, Row, Col, Input, Divider, DatePicker, Alert, Switch} from 'antd';
+import React, { useEffect } from "react";
+import { Layout, PageHeader, Button, Select, Form, Row, Col, Input, Divider, DatePicker } from 'antd';
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import toasterRequest from "src/app/util/toaster";
@@ -84,7 +84,8 @@ const EventUpdate = () => {
     }
 
     useEffect(() => {
-        getData()
+        getData();
+    // eslint-disable-next-line
     }, []);
     
     return (

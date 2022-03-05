@@ -69,7 +69,8 @@ const EventCreate = () => {
             last_name: last_name,
             email: email,
             phone_number: phone_number.substring(3)
-        })
+        });
+    // eslint-disable-next-line
     }, []);
 
     const [ reqStatus, setReqStatus ] = useState(false);

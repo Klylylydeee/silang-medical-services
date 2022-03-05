@@ -1,37 +1,51 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
-
-//Ant Design layout
+import { useSelector, useDispatch } from "react-redux";
+import toasterRequest from "src/app/util/toaster";
+import { axiosAPI } from "src/app/util/axios";
+import { changeLoader } from "src/app/store/web/webInformation";
 import { Pie } from '@ant-design/plots';
-import { Comment, Avatar, Form, Button, List, Input, Col, Layout, PageHeader } from "antd";
-import moment from "moment";
-import "antd/dist/antd.css";
+import { Comment, Form, Button, List, Input, Layout, PageHeader, Divider, Tooltip } from "antd";
+import { CloseSquareOutlined } from '@ant-design/icons';
+import "./data.scss"
 
-//Scss Styling
-import '../../../../styles/analytics-specific.scss'
-
-//Comments Config
-const { TextArea } = Input;
-
-const CommentList = ({ comments }) => (
+const CommentList = ({ comments, author, onClick }) => (
     <List
         dataSource={comments}
         itemLayout="horizontal"
-        renderItem={(props) => <Comment {...props} />}
+        renderItem={(props) => {
+            return (
+                <Comment {...props}
+                style={{ position: "relative" }}
+                actions={[
+                    ...(props.author === `${author.first_name} ${author.last_name}`) && [
+                        <Tooltip title="Remove Comment" >
+                            <Button
+                                icon={<CloseSquareOutlined />} 
+                                onClick={() => { onClick(props._id) }}
+                                type="primary"
+                                style={{ position: "absolute", top: 0, bottom: 0, margin: "auto 0", right: 0 }}
+                            >
+                            </Button>
+                        </Tooltip>
+                    ]
+                ]} />
+            )
+        }}
     />
 );
 
 const Editor = ({ onChange, onSubmit, submitting, value }) => (
     <>
         <Form.Item>
-            <TextArea rows={4} onChange={onChange} value={value} />
+            <Input.TextArea rows={4} onChange={onChange} value={value} />
         </Form.Item>
         <Form.Item>
             <Button
                 htmlType="submit"
                 loading={submitting}
                 onClick={onSubmit}
+                style={{ margin: "0" }}
                 type="primary"
             >
                 Add Comment
@@ -42,41 +56,70 @@ const Editor = ({ onChange, onSubmit, submitting, value }) => (
 
 const AnalyticData = () => {
     const { dimension } = useSelector((state) => state.web);
-    const { barangay } = useSelector((state) => state.user); 
+    const { barangay, first_name, last_name } = useSelector((state) => state.user);
     const params = useParams();
+    const dispatch = useDispatch();
+    const [pieData, setPieData] = useState([]);
 
-    //Comments Config
     const [state, setState] = useState({
         comments: [],
-        submitting: false,
         value: ""
     });
 
-    useEffect(() => {
-        console.log(state);
-    }, [state]);
+    const getComments = async () => {
+        try {
+            dispatch(changeLoader({ loading: true }))
+            let eventData = await axiosAPI.get(`analytics/specific-comments?barangay=${barangay}&year=${params.year}&month=${params.month}`);
+            setState((prevData) => {
+                return {
+                    ...prevData,
+                    comments: eventData.data.comments
+                }
+            })
+            dispatch(changeLoader({ loading: false }));
+        } catch (err) {
+            dispatch(changeLoader({ loading: false }))
+            err.response ? 
+                toasterRequest({ payloadType: "error", textString: err.response.data.message})
+            :
+                toasterRequest({ payloadType: "error", textString: err.message});
+        }
+    }
+    const addComment = async () => {
+        try {
+            dispatch(changeLoader({ loading: true }))
+            let eventData = await axiosAPI.post(`analytics/add-comments?barangay=${barangay}&year=${params.year}&month=${params.month}&comment=${state.value}&author=${first_name} ${last_name}`);
+            toasterRequest({ payloadType: "success", textString: eventData.data.message});
+            setState({
+                ...state,
+                value: ""
+            });
+            getComments();
+        } catch (err) {
+            dispatch(changeLoader({ loading: false }))
+            err.response ? 
+                toasterRequest({ payloadType: "error", textString: err.response.data.message})
+            :
+                toasterRequest({ payloadType: "error", textString: err.message});
+        }
+    }
+    const removeComment = async (id) => {
+        try {
+            dispatch(changeLoader({ loading: true }))
+            let eventData = await axiosAPI.patch(`analytics/remove-comments?_id=${id}`);
+            toasterRequest({ payloadType: "success", textString: eventData.data.message});
+            getComments();
+        } catch (err) {
+            dispatch(changeLoader({ loading: false }))
+            err.response ? 
+                toasterRequest({ payloadType: "error", textString: err.response.data.message})
+            :
+                toasterRequest({ payloadType: "error", textString: err.message});
+        }
+    }
 
     const handleSubmit = () => {
-        setState({
-            ...state,
-            submitting: true
-        });
-
-        setTimeout(() => {
-            setState({
-                submitting: false,
-                value: "",
-                comments: [
-                    ...state.comments,
-                    {
-                        author: "Jether Haniel",
-                        avatar: "https://joeschmoe.io/api/v1/random",
-                        content: <p>{state.value}</p>,
-                        datetime: moment().fromNow()
-                    }
-                ]
-            });
-        }, 1000);
+        addComment();
     };
 
     const handleChange = (e) => {
@@ -86,84 +129,76 @@ const AnalyticData = () => {
         });
     };
 
-    //Pie chart config
-    const data = [
-        {
-            type: 'Jether',
-            value: 27,
-        },
-        {
-            type: 'Klyde',
-            value: 25,
-        },
-        {
-            type: 'Rondel',
-            value: 18,
-        },
-        {
-            type: 'Kenn',
-            value: 15,
-        },
-        {
-            type: 'Haniel',
-            value: 10,
-        },
-        {
-            type: 'Charles',
-            value: 5,
-        },
-    ];
-    const config = {
-        appendPadding: 10,
-        data,
-        angleField: 'value',
-        colorField: 'type',
-        radius: 0.8,
-        label: {
-            type: 'outer',
-            content: '{name} {percentage}',
-        },
-        interactions: [
-            {
-                type: 'pie-legend-active',
-            },
-            {
-                type: 'element-active',
-            },
-        ],
-    };
+    const getData = async () => {
+        try {
+            dispatch(changeLoader({ loading: true }))
+            let eventData = await axiosAPI.get(`analytics/specific?barangay=${barangay}&year=${params.year}&month=${params.month}`);
+            setPieData(eventData.data.payload)
+            setState((prevData) => {
+                return {
+                    ...prevData,
+                    comments: eventData.data.comments
+                }
+            })
+            dispatch(changeLoader({ loading: false }));
+        } catch (err) {
+            dispatch(changeLoader({ loading: false }))
+            err.response ? 
+                toasterRequest({ payloadType: "error", textString: err.response.data.message})
+            :
+                toasterRequest({ payloadType: "error", textString: err.message});
+        }
+    }
 
+    useEffect(() => {
+        getData();
+    // eslint-disable-next-line
+    }, []);
+    
     return (
-        <Layout.Content>
-            <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }} xxl={{ span: 24 }} className="analytics-monthly-container">
-                <div style={{ backgroundColor: "#AD72B7", padding: "10px 20px", marginBottom: "15px", borderRadius: "5px" }}>
-                    <PageHeader
-                        ghost={false}
-                        title="Monthly Analytics"
-                        subTitle={dimension >= 4 ? `Contains the analytics for Barangay ${barangay}.` : ""}
-                        style={{ padding: 0, backgroundColor: "#AD72B7", borderRadius: "5px" }}
-                    />
-                </div>
-                <Pie {...config} />
-
-                <>
-                    <CommentList comments={state.comments} />
-                    <Comment
-                        avatar={
-                            <Avatar src="https://joeschmoe.io/api/v1/random" alt="Han Solo" />
-                        }
-                        content={
-                            <Editor
-                                onChange={handleChange}
-                                onSubmit={handleSubmit}
-                                submitting={state.submitting}
-                                value={state.value}
-                            />
-                        }
-                    />
-                </>
-            </Col>
-        </Layout.Content>
+        <React.Fragment>
+            <Layout.Content style={{ backgroundColor: "#AD72B7", padding: "10px 20px", marginBottom: "15px", borderRadius: "5px" }}>
+                <PageHeader
+                    ghost={false}
+                    title={`${params.month} ${params.year} - Analytics`} 
+                    subTitle={dimension >= 4 ? `Contains the analytics for Barangay ${barangay}.` : ""}
+                    style={{ padding: 0, backgroundColor: "#AD72B7" }}
+                />
+            </Layout.Content>
+            <Layout.Content style={{ backgroundColor: "white", padding: "10px 20px", marginBottom: "15px", borderRadius: "5px" }}>
+                <Pie 
+                    appendPadding={10}
+                    data={pieData}
+                    angleField="value"
+                    colorField="type"
+                    radius={0.8}
+                    label={{type: 'outer', content: '{name} {percentage}'}}
+                    interactions={[
+                        {
+                            type: 'pie-legend-active',
+                        },
+                        {
+                            type: 'element-active',
+                        },
+                    ]}
+                />
+            </Layout.Content>
+            <Layout.Content style={{ backgroundColor: "white", padding: "10px 20px", marginBottom: "15px", borderRadius: "5px" }}>
+                <Divider orientation="left" style={{ fontSize: "18px", color: "black", fontWeight: 500 }}>Comments</Divider>
+                <CommentList comments={state.comments} author={{ first_name, last_name }} onClick={removeComment} />
+            </Layout.Content>
+            <Layout.Content style={{ backgroundColor: "white", padding: "10px 20px 0 20px", marginBottom: "15px", borderRadius: "5px" }}>
+                <Comment
+                    content={
+                        <Editor
+                            onChange={handleChange}
+                            onSubmit={handleSubmit}
+                            value={state.value}
+                        />
+                    }
+                />
+            </Layout.Content>
+        </React.Fragment>
     )
 }
 

@@ -142,6 +142,7 @@ const EventData = () => {
 
     useEffect(() => {
         getCellData()
+    // eslint-disable-next-line
     }, []);
     
     return (
@@ -189,6 +190,7 @@ const EventData = () => {
                 </Descriptions>
             </Layout.Content>
             <Layout.Content style={{ backgroundColor: "white", padding: "10px 20px", marginBottom: "15px", borderRadius: "5px" }}>
+                <p style={{ fontSize: "16px", fontWeight: 700, paddingTop: "15px"}}>Event Attendee</p>
                 <Table columns={columns} dataSource={data} scroll={{ x: 500 }} />
             </Layout.Content>
         </React.Fragment>
