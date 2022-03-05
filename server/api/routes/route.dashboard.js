@@ -7,6 +7,14 @@ const { validateAuthorization } = require("../middleware/authHandler");
 const router = express.Router();
 
 router.get(
+    "/default",
+    [
+        query("barangay").not().isEmpty()
+    ],
+    analyticsController.mainDashboard
+)
+
+router.get(
     "/chairman",
     [
         query("barangay").not().isEmpty()

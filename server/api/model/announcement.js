@@ -80,7 +80,7 @@ const announcementSchema = new Schema(
             type: String,
             required: true
         },
-        description: {
+        message: {
             type: String,
             required: true
         },

@@ -1,9 +1,70 @@
 const Announcement = require("../model/announcement");
+const AnalyticComments = require("../model/analyticComment");
 const EventListing = require("../model/eventListing");
 const MedicalRecords = require("../model/medicalRecord");
 const Users = require("../model/userAccount");
 
 const { validateRequest } = require("../util/jsonValidate");
+
+exports.mainDashboard = async (req, res, next) => {
+
+    try {
+
+        validateRequest(req);
+        
+        const distictCitizenRegisteredForm = await MedicalRecords.find({ barangay: req.query.barangay }).distinct("email").count();
+        const totalBarangayMedicalRecord = await MedicalRecords.find({ barangay: req.query.barangay }).count();
+        const totalBarangayUsers = await Users.find({ barangay: req.query.barangay }).count();
+        const totalEventListing = await EventListing.find({ barangay: req.query.barangay }).count();
+        const totalAnnouncement = await Announcement.find({ barangay: req.query.barangay }).count();
+        const totalAnnouncementComments = await AnalyticComments.find({ barangay: req.query.barangay }).count();
+        const latestEvent = await EventListing.find({ barangay: req.query.barangay }).sort({ _id: -1 }).limit(5);
+        const latestAnnouncement = await Announcement.find({ barangay: req.query.barangay }).sort({ _id: -1 }).limit(5);
+        const latestPatient = await MedicalRecords.find({ barangay: req.query.barangay }).sort({ _id: -1 }).limit(5);
+
+        res.status(200).send({
+            message: "Default dashboard data.",
+            payload: {
+                table: [
+                    {
+                        title: "Barangay Users",
+                        count: totalBarangayUsers
+                    },
+                    {
+                        title: "Registered Citizens",
+                        count: distictCitizenRegisteredForm
+                    },
+                    {
+                        title: "Medical Recrods",
+                        count: totalBarangayMedicalRecord
+                    },
+                    {
+                        title: "Event Listing",
+                        count: totalEventListing
+                    },
+                    {
+                        title: "Announcements",
+                        count: totalAnnouncement
+                    },
+                    {
+                        title: "Analytics Comments",
+                        count: totalAnnouncementComments
+                    },
+                ],
+                events: latestEvent,
+                announcements: latestAnnouncement,
+                records: latestPatient
+            }
+        });
+
+    } catch(err) {
+
+        err.statusCode === undefined ? err.statusCode = 500 : "";
+        return next(err);
+
+    };
+
+}
 
 exports.chairmanDashboard = async (req, res, next) => {
 

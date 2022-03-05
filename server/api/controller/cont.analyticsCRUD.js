@@ -1,9 +1,13 @@
 const axios = require("axios");
+const moment = require("moment");
 
 const MedicalRecord = require("../model/medicalRecord");
+const AnalyticComments = require("../model/analyticComment");
 
 const { generateBarangayForm } = require("../middleware/puppeteerConfig");
 const mailerConfig = require("../middleware/mailerConfig");
+
+const { monthToNumber } = require("../util/dateHelper");
 
 const { validateRequest } = require("../util/jsonValidate");
 
@@ -11,152 +15,10 @@ exports.analyticsByYear = async (req, res, next) => {
 
     try {
 
-        
-        // let transactionList = await MedicalRecord.aggregate([
-        //     {
-        //         $match: {
-        //             createdAt: {
-        //                 $gte: new Date(`2022-01-01T00:00:00.0Z`),
-        //                 $lt: new Date(`2022-02-31T15:58:26.000Z`)
-        //             }
-        //         }
-        //     },
-        //     {
-        //         $project: {
-        //             outlier: 1,
-        //             createdAt: 1,
-        //             month: { 
-        //                 $month: "$createdAt" 
-        //             },
-        //             year: {
-        //                 $year: "$createdAt"
-        //             }
-        //         }
-        //     },
-        //     {
-        //         $group: {
-        //             _id: { month: "$month", year: "$year" },
-        //             collection: { 
-        //                 $push: { 
-        //                     score: "$outlier",
-        //                 }
-        //             }
-        //         }
-        //     },
-        //     {
-        //         $addFields: {
-        //             data: {
-        //                 $size: "$collection"
-        //             }
-        //         }
-        //     },
-        //     {
-        //         $addFields: {
-        //             year: "$_id.year"
-        //         }
-        //     },
-        //     {
-        //         $addFields: {
-        //             id: {
-        //                 $let: {
-        //                     vars: {
-        //                         monthsInString: [
-        //                             0,
-        //                             1,
-        //                             2,
-        //                             3,
-        //                             4,
-        //                             5,
-        //                             6,
-        //                             7,
-        //                             8,
-        //                             9,
-        //                             10,
-        //                             11,
-        //                             12
-        //                         ]
-        //                     },
-        //                     in: {
-        //                         $arrayElemAt: [
-        //                             '$$monthsInString',
-        //                             '$_id.month'
-        //                         ]
-        //                     }
-        //                 }
-        //             }
-        //         }
-        //     },
-        //     {
-        //         $addFields: {
-        //             month: {
-        //                 $let: {
-        //                     vars: {
-        //                         monthsInString: [
-        //                             '',
-        //                             'January',
-        //                             'February',
-        //                             'March',
-        //                             'April',
-        //                             'May ',
-        //                             'June',
-        //                             'July',
-        //                             'August',
-        //                             'September',
-        //                             'October',
-        //                             'November',
-        //                             'December'
-        //                         ]
-        //                     },
-        //                     in: {
-        //                         $arrayElemAt: [
-        //                             '$$monthsInString',
-        //                             '$id'
-        //                         ]
-        //                     }
-        //                 }
-        //             }
-        //         }
-        //     },
-        //     {
-        //         $unset: "id"
-        //     },
-        //     {
-        //         $unset: "_id"
-        //     },
-        //     {
-        //         $unset: "collection"
-        //     },
-        //     {
-        //         $group: {
-        //             _id: "$year",
-        //             payload: { 
-        //                 $push: { 
-        //                     payload: {
-        //                         month: "$month",
-        //                         count: "$data"
-        //                     },
-        //                 }
-        //             }
-        //         }
-        //     },
-        //     {
-        //         $project: {
-        //             year: "$_id"
-        //         }
-        //     },
-        //     {
-        //         $unset: "_id"
-        //     }
-        // ])
-
         let medicalRecordList = await MedicalRecord.aggregate([
             {
                 $match: {
-                    createdAt: {
-                        $gte: new Date(`2021-01-01T00:00:00.0Z`),
-                        $lt: new Date(`2022-12-31T15:58:26.000Z`)
-                    },
-                    barangay: req.body.barangay
+                    barangay: req.query.barangay
                 }
             },
             {
@@ -193,7 +55,7 @@ exports.analyticsByYear = async (req, res, next) => {
                                     'February',
                                     'March',
                                     'April',
-                                    'May ',
+                                    'May',
                                     'June',
                                     'July',
                                     'August',
@@ -231,32 +93,44 @@ exports.analyticsByYear = async (req, res, next) => {
             }
         ]);
 
-        let analyticsData = {};
+        
+        let analyticsData = [];
 
-        medicalRecordList.map((currentData) => {
-            !analyticsData[`${currentData._id.year}`]?
-                analyticsData[`${currentData._id.year}`] = {}
-            : null
-            currentData.outlier_score.map((currentScore) => {
-                !analyticsData[`${currentData._id.year}`][`${currentScore.month}`] ?
-                    analyticsData[`${currentData._id.year}`][`${currentScore.month}`] = {
-                        low: 0,
-                        medium: 0,
-                        high: 0
-                    }
-                : null
-                currentScore.score >= 8 ?
-                    analyticsData[`${currentData._id.year}`][`${currentScore.month}`].high++
-                : currentScore.score >= 5 ?
-                    analyticsData[`${currentData._id.year}`][`${currentScore.month}`].medium++
-                :
-                    analyticsData[`${currentData._id.year}`][`${currentScore.month}`].low++
+        medicalRecordList.map(({ _id, outlier_score }) => {
+
+            outlier_score.map(({ month, score}) => {
+                if(analyticsData.map((values) => { return values.datetime }).indexOf(`${_id.year} - ${month} - ${score >= 8 ? "Severe" : score >= 5 ? "Moderate" : "Mild" }`) === -1){
+                    analyticsData.push({
+                        datetime: `${_id.year} - ${month} - ${score >= 8 ? "Severe" : score >= 5 ? "Moderate" : "Mild" }`,
+                        value: 0
+                    })
+                }
+
+                let indexVal = analyticsData.map((values) => { return values.datetime }).indexOf(`${_id.year} - ${month} - ${score >= 8 ? "Severe" : score >= 5 ? "Moderate" : "Mild" }`);
+                analyticsData[indexVal] = {
+                    ...analyticsData[indexVal],
+                    value: ++ analyticsData[indexVal].value
+                }
             })
         });
 
+        let filteredData = analyticsData.map((record) => {
+            let newDateTime = record.datetime.split(" - ");
+            return {
+                datetime: newDateTime[0] + " - " + newDateTime[1],
+                category: newDateTime[2],
+                value: record.value
+            }
+        });
+
+        var collator = new Intl.Collator([], {numeric: true});
+        let sortedData = filteredData.sort((a, b) => collator.compare(a, b)).sort((a, b) => {
+            return moment(a.datetime,'YYYY - MMMM') - moment(b.datetime,'YYYY - MMMM')
+        })
+
         res.send({
             message: "Analytics data based on query year and month",
-            payload: analyticsData
+            payload: sortedData
         });
 
     } catch (err) {
@@ -321,3 +195,165 @@ exports.analyticsBySpecificDate = async (req, res, next) => {
 
     }
 }
+
+exports.analyticsSpecificDate = async (req, res, next) => {
+
+    try {
+
+        console.log(monthToNumber(req.query.month))
+
+        let analyticsData = await MedicalRecord.find(
+            {
+                barangay: req.query.barangay,
+                createdAt: {
+                    $gte: new Date(`${req.query.year}-${monthToNumber(req.query.month)}-01T00:00:00.0Z`),
+                    $lt: new Date(`${req.query.year}-${monthToNumber(req.query.month)}-31T15:58:26.000Z`)
+                }
+            }
+        );
+    
+        let filteredData = []
+
+        analyticsData.map((record) => {
+            if(filteredData.map((values) => { return values.type }).indexOf(record.diagnosis) === -1){
+                filteredData.push({
+                    type: record.diagnosis,
+                    value: 0
+                })
+            }
+            let indexVal = filteredData.map((values) => { return values.type }).indexOf(record.diagnosis);
+            filteredData[indexVal] = {
+                ...filteredData[indexVal],
+                value: ++ filteredData[indexVal].value
+            }
+        });
+
+        let commentsData = await AnalyticComments.find(
+            {
+                barangay: req.query.barangay,
+                year: req.query.year,
+                month: req.query.month,
+                status: true
+            }
+        );
+
+        let filteredComment = commentsData.map((data) => {
+            return {
+                author: data.author,
+                content: data.comment,
+                datetime: moment(data.createdAt).format("MMMM DD, YYYY h:MM A"),
+                _id: data._id
+            }
+        });
+
+        res.send({
+            message: "Specific analytics data",
+            payload: filteredData,
+            comments: filteredComment
+        });
+
+    } catch(err) {
+
+        err.statusCode === undefined ? err.statusCode = 500 : "";
+        return next(err);
+
+    }
+}
+
+exports.commentSpecificDate = async (req, res, next) => {
+
+    try {
+
+        let commentsData = await AnalyticComments.find(
+            {
+                barangay: req.query.barangay,
+                year: req.query.year,
+                month: req.query.month,
+                status: true
+            }
+        );
+    
+        let filteredComment = commentsData.map((data) => {
+            return {
+                author: data.author,
+                content: data.comment,
+                datetime: moment(data.createdAt).format("MMMM DD, YYYY h:MM A"),
+                _id: data._id
+            }
+        });
+
+        res.send({
+            message: "Specific comment data",
+            comments: filteredComment
+        });
+
+    } catch(err) {
+
+        err.statusCode === undefined ? err.statusCode = 500 : "";
+        return next(err);
+
+    }
+}
+
+exports.addCommentSpecificDate = async (req, res, next) => {
+
+    try {
+
+        let commentsData = await AnalyticComments.create(
+            {
+                author: req.query.author,
+                comment: req.query.comment,
+                barangay: req.query.barangay,
+                year: req.query.year,
+                month: req.query.month,
+                status: true
+            }
+        );
+    
+        res.send({
+            message: "Comment has been added!",
+            comments: commentsData
+        });
+
+    } catch(err) {
+
+        err.statusCode === undefined ? err.statusCode = 500 : "";
+        return next(err);
+
+    }
+}
+
+
+exports.deleteCommentSpecificDate = async (req, res, next) => {
+
+    try {
+
+        let commentsData = await AnalyticComments.findOneAndUpdate(
+            { 
+                _id: req.query._id,
+                status: true
+            },
+            {
+                $set: {
+                    status: false
+                }
+            },
+            { 
+                new: true,
+                timestamps: true
+            }
+        );
+    
+        res.send({
+            message: "Comment has been deleted!",
+            comments: commentsData
+        });
+
+    } catch(err) {
+
+        err.statusCode === undefined ? err.statusCode = 500 : "";
+        return next(err);
+
+    }
+}
+

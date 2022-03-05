@@ -1,8 +1,10 @@
 const cors = require("cors");
 
 const whitelist = [
-    process.env.DEPLOYMENT_STATUS === "YES" ? "http://api.silangmedical.com" : "http://localhost:3000",
-    "http://localhost:1000"
+    process.env.DEPLOYMENT_STATUS === "YES" ? "https://api.silangmedical.com" : "http://localhost:1000",
+    process.env.DEPLOYMENT_STATUS === "YES" ? "https://portal.silangmedical.com" : "http://localhost:3000",
+    process.env.DEPLOYMENT_STATUS === "YES" ? "https://silangmedical.com" : "http://localhost:3000",
+    process.env.DEPLOYMENT_STATUS === "YES" && process.env.SERVER_MODE === "admin" &&  "https://admin-api.silangmedical.com",
 ];
 
 const corsConfig = cors({

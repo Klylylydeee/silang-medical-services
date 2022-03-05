@@ -13,5 +13,12 @@ const generatePhoneNum = () => {
         )
     ) + (Math.pow(10, 8));
 }
+const generateOutlier = () => {
+    return Math.floor(
+        Math.random() * (
+            9 * (Math.pow(10, 0))
+        )
+    ) + (Math.pow(10, 0));
+}
 
-module.exports = { generatePin, generatePhoneNum };
+module.exports = { generatePin, generatePhoneNum, generateOutlier };

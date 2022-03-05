@@ -10,9 +10,11 @@ const options = {
         },
         servers: [
             {
-                // url: `https://silang-medical-services-api.com`,
-                url: process.env.DEPLOYMENT_STATUS === "YES" ? "http://api.silangmedical.com" : "http://localhost:1000",
+                url: process.env.DEPLOYMENT_STATUS === "YES" && process.env.SERVER_MODE !== "admin" ? "https://api.silangmedical.com" : "http://localhost:1000",
             },
+            {
+                url: process.env.DEPLOYMENT_STATUS === "YES" && process.env.SERVER_MODE === "admin" && "https://admin-api.silangmedical.com",
+            }
         ],
     },
     apis: ["server.js", "./view/*.js", "./model/*.js"],

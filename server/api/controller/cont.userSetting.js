@@ -94,11 +94,9 @@ exports.userData = async (req, res, next) => {
 
         validateRequest(req);
 
-        console.log()
-
         let userData = await Users.findOne(
             { 
-                ...(req.body._id && { _id: req.body.id }),
+                ...(req.body.id && { _id: req.body.id }),
                 ...(req.body.email && { email: req.body.email }),
                 ...(req.body.barangay && { barangay: req.body.barangay }),
             }

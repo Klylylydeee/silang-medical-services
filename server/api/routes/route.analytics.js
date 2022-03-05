@@ -12,6 +12,26 @@ router.get(
         // query("payload").not().isEmpty()
     ],
     analyticsController.analyticsByYear
-)
+);
+
+router.get(
+    "/specific",
+    analyticsController.analyticsSpecificDate
+);
+
+router.get(
+    "/specific-comments",
+    analyticsController.commentSpecificDate
+);
+
+router.post(
+    "/add-comments",
+    analyticsController.addCommentSpecificDate
+);
+
+router.patch(
+    "/remove-comments",
+    analyticsController.deleteCommentSpecificDate
+);
 
 module.exports = router;

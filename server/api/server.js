@@ -9,7 +9,10 @@ const AdminJSMongoose = require('@adminjs/mongoose');
 const bcrypt = require("bcrypt");
     
 const databaseConnection = require("./database/mongoDBConfig");
-const createEventListing = require("./test/createDocInit");
+const {
+    createEventListing,
+    createMedicalRecord
+} = require("./test/createDocInit");
 const corsConfig = require("./config/corsConfig");
 const morganConfig = require("./config/morganConfig");
 const faviconConfig = require("./config/faviconConfig");
@@ -32,6 +35,7 @@ AdminJS.registerAdapter(AdminJSMongoose);
 
 databaseConnection().then(() => { 
     createEventListing();
+    createMedicalRecord();
 });
 
 const app = express();
@@ -129,7 +133,10 @@ app.listen(process.env.PORT, () => {
 
 app.get('/', (req, res) => {
     process.env.SERVER_MODE === "admin" ?
-        res.redirect(`http://localhost:1000/api-documentation`)
+        process.env.DEPLOYMENT_STATUS === "YES" ?
+            res.redirect(`https://api.silangmedical.com/api-documentation`)
+        :
+            res.redirect(`http://localhost:1000/api-documentation`)
     :
         res.redirect(`http://localhost:3000/`)
 });
