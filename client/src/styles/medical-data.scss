@@ -1,0 +1,133 @@
+.data-container{
+    display: flex !important;
+    flex-direction: column;
+}
+
+.child-container{
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+}
+
+.header h1{
+    font-weight: 700 !important;
+    font-size: 30px;
+    color: #383838;
+}
+
+.patient-name{
+    display: flex !important;
+    flex-direction: row;
+    background-color: white;
+    width: auto;
+    padding: 10px;
+    width: 45vw;
+    font-size: 20px;
+    align-items: center;
+}
+
+.avatar{
+    margin-left: 10px;
+}
+
+.patient-name h2{
+    margin-left: 10px;
+}
+
+.contact-details{
+    display: flex !important;
+    flex-direction: column;
+    justify-content: center;
+    background-color: white;
+    font-size: 20px;
+    width: 45vw;
+    margin-top: 2vh;
+}
+
+.contact-descriptions{
+    height: 15vh;
+}
+
+.desc-item p{
+    font-size: 15px !important;
+    font-weight: 500;
+}
+
+.medication-details{
+    display: flex !important;
+    flex-direction: column;
+    background-color: white;
+    width: 30vw;
+    font-size: 20px;
+}
+
+.diagnosis-report{
+    width: 45vw;
+}
+
+.medical-cards{
+    width: 15vw;
+}
+
+
+// Extra small devices (portrait phones, less than 576px)
+@media (max-width: 575.98px) { 
+    .contact-descriptions{
+        height: 50vh;
+    }
+
+    .medical-cards{
+        width: 45vw;
+    }
+
+    .avatar{
+        margin-left: 0px;
+    }
+
+    .patient-name h2{
+        margin-left: 25px;
+    }
+
+    .patient-name{
+        flex-direction: column;
+        align-items: center;
+        height: 25vh;
+    }
+
+    .contact-details{
+        margin-top: 5vh;
+    }
+
+    .medication-details{
+        width: 45vw;
+    }
+
+}
+
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 576px) {
+    .contact-descriptions{
+        height: 35vh;
+    }
+}
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) {
+    .contact-descriptions{
+        height: 27vh;
+    }
+}
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) {
+    .contact-descriptions{
+        height: 23vh;
+    }
+}
+
+// Extra large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) {
+    .contact-descriptions{
+        height: 23vh;
+    }
+}
