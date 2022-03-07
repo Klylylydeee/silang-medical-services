@@ -63,6 +63,10 @@
 }
 
 //-----------------Right Side-----------------//
+.AboutInfo {
+    padding-top: 20vh;
+    width: 50%;
+}
 
 .WhiteDivTop {
     position: absolute;
@@ -73,10 +77,6 @@
     right: 0;
     margin: 0 0 0 auto;
     background: white;
-}
-
-.AboutInfo {
-    padding-top: 20vh;
 }
 
 #Mission h2, #Vision h2, #Core h2 {
@@ -92,7 +92,8 @@
     color: white;
 }
 
-/*Moibile Responsive*/
+//-----------------Mobile Responsive-----------------//
+
 @media screen and (max-width: 1536px){
     .AboutInfo {
         padding-top: 10vh;
@@ -130,15 +131,21 @@
     }
 }
 
+@media screen and (max-width: 1366px){
+    .AboutLayer {
+        height: 125vh;
+    }
+  }
+
 @media screen and (max-width: 1024px){
     
-    .AboutLayer { 
+    .AboutLayer {
+        height: 100vh;
         margin-top: 0vh;
     }
 
     .AboutTitle  {
         margin-top: 35vh;
-        padding-left: 20px;
     }
 
     .ShisTransparent {
@@ -147,10 +154,11 @@
 
     .AboutTitle h1 {
         font-size: 65px;
+        margin-left: 0vh;
     }
 
     .AboutTitle h3 {
-        padding-left: 20vh;
+        padding-left: 10vh;
     }
 
     .AboutInfo {
@@ -161,12 +169,15 @@
         top: 0vh;
     }
 
+    .WhiteDiv {
+        width: 500px;
+    }
+
     .SmallWhiteDiv {
-        top: 20vh;
+        top: 35vh;
         left: 5vh;
     }
 
-    
     #Mission h2, #Vision h2, #Core h2 {
         font-size: 45px;
     }
@@ -185,8 +196,13 @@
 
     .AboutSection {
         margin-top: -25vh;
+        width: 100%;
     }
 
+    .AboutInfo {
+        width: 100%;
+    }
+        
     .AboutTitle  {
         margin-left: 0px;
         padding-left: 0vh;
@@ -203,7 +219,7 @@
     }
 
     .WhiteDiv { 
-        width: 50.8vh;
+        width: 50vh;
     }
 
     .AboutTitle h1 {
@@ -213,7 +229,7 @@
 
     .AboutTitle h3 {
         font-size: 20px;
-        padding-left: 196px;
+        padding-left: 45vh;
     }
 
     .ShisTransparent {

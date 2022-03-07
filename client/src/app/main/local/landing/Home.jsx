@@ -14,6 +14,7 @@ import PurpleLogo from '../landing/LandingPage-assets/PurpleLogo.png'
 import Vector1A from '../landing/LandingPage-assets/Vector1A.png'
 
 
+
 //Styles
 if(process.env.REACT_APP_ENVIRONMENT_STAGE === "Public Build" && window.location.pathname === "/") {
     require( '../../local/landing/LandingStyles/LandingPage.scss');
@@ -23,9 +24,9 @@ function Home() {
     return (
         <div className='landing'>
                 {/* Navigation Section of Landing Page */}
-                <Row>
+                <div>
                     <Navigation />
-                </Row>
+                </div>
 
                 {/* Purple Background Logo */}
                 <img src={PurpleLogo} alt='SHIS PurpleLogo' className="ShisPurple" />
@@ -33,7 +34,7 @@ function Home() {
                 {/* Home Page Title */}
                 <Row>
                     <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 16 }} >
-                        <div className="Home">
+                        <div className="Home" id="Home">
                             <div className="HomeTitle">
                                 <h1 id='LandingTitle'>Silang</h1>
                                 <h2 id="SecondaryTitle">Medical Services</h2>

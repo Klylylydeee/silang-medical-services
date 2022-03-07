@@ -8,7 +8,7 @@
 
 //-----------------Left Side-----------------//
 .TitleSection {
-    padding-top: 25vh;
+    padding-top: 30vh;
     width: 50%;
 }
 
@@ -44,6 +44,7 @@
 //-----------------Right Side-----------------//
 
 .FormSection {
+    padding-top: 10vh;
     width: 50%;
 }
 
@@ -72,6 +73,7 @@
     width: 129px;
     height: 129px;
     right: 0;
+    z-index: 1;
 }
 
 //-----------------Mobile Responsive-----------------/
@@ -109,8 +111,17 @@
         top: -17vh;
     }
 
+    .black-gridForm2 {
+        right: 1vh;
+    }
     .CheckLink a {
         padding-left: 20vh;
+    }
+}
+
+@media screen and (max-width: 991px){
+    .LandingForm {
+        margin-top: 45vh;
     }
 }
 
@@ -141,6 +152,7 @@
     .FormSection {
         width: 100%;
         margin-top: -25vh;
+        padding-top: 0vh;
     }
 
     .FormLabel .ant-row .ant-col label {

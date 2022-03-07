@@ -5,13 +5,15 @@
     font-family: Quicksand;
     color:black;
     width: 100%;
-    z-index: -1;
+    z-index: 999;
 }
 
 .portfolio-menu ul {
     display: flex;
     padding-top: 15px;
-    font-size: 1.50rem;    
+    text-align: center;
+    justify-content: center;
+    z-index: 999;   
 }
 
 .portfolio-menu ul li {
@@ -22,8 +24,9 @@
 .portfolio-menu .menu-item a{
     color: black;
     font-weight: 600;
-    
+    font-size: 1.50rem; 
 }
+
 .nav-menu {
     margin: 0;
     padding: 0;
@@ -63,6 +66,11 @@
   width: 100%;
 }
 
+//-----------------NavBar Hamburger-----------------//
+.btn {
+  display: none;
+}
+
 //-----------------NavBar Logo-----------------//
 
 .portfolio-menu img {
@@ -71,12 +79,58 @@
 }
 
 //-----------------Mobile Responsive-----------------//
+
 @media screen and (max-width: 1440px){
-//   .portfolio-hero nav ul li a:hover {
-//     color: #ad72b7;
-//   }
+    .portfolio-menu ul {
+      z-index: 999;
+      padding-left: 0vh;
+  }
 }
 
+@media screen and (max-width: 768px){
+  
+  .headernav {
+    width: 100%;
+    background-color: #ad72b7;
+  }
+
+  .portfolio-menu ul {
+    background-color: #ad72b7;
+    position: absolute;
+  }
+  
+  .portfolio-menu .menu-item a{
+    color: white;
+  
+  }
+  .portfolio-menu img {
+    display: none;
+  }
+
+  .portfolio-menu .menu-item a{
+    font-size: 1.50rem;
+  }
+
+   .nav-menu {
+    display: none;
+    flex-direction: column;
+  }
+
+  // .ham {
+  //   left: 0;
+  //   right: 0;
+  // }
+
+  .btn {
+    color: white;
+    background-color: #ad72b7;
+    border-style: none;
+    font-size: 35px;
+    display: block;
+    position: absolute;
+    right: 0;
+  }
+}
 
 @media screen and (max-width: 425px){
   .portfolio-menu ul {

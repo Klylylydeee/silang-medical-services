@@ -18,13 +18,12 @@ function Services() {
             <div className="ServicesPage">
                 {/* Left Side of Services */}
                 <div className="ServicesSection" id="Services">
-                    <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 20 }} xl={{ span: 24 }}>
+                    <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 22 }} xl={{ span: 24 }}>
 
                         <div className="ServicesTitle">
                             <h1 id="TextOne">Services</h1>
-                            <h1 id="TextTwo">We Offer!</h1>
+                            <h1 id="TextTwo">We Of<span>fer!</span></h1>
                         </div>
-                        <div className="SmallBlackDiv"></div>
 
                         <div className="ServicesInfo">
                             {/* Communication */}

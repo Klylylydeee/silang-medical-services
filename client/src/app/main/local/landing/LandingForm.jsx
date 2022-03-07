@@ -2,7 +2,7 @@ import React from 'react';
 
 //Ant Design
 import { Row, Col } from 'antd'
-import { Form, Input, Button, Checkbox, Tooltip } from 'antd';
+import { Form, Input, Button } from 'antd';
 
 //Images 
 import BlackGrid from '../landing/LandingPage-assets/black-grid.png'
@@ -71,15 +71,11 @@ function LandingForm() {
                                     <Input />
                                 </Form.Item>
 
-                                {/* <Form.Item name="remember" valuePropName="checked" className="FormLink" wrapperCol={{ offset: 8, span: 12 }}>
-                                    <Checkbox>Already requested? Check progress here!</Checkbox>
-                                </Form.Item> */}
-
                                 <div className="CheckLink">
                                     <a href="https://www.w3schools.com/">Already requested? Check progress here!</a>
                                 </div>
 
-                                <Form.Item wrapperCol={{ offset: 1, span: 4 }}>
+                                <Form.Item wrapperCol={{ offset: 8, span: 4 }}>
                                     <Button type="primary" htmlType="submit" className="SubmitBtn" size={"large"}>
                                         Submit
                                     </Button>

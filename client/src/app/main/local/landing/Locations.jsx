@@ -59,9 +59,17 @@ if (process.env.REACT_APP_ENVIRONMENT_STAGE === "Public Build" && window.locatio
                                 </p>
                             </div>
                         </div>
+
+                        {/* left Grid Image */}
+                        <img src={BlackGrid} alt='Grid Design' className="black-gridLoc2" />
+
                     </Col>
+
                     <Col xs={{ span: 24 }} lg={{ span: 8 }}>
                         <div style={{ height: "100%", position: "relative", padding: "50px" }}>
+
+                            {/* Right Grid Image */}
+                            <img src={BlackGrid} alt='Grid Design' className="black-gridLoc" />
                             <Swiper
                                 slidesPerView={dimension >= 4 ? 2 : 1}
                                 pagination={paginationSetting}
@@ -75,6 +83,7 @@ if (process.env.REACT_APP_ENVIRONMENT_STAGE === "Public Build" && window.locatio
                                     swipperData.map((index, key) => {
                                         return (
                                             <SwiperSlide key={key}>
+
                                                 <div style={{
                                                     position: "relative",
                                                     textAlign: "center",
