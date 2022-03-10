@@ -34,9 +34,9 @@ function LandingForm() {
                             <div className="LineDiv"></div>
                             <img src={BlackGrid} alt='Grid Design' className="black-gridForm" />
                             <h1>Medical Record <br /> Request</h1>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                Suspendisse et volutpat turpis, a sagittis nisl.
-                                Phasellus posuere viverra nisl, et consectetur nisl ullamcorper id. </p>
+                            <p> If you have any concerns or problems that you would like to be addressed, 
+                                feel free to contact us and leave an email.
+                                We would be more than happy to respond to you. Thank you and have a nice day! </p>
                         </div>
                     </Col>
                 </div>

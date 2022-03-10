@@ -29,17 +29,17 @@ function Services() {
                             {/* Communication */}
                             <Col  id="Communication">
                                 <h2>Communication</h2>
-                                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Impedit, amet sit vero numquam modi itaque officia similique at, quaerat, accusantium ab.</p>
+                                <p>Public announcements, health-related reports, and other information to be distributed by SMS and email feature present in the system.</p>
                             </Col>
                             {/* Medical Record */}
                             <Col id="MedicalRecord">
                                 <h2>Medical Record</h2>
-                                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Impedit, amet sit vero numquam modi itaque officia similique at, quaerat, accusantium ab.</p>
+                                <p>Master Patient Index, a collection of all the patient medical records of each barangay into one or convinience and reliability.</p>
                             </Col>
                             {/* Analytics */}
                             <Col id="Analytics">
                                 <h2>Analytics</h2>
-                                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Impedit, amet sit vero numquam modi itaque officia similique at, quaerat, accusantium ab.</p>
+                                <p>Analytics is used to determine the current and historical outbreaks of sickness or illness that have affected and continue to affect the citizens of Silang.</p>
                             </Col>
                         </div>
                     </Col>

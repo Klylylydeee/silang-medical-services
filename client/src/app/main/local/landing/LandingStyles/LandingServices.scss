@@ -99,7 +99,7 @@
     width: 129px;
     height: 129px;
     bottom: 8vh;
-    left: 100vh;
+    right: 100vh;
     z-index: 10;
 }
 
@@ -117,7 +117,6 @@
 
     .LaptopPhone {
         top: 40vh;
-        left: 5vh;
         height: auto;
         width: 85%;
     }
@@ -204,6 +203,8 @@
     #Communication p, #MedicalRecord p, #Analytics p{
         padding-left: 0vh;
         text-align: center;
+        padding-left: 50px;
+        padding-right: 50px;
     } 
 
     .black-grid1 {
@@ -223,6 +224,12 @@
         margin-right: auto;
         width: 50%;
         left: 0vh;
+    }
+}
+
+@media screen and (max-width: 675px){
+    .black-grid2 {
+        left: 53vh;
     }
 }
 
