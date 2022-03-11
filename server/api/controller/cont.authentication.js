@@ -230,7 +230,7 @@ exports.userSignIn = async (req, res, next) => {
                 },
                 { 
                     new: true,
-                    timestamps: false,
+                    timestamps: true,
                     projection: {
                         password: 0,
                         __v: 0,

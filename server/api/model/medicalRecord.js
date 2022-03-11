@@ -122,15 +122,32 @@ const medicalRecordSchema = new Schema(
             },
             required: true
         },
+        prescription: {
+            type: [
+                {
+                    prescription: {
+                        type: String
+                    },
+                    dosage: {
+                        type: String
+                    }
+                }
+            ]
+        },
         status: {
             type: Boolean,
             default: true
+        },
+        disable: {
+            type: Boolean,
+            default: false
         }
     },
     {
         timestamps: { 
             currentTime: () => {
-                return moment(momentRandom("2022-12-31", "2021-01-01")).utc("Asia/Singapore").format();
+                // return moment(momentRandom("2022-12-31", "2021-01-01")).utc("Asia/Singapore").format();
+                return moment().format();
             }
         }
     }

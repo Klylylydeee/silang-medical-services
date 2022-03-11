@@ -19,6 +19,11 @@ router.get(
     medicalRecordController.allMedicalRecord
 );
 
+router.get(
+    "/private/medical-record",
+    medicalRecordController.selectedMedicalRecord
+);
+
 router.post(
     "/private/create",
     [
@@ -31,8 +36,6 @@ router.post(
         check("outlier").not().isEmpty(),
         check("createdBy").not().isEmpty(),
         check("barangay").not().isEmpty(),
-        // Determine if auto approve
-        check("designation").not().isEmpty(),
     ],
     medicalRecordController.createMedicalRecord
 );
@@ -49,8 +52,7 @@ router.post(
 router.patch(
     "/private/update-record",
     [
-        check("id").not().isEmpty(),
-        query("barangay").not().isEmpty()
+        check("id").not().isEmpty()
     ],
     medicalRecordController.updateMedicalRecord
 );
