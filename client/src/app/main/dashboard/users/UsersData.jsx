@@ -334,7 +334,7 @@ const UsersData = () => {
                             history({
                                 pathname: `/dashboard/users/create/invitation`
                             })
-                        }} style={{ color: "#AD72B7" }}>New User</Button>
+                        }} style={{ color: "#AD72B7" }}>Create User</Button>
                     ]}
                 />
             </Layout.Content>

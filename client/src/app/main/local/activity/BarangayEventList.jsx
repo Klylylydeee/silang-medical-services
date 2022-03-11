@@ -4,7 +4,7 @@ import logo from './barangay-lumil.png';
 import { useState } from 'react';
 import { Modal, Button, Collapse, Card, Form, Input, Select } from 'antd';
 
-const { Option } = Select;
+const { Option } = Select;// eslint-disable-next-line
 const formItemLayout = {};
 
 const BarangayEventList = () => {
@@ -27,7 +27,8 @@ const BarangayEventList = () => {
     function callback(key) {
         console.log(key);
         }
-
+        
+        // eslint-disable-next-line
         const [form] = Form.useForm();
         const prefixSelector = (
           <Form.Item name="prefix" noStyle>

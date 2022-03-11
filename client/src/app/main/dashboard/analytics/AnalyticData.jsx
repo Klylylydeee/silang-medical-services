@@ -18,17 +18,22 @@ const CommentList = ({ comments, author, onClick }) => (
                 <Comment {...props}
                 style={{ position: "relative" }}
                 actions={[
-                    ...(props.author === `${author.first_name} ${author.last_name}`) && [
-                        <Tooltip title="Remove Comment" >
-                            <Button
-                                icon={<CloseSquareOutlined />} 
-                                onClick={() => { onClick(props._id) }}
-                                type="primary"
-                                style={{ position: "absolute", top: 0, bottom: 0, margin: "auto 0", right: 0 }}
-                            >
-                            </Button>
-                        </Tooltip>
-                    ]
+                    ...(props.author === `${author.first_name} ${author.last_name}`) ? 
+                        [
+                            <Tooltip title="Remove Comment" >
+                                <Button
+                                    icon={<CloseSquareOutlined />} 
+                                    onClick={() => { onClick(props._id) }}
+                                    type="primary"
+                                    style={{ position: "absolute", top: 0, bottom: 0, margin: "auto 0", right: 0 }}
+                                >
+                                </Button>
+                            </Tooltip>
+                        ]
+                    :
+                        [
+                            <React.Fragment />
+                        ]
                 ]} />
             )
         }}
@@ -37,7 +42,14 @@ const CommentList = ({ comments, author, onClick }) => (
 
 const Editor = ({ onChange, onSubmit, submitting, value }) => (
     <>
-        <Form.Item>
+        <Form.Item
+            rules={[
+                {
+                    required: true,
+                    message: "Please fill out this field!",
+                },
+            ]}
+        >
             <Input.TextArea rows={4} onChange={onChange} value={value} />
         </Form.Item>
         <Form.Item>
@@ -119,7 +131,11 @@ const AnalyticData = () => {
     }
 
     const handleSubmit = () => {
-        addComment();
+        console.log(state.value.length)
+        state.value.length !== 0 ?
+            addComment()
+        :
+            toasterRequest({ payloadType: "error", textString: "Comment message is empty"});
     };
 
     const handleChange = (e) => {

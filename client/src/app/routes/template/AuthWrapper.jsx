@@ -1,8 +1,8 @@
 // Yarn packages
 import { useEffect } from "react";
 import { Navigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector  } from "react-redux";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import jwt from "jsonwebtoken";
 
@@ -23,6 +23,7 @@ function AuthWrapper({ component, redirectTo, authStatus, users }) {
     const { designation } = useSelector((state) => state.user);
     const { authorization } = useSelector((state) => state.web);
     const history = useNavigate();
+    let location = useLocation();
     
     if(localStorage.getItem("Authorization") && authorization === true) {
         try {
@@ -68,7 +69,7 @@ function AuthWrapper({ component, redirectTo, authStatus, users }) {
             }
         }
     // eslint-disable-next-line
-    }, []);
+    }, [location]);
 
     // Returns the JSX Component back to the Router to be rendered
     return authorization === authStatus ? component : <Navigate to={redirectTo} />;

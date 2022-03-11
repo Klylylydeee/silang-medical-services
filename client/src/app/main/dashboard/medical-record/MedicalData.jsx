@@ -1,115 +1,168 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-
-import { Col, Row, Layout, Avatar, Divider, List, Descriptions, Card, Typography } from 'antd';
-import { UserOutlined, ContactsOutlined, MedicineBoxOutlined } from '@ant-design/icons';
-
-import '../../../../styles/medical-data.scss'
-
-const data = [
-    'Biogesic',
-    'Bioflu',
-    'Alaksan FR',
-    'Viagra',
-    'Neosep',
-    'Amoxicilin'
-];
-
-const date = "January 1, 2021"
-const status = "Waiting for Doctor's Approval"
-const createdBy = "Rondel Hallare"
-const approvedBy = "Dr. Klyde Guevarra"
-const { Title } = Typography;
+import { useSelector, useDispatch } from "react-redux";
+import { Layout, PageHeader, Row, Col, Divider, List, Avatar, Card, Typography } from "antd"
+import { UserOutlined, ContactsOutlined, MedicineBoxOutlined,  } from '@ant-design/icons';
+import toasterRequest from "src/app/util/toaster";
+import { axiosAPI } from "src/app/util/axios";
+import { changeLoader } from "src/app/store/web/webInformation";
+import moment from "moment";
 
 const MedicalData = () => {
-
+    const { dimension } = useSelector((state) => state.web); 
     const params = useParams();
-    const PatientDiagnosis = "Allergy"
+    const dispatch = useDispatch();
+    const [presciptionList, setPresciptionList] = useState([]);
+    const [medData, setMedData] = useState({
+        full_name: "",
+        barangay: "",
+        phone_number: "",
+        email: "",
+        diagnosis: "",
+        outlier: "",
+        detailed_report: "",
+        createdBy: "",
+        approvedBy: "",
+        createdAt: "",
+        updatedAt: ""
+    });
 
-
+    useEffect(() => {
+        const getMedicalData = async () => {
+            try {
+                dispatch(changeLoader({ loading: true }))
+                const medicalData = await axiosAPI.get(`medical-record/private/medical-record?id=${params.id}`);
+                setMedData({
+                    full_name: medicalData.data.payload.first_name + " " + medicalData.data.payload.last_name,
+                    barangay: medicalData.data.payload.barangay,
+                    phone_number: medicalData.data.payload.phone_number,
+                    email: medicalData.data.payload.email,
+                    diagnosis: medicalData.data.payload.diagnosis,
+                    outlier: medicalData.data.payload.outlier,
+                    status: medicalData.data.payload.status,
+                    detailed_report: medicalData.data.payload.detailed_report,
+                    createdBy: medicalData.data.payload.createdBy,
+                    approvedBy: medicalData.data.payload.approvedBy,
+                    createdAt: medicalData.data.payload.createdAt,
+                    updatedAt: medicalData.data.payload.updatedAt
+                })
+                setPresciptionList(medicalData.data.payload.prescription.map((data) => {
+                    return data.prescription !== undefined || data.presciption !== null ?
+                        `${data.prescription} - ${data.dosage}`
+                    :
+                        undefined
+                }))
+                dispatch(changeLoader({ loading: false }));
+            } catch (err) {
+                dispatch(changeLoader({ loading: false }))
+                err.response ? 
+                    toasterRequest({ payloadType: "error", textString: err.response.data.message})
+                :
+                    toasterRequest({ payloadType: "error", textString: err.message});
+            }
+        }
+        getMedicalData()
+        // eslint-disable-next-line
+    }, []);
     return (
-        <Layout.Content>
-            <Col className="data-container" xs={{ span: 24 }} sm={{ span: 17 }} md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }} xxl={{ span: 24 }}>
-                <div className="header">
-                    <h1>PATIENT OVERVIEW</h1>
-                </div>
-
-                <div className="child-container">
-                    <Row gutter={[24, 32]}>
-                        <Col>
-                            <div className="patient-name">
-                                <div className="avatar">
-                                    <Avatar size={100} icon={<UserOutlined />} />
-                                </div>
-                                <h2>{params.id}</h2>
-                            </div>
-
-                            <div className="contact-details">
-                                <Divider orientation="left"><ContactsOutlined /> Patient Details</Divider>
-                                <Descriptions className="contact-descriptions" style={{ padding: 15 }} layout="vertical" column={{ xxl: 2, xl: 2, lg: 2, md: 2, sm: 2, xs: 1 }}>
-                                    <Descriptions.Item className="desc-item" label="Phone Number"><p>+639 1832 9698</p></Descriptions.Item>
-                                    <Descriptions.Item className="desc-item" label="Email Address"><p>jetherhaniel@yahoo.com</p></Descriptions.Item>
-                                    <Descriptions.Item className="desc-item" label="Patient Diagnosis"><p>{PatientDiagnosis}</p></Descriptions.Item>
-                                    <Descriptions.Item className="desc-item" label="Severity"><p>Moderate</p></Descriptions.Item>
-                                </Descriptions>
-                            </div>
+        <React.Fragment>
+            <Layout.Content style={{ backgroundColor: "#AD72B7", padding: "10px 20px", marginBottom: "15px", borderRadius: "5px" }}>
+                <PageHeader
+                    ghost={false}
+                    title={`Medical Record ${params.id}`} 
+                    subTitle={dimension >= 4 ? "Record Data is listed below." : ""}
+                    style={{ padding: 0, backgroundColor: "#AD72B7" }}
+                />
+            </Layout.Content>
+            <Row gutter={[24, 0]} style={{ paddingTop: "10px" }}>
+                <Col xs={{ span: 24 }} lg={{ span: 14 }}>
+                    <Layout.Content style={{ backgroundColor: "white", padding: "10px 20px", marginBottom: "15px", borderRadius: "5px", display: "flex", alignItems: "center" }}>
+                        <Avatar size={75} icon={<UserOutlined />} style={{ marginRight: "15px" }} />
+                        <div>
+                            <p style={{ fontSize: "18px", fontWeight: 500 }}>{medData.full_name}</p>
+                            <p style={{ lineHeight: 0 }}>{medData.barangay}</p>
+                        </div>
+                    </Layout.Content>
+                    <Layout.Content style={{ backgroundColor: "white", padding: "10px 20px", marginBottom: "15px", borderRadius: "5px" }}>
+                        <Divider orientation="left"><ContactsOutlined /> Patient Details</Divider>
+                        <Row gutter={[24, 24]} style={{ paddingTop: "10px" }}>
+                            <Col xs={{ span: 24 }} lg={{ span: 12 }}>
+                                <p style={{ fontWeight: 500 }}>Phone Number:</p>
+                                <p style={{ lineHeight: 0 }}>{medData.phone_number}</p>
+                            </Col>
+                            <Col xs={{ span: 24 }} lg={{ span: 12 }}>
+                                <p style={{ fontWeight: 500 }}>Email Address:</p>
+                                <p style={{ lineHeight: 0 }}>{medData.email}</p>
+                            </Col>
+                            <Col xs={{ span: 24 }} lg={{ span: 12 }}>
+                                <p style={{ fontWeight: 500 }}>Diagnosis:</p>
+                                <p style={{ lineHeight: 0 }}>{medData.diagnosis}</p>
+                            </Col>
+                            <Col xs={{ span: 24 }} lg={{ span: 12 }}>
+                                <p style={{ fontWeight: 500 }}>Severity:</p>
+                                <p style={{ lineHeight: 0 }}>{medData.outlier >= 8 ? "Severe" : medData.outlier >= 5 ? "Moderate" : "Mild"}</p>
+                            </Col>
+                        </Row>
+                    </Layout.Content>
+                    <Card title={<Typography.Title level={3} style={{ fontSize: "16px" }}>Record Status</Typography.Title>}>
+                        {
+                        medData.status === true ?
+                            "Medical Record has been reviewed."
+                        :
+                            "Awaiting for review."
+                        }
+                    </Card>
+                    <Card title={<Typography.Title level={3} style={{ fontSize: "16px" }}>Diagnosis Report</Typography.Title>} style={{ marginTop: 20 }}>
+                        {medData.detailed_report}
+                    </Card>
+                </Col>
+                <Col xs={{ span: 24 }} lg={{ span: 10 }}>
+                    <Layout.Content style={{ backgroundColor: "white", padding: "10px 20px", marginBottom: "15px", borderRadius: "5px" }}>
+                        <Divider orientation="left"><MedicineBoxOutlined /> Medications</Divider>
+                        <List
+                            size="large"
+                            dataSource={presciptionList}
+                            renderItem={
+                                item => <List.Item>{item}</List.Item>
+                            } 
+                        />
+                    </Layout.Content>
+                    <Row gutter={[24, 24]} style={{ paddingTop: "10px" }}>
+                        <Col xs={{ span: 24 }} lg={{ span: 12 }}>
+                            <Card title={<Typography.Title level={3} style={{ fontSize: "16px" }}>Created By</Typography.Title>}>
+                                {medData.createdBy}
+                            </Card>
                         </Col>
-
-                        <Col>
-                            <div className="medication-details">
-                                <Divider orientation="left"><MedicineBoxOutlined /> Medications</Divider>
-                                <List
-                                    size="large"
-                                    dataSource={data}
-                                    renderItem={item => <List.Item>{item}</List.Item>} />
-                            </div>
+                        <Col xs={{ span: 24 }} lg={{ span: 12 }}>
+                            <Card title={<Typography.Title level={3} style={{ fontSize: "16px" }}>Approved By</Typography.Title>}>
+                                {medData.approvedBy}
+                            </Card>
+                        </Col>
+                        <Col xs={{ span: 24 }} lg={{ span: 12 }}>
+                            <Card title={<Typography.Title level={3} style={{ fontSize: "16px" }}>Creation Date</Typography.Title>}>
+                                {
+                                    medData.createdAt !== "" ?
+                                        moment(medData.createdAt).format("MMMM DD, YYYY h:MM A")
+                                    :
+                                        moment().format()
+                                }
+                            </Card>
+                        </Col>
+                        <Col xs={{ span: 24 }} lg={{ span: 12 }}>
+                            <Card title={<Typography.Title level={3} style={{ fontSize: "16px" }}>Last Accessed</Typography.Title>}>
+                                {
+                                    medData.updatedAt !== "" ?
+                                        moment(medData.updatedAt).format("MMMM DD, YYYY h:MM A")
+                                    :
+                                        moment().format()
+                                }
+                            </Card>
                         </Col>
                     </Row>
-
-                    <Row gutter={[16, 32]}>
-                        <Col>
-                            <div>
-                                <Card title={<Title level={3}>Diagnosis Report</Title>} className="diagnosis-report" style={{ marginTop: 20 }}>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultricies purus dictum lorem aliquam, eget vehicula eros porta. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
-                                    <p>Maecenas finibus massa ut nibh efficitur faucibus. Phasellus in sem quis ipsum mattis consequat. Pellentesque accumsan sem eu neque congue, a dignissim erat rhoncus</p>
-                                    <p>Etiam nec vestibulum risus. Suspendisse efficitur est mi, ut efficitur elit condimentum at. Vivamus quis mattis dui. Ut placerat sem enim, eu tempor metus semper at.</p>
-                                </Card>
-                            </div>
-                        </Col>
-
-                        <Col>
-                            <div>
-                                <Card title={<Title level={5}>Date Created</Title>} className="medical-cards" style={{ marginTop: 20 }}>
-                                    <p>{date}</p>
-                                </Card>
-                            </div>
-
-                            <div>
-                                <Card title={<Title level={5}>Created By</Title>} className="medical-cards" style={{ marginTop: 20 }}>
-                                    <p>{createdBy}</p>
-                                </Card>
-                            </div>
-                        </Col>
-
-                        <Col>
-                            <div>
-                                <Card title={<Title level={5}>Record Status</Title>} className="medical-cards" style={{ marginTop: 20 }}>
-                                    <p>{status}</p>
-                                </Card>
-
-                                <div>
-                                    <Card title={<Title level={5}>Approved By</Title>} className="medical-cards" style={{ marginTop: 20 }}>
-                                        <p>{approvedBy}</p>
-                                    </Card>
-                                </div>
-                            </div>
-                        </Col>
-                    </Row>
-                </div>
-
-            </Col>
-        </Layout.Content>
-    )
+                </Col>
+            </Row>
+        </React.Fragment>
+    );
 };
 
 export default MedicalData;
