@@ -182,7 +182,7 @@ section::after {
 
 @media screen and (max-width: 1536px){
   .VectorImage1 {
-    width: 129.5vh;
+    width: 119vh;
   }
 
   #LandingTitle  {
@@ -204,7 +204,7 @@ section::after {
 @media screen and (max-width: 1440px){
 
   .VectorImage1 { 
-    width: 105.7vh;
+    width: 98vh;
     z-index: 1;   
   }
 
@@ -235,8 +235,12 @@ section::after {
   }
   
   .VectorImage1 {
-    width: 127vh;
+    width: 108vh;
     height: auto;
+  }
+
+  #LandingDescription {
+    margin-left: 1vh;
   }
 
   #section07 a {
@@ -244,12 +248,28 @@ section::after {
   }
 }
 
-@media screen and (max-width: 1024px){
-  
+@media screen and (max-width: 1310px){
   .Home {
-    height: 115vh;
+    height: 100vh;
   }
+  
+  .VectorImage1 {
+    width: 104vh;
+  }
+}
 
+@media screen and (max-width: 1265px){
+  .Home {
+    height: 95vh;
+  }
+  
+  .VectorImage1 {
+    width: 98vh;
+    height: auto;
+  }
+}
+
+@media screen and (max-width: 1230px){
   .VectorImage1 {
     display: none;
   }
@@ -260,11 +280,16 @@ section::after {
     margin: auto;
     height: 70vh;
   }
-
-  #section07 a {
-    bottom: 23vh;
 }
 
+@media screen and (max-width: 1024px){
+  
+  .Home {
+    height: 115vh;
+  }
+  #section07 a {
+    bottom: 23vh;
+  }
 }  
 
 @media screen and (max-width: 768px){
@@ -275,15 +300,15 @@ section::after {
   
   #LandingTitle  {
     font-size: 80px;
-   }
+  }
    
    #SecondaryTitle {
      font-size: 80px;
-   }
+  }
    
    #LandingDescription {
      font-size: 17px;
-   }
+  }
 
    #section07 a {
     display: none;
@@ -294,9 +319,7 @@ section::after {
   }
 }
 
-@media screen and (max-width: 425px){
-
-
+@media screen and (max-width: 635px){
   .HomeTitle { 
     padding-left: 1vh;
     margin-left: 0vh;
@@ -306,11 +329,13 @@ section::after {
     margin-left: 0vh;
     padding-left: 0vh;
     width: auto;
-   }
+  }
+
+  .ShisPurple {
+    height: 60vh;
+  }
 
    #section07 a {
     display: none;
   }
-
-  
 }

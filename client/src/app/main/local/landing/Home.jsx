@@ -38,9 +38,11 @@ function Home() {
                             <div className="HomeTitle">
                                 <h1 id='LandingTitle'>Silang</h1>
                                 <h2 id="SecondaryTitle">Medical Services</h2>
-                                <h3 id="LandingDescription">Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                    Suspendisse et volutpat turpis, a sagittis nisl.
-                                    Phasellus posuere viverra nisl, et consectetur nisl ullamcorper id. </h3>
+                                <h3 id="LandingDescription">
+                                        A technological leap from our standard medical processing in our barangay. to aid Barangay Officials and 
+                                          Health workers with health related record handling, monitoring and 
+                                          event handling.                                              
+                                     </h3>
                             </div>
                         </div>
                     </Col>

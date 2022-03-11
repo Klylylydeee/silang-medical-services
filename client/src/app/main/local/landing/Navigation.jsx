@@ -38,7 +38,7 @@ function Navigation() {
         <Row>
             {/* Navigation Section of Landing Page */}
             <Row>
-                <header className="headerNav">
+                <header className="MobileNav">
                     <div className="portfolio-hero">
                         <div className="portfolio-menu">
 

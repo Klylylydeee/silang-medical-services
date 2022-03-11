@@ -3,6 +3,8 @@
 //-----------------NavBar-----------------//
 .portfolio-hero {
     font-family: Quicksand;
+    background-color: white;
+    position: fixed;
     color:black;
     width: 100%;
     z-index: 999;
@@ -11,8 +13,6 @@
 .portfolio-menu ul {
     display: flex;
     padding-top: 15px;
-    text-align: center;
-    justify-content: center;
     z-index: 999;   
 }
 
@@ -89,7 +89,7 @@
 
 @media screen and (max-width: 768px){
   
-  .headernav {
+  .MobileNav {
     width: 100%;
     background-color: #ad72b7;
   }
@@ -97,33 +97,35 @@
   .portfolio-menu ul {
     background-color: #ad72b7;
     position: absolute;
+    right: 0;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
   }
-  
-  .portfolio-menu .menu-item a{
-    color: white;
-  
-  }
+
   .portfolio-menu img {
     display: none;
   }
 
   .portfolio-menu .menu-item a{
-    font-size: 1.50rem;
+    font-size: 2.50rem;
+    color: white;
   }
 
-   .nav-menu {
+  
+
+  .nav-menu {
     display: none;
     flex-direction: column;
   }
 
-  // .ham {
-  //   left: 0;
-  //   right: 0;
-  // }
-
+  .ham {
+    width: 100%;
+  }
+  
   .btn {
     color: white;
-    background-color: #ad72b7;
+    background-color: #905D98;
     border-style: none;
     font-size: 35px;
     display: block;

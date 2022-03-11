@@ -53,9 +53,8 @@ if (process.env.REACT_APP_ENVIRONMENT_STAGE === "Public Build" && window.locatio
                             </p>
                             <div style={{ paddingLeft: "80px", paddingTop: 0, marginTop: 0 }}>
                                 <p style={{ color: "white", fontSize: "18px", fontWeight: 400, maxWidth: "700px" }}>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                    Suspendisse et volutpat turpis, a sagittis nisl.
-                                    Phasellus posuere viverra nisl, et consectetur nisl ullamcorper id.
+                                    Every location that is under the scope of Silang Medical Services is listed in this section. 
+                                    You can click which barangay you are part of to check the latest news and announcements.
                                 </p>
                             </div>
                         </div>
@@ -70,6 +69,7 @@ if (process.env.REACT_APP_ENVIRONMENT_STAGE === "Public Build" && window.locatio
 
                             {/* Right Grid Image */}
                             <img src={BlackGrid} alt='Grid Design' className="black-gridLoc" />
+
                             <Swiper
                                 slidesPerView={dimension >= 4 ? 2 : 1}
                                 pagination={paginationSetting}
