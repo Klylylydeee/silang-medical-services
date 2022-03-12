@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { Row } from 'antd';
 import { MenuOutlined } from '@ant-design/icons';
+import { useNavigate } from "react-router-dom"
 
 //Images
 import SHISLogo from '../../../../styles/SHISLogo.png'
 
 //Styles
-if (process.env.REACT_APP_ENVIRONMENT_STAGE === "Public Build" && window.location.pathname === "/") {
+if (process.env.REACT_APP_ENVIRONMENT_STAGE === "Public Build") {
     require('../../local/landing/LandingStyles/LandingNavBar.scss');
 }
 
@@ -15,6 +16,7 @@ function Navigation() {
     const [toggleMenu, setToggleMenu] = useState(false)
     const [screenWidth, setScreenWidth] = useState(window.innerWidth)
 
+    const history = useNavigate();
 
     const toggleNav = () => {
         setToggleMenu(!toggleMenu)
@@ -52,9 +54,15 @@ function Navigation() {
                                     <ul className="nav-menu">
 
                                         {/* NavBar Logo */}
-                                        <img src={SHISLogo} alt='SHIS Logo' className="SHISLogo" />
+                                        <img src={SHISLogo} alt='SHIS Logo' className="SHISLogo" onClick={() => {
+                                            window.open("https://portal.silangmedical.com/", "_blank")
+                                        }} style={{ cursor: "pointer" }}/>
 
-                                        <li className="menu-item"><a href="#Home">Home</a></li>
+                                        <li className="menu-item"><a {...window.location === "" ? { href: "#Home"} : { onClick: () => {
+                                            history({
+                                                pathname: `/`
+                                            })
+                                        } }} >Home</a></li>
                                         <li className="menu-item"><a href="#About">About Us</a></li>
                                         <li className="menu-item"><a href="#Services">Services</a></li>
                                         <li className="menu-item"><a href="#Locations">Locations</a></li>

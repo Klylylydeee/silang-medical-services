@@ -51,9 +51,9 @@ function AuthWrapper({ component, redirectTo, authStatus, users }) {
         } catch(err) {
             localStorage.removeItem("Authorization");
             err.response ? 
-                toasterRequest({ payloadType: "error", textString: err.response.data.message})
+                toasterRequest({ payloadType: "error", textString: err.response.data.message === "jwt expired" ? "Authentication session has expired" : "Authentication session incorrect!"})
             :
-                toasterRequest({ payloadType: "error", textString: err.message});
+                toasterRequest({ payloadType: "error", textString: err.message === "jwt expired" ? "Authentication session has expired" : "Authentication session incorrect!"});
         }
     } else if (authorization !== authStatus && !localStorage.getItem("Authorization")) {
         toasterRequest({ payloadType: "warning", textString: "Route is restricted!"})

@@ -8,7 +8,7 @@ import LaptopPhone from '../landing/LandingPage-assets/LaptopPhone.png'
 import BlackGrid from '../landing/LandingPage-assets/black-grid.png'
 
 //Styles
-if (process.env.REACT_APP_ENVIRONMENT_STAGE === "Public Build" && window.location.pathname === "/") {
+if (process.env.REACT_APP_ENVIRONMENT_STAGE === "Public Build") {
     require('../../local/landing/LandingStyles/LandingServices.scss');
 }
 

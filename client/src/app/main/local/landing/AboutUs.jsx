@@ -7,7 +7,7 @@ import { Row, Col } from 'antd'
 import TransparentLogo from '../landing/LandingPage-assets/TransparentLogo.png'
 
 //Styles
-if (process.env.REACT_APP_ENVIRONMENT_STAGE === "Public Build" && window.location.pathname === "/") {
+if (process.env.REACT_APP_ENVIRONMENT_STAGE === "Public Build") {
     require('../../local/landing/LandingStyles/About.scss');
 }
 

@@ -1,26 +1,39 @@
 import React from 'react';
+import { useNavigate } from "react-router-dom"
+import jwt from "jsonwebtoken";
 
 //Ant Design
 import { Row, Col } from 'antd'
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, Select } from 'antd';
 
 //Images 
 import BlackGrid from '../landing/LandingPage-assets/black-grid.png'
 
 //Styles
-if (process.env.REACT_APP_ENVIRONMENT_STAGE === "Public Build" && window.location.pathname === "/") {
+if (process.env.REACT_APP_ENVIRONMENT_STAGE === "Public Build") {
     require('../../local/landing/LandingStyles/LandingForm.scss');
 }
 
 function LandingForm() {
+    const history = useNavigate();
 
-    const onFinish = (values: any) => {
-        console.log('Success:', values);
-    };
-
-    const onFinishFailed = (errorInfo: any) => {
-        console.log('Failed:', errorInfo);
+    const createAuth = (email, barangay) => {
+        const token = jwt.sign({
+            email: email,
+            barangay: barangay
+        }, process.env.REACT_APP_JWT_BACKEND, { 
+            expiresIn: "1d",
+            algorithm: "HS512"
+        });
+        return token
     }
+
+    const onFinish = (values) => {
+        const authToken = createAuth(values.email, values.barangay)
+        history({
+            pathname: `/medical-record?auth=${authToken}`
+        })
+    };
 
     return <Row>
         <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 24 }}>
@@ -50,7 +63,6 @@ function LandingForm() {
                                 wrapperCol={{ span: 16 }}
                                 initialValues={{ remember: true }}
                                 onFinish={onFinish}
-                                onFinishFailed={onFinishFailed}
                                 autoComplete="off"
                                 className="FormLabel"
                             >
@@ -58,7 +70,7 @@ function LandingForm() {
                                     label="Email"
                                     name="email"
                                     className="EmailForm"
-                                    rules={[{ required: true, message: 'Please input your email!' }]}
+                                    rules={[{ required: true, message: 'Please input your email!' }, { type: 'email', message: "Incorrect email format!"}]}
                                 >
                                     <Input />
                                 </Form.Item>
@@ -68,16 +80,15 @@ function LandingForm() {
                                     name="barangay"
                                     rules={[{ required: true, message: 'Please input your barangay!' }]}
                                 >
-                                    <Input />
+                                    <Select>
+                                        <Select.Option value="Lumil">Lumil</Select.Option>
+                                        <Select.Option value="Puting Kahoy">Puting Kahoy</Select.Option>
+                                    </Select>
                                 </Form.Item>
-
-                                <div className="CheckLink">
-                                    <a href="https://www.w3schools.com/">Already requested? Check progress here!</a>
-                                </div>
 
                                 <Form.Item wrapperCol={{ offset: 8, span: 4 }}>
                                     <Button type="primary" htmlType="submit" className="SubmitBtn" size={"large"}>
-                                        Submit
+                                        Search
                                     </Button>
                                 </Form.Item>
                             </Form>

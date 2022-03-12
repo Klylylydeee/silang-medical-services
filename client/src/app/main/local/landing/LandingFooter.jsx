@@ -5,7 +5,7 @@ import SHISLogo from '../../../../styles/SHISLogo.png'
 import { Row, Col } from 'antd'
 
 //Styles
-if (process.env.REACT_APP_ENVIRONMENT_STAGE === "Public Build" && window.location.pathname === "/") {
+if (process.env.REACT_APP_ENVIRONMENT_STAGE === "Public Build") {
     require('../../local/landing/LandingStyles/Footer.scss');
 }
 
@@ -18,7 +18,9 @@ function LandingFooter() {
                         <Col>
                             <div className="footerImage">
                                 {/* SHIS Logo */}
-                                <img src={SHISLogo} alt='SHIS Logo' className="Shis-footer-logo" />
+                                <img src={SHISLogo} alt='SHIS Logo' className="Shis-footer-logo" onClick={() => {
+                                    window.open("https://portal.silangmedical.com/", "_blank")
+                                }} style={{ cursor: "pointer" }}/>
                             </div>
                         </Col>
                     </div>

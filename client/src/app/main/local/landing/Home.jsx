@@ -16,7 +16,7 @@ import Vector1A from '../landing/LandingPage-assets/Vector1A.png'
 
 
 //Styles
-if(process.env.REACT_APP_ENVIRONMENT_STAGE === "Public Build" && window.location.pathname === "/") {
+if (process.env.REACT_APP_ENVIRONMENT_STAGE === "Public Build") {
     require( '../../local/landing/LandingStyles/LandingPage.scss');
 }
 

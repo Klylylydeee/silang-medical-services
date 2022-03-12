@@ -3,6 +3,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Row, Col } from "antd"
 import SwiperCore, { Autoplay, Pagination } from "swiper/core";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom"
 
 //Images 
 import BlackGrid from '../landing/LandingPage-assets/black-grid.png'
@@ -11,7 +12,7 @@ import RectangleA from '../landing/LandingPage-assets/RectangleA.png'
 SwiperCore.use([Autoplay, Pagination]);
 
 //Styles
-if (process.env.REACT_APP_ENVIRONMENT_STAGE === "Public Build" && window.location.pathname === "/") {
+if (process.env.REACT_APP_ENVIRONMENT_STAGE === "Public Build") {
     require('../../local/landing/LandingStyles/LandingLocation.scss');
 }
 
@@ -20,6 +21,8 @@ if (process.env.REACT_APP_ENVIRONMENT_STAGE === "Public Build" && window.locatio
         const [swipperIndex, setIndex] = useState(1);
 
     const { dimension } = useSelector((state) => state.web);
+    
+    const history = useNavigate();
 
     const paginationSetting = {
         "dynamicMainBullets": true,
@@ -88,7 +91,11 @@ if (process.env.REACT_APP_ENVIRONMENT_STAGE === "Public Build" && window.locatio
                                                     position: "relative",
                                                     textAlign: "center",
                                                     color: "white"
-                                                }} >
+                                                }} onClick={() => {
+                                                    history({
+                                                        pathname: `/barangay-activities/${index.barangay}`
+                                                    })
+                                                }}>
                                                     <img src={RectangleA} alt="" style={{ maxWidth: "100%", padding: 0, margin: 0 }} />
                                                     <p style={{
                                                         color: "white",
