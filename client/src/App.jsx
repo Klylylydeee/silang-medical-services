@@ -20,6 +20,7 @@ import AppDimension from "src/app/util/responsive";
 // Global styles
 import "antd/dist/antd.less";
 import "src/styles/global.scss";
+import "swiper/swiper.min.css";
 
 function App() {
     

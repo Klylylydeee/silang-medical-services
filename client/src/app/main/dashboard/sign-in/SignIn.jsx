@@ -10,6 +10,7 @@ import arkImage from "src/app/main/dashboard/sign-in/sign-in-assets/lumil1.png";
 import hallImage from "src/app/main/dashboard/sign-in/sign-in-assets/lumil2.png";
 import hall_2Image from "src/app/main/dashboard/sign-in/sign-in-assets/lumil3.png";
 import barangayLogo from "src/app/main/dashboard/sign-in/sign-in-assets/barangay-lumil.png";
+import barangayLogo2 from "src/app/main/local/img/barangay-putingkahoy.png";
 import gridDot from "src/app/main/dashboard/sign-in/sign-in-assets/black-grid.png";
 import silangMedicalServicesLogo from "src/app/main/dashboard/sign-in/sign-in-assets/SHIS-logo.png";
 import toasterRequest from "src/app/util/toaster";
@@ -288,6 +289,11 @@ function SignIn() {
                                 width: dimension >= 5 ? "130px" : "100px",
                                 marginRight: "10%"
                             }}
+                            onClick={
+                                () => {
+                                    window.open("https://silangmedical.com/", "_blank")
+                                }
+                            }
                         />
                         <div 
                             style={{ 
@@ -637,7 +643,7 @@ function SignIn() {
                             alt=""
                         />
                         <img 
-                            src={barangayLogo}
+                            src={barangayLogo2}
                             style={{
                                 height: "85px",
                                 width: "85px"

@@ -22,7 +22,7 @@ function LandingForm() {
             email: email,
             barangay: barangay
         }, process.env.REACT_APP_JWT_BACKEND, { 
-            expiresIn: "1d",
+            expiresIn: "1h",
             algorithm: "HS512"
         });
         return token

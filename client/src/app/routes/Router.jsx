@@ -4,11 +4,7 @@ import { Routes, Route } from "react-router-dom";
 // Public route
 import Home from "src/app/main/local/landing/Home";
 import ActivityList from "src/app/main/local/activity/BarangayEventList";
-import EventListing from "src/app/main/local/activity/EventListing";
-import Announcement from "src/app/main/local/activity/Announcement";
-import Activity from "src/app/main/local/activity/BarangayEvent";
 import MedicalList from "src/app/main/local/medical-record/MedicalRecordList";
-import MedicalPDF from "src/app/main/local/medical-record/GeneratedMedicalRecord";
 
 // Private - Unprotected route
 import SignIn from "src/app/main/dashboard/sign-in/SignIn";
@@ -39,8 +35,6 @@ import BuildUnsuccessful from "src/app/main/general/builder/BuildUnsuccessful";
 import AuthWrapper from "src/app/routes/template/AuthWrapper";
 import Layout from "src/app/routes/template/Layout";
 
-import TestSwiper from "src/app/test/TestSwiper";
-
 function Router() {
 
     return (
@@ -55,13 +49,8 @@ function Router() {
                             <Route path="/" element={<Home />}/>
                             {/* Medical Record Components */}
                             <Route path="/medical-record" element={<MedicalList />}/>
-                            <Route path="/medical-record/:barangay/generate-document/:id" element={<MedicalPDF />}/>
                             {/* Barangay Activities Components */}
                             <Route path="/barangay-activities/:barangay" element={<ActivityList />}/>
-                            <Route path="/barangay-activities/EventListing" element={<EventListing />}/>
-                            <Route path="/barangay-activities/Announcement" element={<Announcement />}/>
-                            <Route path="/barangay-activities/:barangay/id/:id" element={<Activity />}/>
-                            <Route path="/test" element={<TestSwiper />}/>
                             <Route path="*" element={<NotFound />}/>
                         </>
                     )
