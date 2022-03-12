@@ -1,4 +1,5 @@
 const EventListing = require("../model/eventListing");
+const Announcement = require("../model/announcement");
 
 const { validateRequest } = require("../util/jsonValidate");
 
@@ -277,6 +278,55 @@ exports.removeBarangayEventAttendee  = async (req, res, next) => {
         res.status(200).send({
             message: "Attendee removed!",
             payload: eventsData
+        });
+
+    } catch(err) {
+
+        err.statusCode === undefined ? err.statusCode = 500 : "";
+        return next(err);
+
+    };
+
+};
+
+
+exports.publicEventsAndAnnouncement  = async (req, res, next) => {
+
+    try {
+
+        validateRequest(req);
+
+        let eventsData = await EventListing.find(
+            { 
+                barangay: req.query.barangay,
+                createdAt: {
+                    $gte: new Date(`${moment().format("YYYY")}-01-01T00:00:00.0Z`),
+                    $lt: new Date(`${moment().format("YYYY")}-12-31T15:58:26.000Z`)
+                }
+            }
+        )
+        let announcementData = await Announcement.find(
+            { 
+                barangay: req.query.barangay,
+                createdAt: {
+                    $gte: new Date(`${moment().format("YYYY")}-01-01T00:00:00.0Z`),
+                    $lt: new Date(`${moment().format("YYYY")}-12-31T15:58:26.000Z`)
+                }
+            }
+        )
+
+        if(eventsData === null){
+            let error = new Error("Event does not exists.");
+            error.statusCode = 501;
+            throw error;
+        };
+
+        res.status(200).send({
+            message: "Events and Announcement for current year of the barangay!",
+            payload: {
+                events: eventsData,
+                announcements: announcementData
+            }
         });
 
     } catch(err) {

@@ -253,7 +253,7 @@ exports.selectGenerateMedicalRecord = async (req, res, next) => {
                 barangay: req.body.barangay,
                 disable: false
             },
-        );
+        ).sort({ createdAt: -1 });
 
         if(medicalRecord === null){
             let error = new Error("Medical Record does not exists.");

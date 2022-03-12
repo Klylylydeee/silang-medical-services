@@ -36,4 +36,9 @@ router.post(
     eventController.removeBarangayEventAttendee
 );
 
+router.get(
+    "/public/event-and-announcement",
+    eventController.publicEventsAndAnnouncement
+);
+
 module.exports = router;

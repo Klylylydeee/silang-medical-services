@@ -58,7 +58,7 @@ router.patch(
 );
 
 router.post(
-    "/private/generate-record-list",
+    "/public/generate-record-list",
     [
         check("email").not().isEmpty(),
         check("barangay").not().isEmpty(),
