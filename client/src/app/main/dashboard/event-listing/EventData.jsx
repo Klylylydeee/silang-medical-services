@@ -163,7 +163,7 @@ const EventData = () => {
                             history({
                                 pathname: `/dashboard/event-listing/add-attendee/${params.id}`
                             })
-                        }} style={{ color: "#AD72B7" }}>Add Attendee</Button>,
+                        }} style={{ color: "#AD72B7" }}>Add Attendee</Button>
                     ]}
                 />
             </Layout.Content>
@@ -171,8 +171,9 @@ const EventData = () => {
                 <Descriptions title="Event Information" bordered style={{ margin: "5px 0 5px 0" }}>
                     <Descriptions.Item label="Event" span={3}>{formData.event}</Descriptions.Item>
                     <Descriptions.Item label="Description" span={3}>{formData.description}</Descriptions.Item>
-                    <Descriptions.Item label="Start Date & Time" span={1.5}>{formData.start_datetime}</Descriptions.Item>
-                    <Descriptions.Item label="End Date & Time" span={1.5}>{formData.end_datetime}</Descriptions.Item>
+                    <Descriptions.Item label="Start Date & Time" span={1.5}>{moment(formData.start_datetime).format("MMMM DD,YYYY h:m a")}</Descriptions.Item>
+                    <Descriptions.Item label="End Date & Time" span={1.5}>{moment(formData.end_datetime).format("MMMM DD,YYYY h:m a")}</Descriptions.Item>
+
                 </Descriptions>
                 <Descriptions title="Requestor Information" bordered style={{ margin: "15px 0 5px 0" }}>
                     <Descriptions.Item label="First Name" span={1.5}>{formData.first_name}</Descriptions.Item>
@@ -181,8 +182,8 @@ const EventData = () => {
                     <Descriptions.Item label="Phone Number" span={1.5}>{formData.phone_number}</Descriptions.Item>
                 </Descriptions>
                 <Descriptions title="Record Information" bordered style={{ margin: "15px 0 15px 0" }}>
-                    <Descriptions.Item label="Date Creation" span={1.5}>{formData.createdAt}</Descriptions.Item>
-                    <Descriptions.Item label="Last Accessed" span={1.5}>{formData.updatedAt}</Descriptions.Item>
+                    <Descriptions.Item label="Date Creation" span={1.5}>{moment(formData.createdAt).format("MMMM DD,YYYY h:m a")}</Descriptions.Item>
+                    <Descriptions.Item label="Last Accessed" span={1.5}>{moment(formData.updatedAt).format("MMMM DD,YYYY h:m a")}</Descriptions.Item>
                     <Descriptions.Item label="Created By" span={1.5}>{formData.createdBy}</Descriptions.Item>
                     <Descriptions.Item label="Approved By" span={1.5}>{formData.approvedBy}</Descriptions.Item>
                     <Descriptions.Item label="Status" span={3}>

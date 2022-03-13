@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import toasterRequest from "src/app/util/toaster";
 import { axiosAPI } from "src/app/util/axios";
@@ -68,8 +68,9 @@ const Editor = ({ onChange, onSubmit, submitting, value }) => (
 
 const AnalyticData = () => {
     const { dimension } = useSelector((state) => state.web);
-    const { barangay, first_name, last_name } = useSelector((state) => state.user);
+    const { barangay, first_name, last_name, designation } = useSelector((state) => state.user);
     const params = useParams();
+    const [ searchParams ] = useSearchParams();
     const dispatch = useDispatch();
     const [pieData, setPieData] = useState([]);
 
@@ -81,7 +82,7 @@ const AnalyticData = () => {
     const getComments = async () => {
         try {
             dispatch(changeLoader({ loading: true }))
-            let eventData = await axiosAPI.get(`analytics/specific-comments?barangay=${barangay}&year=${params.year}&month=${params.month}`);
+            let eventData = await axiosAPI.get(`analytics/specific-comments?barangay=${designation === "Doctor" ? searchParams.get("barangay") : barangay}&year=${params.year}&month=${params.month}`);
             setState((prevData) => {
                 return {
                     ...prevData,
@@ -100,7 +101,7 @@ const AnalyticData = () => {
     const addComment = async () => {
         try {
             dispatch(changeLoader({ loading: true }))
-            let eventData = await axiosAPI.post(`analytics/add-comments?barangay=${barangay}&year=${params.year}&month=${params.month}&comment=${state.value}&author=${first_name} ${last_name}`);
+            let eventData = await axiosAPI.post(`analytics/add-comments?barangay=${designation === "Doctor" ? searchParams.get("barangay") : barangay}&year=${params.year}&month=${params.month}&comment=${state.value}&author=${first_name} ${last_name}`);
             toasterRequest({ payloadType: "success", textString: eventData.data.message});
             setState({
                 ...state,
@@ -148,7 +149,7 @@ const AnalyticData = () => {
     const getData = async () => {
         try {
             dispatch(changeLoader({ loading: true }))
-            let eventData = await axiosAPI.get(`analytics/specific?barangay=${barangay}&year=${params.year}&month=${params.month}`);
+            let eventData = await axiosAPI.get(`analytics/specific?barangay=${designation === "Doctor" ? searchParams.get("barangay") : barangay}&year=${params.year}&month=${params.month}`);
             setPieData(eventData.data.payload)
             setState((prevData) => {
                 return {

@@ -20,6 +20,7 @@ exports.userSignUp = async (req, res, next) => {
 
         let userData = await Users.create({
             ...req.body,
+            password: "encrypted",
             status: false
         });
 

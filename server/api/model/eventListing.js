@@ -170,8 +170,7 @@ const eventListingSchema = new Schema(
             required: true
         },
         approvedBy: {
-            type: String,
-            required: true
+            type: String
         },
         status: {
             type: Boolean,

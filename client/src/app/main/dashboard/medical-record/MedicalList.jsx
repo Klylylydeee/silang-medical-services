@@ -77,6 +77,18 @@ const MedicalList = () => {
             ),
             responsive: ['lg']
         },
+        ...(designation === "Doctor") ? [{
+            title: 'Barangay',
+            key: 'baranay',
+            render: (text, record) => (
+                <Space size="middle">
+                    {text.barangay}
+                </Space>
+            ),
+            responsive: ['lg']
+        }] : [{ 
+            responsive: ['xll']
+        }],
         {
             title: 'Action',
             key: 'action',
@@ -94,21 +106,40 @@ const MedicalList = () => {
                         >
                         </Button>
                     </Tooltip>
-                    <Tooltip title="Update Medical Record" >
-                        <Button
-                            icon={<FileSyncOutlined />} 
-                            onClick={() => {
-                                history({
-                                    pathname: `/dashboard/medical-records/update/${text._id}`
-                                })
-                            }}
-                            type="primary"
-                            style={{ background: "orange", borderColor: "white" }}
-                        >
-                        </Button>
-                    </Tooltip>
                     {
-                        text.status !== true && 
+                        designation === "Doctor" &&
+                        <Tooltip title="Update Medical Record" >
+                            <Button
+                                icon={<FileSyncOutlined />} 
+                                onClick={() => {
+                                    history({
+                                        pathname: `/dashboard/medical-records/update/${text._id}`
+                                    })
+                                }}
+                                type="primary"
+                                style={{ background: "orange", borderColor: "white" }}
+                            >
+                            </Button>
+                        </Tooltip>
+                    }
+                    {
+                        text.status !== true && designation === "Nurse" &&
+                        <Tooltip title="Update Medical Record" >
+                            <Button
+                                icon={<FileSyncOutlined />} 
+                                onClick={() => {
+                                    history({
+                                        pathname: `/dashboard/medical-records/update/${text._id}`
+                                    })
+                                }}
+                                type="primary"
+                                style={{ background: "orange", borderColor: "white" }}
+                            >
+                            </Button>
+                        </Tooltip>
+                    }
+                    {
+                        text.status !== true && designation === "Doctor" &&
                         <Tooltip title="Approve Medical Record" >
                             <Button
                                 icon={<FileSyncOutlined />} 
@@ -140,35 +171,70 @@ const MedicalList = () => {
                             </Button>
                         </Tooltip>
                     }
-                    <Tooltip title="Delete Medical Record" >
-                        <Button
-                            icon={<FileExcelOutlined />} 
-                            onClick={() => {
-                                const deleteRecord = async () => {
-                                    try {
-                                        dispatch(changeLoader({ loading: true }))
-                                        const postFormData = await axiosAPI.patch(`medical-record/private/update-record`, {
-                                            id: text._id,
-                                            disable: true
-                                        })
-                                        dispatch(changeLoader({ loading: false }));
-                                        toasterRequest({ payloadType: "success", textString: postFormData.data.message});
-                                        getCellData()
-                                    } catch (err) {
-                                        dispatch(changeLoader({ loading: false }))
-                                        err.response ? 
-                                            toasterRequest({ payloadType: "error", textString: err.response.data.message})
-                                        :
-                                            toasterRequest({ payloadType: "error", textString: err.message});
+                    {
+                        designation === "Doctor" &&
+                        <Tooltip title="Delete Medical Record" >
+                            <Button
+                                icon={<FileExcelOutlined />} 
+                                onClick={() => {
+                                    const deleteRecord = async () => {
+                                        try {
+                                            dispatch(changeLoader({ loading: true }))
+                                            const postFormData = await axiosAPI.patch(`medical-record/private/update-record`, {
+                                                id: text._id,
+                                                disable: true
+                                            })
+                                            dispatch(changeLoader({ loading: false }));
+                                            toasterRequest({ payloadType: "success", textString: postFormData.data.message});
+                                            getCellData()
+                                        } catch (err) {
+                                            dispatch(changeLoader({ loading: false }))
+                                            err.response ? 
+                                                toasterRequest({ payloadType: "error", textString: err.response.data.message})
+                                            :
+                                                toasterRequest({ payloadType: "error", textString: err.message});
+                                        }
                                     }
-                                }
-                                deleteRecord()
-                            }}
-                            type="primary"
-                            style={{ background: "red", borderColor: "white" }}
-                        >
-                        </Button>
-                    </Tooltip>
+                                    deleteRecord()
+                                }}
+                                type="primary"
+                                style={{ background: "red", borderColor: "white" }}
+                            >
+                            </Button>
+                        </Tooltip>
+                    }
+                    {
+                        text.status !== true && designation === "Nurse" &&
+                        <Tooltip title="Delete Medical Record" >
+                            <Button
+                                icon={<FileExcelOutlined />} 
+                                onClick={() => {
+                                    const deleteRecord = async () => {
+                                        try {
+                                            dispatch(changeLoader({ loading: true }))
+                                            const postFormData = await axiosAPI.patch(`medical-record/private/update-record`, {
+                                                id: text._id,
+                                                disable: true
+                                            })
+                                            dispatch(changeLoader({ loading: false }));
+                                            toasterRequest({ payloadType: "success", textString: postFormData.data.message});
+                                            getCellData()
+                                        } catch (err) {
+                                            dispatch(changeLoader({ loading: false }))
+                                            err.response ? 
+                                                toasterRequest({ payloadType: "error", textString: err.response.data.message})
+                                            :
+                                                toasterRequest({ payloadType: "error", textString: err.message});
+                                        }
+                                    }
+                                    deleteRecord()
+                                }}
+                                type="primary"
+                                style={{ background: "red", borderColor: "white" }}
+                            >
+                            </Button>
+                        </Tooltip>
+                    }
                 </Space>
             ),
         },
@@ -178,7 +244,7 @@ const MedicalList = () => {
     const getCellData = async () => {
         try {
             dispatch(changeLoader({ loading: true }))
-            let medicalRecords = await axiosAPI.get(`medical-record/private/officer?barangay=${barangay}`);
+            let medicalRecords = await axiosAPI.get(`medical-record/private/officer?barangay=${barangay}&designation=${designation}`);
             const filteredData = medicalRecords.data.payload.map((record) => {
                 return {
                     full_name: `${record.first_name} ${record.last_name}`,
@@ -186,7 +252,8 @@ const MedicalList = () => {
                     createdAt: record.createdAt,
                     diagnosis: record.diagnosis,
                     status: record.status,
-                    _id: record._id
+                    _id: record._id,
+                    ...(designation === "Doctor") && { barangay: record.barangay}
                 }
             });
             setTableData(filteredData)
@@ -213,13 +280,17 @@ const MedicalList = () => {
                     title="Medical Record"
                     subTitle={dimension >= 4 ? `All medical records under Barangay ${barangay}.` : ""}
                     style={{ padding: 0, backgroundColor: "#AD72B7" }}
-                    extra={[
-                        <Button key="3" onClick={() => {
-                            history({
-                                pathname: `/dashboard/medical-records/create`
-                            })
-                        }} style={{ color: "#AD72B7" }}>Create Record</Button>
-                    ]}
+                    extra={designation === "Doctor" || designation === "Nurse" ? 
+                        [
+                            <Button key="3" onClick={() => {
+                                history({
+                                    pathname: `/dashboard/medical-records/create`
+                                })
+                            }} style={{ color: "#AD72B7" }}>Create Record</Button>
+                        ]
+                    : 
+                        []
+                    }
                 />
             </Layout.Content>
             <Layout.Content style={{ backgroundColor: "white", padding: "10px 20px", marginBottom: "15px", borderRadius: "5px" }}>

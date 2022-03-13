@@ -299,6 +299,7 @@ exports.publicEventsAndAnnouncement  = async (req, res, next) => {
         let eventsData = await EventListing.find(
             { 
                 barangay: req.query.barangay,
+                status: true,
                 createdAt: {
                     $gte: new Date(`${moment().format("YYYY")}-01-01T00:00:00.0Z`),
                     $lt: new Date(`${moment().format("YYYY")}-12-31T15:58:26.000Z`)

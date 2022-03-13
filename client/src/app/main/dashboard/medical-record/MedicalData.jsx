@@ -135,7 +135,7 @@ const MedicalData = () => {
                         </Col>
                         <Col xs={{ span: 24 }} lg={{ span: 12 }}>
                             <Card title={<Typography.Title level={3} style={{ fontSize: "16px" }}>Approved By</Typography.Title>}>
-                                {medData.approvedBy}
+                                {medData.approvedBy === "" ? "Awaiting for review." : medData.approvedBy}
                             </Card>
                         </Col>
                         <Col xs={{ span: 24 }} lg={{ span: 12 }}>

@@ -21,7 +21,26 @@ exports.allBarangayMedicalRecord = async (req, res, next) => {
 
         validateRequest(req);
 
-        const medicalRecord = await MedicalRecord.find(
+        const medicalRecord = req.query.designation === "Doctor" ?
+        await MedicalRecord.find(
+            {
+                disable: false
+            },
+            null,
+            {
+                projection: {
+                    first_name: 1,
+                    last_name: 1,
+                    outlier: 1,
+                    createdAt: 1,
+                    diagnosis: 1,
+                    status: 1,
+                    barangay: 1
+                }
+            }
+        ).sort({ createdAt: -1 })
+        :
+        await MedicalRecord.find(
             {
                 barangay: req.query.barangay,
                 disable: false
@@ -34,7 +53,8 @@ exports.allBarangayMedicalRecord = async (req, res, next) => {
                     outlier: 1,
                     createdAt: 1,
                     diagnosis: 1,
-                    status: 1
+                    status: 1,
+                    barangay: 1
                 }
             }
         ).sort({ createdAt: -1 })

@@ -9,7 +9,7 @@ import { changeLoader } from "src/app/store/web/webInformation";
 
 function Analytic() {
     const { dimension } = useSelector((state) => state.web);
-    const { barangay } = useSelector((state) => state.user); 
+    const { barangay, designation } = useSelector((state) => state.user); 
 
     const dispatch = useDispatch();
 
@@ -39,36 +39,103 @@ function Analytic() {
 
     return (
         <React.Fragment>
-            <Layout.Content style={{ backgroundColor: "#AD72B7", padding: "10px 20px", marginBottom: "15px", borderRadius: "5px" }}>
-                <PageHeader
-                    ghost={false}
-                    title="Yearly Analytics" 
-                    subTitle={dimension >= 4 ? `Contains the analytics for Barangay ${barangay}.` : ""}
-                    style={{ padding: 0, backgroundColor: "#AD72B7" }}
-                />
-            </Layout.Content>
-            <Layout.Content style={{ backgroundColor: "white", padding: "10px 20px", marginBottom: "15px", borderRadius: "5px" }}>
-            <Area 
-                height={500}
-                width={500}
-                data={graphData}
-                xField="datetime"
-                yField="value"
-                seriesField="category"
-                slider={{ start: 0.1, end: 0.9}}
-                onReady={(plot) => {
-                    plot.on('axis-label:click', (data) => {
-                        history({
-                            pathname: `/dashboard/analytics/${data.gEvent.target.attrs.text.split(" ")[0]}/${data.gEvent.target.attrs.text.split(" ")[2]}`
-                        })
-                    });
-                }}
-                loading={false}
-            />
-            </Layout.Content>
-            <Layout.Content style={{ marginBottom: "15px", borderRadius: "5px" }}>
-                <Alert message="To see the specific data for a pertaining year and month, please select the 'Year and Month' below the graph." type="info" closeText="Close Now" />
-            </Layout.Content>
+            {
+                designation !== "Doctor" &&
+                <React.Fragment>
+                    <Layout.Content style={{ backgroundColor: "#AD72B7", padding: "10px 20px", marginBottom: "15px", borderRadius: "5px" }}>
+                        <PageHeader
+                            ghost={false}
+                            title="Yearly Analytics" 
+                            subTitle={dimension >= 4 ? `Contains the analytics for Barangay ${barangay}.` : ""}
+                            style={{ padding: 0, backgroundColor: "#AD72B7" }}
+                        />
+                    </Layout.Content>
+                    <Layout.Content style={{ backgroundColor: "white", padding: "10px 20px", marginBottom: "15px", borderRadius: "5px" }}>
+                    <Area 
+                        height={500}
+                        width={500}
+                        data={graphData}
+                        xField="datetime"
+                        yField="value"
+                        seriesField="category"
+                        slider={{ start: 0.1, end: 0.9}}
+                        onReady={(plot) => {
+                            plot.on('axis-label:click', (data) => {
+                                history({
+                                    pathname: `/dashboard/analytics/${data.gEvent.target.attrs.text.split(" ")[0]}/${data.gEvent.target.attrs.text.split(" ")[2]}`
+                                })
+                            });
+                        }}
+                        loading={false}
+                    />
+                    </Layout.Content>
+                    <Layout.Content style={{ marginBottom: "15px", borderRadius: "5px" }}>
+                        <Alert message="To see the specific data for a pertaining year and month, please select the 'Year and Month' below the graph." type="info" closeText="Close Now" />
+                    </Layout.Content>
+                </React.Fragment>
+            }
+            {
+                designation === "Doctor" &&
+                <React.Fragment>
+                    <Layout.Content style={{ marginBottom: "15px", borderRadius: "5px" }}>
+                        <Alert message="To see the specific data for a pertaining year and month, please select the 'Year and Month' below the graph." type="info" closeText="Close Now" />
+                    </Layout.Content>
+                    <Layout.Content style={{ backgroundColor: "#AD72B7", padding: "10px 20px", marginBottom: "15px", borderRadius: "5px" }}>
+                        <PageHeader
+                            ghost={false}
+                            title="Lumil Analytics" 
+                            subTitle={dimension >= 4 ? `Contains the analytics for Barangay Lumil` : ""}
+                            style={{ padding: 0, backgroundColor: "#AD72B7" }}
+                        />
+                    </Layout.Content>
+                    <Layout.Content style={{ backgroundColor: "white", padding: "10px 20px", marginBottom: "15px", borderRadius: "5px" }}>
+                    <Area 
+                        height={500}
+                        width={500}
+                        data={graphData}
+                        xField="datetime"
+                        yField="value"
+                        seriesField="category"
+                        slider={{ start: 0.1, end: 0.9}}
+                        onReady={(plot) => {
+                            plot.on('axis-label:click', (data) => {
+                                history({
+                                    pathname: `/dashboard/analytics/${data.gEvent.target.attrs.text.split(" ")[0]}/${data.gEvent.target.attrs.text.split(" ")[2]}?barangay=Lumil`
+                                })
+                            });
+                        }}
+                        loading={false}
+                    />
+                    </Layout.Content>
+                    <Layout.Content style={{ backgroundColor: "#AD72B7", padding: "10px 20px", marginBottom: "15px", borderRadius: "5px" }}>
+                        <PageHeader
+                            ghost={false}
+                            title="Puting Kahoy Analytics" 
+                            subTitle={dimension >= 4 ? `Contains the analytics for Barangay Puting Kahoy` : ""}
+                            style={{ padding: 0, backgroundColor: "#AD72B7" }}
+                        />
+                    </Layout.Content>
+                    <Layout.Content style={{ backgroundColor: "white", padding: "10px 20px", marginBottom: "15px", borderRadius: "5px" }}>
+                    <Area 
+                        height={500}
+                        width={500}
+                        data={graphData}
+                        xField="datetime"
+                        yField="value"
+                        seriesField="category"
+                        slider={{ start: 0.1, end: 0.9}}
+                        onReady={(plot) => {
+                            plot.on('axis-label:click', (data) => {
+                                history({
+                                    pathname: `/dashboard/analytics/${data.gEvent.target.attrs.text.split(" ")[0]}/${data.gEvent.target.attrs.text.split(" ")[2]}?barangay=Puting Kahoy`
+                                })
+                            });
+                        }}
+                        loading={false}
+                    />
+                    </Layout.Content>
+                </React.Fragment>
+            }
         </React.Fragment>
     );
 }

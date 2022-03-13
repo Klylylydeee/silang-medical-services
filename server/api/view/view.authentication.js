@@ -19,9 +19,6 @@
  *               email:
  *                 type: string
  *                 default: juan_mendoza@gmail.com
- *               password:
- *                 type: string
- *                 default: encrypted
  *               phone_number:
  *                 type: number
  *                 default: 639476303740
@@ -44,9 +41,6 @@
  *               email:
  *                 type: string
  *                 default: juan_mendoza@gmail.com
- *               password:
- *                 type: string
- *                 default: encrypted
  *               phone_number:
  *                 type: number
  *                 default: 639476303740
@@ -57,7 +51,7 @@
  *               designation:
  *                 type: string
  *                 default: Chairman
- *                 enum: [ "Chairman", "Staff", "Doctor", "Caregiver"]
+ *                 enum: [ "Chairman", "Staff", "Doctor", "Nurse"]
  *     responses:
  *       200:
  *         description: Sucessful response containing message, data, and payload.

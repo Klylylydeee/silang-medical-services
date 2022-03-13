@@ -283,18 +283,16 @@ const BarangayEvent = () => {
                 <Descriptions title="Event Information" bordered style={{ margin: "5px 0 5px 0" }}>
                     <Descriptions.Item label="Event" span={3}>{selectedEvent.event}</Descriptions.Item>
                     <Descriptions.Item label="Description" span={3}>{selectedEvent.description}</Descriptions.Item>
-                    <Descriptions.Item label="Start Date & Time" span={3}>{selectedEvent.start_datetime}</Descriptions.Item>
-                    <Descriptions.Item label="End Date & Time" span={3}>{selectedEvent.end_datetime}</Descriptions.Item>
+                    <Descriptions.Item label="Start Date & Time" span={3}>{moment(selectedEvent.start_datetime).format("MMMM DD, YYYY h:m a")}</Descriptions.Item>
+                    <Descriptions.Item label="End Date & Time" span={3}>{moment(selectedEvent.end_datetime).format("MMMM DD, YYYY h:m a")}</Descriptions.Item>
                 </Descriptions>
                 <Descriptions title="Requestor Information" bordered style={{ margin: "15px 0 5px 0" }}>
                     <Descriptions.Item label="First Name" span={3}>{selectedEvent.requestor === undefined ? "" : selectedEvent.requestor.first_name }</Descriptions.Item>
-                    <Descriptions.Item label="Email" span={3}>{selectedEvent.requestor === undefined ? "" : selectedEvent.requestor.email}</Descriptions.Item>
                     <Descriptions.Item label="Last Name" span={3}>{selectedEvent.requestor === undefined ? "" : selectedEvent.requestor.last_name}</Descriptions.Item>
-                    <Descriptions.Item label="Phone Number" span={3}>{selectedEvent.requestor === undefined ? "" : selectedEvent.requestor.phone_number}</Descriptions.Item>
                 </Descriptions>
                 <Descriptions title="Record Information" bordered style={{ margin: "15px 0 15px 0" }}>
-                    <Descriptions.Item label="Date Creation" span={3}>{selectedEvent.createdAt}</Descriptions.Item>
-                    <Descriptions.Item label="Last Accessed" span={3}>{selectedEvent.updatedAt}</Descriptions.Item>
+                    <Descriptions.Item label="Date Creation" span={3}>{moment(selectedEvent.createdAt).format("MMMM DD, YYYY h:m a")}</Descriptions.Item>
+                    <Descriptions.Item label="Last Accessed" span={3}>{moment(selectedEvent.updatedAt).format("MMMM DD, YYYY h:m a")}</Descriptions.Item>
                     <Descriptions.Item label="Created By" span={3}>{selectedEvent.createdBy}</Descriptions.Item>
                     <Descriptions.Item label="Approved By" span={3}>{selectedEvent.approvedBy}</Descriptions.Item>
                     <Descriptions.Item label="Status" span={3}>

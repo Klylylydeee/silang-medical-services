@@ -375,7 +375,7 @@ const MedicalCreate = () => {
                                 label="Record Approver"
                                 tooltip="Individual's given birth first name"
                                 required={true}
-                                initialValue={designation === "Doctor" ? `${first_name} ${last_name} - (${designation})` : ``}
+                                initialValue={designation === "Doctor" ? `${first_name} ${last_name} (${designation})` : ``}
                             >
                                 <Input disabled={true} />
                             </Form.Item>

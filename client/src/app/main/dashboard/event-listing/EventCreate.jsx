@@ -47,7 +47,7 @@ const EventCreate = () => {
                 },
                 barangay: barangay,
                 createdBy: `${first_name} ${last_name} (${designation})`,
-                status: true
+                status: false
             });
             dispatch(changeLoader({ loading: false }));
             toasterRequest({ payloadType: "success", textString: userCreate.data.message});

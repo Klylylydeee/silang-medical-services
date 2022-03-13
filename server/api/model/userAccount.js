@@ -117,7 +117,7 @@ const userAccountSchema = new Schema(
                     "Chairman",
                     "Staff",
                     "Doctor",
-                    "Caregiver",
+                    "Nurse",
                     "Web Administrator"
                 ],
                 message: "Designation does not exists."

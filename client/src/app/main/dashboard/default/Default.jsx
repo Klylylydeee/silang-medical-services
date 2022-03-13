@@ -112,7 +112,7 @@ const Default = () => {
                     <Col xs={{ span: 24 }} lg={{ span: 12 }}>
                         <Divider orientation="left" style={{ fontSize: "18px", color: "black", fontWeight: 500 }}>Recent Patients</Divider>
                         {
-                            eventList.length !== 0 &&
+                            patientList.length !== 0 &&
                             <List
                                 itemLayout="horizontal"
                                 dataSource={patientList}
