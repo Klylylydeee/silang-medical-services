@@ -25,10 +25,12 @@ exports.validateAuthorization = async (req, res, next) => {
     try {
         decodedToken = jwt.verify(token, process.env.JWT_BACKEND);
     } catch (err) {
-        throw err.message === "jwt expired" ?
+        throw next(
+            err.message === "jwt expired" ?
             new Error("Authorization has expired. Please sign-in again.")
         : 
-            new Error(err.message);
+            new Error(err.message)
+        )
     };
 
     if (!decodedToken) {
@@ -37,7 +39,7 @@ exports.validateAuthorization = async (req, res, next) => {
         throw next(error);
     };
     
-    let findUser = await Users.findOne({ email: decodedToken.email });
+    let findUser = await Users.findOne({ email: decodedToken.email, status: true });
 
     if(findUser === null){
         let error = new Error("Email does not exists.");

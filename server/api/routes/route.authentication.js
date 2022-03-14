@@ -2,7 +2,6 @@ const express = require("express");
 const { check, query} = require("express-validator");
 
 const userAuthController = require("../controller/cont.authentication");
-const { validateAuthorization } = require("../middleware/authHandler");
 
 const router = express.Router();
 
@@ -24,6 +23,7 @@ router.post(
     [
         check("_id").not().isEmpty(),
         check("password").not().isEmpty(),
+        query("payload").not().isEmpty()
     ],
     userAuthController.userSignUpVerification
 );

@@ -12,31 +12,53 @@ router.get(
     [
         query("barangay").not().isEmpty()
     ],
+    validateAuthorization,
     userSettingController.userList
 );
 
 router.post(
     "/user-invitation",
+    [
+        check("first_name").not().isEmpty(),
+        check("last_name").not().isEmpty(),
+        check("email").not().isEmpty(),
+        check("phone_number").not().isEmpty(),
+        check("barangay").not().isEmpty(),
+        check("designation").not().isEmpty()
+    ],
+    validateAuthorization,
     userCreateController.userSignUp
 );
 
 router.post(
     "/user-data",
+    validateAuthorization,
     userSettingController.userData
 );
 
 router.post(
     "/user-status",
+    [
+        check("_id").not().isEmpty(),
+        check("barangay").not().isEmpty(),
+        check("status").not().isEmpty()
+    ],
+    validateAuthorization,
     userSettingController.userStatus
 );
 
 router.post(
     "/user-pass-request",
+    [
+        check("_id").not().isEmpty()
+    ],
+    validateAuthorization,
     userSettingController.requestPasswordChange
 );
 
 router.post(
     "/user-setting",
+    validateAuthorization,
     userSettingController.userChangeSetting
 );
 

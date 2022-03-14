@@ -21,6 +21,9 @@ const { Schema, model } = require("mongoose");
  *         level:
  *           type: string
  *           description: level
+ *         message:
+ *           type: string
+ *           description: message
  *         meta:
  *           type: object
  *           properties:

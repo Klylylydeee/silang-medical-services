@@ -4,9 +4,6 @@ const moment = require("moment");
 const MedicalRecord = require("../model/medicalRecord");
 const AnalyticComments = require("../model/analyticComment");
 
-const { generateBarangayForm } = require("../middleware/puppeteerConfig");
-const mailerConfig = require("../middleware/mailerConfig");
-
 const { monthToNumber } = require("../util/dateHelper");
 
 const { validateRequest } = require("../util/jsonValidate");
@@ -14,6 +11,8 @@ const { validateRequest } = require("../util/jsonValidate");
 exports.analyticsByYear = async (req, res, next) => {
 
     try {
+
+        validateRequest(req);
 
         let medicalRecordList = await MedicalRecord.aggregate([
             {
@@ -145,6 +144,8 @@ exports.analyticsByYear = async (req, res, next) => {
 exports.analyticsBySpecificDate = async (req, res, next) => {
 
     try {
+        
+        validateRequest(req);
 
         let analyticsData = await MedicalRecord.find(
             {
@@ -199,8 +200,8 @@ exports.analyticsBySpecificDate = async (req, res, next) => {
 exports.analyticsSpecificDate = async (req, res, next) => {
 
     try {
-
-        console.log(monthToNumber(req.query.month))
+        
+        validateRequest(req);
 
         let analyticsData = await MedicalRecord.find(
             {
@@ -263,6 +264,8 @@ exports.analyticsSpecificDate = async (req, res, next) => {
 exports.commentSpecificDate = async (req, res, next) => {
 
     try {
+        
+        validateRequest(req);
 
         let commentsData = await AnalyticComments.find(
             {
@@ -298,6 +301,8 @@ exports.commentSpecificDate = async (req, res, next) => {
 exports.addCommentSpecificDate = async (req, res, next) => {
 
     try {
+        
+        validateRequest(req);
 
         let commentsData = await AnalyticComments.create(
             {
@@ -327,6 +332,8 @@ exports.addCommentSpecificDate = async (req, res, next) => {
 exports.deleteCommentSpecificDate = async (req, res, next) => {
 
     try {
+        
+        validateRequest(req);
 
         let commentsData = await AnalyticComments.findOneAndUpdate(
             { 

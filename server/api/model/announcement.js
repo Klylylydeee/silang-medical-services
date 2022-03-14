@@ -13,6 +13,7 @@ const validator = require("validator");
  *       type: object
  *       required:
  *         - announcement
+ *         - message
  *         - description
  *         - barangay
  *         - requestor
@@ -25,9 +26,9 @@ const validator = require("validator");
  *         announcement:
  *           type: string
  *           description: announcement
- *         description:
+ *         message:
  *           type: string
- *           description: description
+ *           description: message
  *         barangay:
  *           type: string
  *           description: barangay
@@ -66,6 +67,12 @@ const validator = require("validator");
  *               type: boolean
  *               description: status
  *           description: subscribed 
+ *         approved_by:
+ *           type: string
+ *           description: approved_by  
+ *         status:
+ *           type: boolean
+ *           description: status  
  *         createdAt:
  *           type: string
  *           description: createdAt  

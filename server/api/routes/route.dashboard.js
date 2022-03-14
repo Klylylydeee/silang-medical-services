@@ -11,6 +11,7 @@ router.get(
     [
         query("barangay").not().isEmpty()
     ],
+    validateAuthorization,
     analyticsController.mainDashboard
 )
 
@@ -19,6 +20,7 @@ router.get(
     [
         query("barangay").not().isEmpty()
     ],
+    validateAuthorization,
     analyticsController.chairmanDashboard
 );
 
@@ -27,6 +29,7 @@ router.get(
     [
         query("barangay").not().isEmpty()
     ],
+    validateAuthorization,
     analyticsController.staffDashboard
 );
 
@@ -35,6 +38,7 @@ router.get(
     [
         query("barangay").not().isEmpty()
     ],
+    validateAuthorization,
     analyticsController.nurseDashboard
 );
 

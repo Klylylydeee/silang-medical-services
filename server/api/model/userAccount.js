@@ -11,6 +11,10 @@ const { firstCharacterUppercase, removeUnderscores} = require("../util/stringHel
 /**
  * @swagger
  * components:
+ *   securitySchemes:
+ *    Authorization:
+ *      type: http
+ *      scheme: bearer
  *   schemas:
  *     Accounts:
  *       type: object
@@ -54,6 +58,9 @@ const { firstCharacterUppercase, removeUnderscores} = require("../util/stringHel
  *         pin_threshold:
  *           type: number
  *           description: pin_threshold 
+ *         language:
+ *           type: boolean
+ *           description: language 
  *         status:
  *           type: boolean
  *           description: status 

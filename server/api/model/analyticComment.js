@@ -12,13 +12,18 @@ const validator = require("validator");
  *     Analytic Comments:
  *       type: object
  *       required:
+ *         - author
  *         - comment
  *         - year
+ *         - barangay
  *         - month
  *       properties:
  *         _id:
  *           type: string
  *           description: _id
+ *         author:
+ *           type: string
+ *           description: author
  *         comment:
  *           type: string
  *           description: comment
@@ -28,6 +33,9 @@ const validator = require("validator");
  *         month:
  *           type: string
  *           description: month
+ *         barangay:
+ *           type: string
+ *           description: barangay
  *         status:
  *           type: boolean
  *           description: status 

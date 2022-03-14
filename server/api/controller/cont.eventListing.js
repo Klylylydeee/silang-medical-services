@@ -78,7 +78,6 @@ exports.barangayEvents = async (req, res, next) => {
             message: `Events for Barangay ${req.query.barangay}.`,
             payload: eventsData,
             analytics: {
-
                 finished: finished,
                 upcoming: upcoming,
                 awaiting: awaiting
@@ -219,8 +218,6 @@ exports.updateBarangayEventAttendee  = async (req, res, next) => {
             }
         )
 
-        console.log(eventsData)
-    
         if(eventsData === null){
             let error = new Error("Event does not exists.");
             error.statusCode = 501;
@@ -267,8 +264,6 @@ exports.removeBarangayEventAttendee  = async (req, res, next) => {
             }
         )
 
-        console.log(eventsData)
-    
         if(eventsData === null){
             let error = new Error("Event does not exists.");
             error.statusCode = 501;

@@ -1,6 +1,5 @@
 // Swagger Header table for tag
 
-
 /**
  * @swagger
  * tags:
@@ -18,13 +17,6 @@
 /**
  * @swagger
  * tags:
- *   name: /analytics
- *   description: Analytics Route
- */
-
-/**
- * @swagger
- * tags:
  *   name: /medical-record
  *   description: Medical Record Route
  */
@@ -32,7 +24,14 @@
 /**
  * @swagger
  * tags:
- *   name: /event-list
+ *   name: /analytics
+ *   description: Analytics Route
+ */
+
+/**
+ * @swagger
+ * tags:
+ *   name: /events
  *   description: Event List Route
  */
 
@@ -46,13 +45,6 @@
 /**
  * @swagger
  * tags:
- *   name: /user
- *   description: User Route
- */
-
-/**
- * @swagger
- * tags:
- *   name: /setting
- *   description: Setting Route
+ *   name: /settings
+ *   description: Settings Route
  */

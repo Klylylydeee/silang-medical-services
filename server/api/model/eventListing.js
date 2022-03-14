@@ -12,45 +12,71 @@ const validator = require("validator");
  *     Event Listing:
  *       type: object
  *       required:
- *         - first_name
- *         - last_name
- *         - email
- *         - password
- *         - phone_number
+ *         - event
+ *         - description
  *         - barangay
- *         - designation
+ *         - requestor
+ *         - attendee
+ *         - start_datetime 
+ *         - end_datetime
+ *         - createdBy
  *       properties:
  *         _id:
  *           type: string
  *           description: _id
- *         first_name:
+ *         event:
  *           type: string
- *           description: first_name
- *         last_name:
+ *           description: event
+ *         description:
  *           type: string
- *           description: last_name
- *         email:
- *           type: string
- *           description: email
- *         password:
- *           type: string
- *           description: password 
- *         phone_number:
- *           type: number
- *           pattern: '^(639)\d{9}$'
- *           description: number 
+ *           description: description
  *         barangay:
  *           type: string
- *           description: barangay 
- *         designation:
+ *           description: barangay
+ *         requestor:
+ *           type: object
+ *           properties:
+ *             first_name:
+ *               type: string
+ *               description: first_name
+ *             last_name:
+ *               type: string
+ *               description: last_name
+ *             email:
+ *               type: string
+ *               description: email
+ *             phone_number:
+ *               type: number
+ *               description: phone_number
+ *           description: requestor  
+ *         attendee:
+ *           type: object
+ *           properties:
+ *             first_name:
+ *               type: string
+ *               description: first_name
+ *             last_name:
+ *               type: string
+ *               description: last_name
+ *             email:
+ *               type: string
+ *               description: email
+ *             phone_number:
+ *               type: number
+ *               description: phone_number
+ *           description: requestor 
+ *         start_datetime:
+ *           type: date
+ *           description: start_datetime 
+ *         end_datetime:
+ *           type: date
+ *           description: end_datetime 
+ *         createdBy:
  *           type: string
- *           description: designation 
- *         pin:
- *           type: number
- *           description: pin 
- *         pin_threshold:
- *           type: number
- *           description: pin_threshold 
+ *           description: createdBy 
+ *         approvedBy:
+ *           type: string
+ *           description: approvedBy  
  *         status:
  *           type: boolean
  *           description: status 
@@ -131,31 +157,6 @@ const eventListingSchema = new Schema(
                     match: /^(639)\d{9}$/
                 }
             }]
-        },
-        officials: {
-            type: [{
-                first_name: {
-                    type: String
-                },
-                last_name: {
-                    type: String
-                },
-                email: {
-                    type: String,
-                    lowercase: true,
-                    trim: true,
-                    validate: {
-                        validator: validator.isEmail,
-                        message: 'Email is not a valid email.',
-                        isAsync: false
-                    }
-                },
-                phone_number: {
-                    type: String,
-                    match: /^(639)\d{9}$/
-                }
-            }],
-            default: undefined
         },
         start_datetime: {
             type: String,

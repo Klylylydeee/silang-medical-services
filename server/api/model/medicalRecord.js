@@ -33,9 +33,6 @@ const validator = require("validator");
  *         email:
  *           type: string
  *           description: email
- *         password:
- *           type: string
- *           description: password 
  *         phone_number:
  *           type: number
  *           pattern: '^(639)\d{9}$'
@@ -43,18 +40,42 @@ const validator = require("validator");
  *         barangay:
  *           type: string
  *           description: barangay 
- *         designation:
+ *         diagnosis :
  *           type: string
- *           description: designation 
+ *           description: diagnosis  
+ *         detailed_report:
+ *           type: string
+ *           description: detailed_report 
+ *         outlier:
+ *           type: number
+ *           description: outlier 
+ *         createdBy:
+ *           type: string
+ *           description: createdBy 
+ *         approvedBy:
+ *           type: string
+ *           description: approvedBy 
  *         pin:
  *           type: number
  *           description: pin 
  *         pin_threshold:
  *           type: number
  *           description: pin_threshold 
+ *         prescription:
+ *           type: object
+ *           properties:
+ *             prescription:
+ *               type: String
+ *               description: prescription
+ *             dosage:
+ *               type: String
+ *               description: dosage
  *         status:
  *           type: boolean
  *           description: status 
+ *         disable:
+ *           type: boolean
+ *           description: disable 
  *         createdAt:
  *           type: string
  *           description: createdAt  

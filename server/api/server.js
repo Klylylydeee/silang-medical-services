@@ -7,6 +7,7 @@ const AdminJS = require('adminjs');
 const AdminJSExpress = require('@adminjs/express');
 const AdminJSMongoose = require('@adminjs/mongoose');
 const bcrypt = require("bcrypt");
+const basicAuth = require('express-basic-auth');
     
 const databaseConnection = require("./database/mongoDBConfig");
 const {
@@ -141,7 +142,16 @@ app.get('/', (req, res) => {
         res.redirect(`http://localhost:3000/`)
 });
 
-process.env.SERVER_MODE === "admin" && app.use('/api-documentation', swaggerUI.serve, swaggerUI.setup(swaggerConfig));
+process.env.SERVER_MODE === "admin" && 
+app.use(
+    '/api-documentation',
+    basicAuth({
+        users: JSON.parse(process.env.ADMIN_ROUTE),
+        challenge: true,
+    }),
+    swaggerUI.serve,
+    swaggerUI.setup(swaggerConfig)
+);
 app.use('/authentication', require("./routes/route.authentication"));
 app.use('/dashboard', require("./routes/route.dashboard"));
 app.use('/medical-record', require("./routes/route.medicalRecord"));
