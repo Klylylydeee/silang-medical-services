@@ -171,8 +171,8 @@ const EventData = () => {
                 <Descriptions title="Event Information" bordered style={{ margin: "5px 0 5px 0" }}>
                     <Descriptions.Item label="Event" span={3}>{formData.event}</Descriptions.Item>
                     <Descriptions.Item label="Description" span={3}>{formData.description}</Descriptions.Item>
-                    <Descriptions.Item label="Start Date & Time" span={1.5}>{moment(formData.start_datetime).format("MMMM DD,YYYY h:m a")}</Descriptions.Item>
-                    <Descriptions.Item label="End Date & Time" span={1.5}>{moment(formData.end_datetime).format("MMMM DD,YYYY h:m a")}</Descriptions.Item>
+                    <Descriptions.Item label="Start Date & Time" span={1.5}>{formData.start_datetime}</Descriptions.Item>
+                    <Descriptions.Item label="End Date & Time" span={1.5}>{formData.end_datetime}</Descriptions.Item>
 
                 </Descriptions>
                 <Descriptions title="Requestor Information" bordered style={{ margin: "15px 0 5px 0" }}>

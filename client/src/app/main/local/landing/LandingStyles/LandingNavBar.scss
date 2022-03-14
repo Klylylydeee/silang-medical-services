@@ -139,3 +139,12 @@
     flex-direction: column;
   }
 }
+
+// Drawer CSS
+.nav-drawer > .ant-drawer-content-wrapper > .ant-drawer-content > .ant-drawer-wrapper-body > .ant-drawer-body {
+    background-color: #AD72B7;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
