@@ -5,7 +5,7 @@ import { axiosAPI } from "src/app/util/axios";
 import { changeLoader } from "src/app/store/web/webInformation";
 import { useSelector, useDispatch } from "react-redux";
 import Header from "../medical-record/record-header.png";
-import { Avatar, Image, Divider, Empty, Row, Col, Card, Tooltip, Space, Drawer, Layout, Typography, List, Descriptions, Badge } from 'antd';
+import { Avatar, Image, Divider, Empty, Row, Col, Card, Tooltip, Button, Drawer, Form, Input, Select, Descriptions, Badge, Alert } from 'antd';
 import { EllipsisOutlined, PlusCircleOutlined, MinusCircleOutlined } from '@ant-design/icons';
 import Navigation from "../landing/Navigation";
 import Lumil from "../img/barangay-lumil.png"
@@ -24,12 +24,16 @@ const BarangayEvent = () => {
     const [newHeight, setHeight] = useState("")
     const [announcementData, setAnnouncementData] = useState([]);
     const [selectedAnnouncement, setSelectedAnnouncement] = useState({});
+    const [subscribe, setSubscribe] = useState(false);
     const [announcementDrawer, setAnnouncementDrawer] = useState(false);
     const [eventData, setEventData] = useState([]);
     const [selectedEvent, setSelectedEvent] = useState({});
     const [eventDrawer, setEventDrawer] = useState(false);
     const [addEventAttendee, setAddEventAttendee] = useState(false);
     const [removeEventAttandee, setRemoveEventAttandee] = useState(false);
+    const [addAttendeeForm] = Form.useForm();
+    const [removeAttendeeForm] = Form.useForm();
+    const [subscribeForm] = Form.useForm();
     useEffect(() => {
             const heightDiv = document.getElementById("test")
             const offset = heightDiv.offsetHeight;
@@ -65,6 +69,69 @@ const BarangayEvent = () => {
         getData()
     // eslint-disable-next-line
     }, [])
+
+    const attendeeForm = async ({ prefix, email, last_name, first_name, phone_number }) => {
+        try {
+            dispatch(changeLoader({ loading: true }))
+            let userCreate = await axiosAPI.post(`events/update-listing-attendee?id=${selectedEvent._id}&barangay=${paramsa.barangay}`, {
+                first_name,
+                last_name,
+                email,
+                phone_number: prefix + phone_number
+            });
+            dispatch(changeLoader({ loading: false }));
+            setAddEventAttendee(false)
+            toasterRequest({ payloadType: "success", textString: userCreate.data.message});
+            addAttendeeForm.resetFields();
+        } catch (err) {
+            dispatch(changeLoader({ loading: false }))
+            err.response ? 
+                toasterRequest({ payloadType: "error", textString: err.response.data.message})
+            :
+                toasterRequest({ payloadType: "error", textString: err.message});
+        }
+    }
+    const removedAttendee = async (formPayload) => {
+        try {
+            dispatch(changeLoader({ loading: true }))
+            let eventData = await axiosAPI.post(`events/remove-listing-attendee?id=${selectedEvent._id}&barangay=${paramsa.barangay}`, {
+                email: formPayload.email,
+                phone_number: formPayload.prefix+formPayload.phone_number
+            });
+            toasterRequest({ payloadType: "success", textString: eventData.data.message});
+            dispatch(changeLoader({ loading: false }));
+            setRemoveEventAttandee(false)
+            removeAttendeeForm.resetFields();
+        } catch (err) {
+            dispatch(changeLoader({ loading: false }))
+            err.response ? 
+                toasterRequest({ payloadType: "error", textString: err.response.data.message})
+            :
+                toasterRequest({ payloadType: "error", textString: err.message});
+        }
+    }
+    const subscribeCitizen = async ({ prefix, email, last_name, first_name, phone_number }) => {
+        try {
+            dispatch(changeLoader({ loading: true }))
+            let userCreate = await axiosAPI.post(`subscription/`, {
+                first_name,
+                last_name,
+                email,
+                phone_number: prefix + phone_number,
+                barangay: paramsa.barangay
+            });
+            dispatch(changeLoader({ loading: false }));
+            setSubscribe(false)
+            toasterRequest({ payloadType: "success", textString: userCreate.data.message});
+            subscribeForm.resetFields();
+        } catch (err) {
+            dispatch(changeLoader({ loading: false }))
+            err.response ? 
+                toasterRequest({ payloadType: "error", textString: err.response.data.message})
+            :
+                toasterRequest({ payloadType: "error", textString: err.message});
+        }
+    }
     return (
         <React.Fragment>
             <Navigation />
@@ -129,7 +196,24 @@ const BarangayEvent = () => {
                                 }}
                             />
                         </p>
-                        <Divider orientation="left" style={{ fontSize: "18px", color: "black", fontWeight: 500, padding: "20px 0"}}>Announcements ({moment().format("YYYY")})</Divider>
+                        <Row gutter={[24, 0]} style={{ padding: "20px 0", position: "relative"}} wrap={false}>
+                            <Col flex="auto">
+                                <Divider orientation="left" plain orientationMargin={10} style={{ fontSize: "18px", color: "black", fontWeight: 500, }}>
+                                    Announcements ({moment().format("YYYY")})
+                                </Divider>
+                            </Col>
+                            <Col flex={"130px"}>
+                                <Button 
+                                    type="primary"
+                                    onClick={()=> { 
+                                        setSubscribe(true)
+                                    }}
+                                    style={{ position: "absolute", top: 0, bottom: 0, margin: "auto 0"}}
+                                >
+                                    Subscribe
+                                </Button>
+                            </Col>
+                        </Row>
                         {
                             announcementData.length === 0 &&
                             <div
@@ -185,6 +269,7 @@ const BarangayEvent = () => {
                                             <PlusCircleOutlined
                                                 onClick={() => {
                                                     setAddEventAttendee(true)
+                                                    setSelectedEvent(eventData)
                                                 }}
                                             />
                                         </Tooltip>,            
@@ -192,6 +277,7 @@ const BarangayEvent = () => {
                                             <MinusCircleOutlined 
                                                 onClick={() => {
                                                     setRemoveEventAttandee(true)
+                                                    setSelectedEvent(eventData)
                                                 }}
                                             />
                                         </Tooltip>,
@@ -242,38 +328,331 @@ const BarangayEvent = () => {
                 </div>
             </div>
             <Drawer
+                title={`Subscribe to ${paramsa.barangay} Announcements`}
+                width={dimension >= 4 ? "50%" : "100%"}
+                closable={true}
+                onClose={() => {
+                    setSubscribe(false)
+                }}
+                visible={subscribe}
+            >
+                <Alert message="REMINDER. Once you have enlisted your credential for this subscription list it will be permanently listed." type="info" closeText="Close Now" />
+                <Form
+                    onFinish={subscribeCitizen}
+                    layout="vertical"
+                    form={subscribeForm}
+                >
+                    <Row gutter={[24, 0]} style={{ paddingTop: "10px" }}>
+                        <Col xs={{ span: 24 }} >
+                            <Divider orientation="left" plain orientationMargin={10}>
+                                Personal Details
+                            </Divider>
+                            <Row gutter={[24, 0]} style={{ paddingTop: "10px" }}>
+                                <Col xs={{ span: 24 }} >
+                                    <Form.Item
+                                        name="first_name"
+                                        label="First Name"
+                                        tooltip="Individual's given birth first name"
+                                        rules={[
+                                            {
+                                                required: true,
+                                                message: "Please fill out this field!",
+                                            },
+                                        ]}
+                                        required={true}
+                                    >
+                                        <Input />
+                                    </Form.Item>
+                                </Col>
+                            </Row>
+                            <Row gutter={[24, 0]} style={{ paddingTop: "10px" }}>
+                                <Col xs={{ span: 24 }} >
+                                    <Form.Item
+                                        name="last_name"
+                                        label="Last Name"
+                                        tooltip="Individual's given last name"
+                                        rules={[
+                                            {
+                                                required: true,
+                                                message: "Please fill out this field!",
+                                            },
+                                        ]}
+                                        required={true}
+                                    >
+                                        <Input />
+                                    </Form.Item>
+                                </Col>
+                            </Row>
+                            <Row gutter={[24, 0]} style={{ paddingTop: "10px" }}>
+                                <Col xs={{ span: 24 }} >
+                                    <Form.Item
+                                        name="email"
+                                        label="Email"
+                                        tooltip="Individual's personal/private email address"
+                                        rules={[
+                                            {
+                                                type: 'email',
+                                                message: 'Input is not a valid Email!',
+                                            },
+                                            {
+                                                required: true,
+                                                message: "Please fill out this field!",
+                                            },
+                                        ]}
+                                    >
+                                        <Input />
+                                    </Form.Item>
+                                </Col>
+                            </Row>
+                            <Row gutter={[24, 0]} style={{ paddingTop: "10px" }}>
+                                <Col xs={{ span: 24 }} >
+                                    <Form.Item
+                                        name="phone_number"
+                                        label="Phone Number"
+                                        tooltip="Individual's personal/private Phone Number"
+                                        rules={[
+                                            {
+                                                message: "PH Number should start with 639 + the 9 numbers!",
+                                                pattern: new RegExp(/^(\w{9})$/ )
+                                            },
+                                            {
+                                                required: true,
+                                                message: "Please fill out this field!",
+                                            },
+                                        ]}
+                                        required={true}
+                                    >
+                                        <Input addonBefore={(
+                                            <Form.Item name="prefix" noStyle initialValue={"639"}>
+                                                <Select >
+                                                    <Select.Option value="639">+639</Select.Option>
+                                                </Select>
+                                            </Form.Item>
+                                        )} />
+                                    </Form.Item>
+                                </Col>
+                            </Row>
+                        </Col>
+                    </Row>
+                    <Form.Item style={{ paddingTop: "20px" }}>
+                        <Button type="default" style={{ marginRight: dimension <= 4 ? "10px" : "20px" }}  onClick={() => subscribeForm.resetFields() }>
+                            Reset
+                        </Button>
+                        <Button type="primary" htmlType="submit">
+                            Submit
+                        </Button>
+                    </Form.Item>
+                </Form>
+            </Drawer>
+            <Drawer
                 title={`Add Event Attendee`}
-                width={dimension >= 4 ? 500 : 300}
+                width={dimension >= 4 ? "50%" : "100%"}
                 closable={true}
                 onClose={() => {
                     setAddEventAttendee(false)
                 }}
                 visible={addEventAttendee}
             >
+                <Form
+                    onFinish={attendeeForm}
+                    layout="vertical"
+                    form={addAttendeeForm}
+                >
+                    <Row gutter={[24, 0]} style={{ paddingTop: "10px" }}>
+                        <Col xs={{ span: 24 }} >
+                            <Divider orientation="left" plain orientationMargin={10}>
+                                Personal Details
+                            </Divider>
+                            <Row gutter={[24, 0]} style={{ paddingTop: "10px" }}>
+                                <Col xs={{ span: 24 }} >
+                                    <Form.Item
+                                        name="first_name"
+                                        label="First Name"
+                                        tooltip="Individual's given birth first name"
+                                        rules={[
+                                            {
+                                                required: true,
+                                                message: "Please fill out this field!",
+                                            },
+                                        ]}
+                                        required={true}
+                                    >
+                                        <Input />
+                                    </Form.Item>
+                                </Col>
+                            </Row>
+                            <Row gutter={[24, 0]} style={{ paddingTop: "10px" }}>
+                                <Col xs={{ span: 24 }} >
+                                    <Form.Item
+                                        name="last_name"
+                                        label="Last Name"
+                                        tooltip="Individual's given last name"
+                                        rules={[
+                                            {
+                                                required: true,
+                                                message: "Please fill out this field!",
+                                            },
+                                        ]}
+                                        required={true}
+                                    >
+                                        <Input />
+                                    </Form.Item>
+                                </Col>
+                            </Row>
+                            <Row gutter={[24, 0]} style={{ paddingTop: "10px" }}>
+                                <Col xs={{ span: 24 }} >
+                                    <Form.Item
+                                        name="email"
+                                        label="Email"
+                                        tooltip="Individual's personal/private email address"
+                                        rules={[
+                                            {
+                                                type: 'email',
+                                                message: 'Input is not a valid Email!',
+                                            },
+                                            {
+                                                required: true,
+                                                message: "Please fill out this field!",
+                                            },
+                                        ]}
+                                    >
+                                        <Input />
+                                    </Form.Item>
+                                </Col>
+                            </Row>
+                            <Row gutter={[24, 0]} style={{ paddingTop: "10px" }}>
+                                <Col xs={{ span: 24 }} >
+                                    <Form.Item
+                                        name="phone_number"
+                                        label="Phone Number"
+                                        tooltip="Individual's personal/private Phone Number"
+                                        rules={[
+                                            {
+                                                message: "PH Number should start with 639 + the 9 numbers!",
+                                                pattern: new RegExp(/^(\w{9})$/ )
+                                            },
+                                            {
+                                                required: true,
+                                                message: "Please fill out this field!",
+                                            },
+                                        ]}
+                                        required={true}
+                                    >
+                                        <Input addonBefore={(
+                                            <Form.Item name="prefix" noStyle initialValue={"639"}>
+                                                <Select >
+                                                    <Select.Option value="639">+639</Select.Option>
+                                                </Select>
+                                            </Form.Item>
+                                        )} />
+                                    </Form.Item>
+                                </Col>
+                            </Row>
+                        </Col>
+                    </Row>
+                    <Form.Item style={{ paddingTop: "20px" }}>
+                        <Button type="default" style={{ marginRight: dimension <= 4 ? "10px" : "20px" }}  onClick={() => addAttendeeForm.resetFields() }>
+                            Reset
+                        </Button>
+                        <Button type="primary" htmlType="submit">
+                            Submit
+                        </Button>
+                    </Form.Item>
+                </Form>
             </Drawer>
             <Drawer
                 title={`Remove Event Attendee`}
-                width={dimension >= 4 ? 500 : 300}
+                width={dimension >= 4 ? "50%" : "100%"}
                 closable={true}
                 onClose={() => {
                     setRemoveEventAttandee(false)
                 }}
                 visible={removeEventAttandee}
             >
+                <Form
+                    onFinish={removedAttendee}
+                    layout="vertical"
+                    form={removeAttendeeForm}
+                >
+                    <Row gutter={[24, 0]} style={{ paddingTop: "10px" }}>
+                        <Col xs={{ span: 24 }} >
+                            <Divider orientation="left" plain orientationMargin={10}>
+                                Personal Details
+                            </Divider>
+                            <Row gutter={[24, 0]} style={{ paddingTop: "10px" }}>
+                                <Col xs={{ span: 24 }} >
+                                    <Form.Item
+                                        name="email"
+                                        label="Email"
+                                        tooltip="Individual's personal/private email address"
+                                        rules={[
+                                            {
+                                                type: 'email',
+                                                message: 'Input is not a valid Email!',
+                                            },
+                                            {
+                                                required: true,
+                                                message: "Please fill out this field!",
+                                            },
+                                        ]}
+                                    >
+                                        <Input />
+                                    </Form.Item>
+                                </Col>
+                            </Row>
+                            <Row gutter={[24, 0]} style={{ paddingTop: "10px" }}>
+                                <Col xs={{ span: 24 }} >
+                                    <Form.Item
+                                        name="phone_number"
+                                        label="Phone Number"
+                                        tooltip="Individual's personal/private Phone Number"
+                                        rules={[
+                                            {
+                                                message: "PH Number should start with 639 + the 9 numbers!",
+                                                pattern: new RegExp(/^(\w{9})$/ )
+                                            },
+                                            {
+                                                required: true,
+                                                message: "Please fill out this field!",
+                                            },
+                                        ]}
+                                        required={true}
+                                    >
+                                        <Input addonBefore={(
+                                            <Form.Item name="prefix" noStyle initialValue={"639"}>
+                                                <Select >
+                                                    <Select.Option value="639">+639</Select.Option>
+                                                </Select>
+                                            </Form.Item>
+                                        )} />
+                                    </Form.Item>
+                                </Col>
+                            </Row>
+                        </Col>
+                    </Row>
+                    <Form.Item style={{ paddingTop: "20px" }}>
+                        <Button type="default" style={{ marginRight: dimension <= 4 ? "10px" : "20px" }}  onClick={() => removeAttendeeForm.resetFields() }>
+                            Reset
+                        </Button>
+                        <Button type="primary" htmlType="submit">
+                            Submit
+                        </Button>
+                    </Form.Item>
+                </Form>
             </Drawer>
             <Drawer
                 title={`Announcement Data `}
-                width={dimension >= 4 ? 500 : 300}
+                width={dimension >= 4 ? "500" : "100%"}
                 closable={true}
                 onClose={() => {
                     setAnnouncementDrawer(false)
                 }}
                 visible={announcementDrawer}
-            >
+            >  
             </Drawer>
             <Drawer
                 title={`Event Data ${selectedEvent._id}`}
-                width={dimension >= 4 ? 500 : 300}
+                width={dimension >= 4 ? "50%" : "100%"}
                 closable={true}
                 onClose={() => {
                     setEventDrawer(false)
@@ -299,7 +678,7 @@ const BarangayEvent = () => {
                         <Badge
                             status={
                             selectedEvent.status === true ? 
-                                moment(new Date()) > moment(eventData.data.payload.start_datetime) ?
+                                moment(new Date()) > moment(selectedEvent.start_datetime) ?
                                 "success"
                                 :
                                 "warning"
@@ -307,7 +686,7 @@ const BarangayEvent = () => {
                                 "default"
                             }
                             text={selectedEvent.status=== true ? 
-                                moment(new Date()) > moment(eventData.data.payload.start_datetime) ?
+                                moment(new Date()) > moment(selectedEvent.start_datetime) ?
                                 "Event has occured or is currently on-going."
                                 :
                                 "Upcoming event."

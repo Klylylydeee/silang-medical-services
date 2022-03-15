@@ -277,11 +277,8 @@ const Communication = () => {
                     subTitle={dimension >= 4 ? `Announcements and other message by the Barnagay ${barangay} Officials.` : ""}
                     style={{ padding: 0, backgroundColor: "#AD72B7" }}
                     extra={[
-                        <Button key="3" onClick={() => {
-                            // history({
-                            //     pathname: `/dashboard/users/create/invitation`
-                            // })
-                        }} style={{ color: "#AD72B7" }}>Create Announcement</Button>
+                        <Button key="3" onClick={() => {}} style={{ color: "#AD72B7" }}>{dimension >= 4 ?  "Create Announcement" : "Create" }</Button>,
+                        <Button key="3" onClick={() => {}} style={{ color: "#AD72B7" }}>{dimension >= 4 ?  "Subscription List" : "List" }</Button>
                     ]}
                 />
             </Layout.Content>
