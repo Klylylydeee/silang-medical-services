@@ -4,6 +4,7 @@ const whitelist = [
     process.env.DEPLOYMENT_STATUS === "YES" ? "https://api.silangmedical.com" : "http://localhost:1000",
     process.env.DEPLOYMENT_STATUS === "YES" ? "https://portal.silangmedical.com" : "http://localhost:3000",
     process.env.DEPLOYMENT_STATUS === "YES" ? "https://silangmedical.com" : "http://localhost:3000",
+    process.env.DEPLOYMENT_STATUS === "YES" ? "http://localhost:3001" : "http://localhost:3001",
     process.env.DEPLOYMENT_STATUS === "YES" && process.env.SERVER_MODE === "admin" &&  "https://admin-api.silangmedical.com",
 ];
 

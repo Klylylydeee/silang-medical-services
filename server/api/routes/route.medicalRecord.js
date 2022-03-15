@@ -8,19 +8,22 @@ const router = express.Router();
 
 router.get(
     "/private/officer",
-    [
-        query("barangay").not().isEmpty()
-    ],
+    validateAuthorization,
     medicalRecordController.allBarangayMedicalRecord
 );
 
 router.get(
     "/private/medical",
+    validateAuthorization,
     medicalRecordController.allMedicalRecord
 );
 
 router.get(
     "/private/medical-record",
+    [
+        check("id").not().isEmpty()
+    ],
+    validateAuthorization,
     medicalRecordController.selectedMedicalRecord
 );
 
@@ -64,14 +67,6 @@ router.post(
         check("barangay").not().isEmpty(),
     ],
     medicalRecordController.selectGenerateMedicalRecord
-);
-
-router.post(
-    "/private/generate-record",
-    [
-        query("id").not().isEmpty(),
-    ],
-    medicalRecordController.generateMedicalRecord
 );
 
 module.exports = router;

@@ -167,8 +167,8 @@ const medicalRecordSchema = new Schema(
     {
         timestamps: { 
             currentTime: () => {
-                // return moment(momentRandom("2022-12-31", "2021-01-01")).utc("Asia/Singapore").format();
-                return moment().format();
+                return moment(momentRandom("2022-12-31", "2021-01-01")).utc("Asia/Singapore").format();
+                // return moment().format();
             }
         }
     }

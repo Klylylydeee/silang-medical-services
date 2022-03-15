@@ -45,6 +45,13 @@
 /**
  * @swagger
  * tags:
+ *   name: /subscription
+ *   description: Subscription Route
+ */
+
+/**
+ * @swagger
+ * tags:
  *   name: /settings
  *   description: Settings Route
  */

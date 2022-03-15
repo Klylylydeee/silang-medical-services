@@ -200,6 +200,34 @@ exports.updateBarangayEventAttendee  = async (req, res, next) => {
 
         validateRequest(req);
 
+        let emailExist = await EventListing.findOne(
+            {
+                _id: req.query.id,
+                barangay: req.query.barangay,
+                "attendee.email": req.body.email
+            }
+        );
+
+        if(emailExist !== null){
+            let error = new Error("Email has already been registered.");
+            error.statusCode = 501;
+            throw error;
+        };
+
+        let phoneExist = await EventListing.findOne(
+            {
+                _id: req.query.id,
+                barangay: req.query.barangay,
+                "attendee.phone_number": req.body.phone_number
+            }
+        );
+
+        if(phoneExist !== null){
+            let error = new Error("Phone Number has already been registered.");
+            error.statusCode = 501;
+            throw error;
+        };
+
         let eventsData = await EventListing.findOneAndUpdate(
             { 
                 _id: req.query.id,
@@ -238,42 +266,87 @@ exports.updateBarangayEventAttendee  = async (req, res, next) => {
 
 };
 
-
-
 exports.removeBarangayEventAttendee  = async (req, res, next) => {
 
     try {
 
         validateRequest(req);
 
-        let eventsData = await EventListing.findOneAndUpdate(
-            { 
-                _id: req.query.id,
-                barangay: req.query.barangay
-            },
-            {
-                $pull: {
-                    attendee: {
-                        _id: req.body.id
-                    }
+        if(req.body.email) {
+            let checkIfExist = await EventListing.findOne(
+                { 
+                    _id: req.query.id,
+                    barangay: req.query.barangay,
+                    "attendee.email": req.body.email,
+                    "attendee.phone_number": req.body.phone_number,
                 }
-            },
-            { 
-                new: true,
-                timestamps: true
-            }
-        )
+            );
 
-        if(eventsData === null){
-            let error = new Error("Event does not exists.");
-            error.statusCode = 501;
-            throw error;
-        };
+            if(checkIfExist === null){
+                let error = new Error("Attendee does not exists.");
+                error.statusCode = 501;
+                throw error;
+            };
+            
+            let eventsData = await EventListing.findOneAndUpdate(
+                { 
+                    _id: req.query.id,
+                    barangay: req.query.barangay
+                },
+                {
+                    $pull: {
+                        attendee: {
+                            email: req.body.email
+                        }
+                    }
+                },
+                { 
+                    new: true,
+                    timestamps: true
+                }
+            )
+    
+            if(eventsData === null){
+                let error = new Error("Event does not exists.");
+                error.statusCode = 501;
+                throw error;
+            };
+    
+            res.status(200).send({
+                message: "Attendee removed!",
+                payload: eventsData
+            });
 
-        res.status(200).send({
-            message: "Attendee removed!",
-            payload: eventsData
-        });
+        } else {
+            let eventsData = await EventListing.findOneAndUpdate(
+                { 
+                    _id: req.query.id,
+                    barangay: req.query.barangay
+                },
+                {
+                    $pull: {
+                        attendee: {
+                            _id: req.body.id
+                        }
+                    }
+                },
+                { 
+                    new: true,
+                    timestamps: true
+                }
+            )
+    
+            if(eventsData === null){
+                let error = new Error("Event does not exists.");
+                error.statusCode = 501;
+                throw error;
+            };
+    
+            res.status(200).send({
+                message: "Attendee removed!",
+                payload: eventsData
+            });
+        }
 
     } catch(err) {
 
