@@ -16,12 +16,21 @@ function Analytic() {
     const history = useNavigate();
 
     const [graphData, setGraphData] = useState([]);
+    const [graphData2, setGraphData2] = useState([]);
+    const [graphData3, setGraphData3] = useState([]);
 
     const getAnalyticsData = async () => {
         try {
             dispatch(changeLoader({ loading: true }));
-            let analyticsData = await axiosAPI.get(`analytics/?barangay=${barangay}`);
-            setGraphData(analyticsData.data.payload)
+            if(designation !== "Doctor"){
+                let analyticsData = await axiosAPI.get(`analytics/?barangay=${barangay}`);
+                setGraphData(analyticsData.data.payload);
+            } else {
+                let analyticsData2 = await axiosAPI.get(`analytics/?barangay=Lumil`);
+                setGraphData2(analyticsData2.data.payload)
+                let analyticsData3 = await axiosAPI.get(`analytics/?barangay=Puting Kahoy`);
+                setGraphData3(analyticsData3.data.payload)
+            }
             dispatch(changeLoader({ loading: false }));
         } catch (err) {
             dispatch(changeLoader({ loading: false }))
@@ -92,7 +101,7 @@ function Analytic() {
                     <Area 
                         height={500}
                         width={500}
-                        data={graphData}
+                        data={graphData2}
                         xField="datetime"
                         yField="value"
                         seriesField="category"
@@ -119,7 +128,7 @@ function Analytic() {
                     <Area 
                         height={500}
                         width={500}
-                        data={graphData}
+                        data={graphData3}
                         xField="datetime"
                         yField="value"
                         seriesField="category"

@@ -224,27 +224,32 @@ const BarangayEvent = () => {
                                 <Empty description="Currently no announcement has been made!"/>
                             </div>
                         }
-                        <Row gutter={[24, 0]} >
+                        <Row gutter={[24, 24]} >
                             {
-                                // announcementData.length !== 0 &&
-                                <Col xs={{ span: 24 }} lg={{ span: 6 }}>
-                                    <Card
-                                        actions={[
-                                            <Tooltip title="Read More" >
-                                                <EllipsisOutlined key="ellipsis" 
-                                                    onClick={() => {
-                                                        setAnnouncementDrawer(true)
-                                                    }}
+                                announcementData.length !== 0 &&
+                                announcementData.map((data) => {
+                                    return (
+                                        <Col xs={{ span: 24 }} lg={{ span: 6 }}>
+                                            <Card
+                                                actions={[
+                                                    <Tooltip title="Read More" >
+                                                        <EllipsisOutlined key="ellipsis" 
+                                                            onClick={() => {
+                                                                setAnnouncementDrawer(true)
+                                                                setSelectedAnnouncement(data)
+                                                            }}
+                                                        />
+                                                    </Tooltip>,
+                                                ]}
+                                            >
+                                                <Card.Meta
+                                                    title={`${data.announcement}`}
+                                                    description={`${moment(data.announcement_datetime).format("MMMM DD, YYYY")}`}
                                                 />
-                                            </Tooltip>,
-                                        ]}
-                                    >
-                                        <Card.Meta
-                                            title="Card title"
-                                            description="This is the description"
-                                        />
-                                    </Card>
-                                </Col>
+                                            </Card>
+                                        </Col>
+                                    )
+                                })
                             }
                         </Row>
                         <Divider orientation="left" style={{ fontSize: "18px", color: "black", fontWeight: 500, padding: "20px 0"}}>General and Medical Events  ({moment().format("YYYY")})</Divider>
@@ -259,7 +264,7 @@ const BarangayEvent = () => {
                                 <Empty description="No matching record found!"/>
                             </div>
                         }
-                        <Row gutter={[24, 0]} >
+                        <Row gutter={[24, 24]} >
                             {
                                 eventData.length !== 0 &&
                                 eventData.map(eventData => {
@@ -641,7 +646,7 @@ const BarangayEvent = () => {
                 </Form>
             </Drawer>
             <Drawer
-                title={`Announcement Data `}
+                title={`${selectedAnnouncement.announcement}`}
                 width={dimension >= 4 ? "500" : "100%"}
                 closable={true}
                 onClose={() => {
@@ -649,9 +654,25 @@ const BarangayEvent = () => {
                 }}
                 visible={announcementDrawer}
             >  
+                <Descriptions title="Announcement Details" ayout="vertical" bordered>
+                    <Descriptions.Item label="Message" span={3}>
+                        {selectedAnnouncement.message}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Announcement Date" span={1.5}>
+                        {moment(selectedAnnouncement.announcement_datetime).format("MMMM DD, YYYY")}
+                    </Descriptions.Item>
+                </Descriptions>
+                <Descriptions title="Announcer Information" layout="vertical" bordered style={{ marginTop: "20px" }}>
+                    <Descriptions.Item label="First Name" span={2}>
+                        {selectedAnnouncement.requestor ? selectedAnnouncement.requestor.first_name : ""}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Last Name" span={2}>
+                        {selectedAnnouncement.requestor ? selectedAnnouncement.requestor.last_name : ""}
+                    </Descriptions.Item>
+                </Descriptions>
             </Drawer>
             <Drawer
-                title={`Event Data ${selectedEvent._id}`}
+                title={`Event Data`}
                 width={dimension >= 4 ? "50%" : "100%"}
                 closable={true}
                 onClose={() => {

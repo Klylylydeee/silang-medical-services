@@ -8,6 +8,7 @@ import { axiosAPI } from "src/app/util/axios";
 import { changeLoader } from "src/app/store/web/webInformation";
 import { addCellData, resetCell } from "src/app/store/calendar/calendarInformation";
 import "./eventTable.scss"
+import { CalendarOutlined } from "@ant-design/icons";
 
 const DataCell = (value) => {
     const { cell } = useSelector((state) => state.calendar); 
@@ -97,7 +98,7 @@ const EventList = () => {
                     subTitle={dimension >= 4 ? "Contains all the activities and missions of the Barangay Healthcare." : ""}
                     style={{ padding: 0, backgroundColor: "#AD72B7" }}
                     extra={[
-                        <Button key="3" onClick={() => {
+                        <Button icon={<CalendarOutlined />} key="3" onClick={() => {
                             history({
                                 pathname: `/dashboard/event-listing/create`
                             })

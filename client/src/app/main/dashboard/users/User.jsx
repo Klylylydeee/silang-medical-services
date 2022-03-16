@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useParams, useSearchParams, useNavigate } from "react-router-dom";
 import { Layout, PageHeader, Button, Select, Form, Row, Col, Input, Divider } from 'antd';
 import { useSelector, useDispatch } from "react-redux";
 import { axiosAPI } from "src/app/util/axios";
@@ -9,7 +9,7 @@ import toasterRequest from "src/app/util/toaster";
 const User = () => {
     const params = useParams();
     const [ searchParams ] = useSearchParams();
-
+    const history = useNavigate();
     const { dimension } = useSelector((state) => state.web); 
     const dispatch = useDispatch();
 
@@ -158,7 +158,11 @@ const User = () => {
                         </Col>
                     </Row>
                     <Form.Item style={{ paddingTop: "20px" }}>
-                        <Button type="default" style={{ marginRight: dimension <= 4 ? "10px" : "20px" }} >
+                        <Button type="default" style={{ marginRight: dimension <= 4 ? "10px" : "20px" }} onClick={() => {
+                            history({
+                                pathname: `/dashboard/users`
+                            })
+                        }}>
                             Return
                         </Button>
                     </Form.Item>

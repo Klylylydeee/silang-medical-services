@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Layout, PageHeader, Button, Select, Form, Row, Col, Input, Divider, Slider, Alert, Tooltip} from 'antd';
+import React, { useState, useEffect } from "react";
+import { Layout, PageHeader, Button, Select, Form, Row, Col, Input, Divider, Slider, Alert, Tooltip, AutoComplete } from 'antd';
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import toasterRequest from "src/app/util/toaster";
@@ -16,7 +16,8 @@ const MedicalCreate = () => {
 
     const history = useNavigate();
 
-    const [prescriptionList, setPrescriptionList] = useState([])
+    const [prescriptionList, setPrescriptionList] = useState([]);
+    const [autoComplete, setAutoComplete] = useState([]);
 
     const onReset = () => {
         form.resetFields();
@@ -51,6 +52,22 @@ const MedicalCreate = () => {
                 toasterRequest({ payloadType: "error", textString: err.message});
         }
     }
+
+    useEffect(() => {
+        const getAutoCompleteFields = async () => {
+            try {
+                dispatch(changeLoader({ loading: true }))
+                const postFormData = await axiosAPI.get(`medical-record/auto-complete?barangay=${barangay}`)
+                setAutoComplete(postFormData.data.payload)
+                dispatch(changeLoader({ loading: false }));
+            } catch (err) {
+                dispatch(changeLoader({ loading: false }))
+                toasterRequest({ payloadType: "error", textString: "Auto complete currently not available"})
+            }
+        }
+        getAutoCompleteFields();
+    // eslint-disable-next-line
+    }, []);
     
     return (
         <React.Fragment>
@@ -198,7 +215,18 @@ const MedicalCreate = () => {
                                         ]}
                                         required={true}
                                     >
-                                        <Input />
+                                        {/* <Input /> */}
+                                        <AutoComplete
+                                            style={{
+                                                width: "100%",
+                                            }}
+                                            options={autoComplete}
+                                            filterOption={
+                                                (inputValue, option) => {
+                                                    return  option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
+                                                }
+                                            }
+                                        />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={{ span: 24 }} >

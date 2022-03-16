@@ -282,7 +282,9 @@ const MedicalList = () => {
                     style={{ padding: 0, backgroundColor: "#AD72B7" }}
                     extra={designation === "Doctor" || designation === "Nurse" ? 
                         [
-                            <Button key="3" onClick={() => {
+                            <Button 
+                            icon={<MedicineBoxOutlined />}
+                            key="3" onClick={() => {
                                 history({
                                     pathname: `/dashboard/medical-records/create`
                                 })

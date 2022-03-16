@@ -76,8 +76,8 @@ const Default = () => {
                                     eventList.map((event, eKey) => {
                                         return (
                                             <Collapse.Panel header={event.event} style={{ backgroundColor: "#A76FB0" }} key={eKey}>
-                                                <p style={{ fontSize: "16px", fontWeight: 500 }}>Description: {event.description}</p>
-                                                <p style={{ fontSize: "16px", fontWeight: 500 }}>Event Date/Time: {moment(event.start_datetime).format("MMM DD,YYYY h:MM A")}</p>
+                                                <p><span style={{ fontWeight: 500 }}>Description:</span> {event.description}</p>
+                                                <p><span style={{ fontWeight: 500 }}>Event Date/Time:</span> {moment(event.start_datetime).format("MMM DD,YYYY h:MM A")}</p>
                                             </Collapse.Panel>
                                         )
                                     })
@@ -95,9 +95,9 @@ const Default = () => {
                                 {
                                     announcementList.map((event, eKey) => {
                                         return (
-                                            <Collapse.Panel header={event.event} style={{ backgroundColor: "#A76FB0" }} key={eKey}>
-                                                <p style={{ fontSize: "16px", fontWeight: 500 }}>Description: {event.description}</p>
-                                                <p style={{ fontSize: "16px", fontWeight: 500 }}>Event Date/Time: {moment(event.start_datetime).format("MMM DD,YYYY h:MM A")}</p>
+                                            <Collapse.Panel header={event.announcement} style={{ backgroundColor: "#A76FB0" }} key={eKey}>
+                                                <p><span style={{ fontWeight: 500 }}>Message:</span> {event.message}</p>
+                                                <p><span style={{ fontWeight: 500 }}>Announcement Date:</span> {moment(event.announcement_datetime).format("MMM DD,YYYY")}</p>
                                             </Collapse.Panel>
                                         )
                                     })

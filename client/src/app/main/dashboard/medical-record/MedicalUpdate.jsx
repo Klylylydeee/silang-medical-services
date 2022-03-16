@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
-import { Layout, PageHeader, Button, Select, Form, Row, Col, Input, Divider, Slider, Alert, Tooltip} from 'antd';
+import { Layout, PageHeader, Button, Select, Form, Row, Col, Input, Divider, Slider, Alert, Tooltip, AutoComplete } from 'antd';
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import toasterRequest from "src/app/util/toaster";
@@ -19,6 +19,7 @@ const MedicalUpdate = () => {
     const history = useNavigate();
 
     const [prescriptionList, setPrescriptionList] = useState([]);
+    const [autoComplete, setAutoComplete] = useState([]);
 
     const onReset = () => {
         form.resetFields();
@@ -62,6 +63,7 @@ const MedicalUpdate = () => {
             try {
                 dispatch(changeLoader({ loading: true }))
                 const postFormData = await axiosAPI.get(`medical-record/private/medical-record?id=${params.id}`);
+                const autCompleteForm = await axiosAPI.get(`medical-record/auto-complete?barangay=${barangay}`)
                 form.setFieldsValue({
                     first_name: postFormData.data.payload.first_name,
                     last_name: postFormData.data.payload.last_name,
@@ -74,6 +76,7 @@ const MedicalUpdate = () => {
                     createdBy: postFormData.data.payload.createdBy,
                     approvedBy: postFormData.data.payload.approvedBy
                 });
+                setAutoComplete(autCompleteForm.data.payload)
                 setPrescriptionList(postFormData.data.payload.prescription);
                 dispatch(changeLoader({ loading: false }));
             } catch (err) {
@@ -234,7 +237,18 @@ const MedicalUpdate = () => {
                                         ]}
                                         required={true}
                                     >
-                                        <Input />
+                                        {/* <Input /> */}
+                                        <AutoComplete
+                                            style={{
+                                                width: "100%",
+                                            }}
+                                            options={autoComplete}
+                                            filterOption={
+                                                (inputValue, option) => {
+                                                    return  option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
+                                                }
+                                            }
+                                        />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={{ span: 24 }} >

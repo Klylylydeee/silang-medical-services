@@ -6,11 +6,12 @@ import { changeLoader } from "src/app/store/web/webInformation";
 import toasterRequest from "src/app/util/toaster";
 import moment from "moment";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
 
 const { confirm } = Modal;
 
 const UserSetting = () => {
-
+    const history = useNavigate();
     const { dimension } = useSelector((state) => state.web); 
     const { email } = useSelector((state) => state.user); 
     const dispatch = useDispatch();
@@ -259,7 +260,11 @@ const UserSetting = () => {
                         </Col>
                     </Row>
                     <Form.Item style={{ paddingTop: "20px" }}>
-                        <Button type="default" style={{ marginRight: dimension <= 4 ? "10px" : "20px" }} >
+                        <Button type="default" style={{ marginRight: dimension <= 4 ? "10px" : "20px" }} onClick={()=> {
+                            history({
+                                pathname: `/dashboard`
+                            })
+                        }}>
                             Return
                         </Button>
                         <Button type="primary" htmlType="submit">

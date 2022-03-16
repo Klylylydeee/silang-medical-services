@@ -330,7 +330,7 @@ const UsersData = () => {
                     subTitle={dimension >= 4 ? `All users registered under Barangay ${barangay}.` : ""}
                     style={{ padding: 0, backgroundColor: "#AD72B7" }}
                     extra={[
-                        <Button key="3" onClick={() => {
+                        <Button icon={<UserOutlined />}  key="3" onClick={() => {
                             history({
                                 pathname: `/dashboard/users/create/invitation`
                             })

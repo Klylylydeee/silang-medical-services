@@ -8,3 +8,16 @@
 .comm-menu > .ant-menu-submenu > .ant-menu-sub > .ant-menu-item {
     padding-left: 5px !important;
 }
+
+.subscription-list .ant-drawer-body {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.subscription-list .ant-drawer-body > div > div {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.subscription-list .ant-drawer-body table {
+}
