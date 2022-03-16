@@ -8,6 +8,7 @@ const { validateRequest } = require("../util/jsonValidate");
 const hbs = require("nodemailer-express-handlebars");
 const path = require("path")
 const mailer = require("../middleware/mailerConfig");
+const jwt = require("jsonwebtoken");
 
 exports.allBarangayMedicalRecord = async (req, res, next) => {
 
@@ -132,10 +133,10 @@ exports.createMedicalRecord = async (req, res, next) => {
             transporter.sendMail({
                 to: req.body.email,
                 subject: `Silang Medical Services - Medical Record`,
-                template: "medical-record", // create new for this
+                template: "medical-record",
                 context: {
                     text: `Please open the following link to check your medical record update:`, 
-                    link: `${process.env.CLIENT_ENDPOINT}/medical-record?auth=${createAuth}`
+                    url: `${process.env.CLIENT_ENDPOINT}/medical-record?auth=${createAuth()}`
                 },
                 attachments: [
                     {
@@ -155,21 +156,22 @@ exports.createMedicalRecord = async (req, res, next) => {
             await MessageLogs.create({
                 receiver_user_id: medicalRecordData._id,
                 subject: "Medical Record",
-                message: `Please open the following link to check your medical record update: ${process.env.CLIENT_ENDPOINT}/medical-record?auth=${createAuth}`,
+                message: `Please open the following link to check your medical record update: ${process.env.CLIENT_ENDPOINT}/medical-record?auth=`,
                 type: "Email",
                 status: true
             });
         } catch (err) {
+            console.log(err)
             await MessageLogs.create({
-                receiver_user_id: findUser._id,
+                receiver_user_id: medicalRecordData._id,
                 subject: "Medical Record",
-                message: `Please open the following link to check your medical record update: ${process.env.CLIENT_ENDPOINT}/medical-record?auth=${createAuth}`,
+                message: `Please open the following link to check your medical record update: ${process.env.CLIENT_ENDPOINT}/medical-record?auth=`,
                 type: "Email",
                 status: false
             });
         }
 
-        await axios.get(`${process.env.VPS_SOCKET}/?num=${req.body.phone_number}&msg=A medical record has been created under your name. Please check your email for more information.`);
+        await axios.get(`${process.env.VPS_SOCKET}/?num=${req.body.phone_number}&msg=A medical record has been created under your name. Please check your email for more information.`, { headers: { Authorization: process.env.SECRET_CLIENT_KEY }});
 
         res.status(200).send({
             message: "Medical Record has been created.",
@@ -332,3 +334,32 @@ exports.selectedMedicalRecord = async (req, res, next) => {
     };
 
 };
+
+exports.autoCompleteDistict = async (req, res, next) => {
+
+    try {
+
+        validateRequest(req);
+
+        const medicalRecord = await MedicalRecord.find({ barangay: req.query.barangay }).distinct("diagnosis")
+
+        res.status(200).send({
+            message: `Auto complete fields for barangay`,
+            payload: medicalRecord.map((value) => {
+                return {
+                    value: value
+                }
+            })
+        });
+
+    } catch(err) {
+
+        err.statusCode === undefined ? err.statusCode = 500 : "";
+        return next(err);
+
+    };
+
+};
+
+
+

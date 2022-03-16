@@ -3,27 +3,6 @@
 /**
  * @swagger
  * tags:
- *   name: /authentication
- *   description: Authentication Route
- */
-
-/**
- * @swagger
- * tags:
- *   name: /dashboard
- *   description: Dashboard Route
- */
-
-/**
- * @swagger
- * tags:
- *   name: /medical-record
- *   description: Medical Record Route
- */
-
-/**
- * @swagger
- * tags:
  *   name: /analytics
  *   description: Analytics Route
  */
@@ -31,8 +10,8 @@
 /**
  * @swagger
  * tags:
- *   name: /events
- *   description: Event List Route
+ *   name: /authentication
+ *   description: Authentication Route
  */
 
 /**
@@ -45,8 +24,22 @@
 /**
  * @swagger
  * tags:
- *   name: /subscription
- *   description: Subscription Route
+ *   name: /dashboard
+ *   description: Dashboard Route
+ */
+
+/**
+ * @swagger
+ * tags:
+ *   name: /events
+ *   description: Event List Route
+ */
+
+/**
+ * @swagger
+ * tags:
+ *   name: /medical-record
+ *   description: Medical Record Route
  */
 
 /**
@@ -54,4 +47,11 @@
  * tags:
  *   name: /settings
  *   description: Settings Route
+ */
+
+/**
+ * @swagger
+ * tags:
+ *   name: /subscription
+ *   description: Subscription Route
  */

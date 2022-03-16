@@ -153,16 +153,18 @@ const announcementSchema = new Schema(
                     type: String,
                     enum: [
                         "Queued",
-                        "Sent"
+                        "Sending",
+                        "Sent",
+                        "Failed"
                     ],
                     default: "Queued"
                 }
             }],
             required: true
         },
-        approved_by: {
+        announcement_datetime: {
             type: String,
-            default: undefined
+            required: true
         },
         status: {
             type: Boolean,

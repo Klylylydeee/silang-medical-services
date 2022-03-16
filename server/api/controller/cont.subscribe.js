@@ -98,7 +98,7 @@ exports.createSubscription = async (req, res, next) => {
             });
         }
 
-        await axios.get(`${process.env.VPS_SOCKET}/?num=${req.body.phone_number}&msg=You have been added to the subscription list of barangay ${req.body.barangay}.`);
+        await axios.get(`${process.env.VPS_SOCKET}/?num=${req.body.phone_number}&msg=You have been added to the subscription list of barangay ${req.body.barangay}.`, { headers: { Authorization: process.env.SECRET_CLIENT_KEY }});
 
         res.status(200).send({
             message: "You have been added to the Subscription list.",

@@ -69,4 +69,12 @@ router.post(
     medicalRecordController.selectGenerateMedicalRecord
 );
 
+router.get(
+    "/auto-complete",
+    [
+        query("barangay").not().isEmpty()
+    ],
+    medicalRecordController.autoCompleteDistict
+);
+
 module.exports = router;

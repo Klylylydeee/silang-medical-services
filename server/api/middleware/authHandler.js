@@ -42,7 +42,7 @@ exports.validateAuthorization = async (req, res, next) => {
     let findUser = await Users.findOne({ email: decodedToken.email, status: true });
 
     if(findUser === null){
-        let error = new Error("Email does not exists.");
+        let error = new Error("Email does not exists or has been disabled!");
         error.statusCode = 501;
         throw next(error);
     } else {

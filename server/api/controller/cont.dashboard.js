@@ -31,7 +31,7 @@ exports.mainDashboard = async (req, res, next) => {
                         count: totalBarangayUsers
                     },
                     {
-                        title: "Registered Citizens",
+                        title: "Registered Citizens (Email)",
                         count: distictCitizenRegisteredForm
                     },
                     {

@@ -159,5 +159,6 @@ app.use('/analytics', require("./routes/route.analytics"));
 app.use('/settings', require("./routes/route.userSetting"));
 app.use('/events', require("./routes/route.eventList"));
 app.use('/subscription', require("./routes/route.subscription"));
+app.use('/communication', require("./routes/route.communication"));
 app.use(require("./routes/errorHandler").notFoundHandler);
 app.use(require("./routes/errorHandler").catchHandler);

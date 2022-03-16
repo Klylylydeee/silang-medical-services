@@ -373,7 +373,8 @@ exports.publicEventsAndAnnouncement  = async (req, res, next) => {
                     $lt: new Date(`${moment().format("YYYY")}-12-31T15:58:26.000Z`)
                 }
             }
-        )
+        ).sort({ start_datetime: -1})
+
         let announcementData = await Announcement.find(
             { 
                 barangay: req.query.barangay,
@@ -382,7 +383,7 @@ exports.publicEventsAndAnnouncement  = async (req, res, next) => {
                     $lt: new Date(`${moment().format("YYYY")}-12-31T15:58:26.000Z`)
                 }
             }
-        )
+        ).sort({ announcement_datetime: -1})
 
         if(eventsData === null){
             let error = new Error("Event does not exists.");
