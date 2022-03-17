@@ -61,8 +61,7 @@
     padding-left: 15px;
     font-size: 20px;
     font-weight: 300;
-    text-align: left;
-    justify-content: center;
+    text-align: justify;
     color: black;
 }
 
@@ -124,7 +123,7 @@
 
 @media screen and (max-width: 1366px){
     #TextTwo span {
-        height: 20vh;
+        height: 17vh;
     }
   }
 
@@ -219,9 +218,6 @@
 
     .LaptopPhone {
         top: -15vh;
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
         width: 50%;
         left: 0vh;
     }
@@ -229,9 +225,16 @@
 
 @media screen and (max-width: 675px){
     .black-grid2 {
-        left: 53vh;
+        left: 50vh;
     }
 }
+
+@media screen and (max-width: 465px){
+
+    .black-grid2 {
+      left: 40vh;
+    }
+  }
 
 @media screen and (max-width: 425px){
     .ServicesTitle { 
@@ -260,6 +263,10 @@
         top: 0vh;
     }
 
+    .black-grid2 {
+        left: 35vh;
+    }
+
     .LaptopPhone {
         left: 0vh;
     }
@@ -267,7 +274,19 @@
 
 @media screen and (max-width: 375px){
     .ServicesInfo {
-        margin-left: 15vh;
+        margin-left: 0vh;
+    }
+
+    #Communication h2, #MedicalRecord h2, #Analytics h2 {
+        font-size: 45px;
+    }
+    
+    #Communication p, #MedicalRecord p, #Analytics p{
+        font-size: 18px;
+    } 
+
+    .black-grid2 {
+        left: 25vh;
     }
 }
 

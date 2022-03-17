@@ -66,10 +66,6 @@
   width: 100%;
 }
 
-//-----------------NavBar Hamburger-----------------//
-.btn {
-  display: none;
-}
 
 //-----------------NavBar Logo-----------------//
 
@@ -112,25 +108,9 @@
     color: white;
   }
 
-  
-
   .nav-menu {
     display: none;
     flex-direction: column;
-  }
-
-  .ham {
-    width: 100%;
-  }
-  
-  .btn {
-    color: white;
-    background-color: #905D98;
-    border-style: none;
-    font-size: 35px;
-    display: block;
-    position: absolute;
-    right: 0;
   }
 }
 

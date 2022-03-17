@@ -54,7 +54,7 @@ if (process.env.REACT_APP_ENVIRONMENT_STAGE === "Public Build") {
                                 <br />
                                 <span style={{ paddingLeft: "40px" }}>Clinic Locations</span>
                             </p>
-                            <div style={{ paddingLeft: "80px", paddingTop: 0, marginTop: 0 }}>
+                            <div style={{ paddingLeft: "80px", paddingRight: "80px", paddingTop: 0, marginTop: 0 }}>
                                 <p style={{ color: "white", fontSize: "18px", fontWeight: 400, maxWidth: "700px" }}>
                                     Every location that is under the scope of Silang Medical Services is listed in this section. 
                                     You can click which barangay you are part of to check the latest news and announcements.

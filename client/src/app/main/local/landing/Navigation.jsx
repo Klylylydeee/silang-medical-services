@@ -109,17 +109,12 @@ function Navigation() {
             {/* Navigation Section of Landing Page */}
             <Row>
                 
-                <header className="MobileNav">
+                <header>
                     <div className="portfolio-hero">
                         <div className="portfolio-menu">
 
                             {/* Navigation */}
                             <nav className="stroke">
-                                {/* <div className = "ham">
-                                    <button onClick={toggleNav} className="btn"><MenuOutlined /></button>
-                                </div> */}
-                                
-                                
 
                                 {(toggleMenu || screenWidth > 768) && (
                                     <ul className="nav-menu">
