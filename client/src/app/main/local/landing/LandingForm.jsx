@@ -8,7 +8,8 @@ import { Form, Input, Button, Select } from 'antd';
 
 //Images 
 import BlackGrid from '../landing/LandingPage-assets/black-grid.png'
-
+import { useSelector } from "react-redux";
+import { FlowchartExtension } from '@antv/xflow-extension';
 //Styles
 if (process.env.REACT_APP_ENVIRONMENT_STAGE === "Public Build") {
     require('../../local/landing/LandingStyles/LandingForm.scss');
@@ -16,12 +17,13 @@ if (process.env.REACT_APP_ENVIRONMENT_STAGE === "Public Build") {
 
 function LandingForm() {
     const history = useNavigate();
+    const { dimension } = useSelector((state) => state.web);
 
     const createAuth = (email, barangay) => {
         const token = jwt.sign({
             email: email,
             barangay: barangay
-        }, process.env.REACT_APP_JWT_BACKEND, { 
+        }, process.env.REACT_APP_JWT_BACKEND, {
             expiresIn: "1h",
             algorithm: "HS512"
         });
@@ -47,7 +49,7 @@ function LandingForm() {
                             <div className="LineDiv"></div>
                             <img src={BlackGrid} alt='Grid Design' className="black-gridForm" />
                             <h1>Medical Record <br /> Request</h1>
-                            <p> If you have any concerns or problems that you would like to be addressed, 
+                            <p> If you have any concerns or problems that you would like to be addressed,
                                 feel free to contact us and leave an email.
                                 We would be more than happy to respond to you. Thank you and have a nice day! </p>
                         </div>
@@ -70,7 +72,7 @@ function LandingForm() {
                                     label="Email"
                                     name="email"
                                     className="EmailForm"
-                                    rules={[{ required: true, message: 'Please input your email!' }, { type: 'email', message: "Incorrect email format!"}]}
+                                    rules={[{ required: true, message: 'Please input your email!' }, { type: 'email', message: "Incorrect email format!" }]}
                                 >
                                     <Input />
                                 </Form.Item>
@@ -86,11 +88,23 @@ function LandingForm() {
                                     </Select>
                                 </Form.Item>
 
-                                <Form.Item wrapperCol={{ offset: 8, span: 4 }}>
-                                    <Button type="primary" htmlType="submit" className="SubmitBtn" size={"large"}>
-                                        Search
-                                    </Button>
-                                </Form.Item>
+                                {
+                                    dimension >= 4 ?
+                                        <Form.Item wrapperCol={{ offset: 8, span: 4 }}>
+                                            <Button type="primary" htmlType="submit" className="SubmitBtn" size={"large"}>
+                                                Search
+                                            </Button>
+                                        </Form.Item>
+
+                                        :
+
+                                        <Form.Item wrapperCol={{ span: 4 }} style={{ display: "flex", justifyContent: "center", alignItems: "center", width: "100%"}}>
+                                            <Button type="primary" htmlType="submit" className="SubmitBtn" size={"large"}>
+                                                Search
+                                            </Button>
+                                        </Form.Item>
+                                }
+
                             </Form>
 
                             {/* Right Grid Image */}

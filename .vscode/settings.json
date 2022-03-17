@@ -1,6 +1,6 @@
 {
     "prettier.tabWidth": 4,
-    "window.zoomLevel": 0,
+    "window.zoomLevel": 1,
     "editor.tabSize": 4,
     // "python.pythonPath": "/home/klyly/.virtualenvs/api-YwYu5oTz/Lib/site-packages",
     "python.pythonPath": "C:/Users/klyly/.virtualenvs/api-pn2KODXx/Lib/site-packages",
