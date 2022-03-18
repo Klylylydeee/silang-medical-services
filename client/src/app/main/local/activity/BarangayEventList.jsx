@@ -196,7 +196,7 @@ const BarangayEvent = () => {
                         </p>
                         <Row gutter={[24, 0]} style={{ padding: "20px 0", position: "relative"}} wrap={false}>
                             <Col flex="auto">
-                                <Divider orientation="left" plain orientationMargin={10} style={{ fontSize: "18px", color: "black", fontWeight: 500, }}>
+                                <Divider orientation="left" plain style={{ fontSize: "18px", color: "black", fontWeight: 500, }}>
                                     Announcements ({moment().format("YYYY")})
                                 </Divider>
                             </Col>

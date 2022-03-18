@@ -1,0 +1,34 @@
+{
+  "files": {
+    "main.css": "/static/css/main.c772efa9.chunk.css",
+    "main.js": "/static/js/main.f5493ccd.chunk.js",
+    "main.js.map": "/static/js/main.f5493ccd.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.da35f841.js",
+    "runtime-main.js.map": "/static/js/runtime-main.da35f841.js.map",
+    "static/css/2.6ce96ee2.chunk.css": "/static/css/2.6ce96ee2.chunk.css",
+    "static/js/2.74f05385.chunk.js": "/static/js/2.74f05385.chunk.js",
+    "static/js/2.74f05385.chunk.js.map": "/static/js/2.74f05385.chunk.js.map",
+    "static/js/3.74c87caf.chunk.js": "/static/js/3.74c87caf.chunk.js",
+    "static/js/3.74c87caf.chunk.js.map": "/static/js/3.74c87caf.chunk.js.map",
+    "index.html": "/index.html",
+    "static/css/2.6ce96ee2.chunk.css.map": "/static/css/2.6ce96ee2.chunk.css.map",
+    "static/css/main.c772efa9.chunk.css.map": "/static/css/main.c772efa9.chunk.css.map",
+    "static/js/2.74f05385.chunk.js.LICENSE.txt": "/static/js/2.74f05385.chunk.js.LICENSE.txt",
+    "static/media/LaptopPhone.5664068e.png": "/static/media/LaptopPhone.5664068e.png",
+    "static/media/RectangleA.1b9b0efa.png": "/static/media/RectangleA.1b9b0efa.png",
+    "static/media/SHIS-logo.119c851f.png": "/static/media/SHIS-logo.119c851f.png",
+    "static/media/SHISLogo.119c851f.png": "/static/media/SHISLogo.119c851f.png",
+    "static/media/Vector1A.271e2097.png": "/static/media/Vector1A.271e2097.png",
+    "static/media/barangay-lumil.bfa25a06.png": "/static/media/barangay-lumil.bfa25a06.png",
+    "static/media/black-grid.d99fd654.png": "/static/media/black-grid.d99fd654.png",
+    "static/media/mio.05fb5b67.jpg": "/static/media/mio.05fb5b67.jpg",
+    "static/media/record-header.b00eca13.png": "/static/media/record-header.b00eca13.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.da35f841.js",
+    "static/css/2.6ce96ee2.chunk.css",
+    "static/js/2.74f05385.chunk.js",
+    "static/css/main.c772efa9.chunk.css",
+    "static/js/main.f5493ccd.chunk.js"
+  ]
+}
