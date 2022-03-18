@@ -1,4 +1,4 @@
-require("dotenv").config({ path: "./environment/.env.public" });
+require("dotenv").config({ path: "./environment/.env.deployed" });
 
 const express = require("express");
 const helmet = require("helmet");

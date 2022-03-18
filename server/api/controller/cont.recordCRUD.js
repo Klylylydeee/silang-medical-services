@@ -30,7 +30,10 @@ exports.allBarangayMedicalRecord = async (req, res, next) => {
                     createdAt: 1,
                     diagnosis: 1,
                     status: 1,
-                    barangay: 1
+                    barangay: 1,
+                    detailed_report: 1,
+                    email: 1,
+                    phone_number: 1
                 }
             }
         ).sort({ createdAt: -1 })
@@ -171,7 +174,15 @@ exports.createMedicalRecord = async (req, res, next) => {
             });
         }
 
-        await axios.get(`${process.env.VPS_SOCKET}/?num=${req.body.phone_number}&msg=A medical record has been created under your name. Please check your email for more information.`, { headers: { Authorization: process.env.SECRET_CLIENT_KEY }});
+        let smsPayload = await MessageLogs.create({
+            receiver_user_id: medicalRecordData._id,
+            subject: "Medical Record",
+            message: `Please open the following link to check your medical record update: ${process.env.CLIENT_ENDPOINT}/medical-record?auth=`,
+            type: "Text",
+            status: false
+        });
+
+        await axios.get(`${process.env.VPS_SOCKET}/default?smsId=${smsPayload}&num=${req.body.phone_number}&msg=A medical record has been created under your name. Please check your email for more information.`, { headers: { Authorization: process.env.SECRET_CLIENT_KEY }});
 
         res.status(200).send({
             message: "Medical Record has been created.",

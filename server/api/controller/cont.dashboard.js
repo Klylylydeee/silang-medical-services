@@ -12,15 +12,15 @@ exports.mainDashboard = async (req, res, next) => {
 
         validateRequest(req);
         
-        const distictCitizenRegisteredForm = await MedicalRecords.find({ barangay: req.query.barangay }).distinct("email").count();
-        const totalBarangayMedicalRecord = await MedicalRecords.find({ barangay: req.query.barangay }).count();
-        const totalBarangayUsers = await Users.find({ barangay: req.query.barangay }).count();
-        const totalEventListing = await EventListing.find({ barangay: req.query.barangay }).count();
-        const totalAnnouncement = await Announcement.find({ barangay: req.query.barangay }).count();
-        const totalAnnouncementComments = await AnalyticComments.find({ barangay: req.query.barangay }).count();
-        const latestEvent = await EventListing.find({ barangay: req.query.barangay }).sort({ _id: -1 }).limit(5);
-        const latestAnnouncement = await Announcement.find({ barangay: req.query.barangay }).sort({ _id: -1 }).limit(5);
-        const latestPatient = await MedicalRecords.find({ barangay: req.query.barangay }).sort({ _id: -1 }).limit(5);
+        const distictCitizenRegisteredForm = await MedicalRecords.find({ barangay: req.query.barangay, status: true }).distinct("email").count();
+        const totalBarangayMedicalRecord = await MedicalRecords.find({ barangay: req.query.barangay, status: true }).count();
+        const totalBarangayUsers = await Users.find({ barangay: req.query.barangay, status: true }).count();
+        const totalEventListing = await EventListing.find({ barangay: req.query.barangay, status: true }).count();
+        const totalAnnouncement = await Announcement.find({ barangay: req.query.barangay, status: true }).count();
+        const totalAnnouncementComments = await AnalyticComments.find({ barangay: req.query.barangay, status: true }).count();
+        const latestEvent = await EventListing.find({ barangay: req.query.barangay, status: true }).sort({ _id: -1 }).limit(5);
+        const latestAnnouncement = await Announcement.find({ barangay: req.query.barangay, status: true }).sort({ _id: -1 }).limit(5);
+        const latestPatient = await MedicalRecords.find({ barangay: req.query.barangay, status: true}).sort({ _id: -1 }).limit(5);
 
         res.status(200).send({
             message: "Default dashboard data.",

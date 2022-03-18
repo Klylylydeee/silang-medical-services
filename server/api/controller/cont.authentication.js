@@ -84,9 +84,17 @@ exports.userSignUp = async (req, res, next) => {
                 type: "Email",
                 status: false
             });
-        }
+        };
+        
+        let smsPayload = await MessageLogs.create({
+            receiver_user_id: userData._id,
+            subject: "Account Verification",
+            message: `${process.env.SERVER_ENDPOINT}/?payload=${userData.id}`,
+            type: "Text",
+            status: false
+        });
 
-        await axios.get(`${process.env.VPS_SOCKET}/?num=${req.body.phone_number}&msg=Account Verification has been sent to your email address \n Silang Medical Services`, { headers: { Authorization: process.env.SECRET_CLIENT_KEY }});
+        await axios.get(`${process.env.VPS_SOCKET}/default?smsId=${smsPayload}&num=${req.body.phone_number}&msg=Account Verification has been sent to your email address \n Silang Medical Services`, { headers: { Authorization: process.env.SECRET_CLIENT_KEY }});
 
         res.status(200).send({
             message: "Account has been created.",
@@ -296,7 +304,15 @@ exports.userSignIn = async (req, res, next) => {
                 });
             }
 
-            await axios.get(`${process.env.VPS_SOCKET}/?num=${generatePIN.phone_number}&msg=Verification PIN: ${generatePIN.pin}\n Silang Medical Services`, { headers: { Authorization: process.env.SECRET_CLIENT_KEY }});
+            let smsPayload = await MessageLogs.create({
+                receiver_user_id: findUser._id,
+                subject: "PIN Verification",
+                message: `Verification PIN: ${generatePIN.pin}`,
+                type: "Text",
+                status: false
+            });
+
+            await axios.get(`${process.env.VPS_SOCKET}/default?smsId=${smsPayload}&num=${generatePIN.phone_number}&msg=Verification PIN: ${generatePIN.pin}\n Silang Medical Services`, { headers: { Authorization: process.env.SECRET_CLIENT_KEY }});
 
             res.status(200).send({
                 message: "Authentication successful. Please verify the generated pin sent to your email and phone number before 15 minutes."
@@ -625,7 +641,15 @@ exports.userLostPassword = async (req, res, next) => {
             });
         }
 
-        await axios.get(`${process.env.VPS_SOCKET}/?num=${checkUserData.phone_number}&msg=Lost Password Verification has been sent to your email address \n Silang Medical Services`, { headers: { Authorization: process.env.SECRET_CLIENT_KEY }});
+        let smsPayload = await MessageLogs.create({
+            receiver_user_id: checkUserData._id,
+            subject: "Account Verification",
+            message: `${process.env.SERVER_ENDPOINT}/?reset=${checkUserData.id}`,
+            type: "Text",
+            status: false
+        });
+
+        await axios.get(`${process.env.VPS_SOCKET}/default?smsId=${smsPayload}&num=${checkUserData.phone_number}&msg=Lost Password Verification has been sent to your email address \n Silang Medical Services`, { headers: { Authorization: process.env.SECRET_CLIENT_KEY }});
 
         res.status(200).send({
             message: "Please verify the email sent to implement the new password!",
@@ -652,7 +676,8 @@ exports.acceptChangePassword = async (req, res, next) => {
             },
             {
                 $set: {
-                    "password": await bcrypt.hash(req.body.password, Number(process.env.HASHING))
+                    "password": await bcrypt.hash(req.body.password, Number(process.env.HASHING)),
+                    "pin_threshold": 3
                 }
             },
             { 

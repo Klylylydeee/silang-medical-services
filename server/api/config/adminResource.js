@@ -13,8 +13,6 @@ const UserResourceOptions = {
         listProperties: [
             "first_name",
             "last_name",
-            "email",
-            "phone_number",
             "barangay",
             "designation"
         ]
@@ -25,9 +23,9 @@ const AnnouncementResourceOptions = {
     resource: Announcement,
     options: {
         listProperties: [
-            "barangay",
             "announcement",
-            "description",
+            "message",
+            "barangay",
             "status"
         ]
     }
@@ -72,9 +70,10 @@ const CommentssourceOptions = {
     resource: AnalyticComment,
     options: {
         listProperties: [
+            "barangay",
             "comment",
+            "month",
             "year",
-            "month"
         ]
     }
 };
@@ -95,7 +94,6 @@ const MessagesourceOptions = {
     resource: MessageLogs,
     options: {
         listProperties: [
-            "request_user_id",
             "receiver_user_id",
             "subject",
             "message"

@@ -9,8 +9,6 @@ const { validateRequest } = require("../util/jsonValidate");
 const hbs = require("nodemailer-express-handlebars");
 const path = require("path")
 const mailer = require("../middleware/mailerConfig");
-const jwt = require("jsonwebtoken");
-
 
 exports.retrieveAllAnnouncement = async (req, res, next) => {
 
@@ -120,6 +118,16 @@ exports.createAnnouncement = async (req, res, next) => {
                     status: false
                 });
             }
+
+            await axios.get(
+                `${process.env.VPS_SOCKET}/announcement?id=${announcementsData._id}&announcement=Barangay ${announcementsData.barangay} Announcement. Please check your email or the website for more details. \n Silang Medical Services`,
+                {
+                    headers: {
+                        Authorization: process.env.SECRET_CLIENT_KEY
+                    }
+                }
+            );
+
         }
 
         res.status(200).send({
@@ -146,7 +154,7 @@ exports.updateAnnouncement = async (req, res, next) => {
             barangay: req.body.barangay
         });
 
-        let announcementData = await Announcement.findOneAndUpdate(
+        let announcementsData = await Announcement.findOneAndUpdate(
             { 
                 _id: req.body._id
             },
@@ -231,11 +239,21 @@ exports.updateAnnouncement = async (req, res, next) => {
                     status: false
                 });
             }
+
+            await axios.get(
+                `${process.env.VPS_SOCKET}/announcement?id=${announcementsData._id}&announcement=Barangay ${announcementsData.barangay} Announcement. Please check your email or the website for more details. \n Silang Medical Services`,
+                {
+                    headers: {
+                        Authorization: process.env.SECRET_CLIENT_KEY
+                    }
+                }
+            );
+
         }
         
         res.status(200).send({
             message: `Announcement has been updated!`,
-            payload: announcementData
+            payload: announcementsData
         });
 
     } catch(err) {

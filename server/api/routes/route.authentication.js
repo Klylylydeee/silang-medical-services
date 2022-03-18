@@ -22,8 +22,7 @@ router.post(
     "/sign-up-verification",
     [
         check("_id").not().isEmpty(),
-        check("password").not().isEmpty(),
-        query("payload").not().isEmpty()
+        check("password").not().isEmpty()
     ],
     userAuthController.userSignUpVerification
 );

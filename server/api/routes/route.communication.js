@@ -14,6 +14,12 @@ router.get(
 
 router.post(
     "/create",
+    [
+        check("announcement").not().isEmpty(),
+        check("message").not().isEmpty(),
+        check("barangay").not().isEmpty(),
+        check("announcement_datetime").not().isEmpty()
+    ],
     validateAuthorization,
     communicationController.createAnnouncement
 );

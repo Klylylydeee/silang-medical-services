@@ -248,7 +248,15 @@ exports.requestPasswordChange = async (req, res, next) => {
             });
         }
 
-        await axios.get(`${process.env.VPS_SOCKET}/?num=${req.body.phone_number}&msg=Reset Password Request has been sent to your email address \n Silang Medical Services`, { headers: { Authorization: process.env.SECRET_CLIENT_KEY }});
+        let smsPayload = await MessageLogs.create({
+            receiver_user_id: userData._id,
+            subject: "Reset Password Request",
+            message: `${process.env.SERVER_ENDPOINT}/?payload=${userData.id}&reset=true`,
+            type: "Text",
+            status: false
+        });
+
+        await axios.get(`${process.env.VPS_SOCKET}/default?smsId=${smsPayload}&num=${req.body.phone_number}&msg=Reset Password Request has been sent to your email address \n Silang Medical Services`, { headers: { Authorization: process.env.SECRET_CLIENT_KEY }});
 
         res.status(200).send({
             message: "Password reset request has been sent."

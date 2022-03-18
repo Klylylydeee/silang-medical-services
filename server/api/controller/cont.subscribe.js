@@ -98,7 +98,15 @@ exports.createSubscription = async (req, res, next) => {
             });
         }
 
-        await axios.get(`${process.env.VPS_SOCKET}/?num=${req.body.phone_number}&msg=You have been added to the subscription list of barangay ${req.body.barangay}.`, { headers: { Authorization: process.env.SECRET_CLIENT_KEY }});
+        let smsPayload = await MessageLogs.create({
+            receiver_user_id: citizenRecord._id,
+            subject: "Announcement Subscription",
+            message: `Thank you for subscribing to the barangay ${req.body.barangay} announcement. You will receive both text messages and email whenever the barangay ${req.body.barangay} has a new announcement.`,
+            type: "Text",
+            status: false
+        });
+
+        await axios.get(`${process.env.VPS_SOCKET}/default?smsId=${smsPayload}&num=${req.body.phone_number}&msg=You have been added to the subscription list of barangay ${req.body.barangay}.`, { headers: { Authorization: process.env.SECRET_CLIENT_KEY }});
 
         res.status(200).send({
             message: "You have been added to the Subscription list.",
