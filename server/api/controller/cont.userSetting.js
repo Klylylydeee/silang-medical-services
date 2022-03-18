@@ -278,28 +278,26 @@ exports.userChangeSetting = async (req, res, next) => {
 
         validateRequest(req);
 
-        if(req.body.prev_password){
-            let verifyUser = await Users.findOne(
-                { 
-                    _id: req.query.id,
-                    status: true
-                }
-            )
-    
-            if(verifyUser === null){
-                let error = new Error("Account does not exists.");
-                error.statusCode = 501;
-                throw error;
-            };
+        let checkUser = await Users.findOne(
+            { 
+                _id: req.query.id,
+                status: true
+            }
+        );
 
-            const validate = await bcrypt.compare(req.body.prev_password, verifyUser.password);
-    
-            if(!validate){
-                let error = new Error("Password does not match.");
-                error.statusCode = 501;
-                throw error;
-            };
-        }
+        if(checkUser === null){
+            let error = new Error("Account does not exists.");
+            error.statusCode = 501;
+            throw error;
+        };
+        
+        const validate = await bcrypt.compare(req.body.password, checkUser.password);
+
+        if(validate === false){
+            let error = new Error("Incorrect password. No changes made!");
+            error.statusCode = 501;
+            throw error;
+        };
 
         let userData = await Users.findOneAndUpdate(
             { 
@@ -308,8 +306,8 @@ exports.userChangeSetting = async (req, res, next) => {
             },
             {
                 $set: {
-                    ...req.body,
-                    ...(req.body.password && { password: await bcrypt.hash(req.body.password, Number(process.env.HASHING)) })
+                    email: req.body.email,
+                    phone_number: req.body.phone_number
                 }
             },
             {

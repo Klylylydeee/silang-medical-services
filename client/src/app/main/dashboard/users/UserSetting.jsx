@@ -73,8 +73,7 @@ const UserSetting = () => {
             let userCreate = await axiosAPI.post(`settings/user-setting?id=${userData._id}`, {
                 email: formData.email,
                 phone_number: formData.prefix + formData.phone_number,
-                password: formData.password,
-                prev_password: formData.prev_password
+                password: formData.password
             });
             toasterRequest({ payloadType: "success", textString: userCreate.data.message })
             getUserData()
@@ -181,36 +180,6 @@ const UserSetting = () => {
                             </Form.Item>
                         </Col>
                     </Row>
-                    <Row gutter={[24, 0]}>
-                        <Col xs={{ span: 24 }} lg={{ span: 12 }}>
-                            <Form.Item
-                                name="prev_password"
-                                label="Current Password"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: "Please fill out this field!",
-                                    },
-                                ]}
-                            >
-                                <Input.Password />
-                            </Form.Item>
-                        </Col>
-                        <Col xs={{ span: 24 }} lg={{ span: 12 }}>
-                            <Form.Item
-                                name="password"
-                                label="New Password"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: "Please fill out this field!",
-                                    },
-                                ]}
-                            >
-                                <Input.Password />
-                            </Form.Item>
-                        </Col>
-                    </Row>
                     <Divider orientation="left" plain orientationMargin={10}>
                         Barangay Details
                     </Divider>
@@ -259,6 +228,26 @@ const UserSetting = () => {
                             </Form.Item>
                         </Col>
                     </Row>
+                    
+                    <Divider orientation="left" plain orientationMargin={10}>
+                        Confirm Changes
+                    </Divider>
+                    <Row gutter={[24, 0]}>
+                        <Col xs={{ span: 24 }} lg={{ span: 12 }}>
+                            <Form.Item
+                                name="password"
+                                label="Current Password"
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: "Please fill out this field!",
+                                    },
+                                ]}
+                            >
+                                <Input.Password />
+                            </Form.Item>
+                        </Col>
+                    </Row>
                     <Form.Item style={{ paddingTop: "20px" }}>
                         <Button type="default" style={{ marginRight: dimension <= 4 ? "10px" : "20px" }} onClick={()=> {
                             history({
@@ -267,7 +256,7 @@ const UserSetting = () => {
                         }}>
                             Return
                         </Button>
-                        <Button type="primary" htmlType="submit">
+                        <Button type="primary" style={{ marginRight: dimension <= 4 ? "10px" : "20px" }}  htmlType="submit">
                             Save Changes
                         </Button>
                     </Form.Item>

@@ -9,7 +9,6 @@ import { Form, Input, Button, Select } from 'antd';
 //Images 
 import BlackGrid from '../landing/LandingPage-assets/black-grid.png'
 import { useSelector } from "react-redux";
-import { FlowchartExtension } from '@antv/xflow-extension';
 //Styles
 if (process.env.REACT_APP_ENVIRONMENT_STAGE === "Public Build") {
     require('../../local/landing/LandingStyles/LandingForm.scss');

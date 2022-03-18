@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Row, Drawer, Button, Avatar } from 'antd';
+import { Row, Drawer, Button } from 'antd';
 import { useSelector } from "react-redux";
 import { MenuOutlined } from '@ant-design/icons';
 import { useNavigate } from "react-router-dom"
@@ -20,9 +20,11 @@ function Navigation() {
 
     const history = useNavigate();
 
-    const toggleNav = () => {
-        setToggleMenu(!toggleMenu)
-    }
+    useEffect(() => {
+        if(dimension >= 4){
+            setToggleMenu(false)
+        }
+    }, [dimension])
 
     useEffect(() => {
 
@@ -123,22 +125,22 @@ function Navigation() {
                                         <img src={SHISLogo} alt='SHIS Logo' className="SHISLogo" onClick={() => {
                                             window.open("https://portal.silangmedical.com/", "_blank")
                                         }} style={{ cursor: "pointer" }}/>
-                                        <li className="menu-item"><a {...window.location === "" ? { href: "#Home"} : { onClick: () => {
+                                        <li className="menu-item"><a {...window.location.pathname === "/" ? { href: "#Home"} : { onClick: () => {
                                             history({
                                                 pathname: `/#Home`
                                             })
                                         } }} >Home</a></li>
-                                        <li className="menu-item"><a {...window.location === "" ? { href: "#About"} : { onClick: () => {
+                                        <li className="menu-item"><a {...window.location.pathname === "/" ? { href: "#About"} : { onClick: () => {
                                             history({
                                                 pathname: `/#About`
                                             })
                                         } }} >About Us</a></li>
-                                        <li className="menu-item"><a {...window.location === "" ? { href: "#Services"} : { onClick: () => {
+                                        <li className="menu-item"><a {...window.location.pathname === "/" ? { href: "#Services"} : { onClick: () => {
                                             history({
                                                 pathname: `/#Services`
                                             })
                                         } }} >Services</a></li>
-                                        <li className="menu-item"><a {...window.location === "" ? { href: "#Locations"} : { onClick: () => {
+                                        <li className="menu-item"><a {...window.location.pathname === "/" ? { href: "#Locations"} : { onClick: () => {
                                             history({
                                                 pathname: `/#Locations`
                                             })
