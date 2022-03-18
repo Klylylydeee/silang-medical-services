@@ -163,7 +163,7 @@ const announcementSchema = new Schema(
             required: true
         },
         announcement_datetime: {
-            type: String,
+            type: Date,
             required: true
         },
         status: {
@@ -179,6 +179,14 @@ const announcementSchema = new Schema(
         }
     }
 );
+
+announcementSchema.pre(
+    "save", 
+    async function(next) {
+        this.announcement_datetime = moment(this.announcement_datetime);
+        next();
+    }
+); 
 
 const Announcement = model("announcement", announcementSchema);
 

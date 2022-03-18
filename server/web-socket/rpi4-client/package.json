@@ -12,9 +12,11 @@
     "dependencies": {
         "dotenv": "^12.0.3",
         "express": "^4.17.2",
+        "for-async": "^1.0.1",
         "moment": "^2.29.1",
         "mongoose": "^6.2.7",
         "node-pdu": "^1.0.15",
+        "node-schedule": "^2.1.0",
         "nodemon": "^2.0.15",
         "serialport": "^8.0.8",
         "socket.io-client": "^4.4.1",

@@ -8,6 +8,7 @@ databaseConnection();
 const forAsync = require('for-async'); 
 
 const Announcement = require("./model/announcement");
+const EventListing = require("./model/eventListing");
 const MessageLogs = require("./model/messageLog");
 const ErrorLogs = require("./model/errorLogs");
 
@@ -84,6 +85,10 @@ socket.on("connect", () => {
             let annResult = await Announcement.findOne({
                 _id: data.id
             });
+            
+            if(annResult === null){
+                throw new Error("Does not exists!")
+            }
             
             if(annResult.subscribed.length !== 0){
                 forAsync(annResult.subscribed, (userData, index) => {
@@ -166,3 +171,225 @@ socket.on("disconnect", () => {
     console.log("Socket Host is turned off. Nodejs shutting down");
     process.exit();
 });
+
+const schedule = require('node-schedule');
+const moment = require("moment");
+
+schedule.scheduleJob(
+    {
+        rule: '* * 6 * * *',
+        tz: "Asia/Manila"
+    },
+    async () => {
+        try{
+
+            let getAnnouncementData = await Announcement.find(
+                {
+                    announcement_datetime: {
+                        $gte: moment(`${moment().format("Y")}-${moment().format("M") >= 10 ? `${moment().format("M")}` : `0${moment().format("M")}` }-${moment().format("D")}` + ` ` + "00:00").format("M D,Y h:mm a"),
+                        $lt: moment(`${moment().format("Y")}-${moment().format("M") >= 10 ? `${moment().format("M")}` : `0${moment().format("M")}` }-${moment().format("D")}` + ` ` + "24:00").format("M D,Y h:mm a")
+                    }
+                }
+            );
+            
+            if(getAnnouncementData === null){
+                throw new Error("Does not exists!")
+            }
+
+            if(getAnnouncementData.length !== 0){
+                forAsync(getAnnouncementData, (recordData, dataIndex) => {
+                    return new Promise((resolveData) => {
+                        forAsync(recordData.subscribed, (userData, dataIndex) => {
+                            return new Promise((resolveUser) => {
+                                modem.sendSMS(
+                                    userData.phone_number,
+                                    `Barangay ${recordData.barangay} Announcement. Please check your email or the website for more details. \n Silang Medical Services`,
+                                    false,
+                                    async (params) => {
+                                        if(params.data){
+                                            if(params.data.response === "Successfully Sent to Message Queue"){
+                                                await Announcement.updateOne(
+                                                    {
+                                                        "subscribed._id": userData._id
+                                                    },
+                                                    {
+                                                        $set: {
+                                                            "subscribed.$.status": "Sending",
+                                                        }
+                                                    }
+                                                )
+                                            } else if(params.data.response === "Message Successfully Sent"){
+                                                await Announcement.updateOne(
+                                                    {
+                                                        "subscribed._id": userData._id
+                                                    },
+                                                    {
+                                                        $set: {
+                                                            "subscribed.$.status": "Sent",
+                                                        }
+                                                    }
+                                                )
+                                                await MessageLogs.create({
+                                                    request_user_id: recordData.requestor.email,
+                                                    receiver_user_id: userData._id,
+                                                    subject: data.announcement,
+                                                    message: recordData.message,
+                                                    type: "Text",
+                                                    status: true
+                                                });
+                                                resolveUser();
+                                            } else {
+                                                await Announcement.updateOne(
+                                                    {
+                                                        "subscribed._id": userData._id
+                                                    },
+                                                    {
+                                                        $set: {
+                                                            "subscribed.$.status": "Failed",
+                                                        }
+                                                    }
+                                                );
+                                                await MessageLogs.create({
+                                                    request_user_id: recordData.requestor.email,
+                                                    receiver_user_id: userData._id,
+                                                    subject: data.announcement,
+                                                    message: recordData.message,
+                                                    type: "Text",
+                                                    status: false
+                                                });
+                                                resolveUser();
+                                            }
+                                        }
+                                    }
+                                )
+                            })
+                        })
+                        resolveData();
+                    })
+                })
+            }
+            
+        } catch (err) {
+            ErrorLogs.create({
+                timestamp: new Date(),
+                level: "error",
+                message: err.message,
+                meta: {
+                    status: 500,
+                    stack: err.stack
+                }
+            })
+        }
+    }
+)
+
+schedule.scheduleJob(
+    {
+        rule: '* * 7 * * *',
+        tz: "Asia/Manila"
+    },
+    async () => {
+        try{
+
+            let getEventListing = await EventListing.find(
+                {
+                    start_datetime: {
+                        $gte: moment(`${moment().format("Y")}-${moment().format("M") >= 10 ? `${moment().format("M")}` : `0${moment().format("M")}` }-${moment().format("D")}` + ` ` + "00:00").format("M D,Y h:mm a"),
+                        $lt: moment(`${moment().format("Y")}-${moment().format("M") >= 10 ? `${moment().format("M")}` : `0${moment().format("M")}` }-${moment().format("D")}` + ` ` + "24:00").format("M D,Y h:mm a")
+                    },
+                    status: true
+                }
+            );
+
+            console.log(getEventListing)
+            
+            if(getEventListing === null){
+                throw new Error("Does not exists!")
+            }
+
+            if(getEventListing.length !== 0){
+                forAsync(getEventListing, (recordData, dataIndex) => {
+                    return new Promise((resolveData) => {
+                        forAsync(recordData.attendee, (userData, dataIndex) => {
+                            return new Promise((resolveUser) => {
+                                modem.sendSMS(
+                                    userData.phone_number,
+                                    `Barangay ${recordData.barangay} Event. Please check your email or the website for more details. \n Silang Medical Services`,
+                                    false,
+                                    async (params) => {
+                                        if(params.data){
+                                            if(params.data.response === "Successfully Sent to Message Queue"){
+                                                await EventListing.updateOne(
+                                                    {
+                                                        "attendee._id": userData._id
+                                                    },
+                                                    {
+                                                        $set: {
+                                                            "attendee.$.status": "Sending",
+                                                        }
+                                                    }
+                                                )
+                                            } else if(params.data.response === "Message Successfully Sent"){
+                                                await EventListing.updateOne(
+                                                    {
+                                                        "attendee._id": userData._id
+                                                    },
+                                                    {
+                                                        $set: {
+                                                            "attendee.$.status": "Sent",
+                                                        }
+                                                    }
+                                                )
+                                                await MessageLogs.create({
+                                                    request_user_id: recordData.requestor.email,
+                                                    receiver_user_id: userData._id,
+                                                    subject: recordData.event,
+                                                    message: recordData.description,
+                                                    type: "Text",
+                                                    status: true
+                                                });
+                                                resolveUser();
+                                            } else {
+                                                await EventListing.updateOne(
+                                                    {
+                                                        "attendee._id": userData._id
+                                                    },
+                                                    {
+                                                        $set: {
+                                                            "attendee.$.status": "Failed",
+                                                        }
+                                                    }
+                                                );
+                                                await MessageLogs.create({
+                                                    request_user_id: recordData.requestor.email,
+                                                    receiver_user_id: userData._id,
+                                                    subject: recordData.event,
+                                                    message: recordData.description,
+                                                    type: "Text",
+                                                    status: false
+                                                });
+                                                resolveUser();
+                                            }
+                                        }
+                                    }
+                                )
+                            })
+                        })
+                        resolveData();
+                    })
+                })
+            }
+            
+        } catch (err) {
+            ErrorLogs.create({
+                timestamp: new Date(),
+                level: "error",
+                message: err.message,
+                meta: {
+                    status: 500,
+                    stack: err.stack
+                }
+            })
+        }
+    }
+)
