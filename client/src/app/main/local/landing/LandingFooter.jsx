@@ -16,12 +16,10 @@ function LandingFooter() {
                 <div className="FooterPage">
                     <div className="LogoSection">
                         <Col>
-                            <div className="footerImage">
                                 {/* SHIS Logo */}
                                 <img src={SHISLogo} alt='SHIS Logo' className="Shis-footer-logo" onClick={() => {
                                     window.open("https://portal.silangmedical.com/", "_blank")
                                 }} style={{ cursor: "pointer" }}/>
-                            </div>
                         </Col>
                     </div>
 

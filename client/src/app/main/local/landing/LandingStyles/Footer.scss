@@ -11,14 +11,23 @@
 //-----------------Footer Logo-----------------//
 .LogoSection {
     width: 20%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
 }
 
 .Shis-footer-logo {
     position: relative;
-    width: 290px;
-    height: 236px;
-    left: 70px;
-    top: 130px;
+    z-index: 20;
+    right: 0vh;
+    top: 0vh;
+    width: auto;
+    height: 30vh;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    
 }
 
 //-----------------Footer Page Links-----------------//
@@ -56,8 +65,6 @@
     color: white;
     padding-top: 1vh;
 }
-
-
 
 //-----------------SHIS Contact Info-----------------//
 
@@ -108,9 +115,12 @@
 
 #FooterDescription {
     margin-top: -3vh;
-    padding-left: 30px;
+    padding-left: 50px;
+    padding-right: 50px;
     font-size: 17px;
     color: white;
+    justify-content: center;
+    text-align: justify;
 }
 
 //-----------------Bottom Footer-----------------//
@@ -140,39 +150,39 @@
 }
 
 //-----------------Mobile Responsive-----------------/
-@media screen and (max-width: 1536px){
-    .Shis-footer-logo {
-        left: 0vh;
-    }
-}
 
 @media screen and (max-width: 1440px){
 
     #FooterTitle {
-        font-size: 55px;
-        
+        font-size: 55px;    
     }
     
     #SecondTitle {
         font-size: 55px;
     }
+}
+
+@media screen and (max-width: 1092px){
     
-    .Shis-footer-logo {
-        left: 35px;
+    #FooterTitle {
+        font-size: 45px;    
+    }
+    
+    #SecondTitle {
+        font-size: 50px;
+    }
+
+    #FooterDescription {
+        font-size: 15px;
     }
 }
 
-@media screen and (max-width: 1366px){
-    .Shis-footer-logo {
-        left: 0px;
-        top: 15vh;
-    }
-  }
 
 @media screen and (max-width: 1024px){
+
     .Shis-footer-logo {
-        left: -45px;
-        top: 15vh;
+        width: auto;
+        height: 200px;
     }
 
     .ContactSection h2 {
@@ -199,12 +209,12 @@
         align-items: center;
     }
     
-
     .Shis-footer-logo {
-        left: -28px;
         top: 0vh;
         height: 20vh;
         width: auto;
+        align-items: center;
+        margin-left: -30px;
     }
 
     .footer-menu h1 {
@@ -238,9 +248,11 @@
         text-align: center;
         font-size: 45px;
         margin-top: 3vh;
+        padding-left: 0px;
     }
     
     #SecondTitle {
+        padding-left: 0px;
         text-align: center;
         font-size: 45px;
     }
@@ -249,7 +261,7 @@
         text-align: center;
         margin-top: -3vh;
         margin-bottom:3vh;
-        padding-left: 0px;
+        padding-left: 50px;
         font-size: 15px;
     }
 

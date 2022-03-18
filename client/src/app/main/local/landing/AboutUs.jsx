@@ -32,7 +32,7 @@ function AboutUs() {
                 {/* Mission */}
 
                 <div className="AboutInfo" >
-                    <Col xl={{ span: 22 }}>
+                    <Col lg={{ span: 22 }} xl={{ span: 22 }}>
                         <div id="Mission">
                             <h2>Mission</h2>
                             <p>Our mission is to provide an efficient and effective way of medical processing to aid our citizens, 
