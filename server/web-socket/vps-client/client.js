@@ -21,7 +21,7 @@ app.listen(process.env.PORT, () =>{
 });
 
 // Routes and Rooms
-app.get("/", 
+app.get("/default", 
     
     async (req, res, next) => {
         const authHeader = req.get("Authorization");
@@ -45,12 +45,51 @@ app.get("/",
     async (req, res, next) => {
         // Get the query params and send it as data to the WS room
         socket.emit(`${process.env.WS_TOPIC_LOGIN}`, {
+            id: req.query.smsId,
             number: req.query.num,
             message: req.query.msg
         })
+
         res.status(200).send({
+            id: req.query.smsId,
             number: req.query.num,
             message: req.query.msg
+        });
+    }
+    
+);
+
+app.get("/announcement", 
+    
+    async (req, res, next) => {
+        const authHeader = req.get("Authorization");
+        if (authHeader === undefined) {
+            res.status(403).send({
+                message: "Authorization does not exist!",
+                status: "Error",
+                statusCode: 403
+            });
+        }
+        if(authHeader !== process.env.SECRET_CLIENT_KEY){
+            res.status(403).send({
+                message: "Incorrect authorization code!",
+                status: "Error",
+                statusCode: 403
+            });
+        }
+        next();
+    },
+
+    async (req, res, next) => {
+        // Get the query params and send it as data to the WS room
+        socket.emit(`${process.env.WS_TOPIC_COMMS}`, {
+            id: req.query.id,
+            announcement: req.query.announcement
+        });
+
+        res.status(200).send({
+            id: req.query.announcementId,
+            announcement: req.query.announcement
         });
     }
     

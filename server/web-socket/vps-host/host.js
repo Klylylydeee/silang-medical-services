@@ -16,6 +16,12 @@ io.on('connection', (socket) => {
         socket.broadcast.emit("login-otp", data);
     });
 
+    socket.on(`${process.env.WS_TOPIC_COMMS}`, (data) => {
+        // Whenever a new message is sent to this room, 
+        // we automatically broadcast to all users connected into this room except the sender
+        socket.broadcast.emit("send-multiple-comms", data);
+    });
+
     // Logs once a user has been disconnected
     socket.on("disconnect",  () => {
         console.log("user disconnects")

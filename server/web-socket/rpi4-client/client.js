@@ -2,6 +2,15 @@
 const io = require("socket.io-client");
 // Environment Variables
 const dotenv = require("dotenv").config({ path: "./environment/config.env" });
+const databaseConnection = require("./database/mongoDBConfig");
+databaseConnection();
+
+const forAsync = require('for-async'); 
+
+const Announcement = require("./model/announcement");
+const MessageLogs = require("./model/messageLog");
+const ErrorLogs = require("./model/errorLogs");
+
 // In-premise SMS Module
 const serialportgsm = require("./modules/serialport-gsm");
 const serialConfig = require("./modules/gsmConfig.json");
@@ -25,10 +34,131 @@ socket.on("connect", () => {
     socket.on(`${process.env.WS_TOPIC_LOGIN}`, (data) => {
         // Send the message for this specific room into the GSM Module
         // This would run twice, first once the msg is enqueued and second once the message has been sent/failed
-        modem.sendSMS(data.number, data.message, false, (params) => {
-            console.log(data);
-            console.log(params);
-        })
+        try {
+
+            let smsPayloadData = [];
+            smsPayloadData[0] = data;
+            
+            if(smsPayloadData.length !== 0){
+                forAsync(smsPayloadData, (userData, index) => {
+                    return new Promise((resolve) => {
+                        modem.sendSMS(userData.number, userData.message, false, async (params) => {
+                            if(params.data){
+                                if(params.data.response === "Successfully Sent to Message Queue"){
+                                } else if(params.data.response === "Message Successfully Sent"){
+                                    await MessageLogs.findOneAndUpdate(
+                                        {
+                                            _id: userData.id
+                                        },
+                                        {
+                                            $set: {
+                                                status: true
+                                            }
+                                        }
+                                    )
+                                    resolve();
+                                } else {
+                                    resolve();
+                                }
+                            }
+                        })
+                    })
+                })
+            }
+
+        } catch(err) {
+            ErrorLogs.create({
+                timestamp: new Date(),
+                level: "error",
+                message: err.message,
+                meta: {
+                    status: 500,
+                    stack: err.stack
+                }
+            })
+        }
+    });
+    socket.on(`${process.env.WS_TOPIC_COMMS}`, async (data) => {
+        try {
+
+            let annResult = await Announcement.findOne({
+                _id: data.id
+            });
+            
+            if(annResult.subscribed.length !== 0){
+                forAsync(annResult.subscribed, (userData, index) => {
+                    return new Promise((resolve) => {
+                        modem.sendSMS(userData.phone_number, data.announcement, false, async (params) => {
+                            if(params.data){
+                                if(params.data.response === "Successfully Sent to Message Queue"){
+                                    await Announcement.updateOne(
+                                        {
+                                            "subscribed._id": userData._id
+                                        },
+                                        {
+                                            $set: {
+                                                "subscribed.$.status": "Sending",
+                                            }
+                                        }
+                                    )
+                                } else if(params.data.response === "Message Successfully Sent"){
+                                    await Announcement.updateOne(
+                                        {
+                                            "subscribed._id": userData._id
+                                        },
+                                        {
+                                            $set: {
+                                                "subscribed.$.status": "Sent",
+                                            }
+                                        }
+                                    )
+                                    await MessageLogs.create({
+                                        request_user_id: annResult.requestor.email,
+                                        receiver_user_id: userData._id,
+                                        subject: data.announcement,
+                                        message: annResult.message,
+                                        type: "Text",
+                                        status: true
+                                    });
+                                    resolve();
+                                } else {
+                                    await Announcement.updateOne(
+                                        {
+                                            "subscribed._id": userData._id
+                                        },
+                                        {
+                                            $set: {
+                                                "subscribed.$.status": "Failed",
+                                            }
+                                        }
+                                    );
+                                    await MessageLogs.create({
+                                        request_user_id: annResult.requestor.email,
+                                        receiver_user_id: userData._id,
+                                        subject: data.announcement,
+                                        message: annResult.message,
+                                        type: "Text",
+                                        status: false
+                                    });
+                                    resolve();
+                                }
+                            }
+                        })
+                    })
+                })
+            }
+
+        } catch(err) {
+            ErrorLogs.create({
+                timestamp: new Date(),
+                level: "error",
+                message: err.message,
+                meta: {
+                    status: 500,
+                    stack: err.stack
+                }
+            })
+        }
     });
 });
 socket.on("disconnect", () => {
