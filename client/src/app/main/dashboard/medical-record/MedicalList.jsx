@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-
+import { Table } from "ant-table-extensions";
 //Ant Design layout
 import {
     Layout,
-    Table,
     Tag,
     Space,
     PageHeader,
@@ -241,6 +240,58 @@ const MedicalList = () => {
 
     ];
 
+    const fields = {
+        full_name: {
+            header: "Full Name",
+            formatter: (_fieldValue, record) => {
+                return record.full_name;
+            },
+        },
+        email: {
+            header: "Email",
+            formatter: (_fieldValue, record) => {
+                console.log(record)
+                return record.email;
+            },
+        },
+        phone_number: {
+            header: "Phone Number",
+            formatter: (_fieldValue, record) => {
+                return `${String(record.phone_number).substring(0, 3)}-${String(record.phone_number).substring(3, 6)}-${String(record.phone_number).substring(6, 9)}-${String(record.phone_number).substring(9, 12)}`;
+            },
+        },
+        diagnosis: {
+            header: "Diagnosis",
+            formatter: (_fieldValue, record) => {
+                return record.diagnosis;
+            },
+        },
+        detailed_report: {
+            header: "Detailed Report",
+            formatter: (_fieldValue, record) => {
+                return record.detailed_report;
+            },
+        },
+        outlier: {
+            header: "Outlier Score",
+            formatter: (_fieldValue, record) => {
+                return record.outlier;
+            },
+        },
+        createdAt: {
+            header: "Date Creation",
+            formatter: (_fieldValue, record) => {
+                return moment(record.createdAt).format("MMMM DD,YYYY h:mm a")
+            },
+        }
+    }
+
+    const btnProps =  {
+        type: "primary",
+        icon: <FileExcelOutlined />,
+        children: <span>Export to EXCEL</span>
+    }
+
     const getCellData = async () => {
         try {
             dispatch(changeLoader({ loading: true }))
@@ -248,9 +299,12 @@ const MedicalList = () => {
             const filteredData = medicalRecords.data.payload.map((record) => {
                 return {
                     full_name: `${record.first_name} ${record.last_name}`,
+                    email: record.email,
+                    phone_number: record.phone_number,
+                    diagnosis: record.diagnosis,
+                    detailed_report: record.detailed_report,
                     outlier: record.outlier,
                     createdAt: record.createdAt,
-                    diagnosis: record.diagnosis,
                     status: record.status,
                     _id: record._id,
                     ...(designation === "Doctor") && { barangay: record.barangay}
@@ -297,7 +351,18 @@ const MedicalList = () => {
             </Layout.Content>
             <Layout.Content style={{ backgroundColor: "white", padding: "10px 20px", marginBottom: "15px", borderRadius: "5px" }}>
                 {/*Medical Record Table*/}
-                <Table columns={columns} dataSource={tableData} scroll={{ x: 500 }} />
+                <Table 
+                    columns={columns}
+                    dataSource={tableData}
+                    scroll={{ x: 500 }} 
+                    searchable
+                    exportableProps={{ 
+                        fields,
+                        showColumnPicker: true,
+                        btnProps: btnProps,
+                        fileName: "medical-record",
+                        disabled: tableData.length === 0 ? true : false
+                    }} />
             </Layout.Content>
         </React.Fragment>
     );

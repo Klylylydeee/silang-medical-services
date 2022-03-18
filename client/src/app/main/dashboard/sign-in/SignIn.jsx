@@ -6,9 +6,9 @@ import { authorizeUser } from "src/app/store/web/webInformation";
 import { Row, Col, Carousel, Form, Input, Button } from "antd";
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import "./signInStyles.scss";
-import arkImage from "src/app/main/dashboard/sign-in/sign-in-assets/lumil1.png";
-import hallImage from "src/app/main/dashboard/sign-in/sign-in-assets/lumil2.png";
-import hall_2Image from "src/app/main/dashboard/sign-in/sign-in-assets/lumil3.png";
+import arkImage from "src/app/main/dashboard/sign-in/sign-in-assets/mio.jpg";
+import hallImage from "src/app/main/dashboard/sign-in/sign-in-assets/mio.jpg";
+import hall_2Image from "src/app/main/dashboard/sign-in/sign-in-assets/mio.jpg";
 import barangayLogo from "src/app/main/dashboard/sign-in/sign-in-assets/barangay-lumil.png";
 import barangayLogo2 from "src/app/main/local/img/barangay-putingkahoy.png";
 import gridDot from "src/app/main/dashboard/sign-in/sign-in-assets/black-grid.png";
@@ -191,7 +191,7 @@ function SignIn() {
             if(err.response) {
                 toasterRequest({ payloadType: "error", textString: err.response.data.message})
                 if(err.response.data.message === "Max pin threshold has been meet. Please reset your account's password.") {
-                    currentStep(3)
+                    currentStep(4)
                 }
             } else {
                 toasterRequest({ payloadType: "error", textString: err.message});
@@ -207,6 +207,7 @@ function SignIn() {
             });
             toasterRequest({ payloadType: "success", textString: getThresholdReset.data.message});
             currentStep(1)
+            dispatch(changeLoader({ loading: false }))
         } catch(err) {
             dispatch(changeLoader({ loading: false }))
             err.response ? 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useSearchParams, useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import toasterRequest from "src/app/util/toaster";
 import { axiosAPI } from "src/app/util/axios";
 import { changeLoader } from "src/app/store/web/webInformation";
@@ -17,8 +17,6 @@ import moment from "moment";
 const BarangayEvent = () => {
     const { dimension } = useSelector((state) => state.web);
     const paramsa = useParams();
-    // {paramsa.barangay}-{paramsa.id}
-    const [params] = useSearchParams();
     const dispatch = useDispatch();
     const history = useNavigate();
     const [newHeight, setHeight] = useState("")
@@ -252,7 +250,14 @@ const BarangayEvent = () => {
                                 })
                             }
                         </Row>
-                        <Divider orientation="left" style={{ fontSize: "18px", color: "black", fontWeight: 500, padding: "20px 0"}}>General and Medical Events  ({moment().format("YYYY")})</Divider>
+                        
+                        <Row gutter={[24, 0]} style={{ padding: "20px 0", position: "relative"}} wrap={false}>
+                            <Col flex="auto">
+                                <Divider orientation="left" style={{ fontSize: "18px", color: "black", fontWeight: 500, padding: "20px 0"}}>{dimension >=4 ? "General and Medical Events": "Events"}  ({moment().format("YYYY")})</Divider>
+                            </Col>
+                            <Col flex={"130px"}>
+                            </Col>
+                        </Row>
                         {/*  */}
                         {
                             eventData.length === 0 &&
