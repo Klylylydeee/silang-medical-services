@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Layout, PageHeader, Button, Select, Form, Row, Col, Input, Divider, Modal} from 'antd';
+import { signIn } from "src/app/store/user/userInformation";
 import { useSelector, useDispatch } from "react-redux";
 import { axiosAPI } from "src/app/util/axios";
 import { changeLoader } from "src/app/store/web/webInformation";
@@ -41,8 +42,8 @@ const UserSetting = () => {
                 designation: userCreate.data.payload.designation,
                 status: userCreate.data.payload.status,
                 language: userCreate.data.payload.language,
-                createdAt: moment(userCreate.data.payload.createdAt).format("MMMM DD,YYYY h:MM:ss a"),
-                updatedAt: moment(userCreate.data.payload.updatedAt).format("MMMM DD,YYYY h:MM:ss a"),
+                createdAt: moment(userCreate.data.payload.createdAt).format("MMMM DD,YYYY h:mm:ss a"),
+                updatedAt: moment(userCreate.data.payload.updatedAt).format("MMMM DD,YYYY h:mm:ss a"),
                 _id: userCreate.data.payload._id
             })
             dispatch(changeLoader({ loading: false }))
@@ -77,6 +78,13 @@ const UserSetting = () => {
             });
             toasterRequest({ payloadType: "success", textString: userCreate.data.message })
             getUserData()
+            localStorage.setItem("Authorization", userCreate.data.payload);
+            dispatch(
+                signIn({
+                    email: userCreate.data.data.email,
+                    phone_number : userCreate.data.data.phone_number
+                })
+            );
         } catch (err) {
             dispatch(changeLoader({ loading: false }))
             err.response ? 

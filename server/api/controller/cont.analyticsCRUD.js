@@ -242,7 +242,7 @@ exports.analyticsSpecificDate = async (req, res, next) => {
             return {
                 author: data.author,
                 content: data.comment,
-                datetime: moment(data.createdAt).format("MMMM DD, YYYY h:MM A"),
+                datetime: moment(data.createdAt).format("MMMM DD, YYYY h:mm A"),
                 _id: data._id
             }
         });
@@ -280,7 +280,7 @@ exports.commentSpecificDate = async (req, res, next) => {
             return {
                 author: data.author,
                 content: data.comment,
-                datetime: moment(data.createdAt).format("MMMM DD, YYYY h:MM A"),
+                datetime: moment(data.createdAt).format("MMMM DD, YYYY h:mm A"),
                 _id: data._id
             }
         });

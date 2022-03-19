@@ -177,7 +177,8 @@ const moment = require("moment");
 
 schedule.scheduleJob(
     {
-        rule: '* * 6 * * *',
+        hour: 6,
+        minute: 0,
         tz: "Asia/Manila"
     },
     async () => {
@@ -285,7 +286,11 @@ schedule.scheduleJob(
 
 schedule.scheduleJob(
     {
-        rule: '* * 7 * * *',
+        // every second of 7am
+        // rule: '* * 7 * * *',
+        // rule should be set to a specific minute and hour as per documentation
+        hour: 7,
+        minute: 0,
         tz: "Asia/Manila"
     },
     async () => {

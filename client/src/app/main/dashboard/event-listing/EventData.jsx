@@ -40,14 +40,14 @@ const EventData = () => {
             setFormData({
                 event: eventData.data.payload.event,
                 description: eventData.data.payload.description,
-                start_datetime: moment(eventData.data.payload.start_datetime).format("MMMM DD,YYYY - h:MM A"),
-                end_datetime: moment(eventData.data.payload.end_datetime).format("MMMM DD,YYYY - h:MM A"),
+                start_datetime: moment(eventData.data.payload.start_datetime).format("MMMM DD,YYYY - h:mm A"),
+                end_datetime: moment(eventData.data.payload.end_datetime).format("MMMM DD,YYYY - h:mm A"),
                 first_name: eventData.data.payload.requestor.first_name,
                 last_name: eventData.data.payload.requestor.last_name,
                 phone_number: eventData.data.payload.requestor.phone_number,
                 email: eventData.data.payload.requestor.email,
-                createdAt: moment(eventData.data.payload.createdAt).format("MMMM DD,YYYY - h:MM A"),
-                updatedAt: moment(eventData.data.payload.updatedAt).format("MMMM DD,YYYY - h:MM A"),
+                createdAt: moment(eventData.data.payload.createdAt).format("MMMM DD,YYYY - h:mm A"),
+                updatedAt: moment(eventData.data.payload.updatedAt).format("MMMM DD,YYYY - h:mm A"),
                 badgeText: eventData.data.payload.status === true ? 
                     moment(new Date()) > moment(eventData.data.payload.start_datetime) ?
                     "success"

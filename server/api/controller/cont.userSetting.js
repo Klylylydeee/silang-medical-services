@@ -319,6 +319,13 @@ exports.userChangeSetting = async (req, res, next) => {
             pin_threshold: 0,
             __v: 0
         });
+        
+        const token = await jwt.sign({
+            userData
+        }, process.env.JWT_BACKEND, { 
+            expiresIn: "7d",
+            algorithm: "HS512"
+        });
 
         if(userData === null){
             let error = new Error("Account does not exists.");
@@ -327,7 +334,9 @@ exports.userChangeSetting = async (req, res, next) => {
         };
 
         res.status(200).send({
-            message: `User setting has been changed!`
+            message: `User setting has been changed!`,
+            payload: token,
+            data: userData
         });
 
     } catch(err) {

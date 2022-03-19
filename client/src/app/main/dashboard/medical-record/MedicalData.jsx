@@ -142,7 +142,7 @@ const MedicalData = () => {
                             <Card title={<Typography.Title level={3} style={{ fontSize: "16px" }}>Creation Date</Typography.Title>}>
                                 {
                                     medData.createdAt !== "" ?
-                                        moment(medData.createdAt).format("MMMM DD, YYYY h:MM A")
+                                        moment(medData.createdAt).format("MMMM DD, YYYY h:mm A")
                                     :
                                         moment().format()
                                 }
@@ -152,7 +152,7 @@ const MedicalData = () => {
                             <Card title={<Typography.Title level={3} style={{ fontSize: "16px" }}>Last Accessed</Typography.Title>}>
                                 {
                                     medData.updatedAt !== "" ?
-                                        moment(medData.updatedAt).format("MMMM DD, YYYY h:MM A")
+                                        moment(medData.updatedAt).format("MMMM DD, YYYY h:mm A")
                                     :
                                         moment().format()
                                 }

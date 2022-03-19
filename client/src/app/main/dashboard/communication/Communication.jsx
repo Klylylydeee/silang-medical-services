@@ -132,7 +132,7 @@ const Communication = () => {
             dispatch(changeLoader({ loading: true }))
             let formResult = await axiosAPI.post(`communication/create`, {
                 ...createModalData,
-                announcement_datetime: moment(createModalData.announcement_datetime).format("YYYY-MM-DD HH:mm:ss"),
+                announcement_datetime: moment(createModalData.announcement_datetime).format("YYYY-MM-DD h:mm:ss"),
                 barangay: barangay,
                 requestor: {
                     first_name: first_name,
@@ -174,7 +174,7 @@ const Communication = () => {
                 _id: updateDrawerData._id,
                 announcement: payload.announcement,
                 message: payload.message,
-                announcement_datetime: moment(payload.announcement_datetime).format("YYYY-MM-DD HH:mm:ss"),
+                announcement_datetime: moment(payload.announcement_datetime).format("YYYY-MM-DD h:mm:ss"),
                 requestor: {
                     first_name: first_name,
                     last_name: last_name,

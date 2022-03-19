@@ -77,7 +77,7 @@ const Default = () => {
                                         return (
                                             <Collapse.Panel header={event.event} style={{ backgroundColor: "#A76FB0" }} key={eKey}>
                                                 <p><span style={{ fontWeight: 500 }}>Description:</span> {event.description}</p>
-                                                <p><span style={{ fontWeight: 500 }}>Event Date/Time:</span> {moment(event.start_datetime).format("MMM DD,YYYY h:MM A")}</p>
+                                                <p><span style={{ fontWeight: 500 }}>Event Date/Time:</span> {moment(event.start_datetime).format("MMM DD,YYYY h:mm A")}</p>
                                             </Collapse.Panel>
                                         )
                                     })

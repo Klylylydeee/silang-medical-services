@@ -139,7 +139,7 @@ exports.createMedicalRecord = async (req, res, next) => {
                 template: "medical-record",
                 context: {
                     text: `Please open the following link to check your medical record update:`, 
-                    url: `${process.env.CLIENT_ENDPOINT}/medical-record?auth=${createAuth()}`
+                    url: `https://silangmedical.com/medical-record?auth=${createAuth()}`
                 },
                 attachments: [
                     {
