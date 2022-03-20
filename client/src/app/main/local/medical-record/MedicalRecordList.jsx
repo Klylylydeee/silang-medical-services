@@ -149,7 +149,7 @@ const MedicalRecord = () => {
                         </p>
                         <Divider orientation="left" style={{ fontSize: "18px", color: "black", fontWeight: 500, padding: "20px 0"}}>Search Results</Divider>
                         {
-                            dataList === 0 &&
+                            dataList.length === 0 &&
                             <div
                                 style={{
                                     height: "100%"
