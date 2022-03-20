@@ -28,13 +28,18 @@ export const userInformation = createSlice({
             state.barangay = undefined;
             state.designation = undefined;
             toasterRequest({ payloadType: "success", textString: "No longer authorized!"});
+        },
+        changeSetting: (state, action) => {
+            state.email = action.payload.email;
+            state.phone_number = action.payload.phone_number;
         }
     }
 });
 
 export const { 
     signIn,
-    signOut
+    signOut,
+    changeSetting
 } = userInformation.actions;
 
 export default userInformation.reducer;

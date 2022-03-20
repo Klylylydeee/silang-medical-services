@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Layout, PageHeader, Button, Select, Form, Row, Col, Input, Divider, Modal} from 'antd';
-import { signIn } from "src/app/store/user/userInformation";
+import { changeSetting } from "src/app/store/user/userInformation";
 import { useSelector, useDispatch } from "react-redux";
 import { axiosAPI } from "src/app/util/axios";
 import { changeLoader } from "src/app/store/web/webInformation";
@@ -8,6 +8,7 @@ import toasterRequest from "src/app/util/toaster";
 import moment from "moment";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
+import jwt from "jsonwebtoken";
 
 const { confirm } = Modal;
 
@@ -77,14 +78,15 @@ const UserSetting = () => {
                 password: formData.password
             });
             toasterRequest({ payloadType: "success", textString: userCreate.data.message })
-            getUserData()
-            localStorage.setItem("Authorization", userCreate.data.payload);
+            localStorage.setItem("Authorization", userCreate.data.payload)
+            let decodedData = await jwt.verify(localStorage.getItem("Authorization"), process.env.REACT_APP_JWT_BACKEND);
             dispatch(
-                signIn({
-                    email: userCreate.data.data.email,
-                    phone_number : userCreate.data.data.phone_number
+                changeSetting({
+                    email: decodedData.email,
+                    phone_number : decodedData.phone_number
                 })
             );
+            dispatch(changeLoader({ loading: false }))
         } catch (err) {
             dispatch(changeLoader({ loading: false }))
             err.response ? 

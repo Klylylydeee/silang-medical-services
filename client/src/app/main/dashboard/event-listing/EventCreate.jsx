@@ -16,6 +16,7 @@ const EventCreate = () => {
     const [form] = Form.useForm();
 
     const history = useNavigate();
+    const [ reqStatus, setReqStatus ] = useState(false);
 
     const onReset = () => {
         form.resetFields()
@@ -46,7 +47,7 @@ const EventCreate = () => {
                     phone_number: prefix + phone_number
                 },
                 barangay: barangay,
-                createdBy: `${first_name} ${last_name} (${designation})`,
+                createdBy: reqStatus === false ? `${first_name} ${last_name} (${designation})` : `${first_name} ${last_name}`,
                 status: false
             });
             dispatch(changeLoader({ loading: false }));
@@ -73,7 +74,6 @@ const EventCreate = () => {
     // eslint-disable-next-line
     }, []);
 
-    const [ reqStatus, setReqStatus ] = useState(false);
     
     return (
         <React.Fragment>

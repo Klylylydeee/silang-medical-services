@@ -311,6 +311,7 @@ exports.userChangeSetting = async (req, res, next) => {
                 }
             },
             {
+                new: true,
                 timestamps: false
             }
         ).select({
@@ -321,7 +322,7 @@ exports.userChangeSetting = async (req, res, next) => {
         });
         
         const token = await jwt.sign({
-            userData
+            ...userData._doc
         }, process.env.JWT_BACKEND, { 
             expiresIn: "7d",
             algorithm: "HS512"

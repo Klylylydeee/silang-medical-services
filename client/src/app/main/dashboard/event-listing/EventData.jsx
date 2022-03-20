@@ -8,7 +8,7 @@ import { axiosAPI } from "src/app/util/axios";
 import { changeLoader } from "src/app/store/web/webInformation";
 import { DisconnectOutlined } from "@ant-design/icons";
 import { Table } from "ant-table-extensions";
-import { CalendarOutlined, UserOutlined} from "@ant-design/icons";
+import { CalendarOutlined, UserOutlined, FileExcelOutlined } from "@ant-design/icons";
 
 const EventData = () => {
     const { dimension } = useSelector((state) => state.web); 
@@ -141,6 +141,33 @@ const EventData = () => {
         }
     ];
 
+    const fields = {
+        full_name: {
+            header: "Full Name",
+            formatter: (_fieldValue, record) => {
+                return record.first_name + " " + record.last_name;
+            },
+        },
+        email: {
+            header: "Email",
+            formatter: (_fieldValue, record) => {
+                return record.email;
+            },
+        },
+        phone_number: {
+            header: "Phone Number",
+            formatter: (_fieldValue, record) => {
+                return `${String(record.phone_number).substring(0, 3)}-${String(record.phone_number).substring(3, 6)}-${String(record.phone_number).substring(6, 9)}-${String(record.phone_number).substring(9, 12)}`;
+            },
+        }
+    }
+
+    const btnProps =  {
+        type: "primary",
+        icon: <FileExcelOutlined />,
+        children: <span>Export to EXCEL</span>
+    }
+
     useEffect(() => {
         getCellData()
     // eslint-disable-next-line
@@ -193,7 +220,19 @@ const EventData = () => {
             </Layout.Content>
             <Layout.Content style={{ backgroundColor: "white", padding: "10px 20px", marginBottom: "15px", borderRadius: "5px" }}>
                 <p style={{ fontSize: "16px", fontWeight: 700, paddingTop: "15px"}}>Event Attendee</p>
-                <Table columns={columns} dataSource={data} scroll={{ x: 500 }} />
+                <Table
+                    columns={columns}
+                    dataSource={data}
+                    scroll={{ x: 500 }}
+                    searchable
+                    exportableProps={{ 
+                        fields,
+                        showColumnPicker: true,
+                        btnProps: btnProps,
+                        fileName: "event-attendee",
+                        disabled: data.length === 0 ? true : false
+                    }}
+                />
             </Layout.Content>
         </React.Fragment>
     );

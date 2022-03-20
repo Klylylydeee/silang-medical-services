@@ -126,6 +126,7 @@ exports.createMedicalRecord = async (req, res, next) => {
             const createAuth = () => {
                 const token = jwt.sign({
                     email: req.body.email,
+                    phone_number: req.body.phone_number,
                     barangay: req.body.barangay
                 }, process.env.JWT_BACKEND, { 
                     expiresIn: "1d",
