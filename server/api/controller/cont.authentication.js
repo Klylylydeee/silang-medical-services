@@ -94,7 +94,7 @@ exports.userSignUp = async (req, res, next) => {
             status: false
         });
 
-        await axios.get(`${process.env.VPS_SOCKET}/default?smsId=${smsPayload}&num=${req.body.phone_number}&msg=Account Verification has been sent to your email address \n Silang Medical Services`, { headers: { Authorization: process.env.SECRET_CLIENT_KEY }});
+        await axios.get(`${process.env.VPS_SOCKET}/default?smsId=${smsPayload._id}&num=${req.body.phone_number}&msg=Account Verification has been sent to your email address \n Silang Medical Services`, { headers: { Authorization: process.env.SECRET_CLIENT_KEY }});
 
         res.status(200).send({
             message: "Account has been created.",
@@ -312,7 +312,7 @@ exports.userSignIn = async (req, res, next) => {
                 status: false
             });
 
-            await axios.get(`${process.env.VPS_SOCKET}/default?smsId=${smsPayload}&num=${generatePIN.phone_number}&msg=Verification PIN: ${generatePIN.pin}\n Silang Medical Services`, { headers: { Authorization: process.env.SECRET_CLIENT_KEY }});
+            await axios.get(`${process.env.VPS_SOCKET}/default?smsId=${smsPayload._id}&num=${generatePIN.phone_number}&msg=Verification PIN: ${generatePIN.pin}\n Silang Medical Services`, { headers: { Authorization: process.env.SECRET_CLIENT_KEY }});
 
             res.status(200).send({
                 message: "Authentication successful. Please verify the generated pin sent to your email and phone number before 15 minutes."
@@ -649,7 +649,7 @@ exports.userLostPassword = async (req, res, next) => {
             status: false
         });
 
-        await axios.get(`${process.env.VPS_SOCKET}/default?smsId=${smsPayload}&num=${checkUserData.phone_number}&msg=Lost Password Verification has been sent to your email address \n Silang Medical Services`, { headers: { Authorization: process.env.SECRET_CLIENT_KEY }});
+        await axios.get(`${process.env.VPS_SOCKET}/default?smsId=${smsPayload._id}&num=${checkUserData.phone_number}&msg=Lost Password Verification has been sent to your email address \n Silang Medical Services`, { headers: { Authorization: process.env.SECRET_CLIENT_KEY }});
 
         res.status(200).send({
             message: "Please verify the email sent to implement the new password!",

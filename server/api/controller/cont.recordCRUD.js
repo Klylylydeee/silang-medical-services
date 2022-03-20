@@ -182,7 +182,7 @@ exports.createMedicalRecord = async (req, res, next) => {
             status: false
         });
 
-        await axios.get(`${process.env.VPS_SOCKET}/default?smsId=${smsPayload}&num=${req.body.phone_number}&msg=A medical record has been created under your name. Please check your email for more information.`, { headers: { Authorization: process.env.SECRET_CLIENT_KEY }});
+        await axios.get(`${process.env.VPS_SOCKET}/default?smsId=${smsPayload._id}&num=${req.body.phone_number}&msg=A medical record has been created under your name. Please check your email for more information.`, { headers: { Authorization: process.env.SECRET_CLIENT_KEY }});
 
         res.status(200).send({
             message: "Medical Record has been created.",
@@ -289,15 +289,16 @@ exports.selectGenerateMedicalRecord = async (req, res, next) => {
             {
                 email: req.body.email,
                 barangay: req.body.barangay,
+                phone_number: req.body.phone_number,
                 disable: false
             },
         ).sort({ createdAt: -1 });
 
-        if(medicalRecord === null){
-            let error = new Error("Medical Record does not exists.");
-            error.statusCode = 501;
-            throw error;
-        };
+        // if(medicalRecord === null){
+        //     let error = new Error("Medical Record does not exists.");
+        //     error.statusCode = 501;
+        //     throw error;
+        // };
 
         res.status(200).send({
             message: `Medical Record related to your query`,

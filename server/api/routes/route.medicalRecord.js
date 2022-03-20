@@ -65,6 +65,7 @@ router.post(
     [
         check("email").not().isEmpty(),
         check("barangay").not().isEmpty(),
+        check("phone_number").not().isEmpty(),
     ],
     medicalRecordController.selectGenerateMedicalRecord
 );
