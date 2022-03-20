@@ -1,0 +1,17 @@
+{
+    "name": "build",
+    "version": "1.0.0",
+    "description": "",
+    "main": "build.js",
+    "scripts": {
+        "start": "nodemon build.js"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "express": "^4.17.2",
+        "nodemon": "^2.0.15",
+        "path": "^0.12.7"
+    }
+}
