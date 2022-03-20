@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import Header from "../medical-record/record-header.png";
 import { Avatar, Image, Divider, Empty, Row, Col, Card, Tooltip, Button, Drawer, Form, Input, Select, Descriptions, Badge, Alert } from 'antd';
 import { EllipsisOutlined, PlusCircleOutlined, MinusCircleOutlined } from '@ant-design/icons';
-import Navigation from "../landing/Navigation";
+import Navigation from "../../../test/landing/TestNav";
 import Lumil from "../img/barangay-lumil.png"
 import Grid from "../img/black-grid.png"
 import PK from "../img/barangay-putingkahoy.png"
@@ -130,6 +130,7 @@ const BarangayEvent = () => {
                 toasterRequest({ payloadType: "error", textString: err.message});
         }
     }
+    
     return (
         <React.Fragment>
             <Navigation />
@@ -144,7 +145,6 @@ const BarangayEvent = () => {
                         backgroundImage: `url(${Header})`,
                         backgroundSize: "cover",
                         minHeight: "85vh",
-                        marginTop: dimension >= 4 ? "10vh" : "0",
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
@@ -688,16 +688,16 @@ const BarangayEvent = () => {
                 <Descriptions title="Event Information" bordered style={{ margin: "5px 0 5px 0" }}>
                     <Descriptions.Item label="Event" span={3}>{selectedEvent.event}</Descriptions.Item>
                     <Descriptions.Item label="Description" span={3}>{selectedEvent.description}</Descriptions.Item>
-                    <Descriptions.Item label="Start Date & Time" span={3}>{moment(selectedEvent.start_datetime).format("MMMM DD, YYYY h:m a")}</Descriptions.Item>
-                    <Descriptions.Item label="End Date & Time" span={3}>{moment(selectedEvent.end_datetime).format("MMMM DD, YYYY h:m a")}</Descriptions.Item>
+                    <Descriptions.Item label="Start Date & Time" span={3}>{moment(selectedEvent.start_datetime).format("MMMM DD, YYYY h:mm a")}</Descriptions.Item>
+                    <Descriptions.Item label="End Date & Time" span={3}>{moment(selectedEvent.end_datetime).format("MMMM DD, YYYY h:mm a")}</Descriptions.Item>
                 </Descriptions>
                 <Descriptions title="Requestor Information" bordered style={{ margin: "15px 0 5px 0" }}>
                     <Descriptions.Item label="First Name" span={3}>{selectedEvent.requestor === undefined ? "" : selectedEvent.requestor.first_name }</Descriptions.Item>
                     <Descriptions.Item label="Last Name" span={3}>{selectedEvent.requestor === undefined ? "" : selectedEvent.requestor.last_name}</Descriptions.Item>
                 </Descriptions>
                 <Descriptions title="Record Information" bordered style={{ margin: "15px 0 15px 0" }}>
-                    <Descriptions.Item label="Date Creation" span={3}>{moment(selectedEvent.createdAt).format("MMMM DD, YYYY h:m a")}</Descriptions.Item>
-                    <Descriptions.Item label="Last Accessed" span={3}>{moment(selectedEvent.updatedAt).format("MMMM DD, YYYY h:m a")}</Descriptions.Item>
+                    <Descriptions.Item label="Date Creation" span={3}>{moment(selectedEvent.createdAt).format("MMMM DD, YYYY h:mm a")}</Descriptions.Item>
+                    <Descriptions.Item label="Last Accessed" span={3}>{moment(selectedEvent.updatedAt).format("MMMM DD, YYYY h:mm a")}</Descriptions.Item>
                     <Descriptions.Item label="Created By" span={3}>{selectedEvent.createdBy}</Descriptions.Item>
                     <Descriptions.Item label="Approved By" span={3}>{selectedEvent.approvedBy}</Descriptions.Item>
                     <Descriptions.Item label="Status" span={3}>

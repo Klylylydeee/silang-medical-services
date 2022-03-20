@@ -8,6 +8,7 @@ import { axiosAPI } from "src/app/util/axios";
 import { changeLoader } from "src/app/store/web/webInformation";
 import { DisconnectOutlined } from "@ant-design/icons";
 import { Table } from "ant-table-extensions";
+import { CalendarOutlined, UserOutlined} from "@ant-design/icons";
 
 const EventData = () => {
     const { dimension } = useSelector((state) => state.web); 
@@ -154,36 +155,36 @@ const EventData = () => {
                     subTitle={dimension >= 4 ? `Contains all the data for the event ${params.id}` : ""}
                     style={{ padding: 0, backgroundColor: "#AD72B7" }}
                     extra={[
-                        <Button key="3" onClick={() => {
+                        <Button icon={<CalendarOutlined />} key="3" onClick={() => {
                             history({
                                 pathname: `/dashboard/event-listing/update/${params.id}`
                             })
-                        }} style={{ color: "#AD72B7" }}>Update Event Details</Button>,
-                        <Button key="3" onClick={() => {
+                        }} style={{ color: "#AD72B7" }}>{dimension >= 4 ?  "Update Event Details" : dimension >= 1 ? "Update" : "" }</Button>,
+                        <Button icon={<UserOutlined />} key="3" onClick={() => {
                             history({
                                 pathname: `/dashboard/event-listing/add-attendee/${params.id}`
                             })
-                        }} style={{ color: "#AD72B7" }}>Add Attendee</Button>
+                        }} style={{ color: "#AD72B7" }}>{dimension >= 4 ?  "Add Attendee" : dimension >= 1 ? "Add" : "" }</Button>
                     ]}
                 />
             </Layout.Content>
             <Layout.Content style={{ backgroundColor: "white", padding: "10px 20px", marginBottom: "15px", borderRadius: "5px" }}>
-                <Descriptions title="Event Information" bordered style={{ margin: "5px 0 5px 0" }}>
+                <Descriptions title="Event Information" bordered style={{ margin: "5px 0 5px 0" }} layout={dimension >= 3 ? "horizontal" : "vertical"}>
                     <Descriptions.Item label="Event" span={3}>{formData.event}</Descriptions.Item>
                     <Descriptions.Item label="Description" span={3}>{formData.description}</Descriptions.Item>
                     <Descriptions.Item label="Start Date & Time" span={1.5}>{formData.start_datetime}</Descriptions.Item>
                     <Descriptions.Item label="End Date & Time" span={1.5}>{formData.end_datetime}</Descriptions.Item>
 
                 </Descriptions>
-                <Descriptions title="Requestor Information" bordered style={{ margin: "15px 0 5px 0" }}>
+                <Descriptions title="Requestor Information" bordered style={{ margin: "15px 0 5px 0" }} layout={dimension >= 3 ? "horizontal" : "vertical"}>
                     <Descriptions.Item label="First Name" span={1.5}>{formData.first_name}</Descriptions.Item>
                     <Descriptions.Item label="Email" span={1.5}>{formData.email}</Descriptions.Item>
                     <Descriptions.Item label="Last Name" span={1.5}>{formData.last_name}</Descriptions.Item>
                     <Descriptions.Item label="Phone Number" span={1.5}>{formData.phone_number}</Descriptions.Item>
                 </Descriptions>
-                <Descriptions title="Record Information" bordered style={{ margin: "15px 0 15px 0" }}>
-                    <Descriptions.Item label="Date Creation" span={1.5}>{moment(formData.createdAt).format("MMMM DD,YYYY h:m a")}</Descriptions.Item>
-                    <Descriptions.Item label="Last Accessed" span={1.5}>{moment(formData.updatedAt).format("MMMM DD,YYYY h:m a")}</Descriptions.Item>
+                <Descriptions title="Record Information" bordered style={{ margin: "15px 0 15px 0" }} layout={dimension >= 3 ? "horizontal" : "vertical"}>
+                    <Descriptions.Item label="Date Creation" span={1.5}>{formData.createdAt}</Descriptions.Item>
+                    <Descriptions.Item label="Last Accessed" span={1.5}>{formData.updatedAt}</Descriptions.Item>
                     <Descriptions.Item label="Created By" span={1.5}>{formData.createdBy}</Descriptions.Item>
                     <Descriptions.Item label="Approved By" span={1.5}>{formData.approvedBy}</Descriptions.Item>
                     <Descriptions.Item label="Status" span={3}>

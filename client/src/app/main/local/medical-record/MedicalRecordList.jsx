@@ -8,7 +8,7 @@ import { useSelector, useDispatch } from "react-redux";
 import Header from "./record-header.png";
 import { Avatar, Image, Divider, Empty, Row, Col, Card, Tooltip, Space, Drawer, Layout, Typography, List} from 'antd';
 import { EllipsisOutlined, UserOutlined  } from '@ant-design/icons';
-import Navigation from "../landing/Navigation";
+import Navigation from "../../../test/landing/TestNav";
 import Lumil from "../img/barangay-lumil.png"
 import Grid from "../img/black-grid.png"
 import PK from "../img/barangay-putingkahoy.png"
@@ -49,7 +49,8 @@ const MedicalRecord = () => {
                 }
                 const payloadData = await axiosAPI.post(`medical-record/public/generate-record-list`, {
                     email: decodedData.email,
-                    barangay: decodedData.barangay
+                    barangay: decodedData.barangay, 
+                    phone_number: decodedData.phone_number
                 })
                 setDataList(payloadData.data.payload.map((data) => {
                     return {
@@ -97,7 +98,6 @@ const MedicalRecord = () => {
                         backgroundImage: `url(${Header})`,
                         backgroundSize: "cover",
                         minHeight: "85vh",
-                        marginTop: dimension >= 4 ? "10vh" : "0",
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
@@ -158,7 +158,7 @@ const MedicalRecord = () => {
                                 <Empty description="No matching record found!"/>
                             </div>
                         }
-                        <Row gutter={[24, 0]} >
+                        <Row gutter={[24, 24]} >
                             {
                                 dataList.length !== 0 &&
                                 dataList.map((recordRow) => {

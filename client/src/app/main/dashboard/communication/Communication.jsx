@@ -167,6 +167,10 @@ const Communication = () => {
         return current && current < moment().endOf('day');
     }
 
+    useEffect(() =>{
+        console.log(dimension)
+    }, [dimension])
+
     const updateAnnouncement = async (payload) => {
         try {
             dispatch(changeLoader({ loading: true }))
@@ -237,8 +241,8 @@ const Communication = () => {
                     subTitle={dimension >= 4 ? `Announcements and other message by the Barnagay ${barangay} Officials.` : ""}
                     style={{ padding: 0, backgroundColor: "#AD72B7" }}
                     extra={[
-                        <Button icon={<MailOutlined />} key="3" onClick={() => { setCreateDrawer(true); setSendAnnouncement(false) }} style={{ color: "#AD72B7" }}>{dimension >= 4 ?  "Create Announcement" : "Create" }</Button>,
-                        <Button icon={<UserOutlined />} key="3" onClick={() => { setSubscriptionDrawer(true) }} style={{ color: "#AD72B7" }}>{dimension >= 4 ?  "Subscription List" : "List" }</Button>
+                        <Button icon={<MailOutlined />} key="3" onClick={() => { setCreateDrawer(true); setSendAnnouncement(false) }} style={{ color: "#AD72B7" }}>{dimension >= 4 ?  "Create Announcement" : dimension >= 1 ? "Create" : "" }</Button>,
+                        <Button icon={<UserOutlined />} key="3" onClick={() => { setSubscriptionDrawer(true) }} style={{ color: "#AD72B7" }}>{dimension >= 4 ?  "Subscription List" : dimension >= 1 ? "List" : "" }</Button>
                     ]}
                 />
             </Layout.Content>
@@ -334,7 +338,7 @@ const Communication = () => {
                                     </Descriptions.Item>
                                     <Descriptions.Item label="Email" span={2}>
                                         {selectedComm.requestor ? selectedComm.requestor.email : ""}
-s                                    </Descriptions.Item>
+                                    </Descriptions.Item>
                                     <Descriptions.Item label="Phone Number" span={2}>
                                         {selectedComm.requestor ? selectedComm.requestor.phone_number : ""}
                                     </Descriptions.Item>

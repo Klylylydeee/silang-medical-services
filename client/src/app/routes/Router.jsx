@@ -2,9 +2,9 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 
 // Public route
-import Home from "src/app/main/local/landing/Home";
 import ActivityList from "src/app/main/local/activity/BarangayEventList";
 import MedicalList from "src/app/main/local/medical-record/MedicalRecordList";
+import TestPublic from "src/app/test/landing/TestPublic";
 
 // Private - Unprotected route
 import SignIn from "src/app/main/dashboard/sign-in/SignIn";
@@ -46,7 +46,7 @@ function Router() {
                         // these routes can be accessed from this URL
                         // https://silang-medical.com/
                         <>
-                            <Route path="/" element={<Home />}/>
+                            <Route path="/" element={<TestPublic />}/>
                             {/* Medical Record Components */}
                             <Route path="/medical-record" element={<MedicalList />}/>
                             {/* Barangay Activities Components */}
