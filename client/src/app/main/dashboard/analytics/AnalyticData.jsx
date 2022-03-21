@@ -7,6 +7,8 @@ import { changeLoader } from "src/app/store/web/webInformation";
 import { Pie } from '@ant-design/plots';
 import { Comment, Form, Button, List, Input, Layout, PageHeader, Divider, Tooltip } from "antd";
 import { CloseSquareOutlined } from '@ant-design/icons';
+import { Helmet } from "react-helmet-async";
+
 import "./data.scss"
 
 const CommentList = ({ comments, author, onClick }) => (
@@ -174,6 +176,9 @@ const AnalyticData = () => {
     
     return (
         <React.Fragment>
+            <Helmet>
+                <title>Analytics | Portal Silang Medical Services</title>
+            </Helmet>
             <Layout.Content style={{ backgroundColor: "#AD72B7", padding: "10px 20px", marginBottom: "15px", borderRadius: "5px" }}>
                 <PageHeader
                     ghost={false}

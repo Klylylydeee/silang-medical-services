@@ -5,6 +5,7 @@ import toasterRequest from "src/app/util/toaster";
 import { axiosAPI } from "src/app/util/axios";
 import { changeLoader } from "src/app/store/web/webInformation";
 import moment from "moment";
+import { Helmet } from "react-helmet-async";
 
 import "./default.scss";
 
@@ -42,6 +43,9 @@ const Default = () => {
 
     return (
         <React.Fragment>
+            <Helmet>
+                <title>Dashboard | Portal Silang Medical Services</title>
+            </Helmet>
             <Layout.Content style={{ backgroundColor: "white", padding: "10px 10px 0px 10px", borderRadius: "5px" }}>
                 <List
                     grid={{

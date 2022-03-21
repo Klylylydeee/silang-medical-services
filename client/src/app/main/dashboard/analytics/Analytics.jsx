@@ -6,6 +6,8 @@ import { Area } from '@ant-design/plots';
 import toasterRequest from "src/app/util/toaster";
 import { axiosAPI } from "src/app/util/axios";
 import { changeLoader } from "src/app/store/web/webInformation";
+import { Helmet } from "react-helmet-async";
+
 
 function Analytic() {
     const { dimension } = useSelector((state) => state.web);
@@ -48,6 +50,9 @@ function Analytic() {
 
     return (
         <React.Fragment>
+            <Helmet>
+                <title>Analytics | Portal Silang Medical Services</title>
+            </Helmet>
             {
                 designation !== "Doctor" &&
                 <React.Fragment>

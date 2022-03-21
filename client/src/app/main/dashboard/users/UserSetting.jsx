@@ -9,6 +9,7 @@ import moment from "moment";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import jwt from "jsonwebtoken";
+import { Helmet } from "react-helmet-async";
 
 const { confirm } = Modal;
 
@@ -112,6 +113,9 @@ const UserSetting = () => {
 
     return (
         <React.Fragment>
+            <Helmet>
+                <title>Setting | Portal Silang Medical Services</title>
+            </Helmet>
             <Layout.Content style={{ backgroundColor: "#AD72B7", padding: "10px 20px", marginBottom: "15px", borderRadius: "5px" }}>
                 <PageHeader
                     ghost={false}

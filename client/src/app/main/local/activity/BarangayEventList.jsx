@@ -13,6 +13,7 @@ import Grid from "../img/black-grid.png"
 import PK from "../img/barangay-putingkahoy.png"
 import Footer from "../medical-record/footer.png"
 import moment from "moment";
+import { Helmet } from "react-helmet-async";
 
 const BarangayEvent = () => {
     const { dimension } = useSelector((state) => state.web);
@@ -133,6 +134,11 @@ const BarangayEvent = () => {
     
     return (
         <React.Fragment>
+            <Helmet>
+                <title>Announcement and Events | Silang Medical Services</title>
+                <meta name="description" content="Contains a announcement and event listing of a specific barangay."/>
+                <link rel="canonical" href={`/barangay-activities/${paramsa.barangay}`}/>
+            </Helmet>
             <Navigation />
             <div
                 style={{
@@ -151,7 +157,7 @@ const BarangayEvent = () => {
                         flexDirection: dimension >= 4 ? "row" : "column"
                     }}
                 >
-                    <Avatar src={<Image src={paramsa.barangay === "Lumil" ? Lumil : PK}/>} size={dimension >= 4 ? 175 : 150} style={{ margin: dimension >= 4 ? "0px" : "75px 0 15px 0" }} shape="circle" />
+                    <Avatar src={<Image src={paramsa.barangay === "Lumil" ? Lumil : PK} alt=""/>} size={dimension >= 4 ? 175 : 150} style={{ margin: dimension >= 4 ? "0px" : "75px 0 15px 0" }} shape="circle" />
                     <div style={{ padding: dimension >= 4 ? "0 0 0 75px" : "0 0 75px 0", margin: 0, color: "white", fontSize: "42px", fontWeight: 500 }}>
                         <p>
                             Barangay {paramsa.barangay}
@@ -197,7 +203,7 @@ const BarangayEvent = () => {
                         <Row gutter={[24, 0]} style={{ padding: "20px 0", position: "relative"}} wrap={false}>
                             <Col flex="auto">
                                 <Divider orientation="left" plain style={{ fontSize: "18px", color: "black", fontWeight: 500, }}>
-                                    Announcements ({moment().format("YYYY")})
+                                    Announcements
                                 </Divider>
                             </Col>
                             <Col flex={"130px"}>
@@ -253,7 +259,7 @@ const BarangayEvent = () => {
                         
                         <Row gutter={[24, 0]} style={{ padding: "20px 0", position: "relative"}} wrap={false}>
                             <Col flex="auto">
-                                <Divider orientation="left" style={{ fontSize: "18px", color: "black", fontWeight: 500, padding: "20px 0"}}>{dimension >=4 ? "General and Medical Events": "Events"}  ({moment().format("YYYY")})</Divider>
+                                <Divider orientation="left" style={{ fontSize: "18px", color: "black", fontWeight: 500, padding: "20px 0"}}>{dimension >=4 ? "Medical Events": "Events"}</Divider>
                             </Col>
                             <Col flex={"130px"}>
                             </Col>

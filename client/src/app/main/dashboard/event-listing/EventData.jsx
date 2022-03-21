@@ -9,6 +9,7 @@ import { changeLoader } from "src/app/store/web/webInformation";
 import { DisconnectOutlined } from "@ant-design/icons";
 import { Table } from "ant-table-extensions";
 import { CalendarOutlined, UserOutlined, FileExcelOutlined } from "@ant-design/icons";
+import { Helmet } from "react-helmet-async";
 
 const EventData = () => {
     const { dimension } = useSelector((state) => state.web); 
@@ -175,6 +176,9 @@ const EventData = () => {
     
     return (
         <React.Fragment>
+            <Helmet>
+                <title>Event | Portal Silang Medical Services</title>
+            </Helmet>
             <Layout.Content style={{ backgroundColor: "#AD72B7", padding: "10px 20px", marginBottom: "15px", borderRadius: "5px" }}>
                 <PageHeader
                     ghost={false}

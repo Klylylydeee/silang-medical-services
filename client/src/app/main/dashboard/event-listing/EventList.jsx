@@ -9,6 +9,7 @@ import { changeLoader } from "src/app/store/web/webInformation";
 import { addCellData, resetCell } from "src/app/store/calendar/calendarInformation";
 import "./eventTable.scss"
 import { CalendarOutlined } from "@ant-design/icons";
+import { Helmet } from "react-helmet-async";
 
 const DataCell = (value) => {
     const { cell } = useSelector((state) => state.calendar); 
@@ -91,6 +92,9 @@ const EventList = () => {
     
     return (
         <React.Fragment>
+            <Helmet>
+                <title>Event | Portal Silang Medical Services</title>
+            </Helmet>
             <Layout.Content style={{ backgroundColor: "#AD72B7", padding: "10px 20px", marginBottom: "15px", borderRadius: "5px" }}>
                 <PageHeader
                     ghost={false}

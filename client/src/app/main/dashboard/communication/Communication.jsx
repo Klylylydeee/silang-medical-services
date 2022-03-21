@@ -7,6 +7,7 @@ import { changeLoader } from "src/app/store/web/webInformation";
 import { PageHeader, Layout, Row, Col, Menu, Empty, Pagination, Card, Button, Descriptions, Space, Tooltip, Drawer, Form, Input, Divider, Switch, DatePicker, Alert, Modal } from "antd";
 import { RollbackOutlined, CloseCircleOutlined, InfoCircleOutlined, UserOutlined, MailOutlined, ExclamationCircleOutlined } from "@ant-design/icons";
 import { Table } from "ant-table-extensions";
+import { Helmet } from "react-helmet-async";
 import "./communication.scss";
 
 const { confirm } = Modal;
@@ -234,6 +235,9 @@ const Communication = () => {
 
     return (
         <React.Fragment>
+            <Helmet>
+                <title>Communication | Portal Silang Medical Services</title>
+            </Helmet>
             <Layout.Content style={{ backgroundColor: "#AD72B7", padding: "10px 20px", marginBottom: "15px", borderRadius: "5px" }}>
                 <PageHeader
                     ghost={false}

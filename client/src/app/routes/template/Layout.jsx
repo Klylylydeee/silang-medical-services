@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 // Ant Design layout
 import { Layout, Menu, Image, Breadcrumb, Affix, BackTop, Spin } from "antd";
+import { UpOutlined } from '@ant-design/icons';
 // import { MenuUnfoldOutlined, MenuFoldOutlined, } from "@ant-design/icons";
 import { HomeOutlined } from "@ant-design/icons";
 
@@ -210,11 +211,13 @@ function Dashboard() {
                     justifyContent: "center",
                     alignItems: "center",
                     borderRadius: 4,
-                    backgroundColor: '#1088e9',
+                    backgroundColor: '#8C5C94',
                     color: '#fff',
                     textAlign: 'center',
                     fontSize: 10,
-                }}>Scroll Up</div>
+                }}>
+                    <UpOutlined />
+                </div>
             </BackTop>
         </Layout>
     );

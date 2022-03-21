@@ -7,6 +7,7 @@ import toasterRequest from "src/app/util/toaster";
 import { axiosAPI } from "src/app/util/axios";
 import { changeLoader } from "src/app/store/web/webInformation";
 import moment from "moment";
+import { Helmet } from "react-helmet-async";
 
 const MedicalData = () => {
     const { dimension } = useSelector((state) => state.web); 
@@ -66,6 +67,9 @@ const MedicalData = () => {
     }, []);
     return (
         <React.Fragment>
+            <Helmet>
+                <title>Medical Record | Portal Silang Medical Services</title>
+            </Helmet>
             <Layout.Content style={{ backgroundColor: "#AD72B7", padding: "10px 20px", marginBottom: "15px", borderRadius: "5px" }}>
                 <PageHeader
                     ghost={false}

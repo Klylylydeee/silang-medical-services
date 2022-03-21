@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { axiosAPI } from "src/app/util/axios";
 import { changeLoader } from "src/app/store/web/webInformation";
 import toasterRequest from "src/app/util/toaster";
+import { Helmet } from "react-helmet-async";
 
 const User = () => {
     const params = useParams();
@@ -66,6 +67,9 @@ const User = () => {
         // <div>{params.id}-{searchParams.get("barangay")}</div>
         
         <React.Fragment>
+            <Helmet>
+                <title>User | Portal Silang Medical Services</title>
+            </Helmet>
             <Layout.Content style={{ backgroundColor: "#AD72B7", padding: "10px 20px", marginBottom: "15px", borderRadius: "5px" }}>
                 <PageHeader
                     ghost={false}

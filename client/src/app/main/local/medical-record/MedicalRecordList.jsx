@@ -14,6 +14,7 @@ import Grid from "../img/black-grid.png"
 import PK from "../img/barangay-putingkahoy.png"
 import Footer from "./footer.png"
 import moment from "moment";
+import { Helmet } from "react-helmet-async";
 
 const MedicalRecord = () => {
     const { dimension } = useSelector((state) => state.web);
@@ -86,6 +87,12 @@ const MedicalRecord = () => {
     }, [])
     return (
         <React.Fragment>
+            <Helmet>
+                <title>Medical Record | Silang Medical Services</title>
+                <meta name="description" content="Contains a personal record for a particular citizen of a specific barangay."/>
+                <meta name="robots" content="noindex"/>
+                <link rel="canonical" href="/medical-record"/>
+            </Helmet>
             <Navigation />
             <div
                 style={{
@@ -201,7 +208,7 @@ const MedicalRecord = () => {
             </div>
             <Drawer
                 title={`Medical Record ${drawerData._id}`}
-                width={dimension >= 4 ? 500 : 300}
+                width={dimension >= 4 ? 500 : "100%"}
                 closable={true}
                 onClose={() => {
                     setDrawerVisibility(false)
@@ -251,7 +258,7 @@ const MedicalRecord = () => {
                         size="large"
                         dataSource={drawerData.prescription}
                         renderItem={
-                            item => <List.Item>{item}</List.Item>
+                            item => <List.Item>{`${item.prescription} - ${item.dosage}`}</List.Item>
                         } 
                     />
                 </Card>

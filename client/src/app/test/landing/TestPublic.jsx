@@ -16,6 +16,7 @@ import SwiperCore, { Autoplay, Pagination } from "swiper/core";
 import { useNavigate } from "react-router-dom";
 import jwt from "jsonwebtoken";
 import moment from "moment";
+import { Helmet } from "react-helmet-async";
 
 import TestNav from "./TestNav";
 import "./Landing.scss"
@@ -95,6 +96,10 @@ const TestPublic = () => {
 
     return (
         <div style={{ overflow: "hidden", position: "relative" }}>
+            <Helmet>
+                <title>Silang Medical Services</title>
+                <meta name="description" content="Silang Medical Services provides the latest medical events and announcements through a centralized database that contains medical record in Silang, Cavite."/>
+            </Helmet>
             <TestNav />
             <div
                 id="home"
