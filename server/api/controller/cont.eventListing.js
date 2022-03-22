@@ -371,7 +371,8 @@ exports.publicEventsAndAnnouncement  = async (req, res, next) => {
                 createdAt: {
                     $gte: new Date(`${moment().format("YYYY")}-01-01T00:00:00.0Z`),
                     $lt: new Date(`${moment().format("YYYY")}-12-31T15:58:26.000Z`)
-                }
+                },
+                type: "Public"
             }
         ).sort({ start_datetime: -1})
 

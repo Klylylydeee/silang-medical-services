@@ -1,12 +1,6 @@
 const { Schema, model } = require("mongoose");
-const mongoose = require("mongoose");
 
 const moment = require("moment");
-
-const bcrypt = require("bcrypt");
-const validator = require("validator");
-
-const { firstCharacterUppercase, removeUnderscores} = require("../util/stringHelper");
 
 /**
  * @swagger

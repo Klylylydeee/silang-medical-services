@@ -77,6 +77,9 @@ const validator = require("validator");
  *         approvedBy:
  *           type: string
  *           description: approvedBy  
+ *         type:
+ *           type: string
+ *           description: type 
  *         status:
  *           type: boolean
  *           description: status 
@@ -182,6 +185,14 @@ const eventListingSchema = new Schema(
         },
         approvedBy: {
             type: String
+        },
+        type: {
+            type: String,
+            enum: [
+                "Public",
+                "Private"
+            ],
+            default: "Public"
         },
         status: {
             type: Boolean,

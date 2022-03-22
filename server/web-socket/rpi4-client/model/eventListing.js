@@ -183,6 +183,14 @@ const eventListingSchema = new Schema(
         approvedBy: {
             type: String
         },
+        type: {
+            type: String,
+            enum: [
+                "Public",
+                "Private"
+            ],
+            default: "Public"
+        },
         status: {
             type: Boolean,
             default: true

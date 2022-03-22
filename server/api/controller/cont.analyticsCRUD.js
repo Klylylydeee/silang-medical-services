@@ -23,7 +23,7 @@ exports.analyticsByYear = async (req, res, next) => {
             {
                 $addFields: {
                     month: {
-                        $month: "$createdAt"
+                        $month: { date:'$createdAt',timezone:'Asia/Manila' }
                     },
                     year: {
                         $year: "$createdAt"
@@ -253,7 +253,7 @@ exports.analyticsSpecificDate = async (req, res, next) => {
         
         analyticsData.map((currentData) => {
             currentData.outlier >= 8 ?
-                severityList.mild.push({
+                severityList.severe.push({
                     patient: `${currentData.diagnosis} - ${currentData.first_name} ${currentData.last_name}`,
                     id: currentData._id
                 })
@@ -263,7 +263,7 @@ exports.analyticsSpecificDate = async (req, res, next) => {
                     id: currentData._id
                 })
             :
-                severityList.severe.push({
+                severityList.mild.push({
                     patient: `${currentData.diagnosis} - ${currentData.first_name} ${currentData.last_name}`,
                     id: currentData._id
                 })

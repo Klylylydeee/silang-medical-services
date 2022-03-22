@@ -233,7 +233,7 @@ schedule.scheduleJob(
                                                 await MessageLogs.create({
                                                     request_user_id: recordData.requestor.email,
                                                     receiver_user_id: userData._id,
-                                                    subject: data.announcement,
+                                                    subject: recordData.announcement,
                                                     message: recordData.message,
                                                     type: "Text",
                                                     status: true
@@ -253,7 +253,7 @@ schedule.scheduleJob(
                                                 await MessageLogs.create({
                                                     request_user_id: recordData.requestor.email,
                                                     receiver_user_id: userData._id,
-                                                    subject: data.announcement,
+                                                    subject: recordData.announcement,
                                                     message: recordData.message,
                                                     type: "Text",
                                                     status: false
