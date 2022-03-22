@@ -50,11 +50,12 @@ const TestPublic = () => {
         }
     ]
 
-    const createAuth = (email, barangay, phone_number) => {
+    const createAuth = (email, barangay, phone_number, pin) => {
         const token = jwt.sign({
             email: email,
             barangay: barangay,
-            phone_number: phone_number
+            phone_number: phone_number,
+            pin: pin
         }, process.env.REACT_APP_JWT_BACKEND, {
             expiresIn: "1h",
             algorithm: "HS512"
@@ -64,7 +65,7 @@ const TestPublic = () => {
 
     const onFinish = (values) => {
         const phone_number = values.prefix + values.phone_number;
-        const authToken = createAuth(values.email, values.barangay, phone_number)
+        const authToken = createAuth(values.email, values.barangay, phone_number, values.pin)
         history({
             pathname: `/medical-record?auth=${authToken}`
         })
@@ -388,7 +389,6 @@ const TestPublic = () => {
                             >
                                 <Input />
                             </Form.Item>
-
                             <Form.Item
                                 name="phone_number"
                                 label="Phone Number"
@@ -422,6 +422,13 @@ const TestPublic = () => {
                                     <Select.Option value="Lumil">Lumil</Select.Option>
                                     <Select.Option value="Puting Kahoy">Puting Kahoy</Select.Option>
                                 </Select>
+                            </Form.Item>
+                            <Form.Item
+                                label="PIN"
+                                name="pin"
+                                rules={[{ required: true, message: 'Please input a unique pin!' }, { pattern: "^[0-9]+$", message: "PIN does match the needed pattern"}, { len: 6, message: "PIN should be length of 6 numbers"}]}
+                            >
+                                <Input />
                             </Form.Item>
                             <Form.Item>
                                 <Button type="primary" htmlType="submit">

@@ -702,9 +702,6 @@ const BarangayEvent = () => {
                     <Descriptions.Item label="Last Name" span={3}>{selectedEvent.requestor === undefined ? "" : selectedEvent.requestor.last_name}</Descriptions.Item>
                 </Descriptions>
                 <Descriptions title="Record Information" bordered style={{ margin: "15px 0 15px 0" }}>
-                    <Descriptions.Item label="Date Creation" span={3}>{moment(selectedEvent.createdAt).format("MMMM DD, YYYY h:mm a")}</Descriptions.Item>
-                    <Descriptions.Item label="Last Accessed" span={3}>{moment(selectedEvent.updatedAt).format("MMMM DD, YYYY h:mm a")}</Descriptions.Item>
-                    <Descriptions.Item label="Created By" span={3}>{selectedEvent.createdBy}</Descriptions.Item>
                     <Descriptions.Item label="Approved By" span={3}>{selectedEvent.approvedBy}</Descriptions.Item>
                     <Descriptions.Item label="Status" span={3}>
                         <Badge

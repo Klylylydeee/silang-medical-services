@@ -75,9 +75,11 @@ function Analytic() {
                         slider={{ start: 0.1, end: 0.9}}
                         onReady={(plot) => {
                             plot.on('axis-label:click', (data) => {
-                                history({
-                                    pathname: `/dashboard/analytics/${data.gEvent.target.attrs.text.split(" ")[0]}/${data.gEvent.target.attrs.text.split(" ")[2]}`
-                                })
+                                if(Number.isNaN(Number(data.gEvent.target.attrs.text)) === true){
+                                    history({
+                                        pathname: `/dashboard/analytics/${data.gEvent.target.attrs.text.split(" ")[0]}/${data.gEvent.target.attrs.text.split(" ")[2]}`
+                                    })
+                                }
                             });
                         }}
                         loading={false}

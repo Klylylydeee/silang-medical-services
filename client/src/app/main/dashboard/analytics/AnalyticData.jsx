@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useParams, useSearchParams, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import toasterRequest from "src/app/util/toaster";
 import { axiosAPI } from "src/app/util/axios";
 import { changeLoader } from "src/app/store/web/webInformation";
 import { Pie } from '@ant-design/plots';
-import { Comment, Form, Button, List, Input, Layout, PageHeader, Divider, Tooltip } from "antd";
+import { Comment, Form, Button, List, Input, Layout, PageHeader, Divider, Tooltip, Card, Row, Col, Statistic } from "antd";
 import { CloseSquareOutlined } from '@ant-design/icons';
 import { Helmet } from "react-helmet-async";
 
@@ -69,12 +69,15 @@ const Editor = ({ onChange, onSubmit, submitting, value }) => (
 );
 
 const AnalyticData = () => {
+    const history = useNavigate();
     const { dimension } = useSelector((state) => state.web);
     const { barangay, first_name, last_name, designation } = useSelector((state) => state.user);
     const params = useParams();
     const [ searchParams ] = useSearchParams();
     const dispatch = useDispatch();
     const [pieData, setPieData] = useState([]);
+    const [severity, setSeverity] = useState({ mild: 0, moderate: 0, severe: 0});
+    const [severityList, setSeverityList] = useState({ mild: [], moderate: [], severe: []});
 
     const [state, setState] = useState({
         comments: [],
@@ -159,6 +162,8 @@ const AnalyticData = () => {
                     comments: eventData.data.comments
                 }
             })
+            setSeverity(eventData.data.severityCount)
+            setSeverityList(eventData.data.severityList)
             dispatch(changeLoader({ loading: false }));
         } catch (err) {
             dispatch(changeLoader({ loading: false }))
@@ -205,6 +210,59 @@ const AnalyticData = () => {
                     ]}
                 />
             </Layout.Content>
+            <Layout.Content style={{ backgroundColor: "white", padding: "10px 20px", marginBottom: "15px", borderRadius: "5px" }}>
+                <Card title="Severity Count" bordered={false} style={{ width: "100%" }}>
+                    <Row>
+                        <Col xs={{ span: 24 }} lg={{ span: 8 }}>
+                            <Statistic title="Mild" value={severity.mild} />
+                        </Col>
+                        <Col xs={{ span: 24 }} lg={{ span: 8 }}>
+                            <Statistic title="Moderate" value={severity.moderate} />
+                        </Col>
+                        <Col xs={{ span: 24 }} lg={{ span: 8 }}>
+                            <Statistic title="Severe" value={severity.severe} />
+                        </Col>
+                    </Row>
+                </Card>
+            </Layout.Content>
+            <Row gutter={[24, 24]}>
+                <Col xs={{ span: 24 }} lg={{ span: 8 }}>
+                    <Layout.Content style={{ backgroundColor: "white", padding: "10px 20px", marginBottom: "15px", borderRadius: "5px" }}>
+                        <Divider orientation="left">Mild</Divider>
+                        <List
+                            size="large"
+                            dataSource={severityList.mild}
+                            renderItem={
+                                item => <List.Item style={{ cursor: "pointer" }} onClick={() => { history({ pathname: `/dashboard/medical-records/view/${item.id}` }) }}>{item.patient}</List.Item>
+                            } 
+                        />
+                    </Layout.Content>
+                </Col>
+                <Col xs={{ span: 24 }} lg={{ span: 8 }}>
+                    <Layout.Content style={{ backgroundColor: "white", padding: "10px 20px", marginBottom: "15px", borderRadius: "5px" }}>
+                        <Divider orientation="left">Moderate</Divider>
+                        <List
+                            size="large"
+                            dataSource={severityList.moderate}
+                            renderItem={
+                                item => <List.Item style={{ cursor: "pointer" }} onClick={() => { history({ pathname: `/dashboard/medical-records/view/${item.id}` }) }}>{item.patient}</List.Item>
+                            } 
+                        />
+                    </Layout.Content>
+                </Col>
+                <Col xs={{ span: 24 }} lg={{ span: 8 }}>
+                    <Layout.Content style={{ backgroundColor: "white", padding: "10px 20px", marginBottom: "15px", borderRadius: "5px" }}>
+                        <Divider orientation="left">Severe</Divider>
+                        <List
+                            size="large"
+                            dataSource={severityList.severe}
+                            renderItem={
+                                item => <List.Item style={{ cursor: "pointer" }} onClick={() => { history({ pathname: `/dashboard/medical-records/view/${item.id}` }) }}>{item.patient}</List.Item>
+                            } 
+                        />
+                    </Layout.Content>
+                </Col>
+            </Row>
             <Layout.Content style={{ backgroundColor: "white", padding: "10px 20px", marginBottom: "15px", borderRadius: "5px" }}>
                 <Divider orientation="left" style={{ fontSize: "18px", color: "black", fontWeight: 500 }}>Comments</Divider>
                 <CommentList comments={state.comments} author={{ first_name, last_name }} onClick={removeComment} />

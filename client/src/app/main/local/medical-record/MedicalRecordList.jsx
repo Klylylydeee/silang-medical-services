@@ -51,7 +51,8 @@ const MedicalRecord = () => {
                 const payloadData = await axiosAPI.post(`medical-record/public/generate-record-list`, {
                     email: decodedData.email,
                     barangay: decodedData.barangay, 
-                    phone_number: decodedData.phone_number
+                    phone_number: decodedData.phone_number,
+                    pin: decodedData.pin
                 })
                 setDataList(payloadData.data.payload.map((data) => {
                     return {

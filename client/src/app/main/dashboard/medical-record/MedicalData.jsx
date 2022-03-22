@@ -25,7 +25,8 @@ const MedicalData = () => {
         createdBy: "",
         approvedBy: "",
         createdAt: "",
-        updatedAt: ""
+        updatedAt: "",
+        pin: ""
     });
 
     useEffect(() => {
@@ -45,7 +46,8 @@ const MedicalData = () => {
                     createdBy: medicalData.data.payload.createdBy,
                     approvedBy: medicalData.data.payload.approvedBy,
                     createdAt: medicalData.data.payload.createdAt,
-                    updatedAt: medicalData.data.payload.updatedAt
+                    updatedAt: medicalData.data.payload.updatedAt,
+                    pin: medicalData.data.payload.pin
                 })
                 setPresciptionList(medicalData.data.payload.prescription.map((data) => {
                     return data.prescription !== undefined || data.presciption !== null ?
@@ -160,6 +162,11 @@ const MedicalData = () => {
                                     :
                                         moment().format()
                                 }
+                            </Card>
+                        </Col>
+                        <Col xs={{ span: 24 }}>
+                            <Card title={<Typography.Title level={3} style={{ fontSize: "16px" }}>Identification PIN</Typography.Title>}>
+                                {medData.pin}
                             </Card>
                         </Col>
                     </Row>

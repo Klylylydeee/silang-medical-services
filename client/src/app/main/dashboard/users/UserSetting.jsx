@@ -45,7 +45,7 @@ const UserSetting = () => {
                 status: userCreate.data.payload.status,
                 language: userCreate.data.payload.language,
                 createdAt: moment(userCreate.data.payload.createdAt).format("MMMM DD,YYYY h:mm:ss a"),
-                updatedAt: moment(userCreate.data.payload.updatedAt).format("MMMM DD,YYYY h:mm:ss a"),
+                updatedAt: moment(userCreate.data.payload.updatedAt).add(3, "hours").format("MMMM DD,YYYY h:mm:ss a"),
                 _id: userCreate.data.payload._id
             })
             dispatch(changeLoader({ loading: false }))

@@ -365,7 +365,7 @@ function SignIn() {
                             </Form>
                             <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", paddingTop: "20px" }}>
                                 <p style={{ fontSize: "11px",  fontWeight: 600, color: "gray"}}>Request for threshold reset? Create a <span style={{ color: "#001529", cursor: "default" }} onClick={()=> { currentStep(4) }}>ticket request here</span>.</p>
-                                <p style={{ fontSize: "11px",  fontWeight: 600, color: "gray"}}>Forgot your password? Let us help you <span style={{ color: "#001529", cursor: "default" }} onClick={()=> { currentStep(3) }}>reset it</span>.</p>
+                                {/* <p style={{ fontSize: "11px",  fontWeight: 600, color: "gray"}}>Forgot your password? Let us help you <span style={{ color: "#001529", cursor: "default" }} onClick={()=> { currentStep(3) }}>reset it</span>.</p> */}
                             </div>
                         </div>
                     }
