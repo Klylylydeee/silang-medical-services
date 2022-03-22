@@ -31,7 +31,8 @@ const EventData = () => {
         badgeText: "",
         textData: "",
         createdBy: "",
-        approvedBy: ""
+        approvedBy: "",
+        type: ""
     })
     const [ data, setData ] = useState([]);
 
@@ -65,7 +66,8 @@ const EventData = () => {
                 : 
                     "Event is awaiting for approval.",
                 createdBy: eventData.data.payload.createdBy,
-                approvedBy: eventData.data.payload.approvedBy
+                approvedBy: eventData.data.payload.approvedBy,
+                type: eventData.data.payload.type
             })
             setData(eventData.data.payload.attendee)
             dispatch(changeLoader({ loading: false }));
@@ -218,9 +220,10 @@ const EventData = () => {
                     <Descriptions.Item label="Last Accessed" span={1.5}>{formData.updatedAt}</Descriptions.Item>
                     <Descriptions.Item label="Created By" span={1.5}>{formData.createdBy}</Descriptions.Item>
                     <Descriptions.Item label="Approved By" span={1.5}>{formData.approvedBy}</Descriptions.Item>
-                    <Descriptions.Item label="Status" span={3}>
+                    <Descriptions.Item label="Type" span={1.5}>{formData.type}</Descriptions.Item>
+                    <Descriptions.Item label="Status" span={1.5}>
                         <Badge status={formData.badgeText} text={formData.textData} /></Descriptions.Item>
-                </Descriptions>
+                    </Descriptions>
             </Layout.Content>
             <Layout.Content style={{ backgroundColor: "white", padding: "10px 20px", marginBottom: "15px", borderRadius: "5px" }}>
                 <p style={{ fontSize: "16px", fontWeight: 700, paddingTop: "15px"}}>Event Attendee</p>

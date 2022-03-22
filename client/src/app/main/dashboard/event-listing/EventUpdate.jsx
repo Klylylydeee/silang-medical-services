@@ -43,6 +43,7 @@ const EventUpdate = () => {
                 },
                 barangay: barangay,
                 status: formData.status,
+                type: formData.type,
                 ...(formData.status === true) && { approvedBy: `${first_name} ${last_name} (${designation})`}
             });
             dispatch(changeLoader({ loading: false }));
@@ -72,7 +73,8 @@ const EventUpdate = () => {
                 email: eventListingData.data.payload.requestor.email,
                 start_datetime: moment(eventListingData.data.payload.start_datetime, "YYYY-MM-DD HH:mm:ss"),
                 end_datetime: moment(eventListingData.data.payload.end_datetime, "YYYY-MM-DD HH:mm:ss"),
-                status: eventListingData.data.payload.status
+                status: eventListingData.data.payload.status,
+                type: eventListingData.data.payload.type
             })
             dispatch(changeLoader({ loading: false }))
         } catch (err) {
@@ -180,6 +182,27 @@ const EventUpdate = () => {
                                         required={true}
                                     >
                                         <DatePicker showTime format="YYYY-MM-DD HH:mm:ss" style={{ width: "100%" }} />
+                                    </Form.Item>
+                                </Col>
+                            </Row>
+                            <Row gutter={[24, 0]} style={{ paddingTop: "10px" }}>
+                                <Col xs={{ span: 24 }} >
+                                    <Form.Item
+                                        name="type"
+                                        label="Type"
+                                        tooltip="Basis whether the event can be seen publicly"
+                                        rules={[
+                                            {
+                                                required: true,
+                                                message: "Please fill out this field!",
+                                            },
+                                        ]}
+                                        required={true}
+                                    >
+                                        <Select >
+                                            <Select.Option value={"Public"}>Public</Select.Option>
+                                            <Select.Option value={"Private"}>Private</Select.Option>
+                                        </Select>
                                     </Form.Item>
                                 </Col>
                             </Row>

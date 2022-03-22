@@ -49,7 +49,8 @@ const EventCreate = () => {
                 },
                 barangay: barangay,
                 createdBy: reqStatus === false ? `${first_name} ${last_name} (${designation})` : `${first_name} ${last_name}`,
-                status: false
+                status: false,
+                type: formData.type
             });
             dispatch(changeLoader({ loading: false }));
             toasterRequest({ payloadType: "success", textString: userCreate.data.message});
@@ -170,6 +171,28 @@ const EventCreate = () => {
                                         required={true}
                                     >
                                         <DatePicker showTime format="YYYY-MM-DD HH:mm:ss" style={{ width: "100%" }} />
+                                    </Form.Item>
+                                </Col>
+                            </Row>
+                            <Row gutter={[24, 0]} style={{ paddingTop: "10px" }}>
+                                <Col xs={{ span: 24 }} >
+                                    <Form.Item
+                                        name="type"
+                                        label="Type"
+                                        tooltip="Basis whether the event can be seen publicly"
+                                        rules={[
+                                            {
+                                                required: true,
+                                                message: "Please fill out this field!",
+                                            },
+                                        ]}
+                                        required={true}
+                                        initialValue="Public"
+                                    >
+                                        <Select >
+                                            <Select.Option value={"Public"}>Public</Select.Option>
+                                            <Select.Option value={"Private"}>Private</Select.Option>
+                                        </Select>
                                     </Form.Item>
                                 </Col>
                             </Row>
