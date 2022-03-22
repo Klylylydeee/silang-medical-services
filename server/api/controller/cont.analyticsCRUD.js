@@ -229,6 +229,46 @@ exports.analyticsSpecificDate = async (req, res, next) => {
             }
         });
 
+        
+        let severityCount = {
+            mild: 0,
+            moderate: 0,
+            severe: 0
+        }
+        
+        analyticsData.map((currentData) => {
+            currentData.outlier >= 8 ?
+                severityCount.severe++
+            : currentData.outlier >= 5 ?
+                severityCount.moderate++
+            :
+                severityCount.mild++
+        });
+
+        let severityList = {
+            mild: [],
+            moderate: [],
+            severe: []
+        }
+        
+        analyticsData.map((currentData) => {
+            currentData.outlier >= 8 ?
+                severityList.mild.push({
+                    patient: `${currentData.diagnosis} - ${currentData.first_name} ${currentData.last_name}`,
+                    id: currentData._id
+                })
+            : currentData.outlier >= 5 ?
+                severityList.moderate.push({
+                    patient: `${currentData.diagnosis} - ${currentData.first_name} ${currentData.last_name}`,
+                    id: currentData._id
+                })
+            :
+                severityList.severe.push({
+                    patient: `${currentData.diagnosis} - ${currentData.first_name} ${currentData.last_name}`,
+                    id: currentData._id
+                })
+        });
+
         let commentsData = await AnalyticComments.find(
             {
                 barangay: req.query.barangay,
@@ -250,7 +290,9 @@ exports.analyticsSpecificDate = async (req, res, next) => {
         res.send({
             message: "Specific analytics data",
             payload: filteredData,
-            comments: filteredComment
+            comments: filteredComment,
+            severityCount,
+            severityList
         });
 
     } catch(err) {

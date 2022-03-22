@@ -5,6 +5,7 @@ const momentRandom = require('moment-random');
 const moment = require("moment");
 
 const validator = require("validator");
+const { generatePin } = require("../util/numberHelper");
 
 /**
  * @swagger
@@ -155,6 +156,10 @@ const medicalRecordSchema = new Schema(
                 }
             ]
         },
+        pin: {
+            type: Number,
+            maxlength: 6
+        },
         status: {
             type: Boolean,
             default: true
@@ -173,6 +178,14 @@ const medicalRecordSchema = new Schema(
         }
     }
 );
+
+medicalRecordSchema.pre(
+    "save", 
+    async function(next) {
+        this.pin = generatePin();
+        next();
+    }
+); 
 
 const MedicalRecords = model("medical-records", medicalRecordSchema);
 

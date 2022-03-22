@@ -122,23 +122,28 @@ exports.createMedicalRecord = async (req, res, next) => {
             })
         );
 
+        console.log(medicalRecordData.pin)
+
         try {
             const createAuth = () => {
                 const token = jwt.sign({
                     email: req.body.email,
                     phone_number: req.body.phone_number,
-                    barangay: req.body.barangay
+                    barangay: req.body.barangay,
+                    pin: medicalRecordData.pin
                 }, process.env.JWT_BACKEND, { 
                     expiresIn: "1d",
                     algorithm: "HS512"
                 });
                 return token
             }
+            console.log(createAuth())
             transporter.sendMail({
                 to: req.body.email,
                 subject: `Silang Medical Services - Medical Record`,
                 template: "medical-record",
                 context: {
+                    reference: `Medical Record Reference PIN ${medicalRecordData.pin}`,
                     text: `Please open the following link to check your medical record update:`, 
                     url: `https://silangmedical.com/medical-record?auth=${createAuth()}`
                 },
@@ -291,6 +296,7 @@ exports.selectGenerateMedicalRecord = async (req, res, next) => {
                 email: req.body.email,
                 barangay: req.body.barangay,
                 phone_number: req.body.phone_number,
+                pin: req.body.pin,
                 disable: false
             },
         ).sort({ createdAt: -1 });
