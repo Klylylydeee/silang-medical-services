@@ -209,6 +209,7 @@ const Communication = () => {
                 _id: payload._id,
                 status: false
             });
+            setSelectedComm({});
             getSubscriptionList();
             toasterRequest({ payloadType: "success", textString: formResult.data.message});
         } catch (err) {

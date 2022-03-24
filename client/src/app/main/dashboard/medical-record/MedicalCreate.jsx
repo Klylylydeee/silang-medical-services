@@ -108,6 +108,10 @@ const MedicalCreate = () => {
                                         required: true,
                                         message: "Please fill out this field!",
                                     },
+                                    {
+                                        min: 3,
+                                        message: "Min length of 3 characters"
+                                    }
                                 ]}
                                 required={true}
                             >
@@ -124,6 +128,10 @@ const MedicalCreate = () => {
                                         required: true,
                                         message: "Please fill out this field!",
                                     },
+                                    {
+                                        min: 3,
+                                        message: "Min length of 3 characters"
+                                    }
                                 ]}
                                 required={true}
                             >
@@ -210,12 +218,16 @@ const MedicalCreate = () => {
                                     <Form.Item
                                         name="diagnosis"
                                         label="Diagnosis"
-                                        tooltip="Individual's personal/private email address"
+                                        tooltip="Individual's possible diagnosis"
                                         rules={[
                                             {
                                                 required: true,
                                                 message: "Please fill out this field!",
                                             },
+                                            {
+                                                min: 3,
+                                                message: "Min length of 3 characters"
+                                            }
                                         ]}
                                         required={true}
                                     >
@@ -237,7 +249,7 @@ const MedicalCreate = () => {
                                     <Form.Item
                                         name="outlier"
                                         label="Severity"
-                                        tooltip="Individual's personal/private email address"
+                                        tooltip="Diagnosis severity score"
                                         rules={[
                                             {
                                                 required: true,
@@ -272,12 +284,16 @@ const MedicalCreate = () => {
                                     <Form.Item
                                         name="detailed_report"
                                         label="Detailed Report"
-                                        tooltip="Written representation of the event"
+                                        tooltip="Written representation of the diagnosis"
                                         rules={[
                                             {
                                                 required: true,
                                                 message: "Please fill out this field!",
                                             },
+                                            {
+                                                min: 10,
+                                                message: "Min length of 10 characters"
+                                            }
                                         ]}
                                         required={true}
                                     >
@@ -317,7 +333,7 @@ const MedicalCreate = () => {
                                                 <Form.Item
                                                     name="detailed_report"
                                                     label={`Prescription ${key+1}`}
-                                                    tooltip="Written representation of the event"
+                                                    tooltip="Prescription Listing"
                                                     rules={[
                                                         {
                                                             required: true,
@@ -394,7 +410,7 @@ const MedicalCreate = () => {
                             <Form.Item
                                 name="createdBy"
                                 label="Record Creator"
-                                tooltip="Individual's given birth first name"
+                                tooltip="Creator's given birth first name"
                                 required={true}
                                 initialValue={`${first_name} ${last_name} (${designation})`}
                             >
@@ -405,7 +421,7 @@ const MedicalCreate = () => {
                             <Form.Item
                                 name="approvedBy"
                                 label="Record Approver"
-                                tooltip="Individual's given birth first name"
+                                tooltip="Approver's given birth first name"
                                 required={true}
                                 initialValue={designation === "Doctor" ? `${first_name} ${last_name} (${designation})` : ``}
                             >

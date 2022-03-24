@@ -130,6 +130,10 @@ const MedicalUpdate = () => {
                                         required: true,
                                         message: "Please fill out this field!",
                                     },
+                                    {
+                                        min: 3,
+                                        message: "Min length of 3 characters"
+                                    }
                                 ]}
                                 required={true}
                             >
@@ -146,6 +150,10 @@ const MedicalUpdate = () => {
                                         required: true,
                                         message: "Please fill out this field!",
                                     },
+                                    {
+                                        min: 3,
+                                        message: "Min length of 3 characters"
+                                    }
                                 ]}
                                 required={true}
                             >
@@ -238,6 +246,10 @@ const MedicalUpdate = () => {
                                                 required: true,
                                                 message: "Please fill out this field!",
                                             },
+                                            {
+                                                min: 3,
+                                                message: "Min length of 3 characters"
+                                            }
                                         ]}
                                         required={true}
                                     >
@@ -300,6 +312,10 @@ const MedicalUpdate = () => {
                                                 required: true,
                                                 message: "Please fill out this field!",
                                             },
+                                            {
+                                                min: 10,
+                                                message: "Min length of 10 characters"
+                                            }
                                         ]}
                                         required={true}
                                     >
