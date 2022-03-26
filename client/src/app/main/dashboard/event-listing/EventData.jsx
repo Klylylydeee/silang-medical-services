@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from "react-router-dom";
-import { Layout, PageHeader, Button, Descriptions, Badge, Space, Tooltip } from 'antd';
+import { Layout, PageHeader, Button, Descriptions, Badge, Space, Tooltip, Tag, Modal } from 'antd';
 import { useSelector, useDispatch } from "react-redux";
 import moment from "moment";
 import toasterRequest from "src/app/util/toaster";
@@ -8,7 +8,7 @@ import { axiosAPI } from "src/app/util/axios";
 import { changeLoader } from "src/app/store/web/webInformation";
 import { DisconnectOutlined } from "@ant-design/icons";
 import { Table } from "ant-table-extensions";
-import { CalendarOutlined, UserOutlined, FileExcelOutlined } from "@ant-design/icons";
+import { CalendarOutlined, UserOutlined, FileExcelOutlined, AuditOutlined, ArrowRightOutlined } from "@ant-design/icons";
 import { Helmet } from "react-helmet-async";
 
 const EventData = () => {
@@ -35,6 +35,9 @@ const EventData = () => {
         type: ""
     })
     const [ data, setData ] = useState([]);
+    
+    const [selectedVerificationDetails, setSelectedVerificationDetails] = useState(false);
+    const [selectedVerificationDetailsData, setSelectedVerificationDetailsData] = useState({});
 
     const getCellData = async () => {
         try {
@@ -100,32 +103,73 @@ const EventData = () => {
                 
     const columns = [
         {
-            title: "First Name",
-            dataIndex: "first_name",
-            key: "First Name",
-            width: "20%",
-            sorter: (a, b) => a.first_name.length - b.first_name.length
+            title: 'Full Name',
+            key: 'full name',
+            render: (text, row) => (
+                <Space size="middle">
+                    <p>{text.first_name} {text.last_name}</p>
+                </Space>
+            ),
         },
         {
-            title: "Last Name",
-            dataIndex: "last_name",
-            key: "Last Name",
-            width: "20%",
-            sorter: (a, b) => a.last_name.length - b.last_name.length
+            title: 'Contact Details',
+            key: 'contact details',
+            render: (text, row) => (
+                <Space size="middle">
+                    <p>{text.email}/{text.phone_number}</p>
+                </Space>
+            ),
         },
         {
-            title: "Email",
-            dataIndex: "email",
-            key: "Email",
-            width: "20%",
-            sorter: (a, b) => a.email.length - b.email.length
+            title: 'Status',
+            key: 'status',
+            render: (text, row) => (
+                <Space size="middle">
+                    {
+                        text.isApproved === true ?
+                        <p>{text.status}</p>
+                        :
+                        <Tag color={"#FCA300"}>
+                            Awaiting for approval
+                        </Tag>
+                    }
+                </Space>
+            ),
         },
         {
-            title: "Phone Number",
-            dataIndex: "phone_number",
-            key: "Phone Number",
-            width: "20%",
-            sorter: (a, b) => a.phone_number.length - b.phone_number.length
+            title: 'Verification',
+            key: 'action',
+            render: (text, row) => (
+                <Space size="middle">
+                    {
+                        text.isApproved === false ?
+                            <Tooltip title="Show Verification Details">
+                                <Button
+                                    type="primary"
+                                    onClick={()=> { 
+                                        setSelectedVerificationDetails(!selectedVerificationDetails)
+                                        setSelectedVerificationDetailsData({
+                                            title: text.first_name + " " +text.last_name,
+                                            ...(text.vaccine_card) && { vaccine_card: text.vaccine_card },
+                                            ...(text.any_id) && { any_id: text.any_id },
+                                            ...(text.proof_of_billing) && { proof_of_billing: text.proof_of_billing },
+                                            ...(text.barangay_id_number) && { barangay_id_number: text.barangay_id_number },
+                                            ...(text.facebook_url) && { facebook_url: text.facebook_url },
+                                            ...(text.address) && { address: text.address },
+                                        })
+                                    }}
+                                >
+                                    <AuditOutlined  />
+                                </Button>
+                            </Tooltip>
+                        :
+                            <Tag color={"#AD72B7"}>
+                                Approved & Verified
+                            </Tag>
+                    }
+                    
+                </Space>
+            ),
         },
         {
             title: 'Action',
@@ -139,6 +183,28 @@ const EventData = () => {
                             <DisconnectOutlined />
                         </Button>
                     </Tooltip>
+                    {
+                        text.isApproved === false &&
+                        <Tooltip title="Approve Attendee">
+                            <Button style={{ backgroundColor: "green", color: "white" }} onClick={async ()=> { 
+                                try{
+                                    dispatch(changeLoader({ loading: true }))
+                                    let approveData = await axiosAPI.post(`events/approve-listing-attendee?id=${text._id}`);
+                                    toasterRequest({ payloadType: "success", textString: approveData.data.message});
+                                    getCellData();
+                                    dispatch(changeLoader({ loading: false }));
+                                } catch(err) {
+                                    dispatch(changeLoader({ loading: false }))
+                                    err.response ? 
+                                        toasterRequest({ payloadType: "error", textString: err.response.data.message})
+                                    :
+                                        toasterRequest({ payloadType: "error", textString: err.message});
+                                }
+                            }}>
+                                <ArrowRightOutlined  />
+                            </Button>
+                        </Tooltip>
+                    }
                 </Space>
             ),
         }
@@ -161,6 +227,12 @@ const EventData = () => {
             header: "Phone Number",
             formatter: (_fieldValue, record) => {
                 return `${String(record.phone_number).substring(0, 3)}-${String(record.phone_number).substring(3, 6)}-${String(record.phone_number).substring(6, 9)}-${String(record.phone_number).substring(9, 12)}`;
+            },
+        },
+        status: {
+            header: "Status",
+            formatter: (_fieldValue, record) => {
+                return record.isApproved === true ? `Approved` : `Awaiting for approval`;
             },
         }
     }
@@ -239,8 +311,28 @@ const EventData = () => {
                         fileName: "event-attendee",
                         disabled: data.length === 0 ? true : false
                     }}
+                    searchableProps={{ fuzzySearch: true }}
                 />
             </Layout.Content>
+            <Modal
+                title={selectedVerificationDetailsData.title}
+                visible={selectedVerificationDetails}
+                onCancel={() => {
+                    setSelectedVerificationDetails(!selectedVerificationDetails)
+                }}
+                onOk={() => {
+                    setSelectedVerificationDetails(!selectedVerificationDetails)
+                }}
+            >
+                <Descriptions bordered layout="vertical">
+                        { selectedVerificationDetailsData.address && <Descriptions.Item label="Full Address" span={3}>{selectedVerificationDetailsData.address}</Descriptions.Item> }
+                        { selectedVerificationDetailsData.facebook_url && <Descriptions.Item label="Facebook URL" span={3}>{selectedVerificationDetailsData.facebook_url}</Descriptions.Item> }
+                        { selectedVerificationDetailsData.barangay_id_number && <Descriptions.Item label="Barangay ID Number" span={3}>{selectedVerificationDetailsData.barangay_id_number}</Descriptions.Item> } 
+                        { selectedVerificationDetailsData.vaccine_card && <Descriptions.Item label="Vaccine Card" span={3}><img alt="example" style={{ width: '100%', height: "auto" }} src={selectedVerificationDetailsData.vaccine_card} galleryimg="no"/></Descriptions.Item> }
+                        { selectedVerificationDetailsData.proof_of_billing && <Descriptions.Item label="Proof of Billing" span={3}><img alt="example" style={{ width: '100%', height: "auto" }} src={selectedVerificationDetailsData.proof_of_billing} galleryimg="no"/></Descriptions.Item> }
+                        { selectedVerificationDetailsData.any_id && <Descriptions.Item label="General ID" span={1.5}><img alt="example" style={{ width: '100%', height: "auto" }} src={selectedVerificationDetailsData.any_id} galleryimg="no"/></Descriptions.Item> }
+                </Descriptions>
+            </Modal>
         </React.Fragment>
     );
 };

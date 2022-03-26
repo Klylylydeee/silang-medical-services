@@ -29,7 +29,8 @@ const EventAttendee = () => {
                 first_name,
                 last_name,
                 email,
-                phone_number: prefix + phone_number
+                phone_number: prefix + phone_number,
+                isApproved: true
             });
             dispatch(changeLoader({ loading: false }));
             toasterRequest({ payloadType: "success", textString: userCreate.data.message});

@@ -63,6 +63,8 @@ function App() {
         checkAuthorization();
     // eslint-disable-next-line
     }, []);
+
+    document.addEventListener('contextmenu', (event) => { event.preventDefault() });
     
     return (
         <IntlProvider locale={language} messages={AppLocale[language]}>

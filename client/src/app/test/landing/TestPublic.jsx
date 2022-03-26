@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import PinInput from "react-pin-input";
 import LandingImageP1 from "./LandingImagePart1.png";
 import LandingImageP2 from "./LandingImagePart2.png";
 import LandingLogo from "./LandingLogo.png";
@@ -10,13 +11,16 @@ import ServicesDevice from "./ServicesDevice.png";
 import ServicesGrid from "./ServicesGrid.png";
 import LocationImage from "./LocationImage.png";
 import { Row, Col, Form, Input, Button, Select } from "antd";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Autoplay, Pagination } from "swiper/core";
 import { useNavigate } from "react-router-dom";
 import jwt from "jsonwebtoken";
 import moment from "moment";
 import { Helmet } from "react-helmet-async";
+import toasterRequest from "src/app/util/toaster";
+import { axiosAPI } from "src/app/util/axios";
+import { changeLoader } from "src/app/store/web/webInformation";
 
 import TestNav from "./TestNav";
 import "./Landing.scss"
@@ -25,10 +29,16 @@ SwiperCore.use([Autoplay, Pagination]);
 
 const TestPublic = () => {
     const history = useNavigate();
+    const dispatch = useDispatch();
     const { dimension } = useSelector((state) => state.web);
     const [innerHeight, setInnerHeight] = useState("0px");
     const [offSet, setOffSet] = useState("0px");
     const [swipperIndex, setIndex] = useState(1);
+    const [formStep, setFormStep] = useState(1);
+    const [submissionData, setSubmissionData] = useState({});
+    const [pinCode, setPinCode] = useState("");
+    const [verificationCode, setVerificaitonCode] = useState("");
+    const [disabledForm, setDisabledForm] = useState(false)
 
     const paginationSetting = {
         "dynamicMainBullets": true,
@@ -70,6 +80,80 @@ const TestPublic = () => {
             pathname: `/medical-record?auth=${authToken}`
         })
     };
+
+    const sendPinRequest = async (formData) => {
+        try {
+            dispatch(changeLoader({ loading: true }))
+            const sendVerifyOTP = await axiosAPI.post(`medical-record/public/verify-record-list`, {
+                email: formData.email,
+                phone_number: formData.prefix + formData.phone_number,
+                barangay: formData.barangay,
+                pin: formData.pin
+            });
+            setVerificaitonCode(`${sendVerifyOTP.data.pinLoad}`)
+            dispatch(changeLoader({ loading: false }));
+            toasterRequest({ payloadType: "success", textString: sendVerifyOTP.data.message});
+            setFormStep(2)
+            setSubmissionData(formData)
+        } catch(err){
+            dispatch(changeLoader({ loading: false }))
+            err.response ? 
+                toasterRequest({ payloadType: "error", textString: err.response.data.message === "jwt expired" ? "Authentication expired" : "Authentication incorrect!"})
+            :
+                toasterRequest({ payloadType: "error", textString: err.message === "jwt expired" ? "Authentication expired" : "Authentication incorrect!"});
+        }
+    }
+
+    const verifyPIN = () => {
+        if(verificationCode === pinCode) {
+            onFinish(submissionData)
+        } else {
+            if(localStorage.getItem("public-authorization")){
+                const token = jwt.decode(localStorage.getItem("public-authorization"))
+                localStorage.removeItem("public-authorization")
+                const newToken = jwt.sign({
+                    count: token.count + 1
+                }, process.env.REACT_APP_JWT_BACKEND, {
+                    expiresIn: "1h",
+                    algorithm: "HS512"
+                });
+                localStorage.setItem("public-authorization", newToken)
+                if(token.count + 1 >= 3){
+                    setDisabledForm(true)
+                    toasterRequest({ payloadType: "error", textString: "You have attempted the max attempt. Please wait for a few hours."})
+                } else {
+                    toasterRequest({ payloadType: "error", textString: "Incorrect Verificaiton PIN."})
+                }
+            } else {
+                const token = jwt.sign({
+                    count: 1
+                }, process.env.REACT_APP_JWT_BACKEND, {
+                    expiresIn: "1h",
+                    algorithm: "HS512"
+                });
+                localStorage.setItem("public-authorization", token)
+                toasterRequest({ payloadType: "error", textString: "Incorrect Verificaiton PIN."})
+            }
+        }
+    }
+
+    useEffect(() => {
+        const checkPayload = async () => {
+            try {
+                if(localStorage.getItem("public-authorization")){
+                    await jwt.verify(localStorage.getItem("public-authorization"), process.env.REACT_APP_JWT_BACKEND);
+                    let tokenData = await jwt.decode(localStorage.getItem("public-authorization"));
+                    if(tokenData.count >= 3){
+                        setDisabledForm(true);
+                    }
+                }
+            } catch(err){
+                localStorage.removeItem("public-authorization");
+                setDisabledForm(false);
+            }
+        }
+        checkPayload()
+    }, [])
     
     useEffect(() => {
         // Handler to call on window resize
@@ -372,70 +456,111 @@ const TestPublic = () => {
                         </p>
                     </Col>
                     <Col xs={{ span: 24}} lg={{ span: 12 }} style={{ display: "flex", flexDirection: "column", justifyContent: "center", paddingTop: dimension >= 4 ? "10vh" : "0vh" }}>
-                        <Form
-                            onFinish={onFinish}
-                            layout="vertical"
-                            style={{
-                                padding: dimension >= 4 ? "0 15%" : "0 25px",
-                                position: "relative"
-                            }}
-                        >
-                            <img src={ServicesGrid} alt="" style={{ position: "absolute", height: "25%", width: "auto", bottom: 0, right: 0 }}/>
-                            <Form.Item
-                                label="Email"
-                                name="email"
-                                className="EmailForm"
-                                rules={[{ required: true, message: 'Please input your email!' }, { type: 'email', message: "Incorrect email format!" }]}
+                        {
+                            formStep === 1 &&
+                            <Form
+                                onFinish={sendPinRequest}
+                                layout="vertical"
+                                style={{
+                                    padding: dimension >= 4 ? "0 15%" : "0 25px",
+                                    position: "relative"
+                                }}
                             >
-                                <Input />
-                            </Form.Item>
-                            <Form.Item
-                                name="phone_number"
-                                label="Phone Number"
-                                tooltip="Individual's personal/private Phone Number"
-                                rules={[
-                                    {
-                                        message: "PH Number should start with 639 + the 9 numbers!",
-                                        pattern: new RegExp(/^(\w{9})$/ )
-                                    },
-                                    {
-                                        required: true,
-                                        message: "Please fill out this field!",
-                                    },
-                                ]}
-                                required={true}
+                                <img src={ServicesGrid} alt="" style={{ position: "absolute", height: "25%", width: "auto", bottom: 0, right: 0 }}/>
+                                <Form.Item
+                                    label="Email"
+                                    name="email"
+                                    className="EmailForm"
+                                    rules={[{ required: true, message: 'Please input your email!' }, { type: 'email', message: "Incorrect email format!" }]}
+                                >
+                                    <Input disabled={disabledForm} />
+                                </Form.Item>
+                                <Form.Item
+                                    name="phone_number"
+                                    label="Phone Number"
+                                    tooltip="Individual's personal/private Phone Number"
+                                    rules={[
+                                        {
+                                            message: "PH Number should start with 639 + the 9 numbers!",
+                                            pattern: new RegExp(/^(\w{9})$/ )
+                                        },
+                                        {
+                                            required: true,
+                                            message: "Please fill out this field!",
+                                        },
+                                    ]}
+                                    required={true}
+                                >
+                                    <Input disabled={disabledForm} addonBefore={(
+                                        <Form.Item name="prefix" noStyle initialValue={"639"}>
+                                            <Select >
+                                                <Select.Option value="639">+639</Select.Option>
+                                            </Select>
+                                        </Form.Item>
+                                    )} />
+                                </Form.Item>
+                                <Form.Item
+                                    label="Barangay"
+                                    name="barangay"
+                                    rules={[{ required: true, message: 'Please input your barangay!' }]}
+                                >
+                                    <Select disabled={disabledForm}>
+                                        <Select.Option value="Lumil">Lumil</Select.Option>
+                                        <Select.Option value="Puting Kahoy">Puting Kahoy</Select.Option>
+                                    </Select>
+                                </Form.Item>
+                                <Form.Item
+                                    label="Unique Identifier"
+                                    name="pin"
+                                    rules={[{ required: true, message: 'Please input a unique pin!' }, { pattern: "^[0-9]+$", message: "PIN does match the needed pattern"}, { len: 6, message: "PIN should be length of 6 numbers"}]}
+                                >
+                                    <Input disabled={disabledForm} />
+                                </Form.Item>
+                                <Form.Item>
+                                    <Button type="primary" htmlType="submit" disabled={disabledForm}>
+                                        Search Record
+                                    </Button>
+                                </Form.Item>
+                            </Form>
+                        }
+                        {
+                            formStep === 2 &&
+                            <div
+                                style={{
+                                    padding: dimension >= 4 ? "0 15%" : "0 25px",
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    justifyContent: "center",
+                                    alignItems: "center"
+                                }}
                             >
-                                <Input addonBefore={(
-                                    <Form.Item name="prefix" noStyle initialValue={"639"}>
-                                        <Select >
-                                            <Select.Option value="639">+639</Select.Option>
-                                        </Select>
-                                    </Form.Item>
-                                )} />
-                            </Form.Item>
-                            <Form.Item
-                                label="Barangay"
-                                name="barangay"
-                                rules={[{ required: true, message: 'Please input your barangay!' }]}
-                            >
-                                <Select>
-                                    <Select.Option value="Lumil">Lumil</Select.Option>
-                                    <Select.Option value="Puting Kahoy">Puting Kahoy</Select.Option>
-                                </Select>
-                            </Form.Item>
-                            <Form.Item
-                                label="PIN"
-                                name="pin"
-                                rules={[{ required: true, message: 'Please input a unique pin!' }, { pattern: "^[0-9]+$", message: "PIN does match the needed pattern"}, { len: 6, message: "PIN should be length of 6 numbers"}]}
-                            >
-                                <Input />
-                            </Form.Item>
-                            <Form.Item>
-                                <Button type="primary" htmlType="submit">
-                                    Search Record
-                                </Button>
-                            </Form.Item>
-                        </Form>
+                                <p>An OTP verification pin has been sent to your email and phone address. Once received, please verify through the pin input below:</p>
+                                <PinInput
+                                    length={6}
+                                    focus={true}
+                                    onChange={(pin) => { setPinCode(pin)  }}
+                                    type="numeric"
+                                    inputMode="number"
+                                    inputStyle={{ borderColor: 'black' }}
+                                    inputFocusStyle={{ borderColor: '#AD72B7' }}
+                                    autoSelect={true}
+                                    regexCriteria={/^[0-9]*$/}
+                                />
+                                <Row align="middle" justify="center"  gutter={[50, 50]} style={{ width: "100%", marginTop: "20px"}}>
+                                    <Col>
+                                        <Button type="primary" htmlType="submit" onClick={() => { setFormStep(1) }}>
+                                            Return to Form
+                                        </Button>
+                                    </Col>
+                                    <Col>
+                                        <Button type="primary" htmlType="submit" disabled={disabledForm === false ? pinCode.length !== 6 ? true : false : true } onClick={() => { verifyPIN() }}>
+                                            Submit
+                                        </Button>
+                                    </Col>
+                                </Row>
+                            </div>
+
+                        }
                     </Col>
                 </Row>
             </div>

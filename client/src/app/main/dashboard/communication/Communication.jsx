@@ -4,8 +4,8 @@ import toasterRequest from "src/app/util/toaster";
 import { axiosAPI } from "src/app/util/axios";
 import moment from "moment";
 import { changeLoader } from "src/app/store/web/webInformation";
-import { PageHeader, Layout, Row, Col, Menu, Empty, Pagination, Card, Button, Descriptions, Space, Tooltip, Drawer, Form, Input, Divider, Switch, DatePicker, Alert, Modal } from "antd";
-import { RollbackOutlined, CloseCircleOutlined, InfoCircleOutlined, UserOutlined, MailOutlined, ExclamationCircleOutlined } from "@ant-design/icons";
+import { PageHeader, Layout, Row, Col, Menu, Empty, Pagination, Card, Button, Descriptions, Space, Tooltip, Drawer, Form, Input, Divider, Switch, DatePicker, Alert, Modal, Tag } from "antd";
+import { AuditOutlined, CloseCircleOutlined, InfoCircleOutlined, UserOutlined, MailOutlined, ExclamationCircleOutlined, ArrowRightOutlined } from "@ant-design/icons";
 import { Table } from "ant-table-extensions";
 import { Helmet } from "react-helmet-async";
 import "./communication.scss";
@@ -35,6 +35,9 @@ const Communication = () => {
     const [ data, setData ] = useState([]);
     const [ subData, setSubData ] = useState([]);
     const titleRef = useRef();
+
+    const [selectedVerificationDetails, setSelectedVerificationDetails] = useState(false);
+    const [selectedVerificationDetailsData, setSelectedVerificationDetailsData] = useState({});
                 
     const columns = [
         {
@@ -63,32 +66,12 @@ const Communication = () => {
             key: "Status",
             width: "20%",
             sorter: (a, b) => a.phone_number.length - b.phone_number.length
-        },
-        {
-            title: 'Action',
-            key: 'action',
-            render: (text, row) => (
-                <Space size="middle">
-                    {
-                        text.status === "Failed" ?
-                            <Tooltip title="Resend">
-                                <Button style={{ backgroundColor: "green", color: "white" }} onClick={()=> { 
-                                }}>
-                                    <RollbackOutlined  />
-                                </Button>
-                            </Tooltip>
-                        :
-                            <React.Fragment />
-                    }
-                </Space>
-            ),
         }
     ];
     const subscriptionColumns = [
         {
             title: 'Full Name',
             key: 'full name',
-            width: "30%",
             render: (text, row) => (
                 <Space size="middle">
                     <p>{text.first_name} {text.last_name}</p>
@@ -99,15 +82,91 @@ const Communication = () => {
             title: "Email",
             dataIndex: "email",
             key: "Email",
-            width: "30%",
             sorter: (a, b) => a.email.length - b.email.length
         },
         {
             title: "Phone Number",
             dataIndex: "phone_number",
             key: "Phone Number",
-            width: "30%",
             sorter: (a, b) => a.phone_number.length - b.phone_number.length
+        },
+        {
+            title: "Address",
+            dataIndex: "address",
+            key: "Address",
+            sorter: (a, b) => a.address.length - b.address.length
+        },
+        {
+            title: 'Verification',
+            key: 'action',
+            render: (text, row) => (
+                <Space size="middle">
+                    {
+                        text.status === false ?
+                            <Tooltip title="Show Verification Details">
+                                <Button
+                                    type="primary"
+                                    onClick={()=> { 
+                                        setSelectedVerificationDetails(!selectedVerificationDetails)
+                                        setSelectedVerificationDetailsData({
+                                            title: text.first_name + " " +text.last_name,
+                                            ...(text.vaccine_card) && { vaccine_card: text.vaccine_card },
+                                            ...(text.any_id) && { any_id: text.any_id },
+                                            ...(text.proof_of_billing) && { proof_of_billing: text.proof_of_billing },
+                                            ...(text.barangay_id_number) && { barangay_id_number: text.barangay_id_number },
+                                            ...(text.facebook_url) && { facebook_url: text.facebook_url },
+                                            ...(text.address) && { address: text.address },
+                                        })
+                                    }}
+                                >
+                                    <AuditOutlined  />
+                                </Button>
+                            </Tooltip>
+                        :
+                            <Tag color={"#AD72B7"}>
+                                Approved & Verified
+                            </Tag>
+                    }
+                    
+                </Space>
+            ),
+        },
+        {
+            title: 'Action',
+            key: 'action',
+            render: (text, row) => (
+                <Space size="middle">
+                    {
+                        text.status === false ?
+                            <Tooltip title="Enable subscription">
+                                <Button style={{ backgroundColor: "green", color: "white" }} onClick={async ()=> { 
+                                    try{
+                                        dispatch(changeLoader({ loading: true }))
+                                        let approveData = await axiosAPI.post(`subscription/approve-listing`, {
+                                            id: text._id
+                                        });
+                                        toasterRequest({ payloadType: "success", textString: approveData.data.message});
+                                        let subscriptList = await axiosAPI.get(`subscription/listing?barangay=${barangay}`);
+                                        setSubData(subscriptList.data.payload)
+                                        dispatch(changeLoader({ loading: false }))
+                                    } catch(err) {
+                                        dispatch(changeLoader({ loading: false }))
+                                        err.response ? 
+                                            toasterRequest({ payloadType: "error", textString: err.response.data.message})
+                                        :
+                                            toasterRequest({ payloadType: "error", textString: err.message});
+                                    }
+                                }}>
+                                    <ArrowRightOutlined  />
+                                </Button>
+                            </Tooltip>
+                        :
+                            <Tag color={"#AD72B7"}>
+                                Approved & Verified
+                            </Tag>
+                    }
+                </Space>
+            ),
         }
     ];
 
@@ -116,6 +175,7 @@ const Communication = () => {
             dispatch(changeLoader({ loading: true }))
             let subscriptList = await axiosAPI.get(`subscription/listing?barangay=${barangay}`);
             let announcementList = await axiosAPI.get(`communication/listing/${barangay}`);
+            console.log(subscriptList)
             setCommData(announcementList.data.payload)
             setSubData(subscriptList.data.payload)
             dispatch(changeLoader({ loading: false }))
@@ -168,10 +228,6 @@ const Communication = () => {
         return current && current < moment().endOf('day');
     }
 
-    useEffect(() =>{
-        console.log(dimension)
-    }, [dimension])
-
     const updateAnnouncement = async (payload) => {
         try {
             dispatch(changeLoader({ loading: true }))
@@ -179,6 +235,7 @@ const Communication = () => {
                 _id: updateDrawerData._id,
                 announcement: payload.announcement,
                 message: payload.message,
+                barangay: barangay,
                 announcement_datetime: moment(payload.announcement_datetime).format("YYYY-MM-DD h:mm:ss"),
                 requestor: {
                     first_name: first_name,
@@ -609,7 +666,7 @@ const Communication = () => {
             </Drawer>
             <Drawer
                 title={`Subscription List`}
-                width={dimension >= 4 ? "50%" : "100%"}
+                width={dimension >= 4 ? "75%" : "100%"}
                 closable={true}
                 onClose={() => {
                     setSubscriptionDrawer(false)
@@ -619,6 +676,25 @@ const Communication = () => {
             >
                 <Table columns={subscriptionColumns} dataSource={subData} scroll={{ x: 500 }} />
             </Drawer>
+            <Modal
+                title={selectedVerificationDetailsData.title}
+                visible={selectedVerificationDetails}
+                onCancel={() => {
+                    setSelectedVerificationDetails(!selectedVerificationDetails)
+                }}
+                onOk={() => {
+                    setSelectedVerificationDetails(!selectedVerificationDetails)
+                }}
+            >
+                <Descriptions bordered layout="vertical">
+                        { selectedVerificationDetailsData.address && <Descriptions.Item label="Full Address" span={3}>{selectedVerificationDetailsData.address}</Descriptions.Item> }
+                        { selectedVerificationDetailsData.facebook_url && <Descriptions.Item label="Facebook URL" span={3}>{selectedVerificationDetailsData.facebook_url}</Descriptions.Item> }
+                        { selectedVerificationDetailsData.barangay_id_number && <Descriptions.Item label="Barangay ID Number" span={3}>{selectedVerificationDetailsData.barangay_id_number}</Descriptions.Item> } 
+                        { selectedVerificationDetailsData.vaccine_card && <Descriptions.Item label="Vaccine Card" span={3}><img alt="example" style={{ width: '100%', height: "auto" }} src={selectedVerificationDetailsData.vaccine_card} galleryimg="no"/></Descriptions.Item> }
+                        { selectedVerificationDetailsData.proof_of_billing && <Descriptions.Item label="Proof of Billing" span={3}><img alt="example" style={{ width: '100%', height: "auto" }} src={selectedVerificationDetailsData.proof_of_billing} galleryimg="no"/></Descriptions.Item> }
+                        { selectedVerificationDetailsData.any_id && <Descriptions.Item label="General ID" span={1.5}><img alt="example" style={{ width: '100%', height: "auto" }} src={selectedVerificationDetailsData.any_id} galleryimg="no"/></Descriptions.Item> }
+                </Descriptions>
+            </Modal>
         </React.Fragment>
     );
 };

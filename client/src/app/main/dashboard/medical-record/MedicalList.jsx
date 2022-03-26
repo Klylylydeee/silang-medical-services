@@ -93,6 +93,13 @@ const MedicalList = () => {
             title: 'Action',
             key: 'action',
             render: (text, record) => (
+                text.disable === true ?
+                <Space size="middle">
+                    <Tag color={"#fb6666"}>
+                        Disabled by <p style={{ padding: 0, margin: 0 }}>{text.disabledBy}</p>
+                    </Tag>
+                </Space>
+                :
                 <Space size="middle">
                     <Tooltip title="View Medical Record" >
                         <Button
@@ -182,7 +189,8 @@ const MedicalList = () => {
                                             dispatch(changeLoader({ loading: true }))
                                             const postFormData = await axiosAPI.patch(`medical-record/private/update-record`, {
                                                 id: text._id,
-                                                disable: true
+                                                disable: true,
+                                                disabledBy: `${first_name} ${last_name} (${designation}) `
                                             })
                                             dispatch(changeLoader({ loading: false }));
                                             toasterRequest({ payloadType: "success", textString: postFormData.data.message});
@@ -241,57 +249,57 @@ const MedicalList = () => {
 
     ];
 
-    const fields = {
-        full_name: {
-            header: "Full Name",
-            formatter: (_fieldValue, record) => {
-                return record.full_name;
-            },
-        },
-        email: {
-            header: "Email",
-            formatter: (_fieldValue, record) => {
-                console.log(record)
-                return record.email;
-            },
-        },
-        phone_number: {
-            header: "Phone Number",
-            formatter: (_fieldValue, record) => {
-                return `${String(record.phone_number).substring(0, 3)}-${String(record.phone_number).substring(3, 6)}-${String(record.phone_number).substring(6, 9)}-${String(record.phone_number).substring(9, 12)}`;
-            },
-        },
-        diagnosis: {
-            header: "Diagnosis",
-            formatter: (_fieldValue, record) => {
-                return record.diagnosis;
-            },
-        },
-        detailed_report: {
-            header: "Detailed Report",
-            formatter: (_fieldValue, record) => {
-                return record.detailed_report;
-            },
-        },
-        outlier: {
-            header: "Outlier Score",
-            formatter: (_fieldValue, record) => {
-                return record.outlier;
-            },
-        },
-        createdAt: {
-            header: "Date Creation",
-            formatter: (_fieldValue, record) => {
-                return moment(record.createdAt).format("MMMM DD,YYYY h:mm a")
-            },
-        }
-    }
+    // const fields = {
+    //     full_name: {
+    //         header: "Full Name",
+    //         formatter: (_fieldValue, record) => {
+    //             return record.full_name;
+    //         },
+    //     },
+    //     email: {
+    //         header: "Email",
+    //         formatter: (_fieldValue, record) => {
+    //             console.log(record)
+    //             return record.email;
+    //         },
+    //     },
+    //     phone_number: {
+    //         header: "Phone Number",
+    //         formatter: (_fieldValue, record) => {
+    //             return `${String(record.phone_number).substring(0, 3)}-${String(record.phone_number).substring(3, 6)}-${String(record.phone_number).substring(6, 9)}-${String(record.phone_number).substring(9, 12)}`;
+    //         },
+    //     },
+    //     diagnosis: {
+    //         header: "Diagnosis",
+    //         formatter: (_fieldValue, record) => {
+    //             return record.diagnosis;
+    //         },
+    //     },
+    //     detailed_report: {
+    //         header: "Detailed Report",
+    //         formatter: (_fieldValue, record) => {
+    //             return record.detailed_report;
+    //         },
+    //     },
+    //     outlier: {
+    //         header: "Outlier Score",
+    //         formatter: (_fieldValue, record) => {
+    //             return record.outlier;
+    //         },
+    //     },
+    //     createdAt: {
+    //         header: "Date Creation",
+    //         formatter: (_fieldValue, record) => {
+    //             return moment(record.createdAt).format("MMMM DD,YYYY h:mm a")
+    //         },
+    //     }
+    // }
 
-    const btnProps =  {
-        type: "primary",
-        icon: <FileExcelOutlined />,
-        children: <span>Export to EXCEL</span>
-    }
+    // const btnProps =  {
+    //     type: "primary",
+    //     icon: <FileExcelOutlined />,
+    //     children: <span>Export to EXCEL</span>
+    // }
 
     const getCellData = async () => {
         try {
@@ -308,7 +316,9 @@ const MedicalList = () => {
                     createdAt: record.createdAt,
                     status: record.status,
                     _id: record._id,
-                    ...(designation === "Doctor") && { barangay: record.barangay}
+                    ...(designation === "Doctor") && { barangay: record.barangay},
+                    disable: record.disable,
+                    disabledBy: record.disabledBy
                 }
             });
             setTableData(filteredData)
@@ -359,14 +369,16 @@ const MedicalList = () => {
                     columns={columns}
                     dataSource={tableData}
                     scroll={{ x: 500 }} 
-                    searchable
-                    exportableProps={{ 
-                        fields,
-                        showColumnPicker: true,
-                        btnProps: btnProps,
-                        fileName: "medical-record",
-                        disabled: tableData.length === 0 ? true : false
-                    }} />
+                    searchable={true}
+                    // exportableProps={{ 
+                    //     fields,
+                    //     showColumnPicker: true,
+                    //     btnProps: btnProps,
+                    //     fileName: "medical-record",
+                    //     disabled: tableData.length === 0 ? true : false
+                    // }}
+                    searchableProps={{ fuzzySearch: true }}
+                    />
             </Layout.Content>
         </React.Fragment>
     );
