@@ -167,13 +167,16 @@ const medicalRecordSchema = new Schema(
         disable: {
             type: Boolean,
             default: false
+        },
+        disabledBy: {
+            type: String
         }
     },
     {
         timestamps: { 
             currentTime: () => {
-                return moment(momentRandom("2022-12-31", "2021-01-01")).utc("Asia/Singapore").format();
-                // return moment().format();
+                // return moment(momentRandom("2022-12-31", "2021-01-01")).utc("Asia/Singapore").format();
+                return moment().format();
             }
         }
     }
@@ -182,7 +185,13 @@ const medicalRecordSchema = new Schema(
 medicalRecordSchema.pre(
     "save", 
     async function(next) {
-        this.pin = generatePin();
+        const unique_identifier_string = this._id.toString().split("");
+        let newPin = "";
+        for (let i = 0; i < 6; i++) {
+            const randomSelect = Math.floor(Math.random() * unique_identifier_string.length);
+            newPin += unique_identifier_string[randomSelect]
+        }
+        this.pin = newPin;
         next();
     }
 ); 

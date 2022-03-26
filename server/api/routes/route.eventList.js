@@ -60,6 +60,15 @@ router.post(
 );
 
 router.post(
+    "/approve-listing-attendee",
+    [
+        query("id").not().isEmpty()
+    ],
+    validateAuthorization,
+    eventController.approveAttendee
+);
+
+router.post(
     "/remove-listing-attendee",
     [
         query("id").not().isEmpty(),

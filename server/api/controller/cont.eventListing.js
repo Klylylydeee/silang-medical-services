@@ -1,5 +1,6 @@
 const EventListing = require("../model/eventListing");
 const Announcement = require("../model/announcement");
+const SubcribedCitizen = require("../model/subscribedCitizen.js");
 
 const { validateRequest } = require("../util/jsonValidate");
 
@@ -200,34 +201,76 @@ exports.updateBarangayEventAttendee  = async (req, res, next) => {
 
         validateRequest(req);
 
-        let emailExist = await EventListing.findOne(
-            {
-                _id: req.query.id,
-                barangay: req.query.barangay,
-                "attendee.email": req.body.email
-            }
-        );
+        let referenceAccount;
 
-        if(emailExist !== null){
-            let error = new Error("Email has already been registered.");
-            error.statusCode = 501;
-            throw error;
-        };
+        if(!req.body.reference_id){
+            let emailExist = await EventListing.findOne(
+                {
+                    _id: req.query.id,
+                    barangay: req.query.barangay,
+                    "attendee.email": req.body.email
+                }
+            );
+    
+            if(emailExist !== null){
+                let error = new Error("Email has already been registered.");
+                error.statusCode = 501;
+                throw error;
+            };
+    
+            let phoneExist = await EventListing.findOne(
+                {
+                    _id: req.query.id,
+                    barangay: req.query.barangay,
+                    "attendee.phone_number": req.body.phone_number
+                }
+            );
+    
+            if(phoneExist !== null){
+                let error = new Error("Phone Number has already been registered.");
+                error.statusCode = 501;
+                throw error;
+            };
+        } else {
+            referenceAccount = await SubcribedCitizen.findOne({
+                _id: req.body.reference_id,
+                status: true
+            })
 
-        let phoneExist = await EventListing.findOne(
-            {
-                _id: req.query.id,
-                barangay: req.query.barangay,
-                "attendee.phone_number": req.body.phone_number
-            }
-        );
+            if(referenceAccount === null){
+                let error = new Error("Reference number does not exists.");
+                error.statusCode = 501;
+                throw error;
+            };
 
-        if(phoneExist !== null){
-            let error = new Error("Phone Number has already been registered.");
-            error.statusCode = 501;
-            throw error;
-        };
+            let emailExist = await EventListing.findOne(
+                {
+                    _id: req.query.id,
+                    "attendee.email": referenceAccount.email
+                }
+            );
+    
+            if(emailExist !== null){
+                let error = new Error("Email has already been registered.");
+                error.statusCode = 501;
+                throw error;
+            };
+    
+            let phoneExist = await EventListing.findOne(
+                {
+                    _id: req.query.id,
+                    "attendee.phone_number": referenceAccount.phone_number
+                }
+            );
+    
+            if(phoneExist !== null){
+                let error = new Error("Phone Number has already been registered.");
+                error.statusCode = 501;
+                throw error;
+            };
+        }
 
+        
         let eventsData = await EventListing.findOneAndUpdate(
             { 
                 _id: req.query.id,
@@ -235,9 +278,20 @@ exports.updateBarangayEventAttendee  = async (req, res, next) => {
             },
             {
                 $push: {
-                    attendee: {
-                        ...req.body
-                    }
+                    attendee: 
+                    req.body.reference_id ?
+                        {
+                            first_name: referenceAccount.first_name,
+                            last_name: referenceAccount.last_name,
+                            email: referenceAccount.email,
+                            phone_number: referenceAccount.phone_number,
+                            address: referenceAccount.address,
+                            isApproved: true
+                        }
+                    :
+                        {
+                            ...req.body
+                        }
                 }
             },
             { 
@@ -255,6 +309,46 @@ exports.updateBarangayEventAttendee  = async (req, res, next) => {
         res.status(200).send({
             message: "Attendee added!",
             payload: eventsData
+        });
+
+    } catch(err) {
+
+        err.statusCode === undefined ? err.statusCode = 500 : "";
+        return next(err);
+
+    };
+
+};
+
+exports.approveAttendee  = async (req, res, next) => {
+
+    try {
+
+        validateRequest(req);
+        
+        let eventsData = await EventListing.updateOne(
+            {
+                "attendee._id": req.query.id
+            },
+            {
+                $set: {
+                    "attendee.$.isApproved": true
+                }
+            },
+            { 
+                new: true,
+                timestamps: true
+            }
+        )
+
+        if(eventsData === null){
+            let error = new Error("Event does not exists.");
+            error.statusCode = 501;
+            throw error;
+        };
+
+        res.status(200).send({
+            message: "Attendee added!"
         });
 
     } catch(err) {

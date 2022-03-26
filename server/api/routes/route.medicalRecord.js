@@ -70,6 +70,17 @@ router.post(
     medicalRecordController.selectGenerateMedicalRecord
 );
 
+router.post(
+    "/public/verify-record-list",
+    [
+        check("email").not().isEmpty(),
+        check("barangay").not().isEmpty(),
+        check("phone_number").not().isEmpty(),
+        check("pin").not().isEmpty()
+    ],
+    medicalRecordController.publicOTP
+);
+
 router.get(
     "/auto-complete",
     [

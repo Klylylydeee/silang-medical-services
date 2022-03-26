@@ -44,8 +44,15 @@ exports.createAnnouncement = async (req, res, next) => {
         validateRequest(req);
 
         let citizenData = await SubcribedCitizen.find({
-            barangay: req.body.barangay
+            barangay: req.body.barangay,
+            status: true
         });
+
+        if(citizenData === null || citizenData.length  === 0){
+            let error = new Error("There are currently no subscribed citizen to send an announcement!");
+            error.statusCode = 501;
+            throw error;
+        }
 
         let announcementsData = await Announcement.create({
             ...req.body,
@@ -151,8 +158,15 @@ exports.updateAnnouncement = async (req, res, next) => {
         validateRequest(req);
 
         let citizenData = await SubcribedCitizen.find({
-            barangay: req.body.barangay
+            barangay: req.body.barangay,
+            status: true
         });
+
+        if(citizenData === null || citizenData.length  === 0){
+            let error = new Error("There are currently no subscribed citizen to send an announcement!");
+            error.statusCode = 501;
+            throw error;
+        }
 
         let announcementsData = await Announcement.findOneAndUpdate(
             { 

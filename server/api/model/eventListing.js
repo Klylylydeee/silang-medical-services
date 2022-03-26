@@ -168,6 +168,29 @@ const eventListingSchema = new Schema(
                         "Failed"
                     ],
                     default: "Queued"
+                },
+                address: {
+                    type: String,
+                    required: true
+                },
+                isApproved: {
+                    type: Boolean,
+                    default: false
+                },
+                facebook_url: {
+                    type: String
+                },
+                barangay_id_number: {
+                    type: String
+                },
+                vaccine_card: {
+                    type: String
+                },
+                proof_of_billing: {
+                    type: String
+                },
+                any_id: {
+                    type: String
                 }
             }]
         },

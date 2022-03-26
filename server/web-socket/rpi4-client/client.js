@@ -317,6 +317,9 @@ schedule.scheduleJob(
                     return new Promise((resolveData) => {
                         forAsync(recordData.attendee, (userData, dataIndex) => {
                             return new Promise((resolveUser) => {
+                                if(userData.isApproved === false){
+                                    resolveUser();
+                                }
                                 modem.sendSMS(
                                     userData.phone_number,
                                     `Barangay ${recordData.barangay} Event. Please check your email or the website for more details. \n Silang Medical Services`,

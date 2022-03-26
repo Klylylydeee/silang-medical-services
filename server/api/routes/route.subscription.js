@@ -14,6 +14,7 @@ router.post(
         check("email").not().isEmpty(),
         check("phone_number").not().isEmpty(),
         check("barangay").not().isEmpty(),
+        check("address").not().isEmpty()
     ],
     subscriptionController.createSubscription
 );
@@ -25,6 +26,15 @@ router.get(
     ],
     validateAuthorization,
     subscriptionController.getSubscription
+);
+
+router.post(
+    "/approve-listing",
+    [
+        check("id").not().isEmpty(),
+    ],
+    validateAuthorization,
+    subscriptionController.approveSubscription
 );
 
 module.exports = router;
