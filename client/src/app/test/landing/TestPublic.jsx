@@ -299,7 +299,7 @@ const TestPublic = () => {
                                     <p style={{ color: "#AD72B7", fontSize: "34px", fontWeight: 500, padding: 0, margin: 0 }}>Communication</p>
                                 </Row>
                                 <Row >
-                                    <p style={{ fontSize: "18px" }}>Public announcements, health-related reports, and other information to be distributed by SMS and email feature present in the system.</p>
+                                    <p style={{ fontSize: "18px" }}>Public announcements, health-related reports, and other information to be distributed by SMS and email feature are present in the system.</p>
                                 </Row>
                             </Col>
                             <Col style={{ paddingLeft: dimension >= 4 ? "13vh" : "0vh" }}>
@@ -307,7 +307,7 @@ const TestPublic = () => {
                                     <p style={{ color: "#AD72B7", fontSize: "34px", fontWeight: 500, padding: 0, margin: 0 }}>Medial Record and Analytics</p>
                                 </Row>
                                 <Row >
-                                    <p style={{ fontSize: "18px" }}>Master Patient Index, a collection of all the patient medical records of each barangay into one or convinience and reliability.</p>
+                                    <p style={{ fontSize: "18px" }}>Master Patient Index, a collection of all the patient medical records of each barangay into one for convinience and reliability. is used to determine the current and historical outbreaks of sickness or illness that have affected and continue to affect the citizens of Silang.</p>
                                 </Row>
                             </Col>
                             <Col style={{ paddingLeft: dimension >= 4 ? "13vh" : "0vh" }}>
@@ -315,7 +315,7 @@ const TestPublic = () => {
                                     <p style={{ color: "#AD72B7", fontSize: "34px", fontWeight: 500, padding: 0, margin: 0 }}>Event Listing</p>
                                 </Row>
                                 <Row >
-                                    <p style={{ fontSize: "18px", }}>Analytics is used to determine the current and historical outbreaks of sickness or illness that have affected and continue to affect the citizens of Silang.</p>
+                                    <p style={{ fontSize: "18px", }}>Event Listing feature is present within the system. To aid barangay officials and health workers coordinate and manage all planned events for the barangays of Silang.</p>
                                 </Row>
                             </Col>
                         </Row>
@@ -451,7 +451,7 @@ const TestPublic = () => {
                         <p style={{ color: "#AD72B7", fontSize: "68px", fontWeight: 500 }}>
                             Citizen <span style={{ color: "black", display: dimension >= 4 ? "block" : "inline-block", paddingLeft: dimension >=4 ? "6vw" : "0" }}> 
                                 Medical Records</span>  <span style={{ color: "black", fontSize:"18px", fontWeight: 300, display: dimension >= 4 ? "block" : "inline-block", paddingLeft: dimension >=4 ? "12vw" : "0"}}>
-                                If you have any concerns or problems that you would like to be addressed, feel free to contact us and leave an email. We would be more than happy to respond to you. Thank you and have a nice day! 
+                                IIf you would like to access your medical records from the barangay, please fill up the blanks in the form. All information and medical records are secured and protected. Thank you and have a nice day! 
                             </span>
                         </p>
                     </Col>
