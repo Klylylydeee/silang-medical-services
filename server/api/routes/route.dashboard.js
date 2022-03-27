@@ -3,6 +3,7 @@ const { check, query} = require("express-validator");
 
 const analyticsController = require("../controller/cont.dashboard");
 const { validateAuthorization } = require("../middleware/authHandler");
+const { activityLogger } = require("../middleware/activityMonitorConfig");
 
 const router = express.Router();
 
@@ -12,6 +13,7 @@ router.get(
         query("barangay").not().isEmpty()
     ],
     validateAuthorization,
+    activityLogger,
     analyticsController.mainDashboard
 )
 
@@ -21,6 +23,7 @@ router.get(
         query("barangay").not().isEmpty()
     ],
     validateAuthorization,
+    activityLogger,
     analyticsController.chairmanDashboard
 );
 
@@ -30,6 +33,7 @@ router.get(
         query("barangay").not().isEmpty()
     ],
     validateAuthorization,
+    activityLogger,
     analyticsController.staffDashboard
 );
 
@@ -39,6 +43,7 @@ router.get(
         query("barangay").not().isEmpty()
     ],
     validateAuthorization,
+    activityLogger,
     analyticsController.nurseDashboard
 );
 

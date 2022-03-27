@@ -20,14 +20,16 @@ const faviconConfig = require("./config/faviconConfig");
 const swaggerConfig = require("./config/swaggerConfig");
 const limiter = require("./config/rateLimitConfig");
 const { 
-    UserResourceOptions,
     AnnouncementResourceOptions,
+    AccessRecordOptions,
+    ActivityOptions,
+    CommentssourceOptions,
+    ErroresourceOptions,
     EventResourceOptions,
     RecordsResourceOptions,
-    ErroresourceOptions,
-    CommentssourceOptions,
-    SubscribedsourceOptions,
-    MessagesourceOptions
+    MessagesourceOptions,
+    UserResourceOptions,
+    SubscribedsourceOptions
 } = require("./config/adminResource");
 
 const Users = require("./model/userAccount");
@@ -49,6 +51,8 @@ process.env.SERVER_MODE === "admin" ?
         rootPath: '/admin',
         resources: [
             AnnouncementResourceOptions,
+            AccessRecordOptions,
+            ActivityOptions,
             CommentssourceOptions,
             ErroresourceOptions,
             EventResourceOptions,

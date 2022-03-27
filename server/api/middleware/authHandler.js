@@ -21,9 +21,11 @@ exports.validateAuthorization = async (req, res, next) => {
     };
 
     let decodedToken;
+    let payloadData;
 
     try {
         decodedToken = jwt.verify(token, process.env.JWT_BACKEND);
+        payloadData = jwt.decode(token)
     } catch (err) {
         throw next(
             err.message === "jwt expired" ?
@@ -47,6 +49,15 @@ exports.validateAuthorization = async (req, res, next) => {
         throw next(error);
     } else {
         // Add code to list a user's activities
+    };
+    
+    req.authDataPayload = {
+        first_name: payloadData.first_name,
+        last_name: payloadData.last_name,
+        email: payloadData.email,
+        phone_number: payloadData.phone_number,
+        barangay: payloadData.barangay,
+        designation: payloadData.designation,
     };
 
     next();

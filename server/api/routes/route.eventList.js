@@ -3,6 +3,7 @@ const { check, query} = require("express-validator");
 
 const eventController = require("../controller/cont.eventListing");
 const { validateAuthorization } = require("../middleware/authHandler");
+const { activityLogger } = require("../middleware/activityMonitorConfig");
 
 const router = express.Router();
 
@@ -12,6 +13,7 @@ router.get(
         query("barangay").not().isEmpty()
     ],
     validateAuthorization,
+    activityLogger,
     eventController.barangayEvents
 );
 
@@ -27,6 +29,7 @@ router.post(
         check("createdBy").not().isEmpty(),
     ],
     validateAuthorization,
+    activityLogger,
     eventController.addBarangayEvents
 );
 
@@ -37,6 +40,7 @@ router.get(
         query("barangay").not().isEmpty()
     ],
     validateAuthorization,
+    activityLogger,
     eventController.getBarangayEvent
 )
 
@@ -47,6 +51,7 @@ router.post(
         query("barangay").not().isEmpty()
     ],
     validateAuthorization,
+    activityLogger,
     eventController.updateBarangayEvent
 );
 
@@ -56,6 +61,7 @@ router.post(
         query("id").not().isEmpty(),
         query("barangay").not().isEmpty()
     ],
+    activityLogger,
     eventController.updateBarangayEventAttendee
 );
 
@@ -65,6 +71,7 @@ router.post(
         query("id").not().isEmpty()
     ],
     validateAuthorization,
+    activityLogger,
     eventController.approveAttendee
 );
 
@@ -74,6 +81,7 @@ router.post(
         query("id").not().isEmpty(),
         query("barangay").not().isEmpty()
     ],
+    activityLogger,
     eventController.removeBarangayEventAttendee
 );
 
@@ -82,6 +90,7 @@ router.get(
     [
         query("barangay").not().isEmpty()
     ],
+    activityLogger,
     eventController.publicEventsAndAnnouncement
 );
 

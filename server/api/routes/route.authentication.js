@@ -2,6 +2,7 @@ const express = require("express");
 const { check, query} = require("express-validator");
 
 const userAuthController = require("../controller/cont.authentication");
+const { activityLogger } = require("../middleware/activityMonitorConfig");
 
 const router = express.Router();
 
@@ -15,6 +16,7 @@ router.post(
         check("barangay").not().isEmpty(),
         check("designation").not().isEmpty()
     ],
+    activityLogger,
     userAuthController.userSignUp
 );
 
@@ -24,6 +26,7 @@ router.post(
         check("_id").not().isEmpty(),
         check("password").not().isEmpty()
     ],
+    activityLogger,
     userAuthController.userSignUpVerification
 );
 
@@ -33,6 +36,7 @@ router.post(
         check("email").not().isEmpty(),
         check("password").not().isEmpty()
     ],
+    activityLogger,
     userAuthController.userSignIn
 );
 
@@ -42,6 +46,7 @@ router.post(
         check("email").not().isEmpty(),
         check("pin").not().isEmpty()
     ],
+    activityLogger,
     userAuthController.userPINVerification
 );
 
@@ -50,6 +55,7 @@ router.post(
     [
         check("email").not().isEmpty()
     ],
+    activityLogger,
     userAuthController.userAccountReset
 );
 
@@ -58,6 +64,7 @@ router.get(
     [
         query("payload").not().isEmpty()
     ],
+    activityLogger,
     userAuthController.userVerifyReset
 );
 
@@ -67,6 +74,7 @@ router.post(
         check("email").not().isEmpty(),
         check("password").not().isEmpty()
     ],
+    activityLogger,
     userAuthController.userLostPassword
 );
 
@@ -76,6 +84,7 @@ router.post(
         check("email").not().isEmpty(),
         check("password").not().isEmpty()
     ],
+    activityLogger,
     userAuthController.acceptChangePassword
 );
 

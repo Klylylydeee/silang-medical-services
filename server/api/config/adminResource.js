@@ -6,6 +6,8 @@ const ErrorLogs = require("../model/errorLogs");
 const AnalyticComment = require("../model/analyticComment");
 const SubscribedCitizen = require("../model/subscribedCitizen");
 const MessageLogs = require("../model/messageLog");
+const AccessRecord = require("../model/publicAccess");
+const Activity = require("../model/activityLog");
 
 const UserResourceOptions = {
     resource: Users,
@@ -101,6 +103,29 @@ const MessagesourceOptions = {
     }
 };
 
+const AccessRecordOptions = {
+    resource: AccessRecord,
+    options: {
+        listProperties: [
+            "email",
+            "phone_number",
+            "barangay"
+        ]
+    }
+};
+
+const ActivityOptions = {
+    resource: Activity,
+    options: {
+        listProperties: [
+            "path",
+            "type",
+            "httpMethod",
+            "ipSource"
+        ]
+    }
+};
+
 module.exports = {
     UserResourceOptions,
     AnnouncementResourceOptions,
@@ -109,5 +134,7 @@ module.exports = {
     ErroresourceOptions,
     CommentssourceOptions,
     SubscribedsourceOptions,
-    MessagesourceOptions
+    MessagesourceOptions,
+    AccessRecordOptions,
+    ActivityOptions
 }

@@ -3,6 +3,7 @@ const { check, query } = require("express-validator");
 
 const analyticsController = require("../controller/cont.analyticsCRUD");
 const { validateAuthorization } = require("../middleware/authHandler");
+const { activityLogger } = require("../middleware/activityMonitorConfig");
 
 const router = express.Router();
 
@@ -12,6 +13,7 @@ router.get(
         query("barangay").not().isEmpty()
     ],
     validateAuthorization,
+    activityLogger,
     analyticsController.analyticsByYear
 );
 
@@ -23,6 +25,7 @@ router.get(
         query("month").not().isEmpty(),
     ],
     validateAuthorization,
+    activityLogger,
     analyticsController.analyticsSpecificDate
 );
 
@@ -34,6 +37,7 @@ router.get(
         query("month").not().isEmpty(),
     ],
     validateAuthorization,
+    activityLogger,
     analyticsController.commentSpecificDate
 );
 
@@ -47,6 +51,7 @@ router.post(
         query("month").not().isEmpty(),
     ],
     validateAuthorization,
+    activityLogger,
     analyticsController.addCommentSpecificDate
 );
 
@@ -56,6 +61,7 @@ router.patch(
         query("_id").not().isEmpty()
     ],
     validateAuthorization,
+    activityLogger,
     analyticsController.deleteCommentSpecificDate
 );
 

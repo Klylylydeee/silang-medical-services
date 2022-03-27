@@ -1,11 +1,8 @@
 const { Schema, model } = require("mongoose");
-const mongoose = require("mongoose");
-const momentRandom = require('moment-random');
 
 const moment = require("moment");
 
 const validator = require("validator");
-const { generatePin } = require("../util/numberHelper");
 
 /**
  * @swagger

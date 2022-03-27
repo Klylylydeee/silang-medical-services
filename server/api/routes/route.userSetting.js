@@ -4,6 +4,7 @@ const { check, query} = require("express-validator");
 const userSettingController = require("../controller/cont.userSetting");
 const userCreateController = require("../controller/cont.authentication");
 const { validateAuthorization } = require("../middleware/authHandler");
+const { activityLogger } = require("../middleware/activityMonitorConfig");
 
 const router = express.Router();
 
@@ -13,6 +14,7 @@ router.get(
         query("barangay").not().isEmpty()
     ],
     validateAuthorization,
+    activityLogger,
     userSettingController.userList
 );
 
@@ -27,12 +29,14 @@ router.post(
         check("designation").not().isEmpty()
     ],
     validateAuthorization,
+    activityLogger,
     userCreateController.userSignUp
 );
 
 router.post(
     "/user-data",
     validateAuthorization,
+    activityLogger,
     userSettingController.userData
 );
 
@@ -44,6 +48,7 @@ router.post(
         check("status").not().isEmpty()
     ],
     validateAuthorization,
+    activityLogger,
     userSettingController.userStatus
 );
 
@@ -53,12 +58,14 @@ router.post(
         check("_id").not().isEmpty()
     ],
     validateAuthorization,
+    activityLogger,
     userSettingController.requestPasswordChange
 );
 
 router.post(
     "/user-setting",
     validateAuthorization,
+    activityLogger,
     userSettingController.userChangeSetting
 );
 

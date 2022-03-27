@@ -3,12 +3,14 @@ const { check, query} = require("express-validator");
 
 const communicationController = require("../controller/cont.communication");
 const { validateAuthorization } = require("../middleware/authHandler");
+const { activityLogger } = require("../middleware/activityMonitorConfig");
 
 const router = express.Router();
 
 router.get(
     "/listing/:id",
     validateAuthorization,
+    activityLogger,
     communicationController.retrieveAllAnnouncement
 );
 
@@ -21,12 +23,14 @@ router.post(
         check("announcement_datetime").not().isEmpty()
     ],
     validateAuthorization,
+    activityLogger,
     communicationController.createAnnouncement
 );
 
 router.post(
     "/update/:id",
     validateAuthorization,
+    activityLogger,
     communicationController.updateAnnouncement
 );
 

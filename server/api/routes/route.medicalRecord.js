@@ -3,18 +3,21 @@ const { check, query} = require("express-validator");
 
 const medicalRecordController = require("../controller/cont.recordCRUD");
 const { validateAuthorization } = require("../middleware/authHandler");
+const { activityLogger } = require("../middleware/activityMonitorConfig");
 
 const router = express.Router();
 
 router.get(
     "/private/officer",
     validateAuthorization,
+    activityLogger,
     medicalRecordController.allBarangayMedicalRecord
 );
 
 router.get(
     "/private/medical",
     validateAuthorization,
+    activityLogger,
     medicalRecordController.allMedicalRecord
 );
 
@@ -24,6 +27,7 @@ router.get(
         check("id").not().isEmpty()
     ],
     validateAuthorization,
+    activityLogger,
     medicalRecordController.selectedMedicalRecord
 );
 
@@ -40,6 +44,7 @@ router.post(
         check("createdBy").not().isEmpty(),
         check("barangay").not().isEmpty(),
     ],
+    activityLogger,
     medicalRecordController.createMedicalRecord
 );
 
@@ -49,6 +54,7 @@ router.post(
         check("id").not().isEmpty(),
         query("barangay").not().isEmpty()
     ],
+    activityLogger,
     medicalRecordController.selectMedicalRecord
 );
 
@@ -57,6 +63,7 @@ router.patch(
     [
         check("id").not().isEmpty()
     ],
+    activityLogger,
     medicalRecordController.updateMedicalRecord
 );
 
@@ -67,6 +74,7 @@ router.post(
         check("barangay").not().isEmpty(),
         check("phone_number").not().isEmpty(),
     ],
+    activityLogger,
     medicalRecordController.selectGenerateMedicalRecord
 );
 
@@ -78,6 +86,7 @@ router.post(
         check("phone_number").not().isEmpty(),
         check("pin").not().isEmpty()
     ],
+    activityLogger,
     medicalRecordController.publicOTP
 );
 
@@ -86,6 +95,7 @@ router.get(
     [
         query("barangay").not().isEmpty()
     ],
+    activityLogger,
     medicalRecordController.autoCompleteDistict
 );
 

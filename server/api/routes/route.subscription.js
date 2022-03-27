@@ -3,6 +3,7 @@ const { check, query } = require("express-validator");
 
 const subscriptionController = require("../controller/cont.subscribe");
 const { validateAuthorization } = require("../middleware/authHandler");
+const { activityLogger } = require("../middleware/activityMonitorConfig");
 
 const router = express.Router();
 
@@ -16,6 +17,7 @@ router.post(
         check("barangay").not().isEmpty(),
         check("address").not().isEmpty()
     ],
+    activityLogger,
     subscriptionController.createSubscription
 );
 
@@ -25,6 +27,7 @@ router.get(
         query("barangay").not().isEmpty()
     ],
     validateAuthorization,
+    activityLogger,
     subscriptionController.getSubscription
 );
 
@@ -34,6 +37,7 @@ router.post(
         check("id").not().isEmpty(),
     ],
     validateAuthorization,
+    activityLogger,
     subscriptionController.approveSubscription
 );
 
