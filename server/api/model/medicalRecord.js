@@ -77,6 +77,9 @@ const { generatePin } = require("../util/numberHelper");
  *         disable:
  *           type: boolean
  *           description: disable 
+ *         pin_reset:
+ *           type: boolean
+ *           description: pin_reset 
  *         createdAt:
  *           type: string
  *           description: createdAt  
@@ -157,8 +160,12 @@ const medicalRecordSchema = new Schema(
             ]
         },
         pin: {
-            type: Number,
+            type: String,
             maxlength: 6
+        },
+        pin_reset: {
+            type: Boolean,
+            default: false
         },
         status: {
             type: Boolean,
@@ -186,12 +193,8 @@ medicalRecordSchema.pre(
     "save", 
     async function(next) {
         const unique_identifier_string = this._id.toString().split("");
-        let newPin = "";
-        for (let i = 0; i < 6; i++) {
-            const randomSelect = Math.floor(Math.random() * unique_identifier_string.length);
-            newPin += unique_identifier_string[randomSelect]
-        }
-        this.pin = newPin;
+        const randomSelect = () => Math.floor(Math.random() * unique_identifier_string.length);
+        this.pin = `${unique_identifier_string[randomSelect()]}${unique_identifier_string[randomSelect()]}${unique_identifier_string[randomSelect()]}${unique_identifier_string[randomSelect()]}${unique_identifier_string[randomSelect()]}${unique_identifier_string[randomSelect()]}`
         next();
     }
 ); 

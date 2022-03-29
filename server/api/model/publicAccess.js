@@ -74,7 +74,7 @@ const accessSchema = new Schema(
             required: true
         },
         pin: {
-            type: Number,
+            type: String,
             maxlength: 6
         },
         otp: {

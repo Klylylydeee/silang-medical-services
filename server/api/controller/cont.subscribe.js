@@ -106,7 +106,7 @@ exports.createSubscription = async (req, res, next) => {
             status: false
         });
 
-        await axios.get(`${process.env.VPS_SOCKET}/default?smsId=${smsPayload._id}&num=${req.body.phone_number}&msg=You have been added to the Subscription list but is currently queued for approval.`, { headers: { Authorization: process.env.SECRET_CLIENT_KEY }});
+        await axios.get(`${process.env.VPS_SOCKET}/default?smsId=${smsPayload._id}&num=${req.body.phone_number}&msg=You have been added to the Subscription list but is currently queued for approval.\n Silang Medical Services`, { headers: { Authorization: process.env.SECRET_CLIENT_KEY }});
 
         res.status(200).send({
             message: "You have been added to the Subscription list but is currently queued for approval.",
@@ -137,7 +137,7 @@ exports.getSubscription = async (req, res, next) => {
             payload: citizensRecord.map((data) => {
                 return data.status === false ?
                     {
-                        ...data
+                        ...data._doc
                     }
                 :
                     {
@@ -246,7 +246,7 @@ exports.approveSubscription = async (req, res, next) => {
             status: false
         });
 
-        await axios.get(`${process.env.VPS_SOCKET}/default?smsId=${smsPayload._id}&num=${approvalData.phone_number}&msg=Your subscription to the barangay ${approvalData.barangay} has been approved.  Please check your email for the reference number. Thank you!`, { headers: { Authorization: process.env.SECRET_CLIENT_KEY }});
+        await axios.get(`${process.env.VPS_SOCKET}/default?smsId=${smsPayload._id}&num=${approvalData.phone_number}&msg=Your subscription to the barangay ${approvalData.barangay} has been approved. Please check your email for the reference number.\n Silang Medical Services`, { headers: { Authorization: process.env.SECRET_CLIENT_KEY }});
 
         res.status(200).send({
             message: "Your subscription has been approved!",

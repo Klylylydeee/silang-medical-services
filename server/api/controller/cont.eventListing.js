@@ -1,10 +1,16 @@
 const EventListing = require("../model/eventListing");
 const Announcement = require("../model/announcement");
 const SubcribedCitizen = require("../model/subscribedCitizen.js");
+const MessageLogs = require("../model/messageLog.js");
 
 const { validateRequest } = require("../util/jsonValidate");
+const axios = require("axios");
 
-const moment = require("moment")
+const moment = require("moment");
+const hbs = require("nodemailer-express-handlebars");
+const path = require("path")
+const mailer = require("../middleware/mailerConfig");
+const jwt = require("jsonwebtoken");
 
 
 exports.barangayEvents = async (req, res, next) => {
@@ -326,7 +332,8 @@ exports.approveAttendee  = async (req, res, next) => {
 
         validateRequest(req);
         
-        let eventsData = await EventListing.updateOne(
+        // let eventsData = await EventListing.updateOne(
+        let eventsData = await EventListing.findOneAndUpdate(
             {
                 "attendee._id": req.query.id
             },
@@ -339,13 +346,80 @@ exports.approveAttendee  = async (req, res, next) => {
                 new: true,
                 timestamps: true
             }
-        )
+        );
 
         if(eventsData === null){
             let error = new Error("Event does not exists.");
             error.statusCode = 501;
             throw error;
         };
+
+        let obj = eventsData.attendee.find(onjectVal => onjectVal._id.toString() === req.query.id);
+
+        if(obj === undefined){
+            let error = new Error("Error encountered!");
+            error.statusCode = 501;
+            throw error;
+        };
+        const transporter = mailer.transport();
+
+        transporter.use(
+            "compile", 
+            hbs({
+                viewEngine: {
+                    extName: ".handlebars",
+                    partialsDir: path.resolve(__dirname, "handlebar"),
+                    defaultLayout: false,
+                },
+                viewPath: path.resolve(__dirname, "handlebar"),
+                extName: ".handlebars",
+            })
+        );
+
+        try {
+            transporter.sendMail({
+                to: obj.email,
+                subject: `Silang Medical Services - Event Attendance Approved`,
+                template: "medical-record-approved",
+                context: {
+                    text: "Your request to attend the event has been approved."
+                },
+                attachments: [
+                    {
+                        filename: "app-logo.png",
+                        path: __dirname +'/handlebar/asset/app-logo.png',
+                        cid: 'app-logo'
+                    },
+                    {
+                        filename: "web-app-bg.png",
+                        path: __dirname +'/handlebar/asset/web-app-bg.png',
+                        cid: 'web-app-bg'
+                    },
+                ]
+            })
+            await MessageLogs.create({
+                subject: "Event Attendance Approved",
+                message: `Your request to attend the event has been approved.`,
+                type: "Email",
+                status: true
+            });
+        } catch (err) {
+            await MessageLogs.create({
+                subject: "Event Attendance Approved",
+                message: `Your request to attend the event has been approved.`,
+                type: "Email",
+                status: false
+            });
+        }
+
+        let smsPayload = await MessageLogs.create({
+            subject: "Event Attendance Approved",
+            message: `Your request to attend the event has been approved.`,
+            type: "Text",
+            status: false
+        });
+
+        await axios.get(`${process.env.VPS_SOCKET}/default?smsId=${smsPayload._id}&num=${obj.phone_number}&msg=Your request to attend the event has been approved.\n Silang Medical Services`, { headers: { Authorization: process.env.SECRET_CLIENT_KEY }});
 
         res.status(200).send({
             message: "Attendee added!"

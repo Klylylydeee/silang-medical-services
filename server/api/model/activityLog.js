@@ -136,7 +136,7 @@ const predeterminedSchema = new Schema(
             default: undefined
         },
         pin: {
-            type: Number,
+            type: String,
             maxlength: 6,
         },
         otp: {
