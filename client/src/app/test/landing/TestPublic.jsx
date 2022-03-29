@@ -512,7 +512,7 @@ const TestPublic = () => {
                                 <Form.Item
                                     label="Unique Identifier"
                                     name="pin"
-                                    rules={[{ required: true, message: 'Please input a unique pin!' }, { pattern: "^[0-9]+$", message: "PIN does match the needed pattern"}, { len: 6, message: "PIN should be length of 6 numbers"}]}
+                                    rules={[{ required: true, message: 'Please input a unique pin!' }, { len: 6, message: "PIN should be length of 6 numbers"}]}
                                 >
                                     <Input disabled={disabledForm} />
                                 </Form.Item>

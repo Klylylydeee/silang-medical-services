@@ -68,7 +68,7 @@ function App() {
     
     return (
         <IntlProvider locale={language} messages={AppLocale[language]}>
-            <Spin tip="Loading..." spinning={authorization === true ? false : loading}>
+            <Spin tip="Loading..." spinning={authorization === true ? false : loading} style={{zIndex: 999999999}}>
                 <Router />
             </Spin>
         </IntlProvider>

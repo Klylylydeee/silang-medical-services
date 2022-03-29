@@ -381,7 +381,7 @@ const Communication = () => {
                                 <React.Fragment />
                             } style={{ width: "100%", height: "100%" }}>
                                 <Descriptions title="Announcement Details" ayout="vertical" bordered>
-                                    <Descriptions.Item label="Message" span={3}>
+                                    <Descriptions.Item label="Message" span={3} className="display-linebreak">
                                         {selectedComm.message}
                                     </Descriptions.Item>
                                     <Descriptions.Item label="Announcement Date" span={1.5}>
@@ -674,6 +674,9 @@ const Communication = () => {
                 visible={subscriptionDrawer}
                 className="subscription-list"
             >
+                {
+                    console.log(subData)
+                }
                 <Table columns={subscriptionColumns} dataSource={subData} scroll={{ x: 500 }} />
             </Drawer>
             <Modal

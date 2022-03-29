@@ -143,6 +143,8 @@ const EventData = () => {
                 <Space size="middle">
                     {
                         text.isApproved === false ?
+                            
+                            moment(formData.end_datetime, "MMMM DD,YYYY h:mm A") > moment() ?
                             <Tooltip title="Show Verification Details">
                                 <Button
                                     type="primary"
@@ -162,6 +164,10 @@ const EventData = () => {
                                     <AuditOutlined  />
                                 </Button>
                             </Tooltip>
+                            :
+                            <Tag color={"#AD72B7"}>
+                                Event has already ended.
+                            </Tag>
                         :
                             <Tag color={"#AD72B7"}>
                                 Approved & Verified
@@ -176,34 +182,42 @@ const EventData = () => {
             key: 'action',
             render: (text, row) => (
                 <Space size="middle">
-                    <Tooltip title="Remove Attendee">
-                        <Button type="danger" onClick={()=> { 
-                            removedAttendee(text._id)
-                         }}>
-                            <DisconnectOutlined />
-                        </Button>
-                    </Tooltip>
                     {
-                        text.isApproved === false &&
-                        <Tooltip title="Approve Attendee">
-                            <Button style={{ backgroundColor: "green", color: "white" }} onClick={async ()=> { 
-                                try{
-                                    dispatch(changeLoader({ loading: true }))
-                                    let approveData = await axiosAPI.post(`events/approve-listing-attendee?id=${text._id}`);
-                                    toasterRequest({ payloadType: "success", textString: approveData.data.message});
-                                    getCellData();
-                                    dispatch(changeLoader({ loading: false }));
-                                } catch(err) {
-                                    dispatch(changeLoader({ loading: false }))
-                                    err.response ? 
-                                        toasterRequest({ payloadType: "error", textString: err.response.data.message})
-                                    :
-                                        toasterRequest({ payloadType: "error", textString: err.message});
-                                }
-                            }}>
-                                <ArrowRightOutlined  />
+                        moment(formData.end_datetime, "MMMM DD,YYYY h:mm A") > moment() &&
+                        <Tooltip title="Remove Attendee">
+                            <Button type="danger" onClick={()=> { 
+                                removedAttendee(text._id)
+                             }}>
+                                <DisconnectOutlined />
                             </Button>
                         </Tooltip>
+                    }
+                    {
+                        text.isApproved === false &&
+                        <React.Fragment>
+                            {
+                                moment(formData.end_datetime, "MMMM DD,YYYY h:mm A") > moment() &&
+                                    <Tooltip title="Approve Attendee">
+                                        <Button style={{ backgroundColor: "green", color: "white" }} onClick={async ()=> { 
+                                            try{
+                                                dispatch(changeLoader({ loading: true }))
+                                                let approveData = await axiosAPI.post(`events/approve-listing-attendee?id=${text._id}`);
+                                                toasterRequest({ payloadType: "success", textString: approveData.data.message});
+                                                getCellData();
+                                                dispatch(changeLoader({ loading: false }));
+                                            } catch(err) {
+                                                dispatch(changeLoader({ loading: false }))
+                                                err.response ? 
+                                                    toasterRequest({ payloadType: "error", textString: err.response.data.message})
+                                                :
+                                                    toasterRequest({ payloadType: "error", textString: err.message});
+                                            }
+                                        }}>
+                                            <ArrowRightOutlined  />
+                                        </Button>
+                                    </Tooltip>
+                            }
+                        </React.Fragment>
                     }
                 </Space>
             ),
@@ -276,7 +290,7 @@ const EventData = () => {
             <Layout.Content style={{ backgroundColor: "white", padding: "10px 20px", marginBottom: "15px", borderRadius: "5px" }}>
                 <Descriptions title="Event Information" bordered style={{ margin: "5px 0 5px 0" }} layout={dimension >= 3 ? "horizontal" : "vertical"}>
                     <Descriptions.Item label="Event" span={3}>{formData.event}</Descriptions.Item>
-                    <Descriptions.Item label="Description" span={3}>{formData.description}</Descriptions.Item>
+                    <Descriptions.Item label="Description" span={3} className="display-linebreak">{formData.description}</Descriptions.Item>
                     <Descriptions.Item label="Start Date & Time" span={1.5}>{formData.start_datetime}</Descriptions.Item>
                     <Descriptions.Item label="End Date & Time" span={1.5}>{formData.end_datetime}</Descriptions.Item>
 

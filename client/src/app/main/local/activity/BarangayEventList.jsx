@@ -252,11 +252,28 @@ const BarangayEvent = () => {
                         </p>
                         <Row gutter={[24, 0]} style={{ padding: "20px 0", position: "relative"}} wrap={false}>
                             <Col flex="auto">
-                                <Divider orientation="left" plain style={{ fontSize: "18px", color: "black", fontWeight: 500, }}>
+                                <Divider orientation="left" plain style={{ fontSize: "18px", color: "black", fontWeight: 500 }}>
                                     Announcements
                                 </Divider>
                             </Col>
-                            <Col flex={"130px"}>
+                            {
+                                dimension >= 4 &&
+                                <Col flex={"130px"}>
+                                    <Button 
+                                        type="primary"
+                                        onClick={()=> { 
+                                            setSubscribe(true)
+                                        }}
+                                        style={{ position: "absolute", top: 0, bottom: 0, margin: "auto 0"}}
+                                    >
+                                        Subscribe
+                                    </Button>
+                                </Col>
+                            }
+                        </Row>
+                        {
+                            dimension < 4 &&
+                            <Col xs={{ span: 24 }} lg={{ span: 6 }} style={{ marginBottom: "20px" }}>
                                 <Button 
                                     type="primary"
                                     onClick={()=> { 
@@ -267,7 +284,7 @@ const BarangayEvent = () => {
                                     Subscribe
                                 </Button>
                             </Col>
-                        </Row>
+                        }
                         {
                             announcementData.length === 0 &&
                             <div
@@ -521,7 +538,7 @@ const BarangayEvent = () => {
                                 </Col>
                             </Row>
                             <Divider orientation="left" plain orientationMargin={10}>
-                                    Verification Details (Not Required)
+                                    Verification Details (Optional)
                             </Divider>
                             <Row gutter={[24, 0]} style={{ paddingTop: "10px" }}>
                                 <Col xs={{ span: 24 }} lg={{ span: 12 }}>
@@ -648,7 +665,7 @@ const BarangayEvent = () => {
                                 </Col>
                                 <Col xs={{ span: 8 }}>
                                     <Form.Item
-                                        label="Any Identification Card"
+                                        label={dimension >= 3 ? "Any Identification Card" : "Any ID"}
                                     >
                                         <ImgCrop rotate>
                                             <Upload
@@ -867,7 +884,7 @@ const BarangayEvent = () => {
                                     </Col>
                                 </Row>
                                 <Divider orientation="left" plain orientationMargin={10}>
-                                    Verification Details (Not Required)
+                                    Verification Details (Optional)
                                 </Divider>
                                 <Row gutter={[24, 0]} style={{ paddingTop: "10px" }}>
                                     <Col xs={{ span: 24 }} lg={{ span: 12 }}>
@@ -994,7 +1011,7 @@ const BarangayEvent = () => {
                                     </Col>
                                     <Col xs={{ span: 8 }}>
                                         <Form.Item
-                                            label="Any Identification Card"
+                                            label={dimension >= 3 ? "Any Identification Card" : "Any ID"}
                                         >
                                             <ImgCrop rotate>
                                                 <Upload
@@ -1216,7 +1233,7 @@ const BarangayEvent = () => {
                 visible={announcementDrawer}
             >  
                 <Descriptions title="Announcement Details" layout="vertical" bordered>
-                    <Descriptions.Item label="Message" span={3}>
+                    <Descriptions.Item label="Message" span={3} className="display-linebreak">
                         {selectedAnnouncement.message}
                     </Descriptions.Item>
                     <Descriptions.Item label="Announcement Date" span={1.5}>
@@ -1243,7 +1260,7 @@ const BarangayEvent = () => {
             >
                 <Descriptions title="Event Information" layout="vertical" bordered style={{ margin: "5px 0 5px 0" }}>
                     <Descriptions.Item label="Event" span={3}>{selectedEvent.event}</Descriptions.Item>
-                    <Descriptions.Item label="Description" span={3}>{selectedEvent.description}</Descriptions.Item>
+                    <Descriptions.Item label="Description" span={3} className="display-linebreak">{selectedEvent.description}</Descriptions.Item>
                 </Descriptions>
                 <Descriptions title="Date Information" bordered style={{ margin: "15px 0 5px 0" }}>
                     <Descriptions.Item label="Start Date & Time" span={3}>{moment(selectedEvent.start_datetime).format("MMMM DD, YYYY h:mm a")}</Descriptions.Item>

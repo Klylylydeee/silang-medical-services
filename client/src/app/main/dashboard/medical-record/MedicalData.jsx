@@ -118,7 +118,7 @@ const MedicalData = () => {
                             "Awaiting for review."
                         }
                     </Card>
-                    <Card title={<Typography.Title level={3} style={{ fontSize: "16px" }}>Diagnosis Report</Typography.Title>} style={{ marginTop: 20 }}>
+                    <Card title={<Typography.Title level={3} style={{ fontSize: "16px" }}>Diagnosis Report</Typography.Title>} style={{ marginTop: 20 }} className="display-linebreak">
                         {medData.detailed_report}
                     </Card>
                 </Col>
