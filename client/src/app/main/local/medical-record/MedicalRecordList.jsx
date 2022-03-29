@@ -6,7 +6,7 @@ import { axiosAPI } from "src/app/util/axios";
 import { changeLoader } from "src/app/store/web/webInformation";
 import { useSelector, useDispatch } from "react-redux";
 import Header from "./record-header.png";
-import { Avatar, Image, Divider, Empty, Row, Col, Card, Tooltip, Space, Drawer, Layout, Typography, List} from 'antd';
+import { Avatar, Image, Divider, Empty, Row, Col, Card, Tooltip, Space, Drawer, Layout, Typography, List, Button } from 'antd';
 import { EllipsisOutlined, UserOutlined  } from '@ant-design/icons';
 import Navigation from "../../../test/landing/TestNav";
 import Lumil from "../img/barangay-lumil.png"
@@ -40,49 +40,49 @@ const MedicalRecord = () => {
             setHeight(`${newHeight}px`)
     // eslint-disable-next-line
     }, [dimension])
-    useEffect(() => {
-        const getData = async () => {
-            try {
-                dispatch(changeLoader({ loading: true }))
-                let decodedData = jwt.verify(params.get("auth"), process.env.REACT_APP_JWT_BACKEND);
-                if(decodedData.barangay !== "Lumil" && decodedData.barangay !== "Puting Kahoy"){
-                    throw new Error("Authentication incorrect!")
-                }
-                const payloadData = await axiosAPI.post(`medical-record/public/generate-record-list`, {
-                    email: decodedData.email,
-                    barangay: decodedData.barangay, 
-                    phone_number: decodedData.phone_number,
-                    pin: decodedData.pin
-                })
-                setDataList(payloadData.data.payload.map((data) => {
-                    return {
-                        ...data,
-                        createdAt: moment(data.createdAt).format("MMMM DD,YYYY")
-                    }
-                }))
-                setRecord(decodedData)
-                dispatch(changeLoader({ loading: false }))
-                setTimeout(()=>{
-                    const heightDiv = document.getElementById("test")
-                    const offset = heightDiv.offsetHeight;
-                    // eslint-disable-next-line
-                    const padding = window.getComputedStyle(heightDiv).getPropertyValue("padding-top")
-                    // eslint-disable-next-line
-                    const paddingB = window.getComputedStyle(heightDiv).getPropertyValue("padding-bottom")
-                    const newHeight = offset
-                    setHeight(`${newHeight}px`)
-                }, 200)
-            } catch (err) {
-                dispatch(changeLoader({ loading: false }))
-                err.response ? 
-                    toasterRequest({ payloadType: "error", textString: err.response.data.message === "jwt expired" ? "Authentication expired" : "Authentication incorrect!"})
-                :
-                    toasterRequest({ payloadType: "error", textString: err.message === "jwt expired" ? "Authentication expired" : "Authentication incorrect!"});
-                history({
-                    pathname: `/`
-                })
+    const getData = async () => {
+        try {
+            dispatch(changeLoader({ loading: true }))
+            let decodedData = jwt.verify(params.get("auth"), process.env.REACT_APP_JWT_BACKEND);
+            if(decodedData.barangay !== "Lumil" && decodedData.barangay !== "Puting Kahoy"){
+                throw new Error("Authentication incorrect!")
             }
+            const payloadData = await axiosAPI.post(`medical-record/public/generate-record-list`, {
+                email: decodedData.email,
+                barangay: decodedData.barangay, 
+                phone_number: decodedData.phone_number,
+                pin: decodedData.pin
+            })
+            setDataList(payloadData.data.payload.map((data) => {
+                return {
+                    ...data,
+                    createdAt: moment(data.createdAt).format("MMMM DD,YYYY")
+                }
+            }))
+            setRecord(decodedData)
+            dispatch(changeLoader({ loading: false }))
+            setTimeout(()=>{
+                const heightDiv = document.getElementById("test")
+                const offset = heightDiv.offsetHeight;
+                // eslint-disable-next-line
+                const padding = window.getComputedStyle(heightDiv).getPropertyValue("padding-top")
+                // eslint-disable-next-line
+                const paddingB = window.getComputedStyle(heightDiv).getPropertyValue("padding-bottom")
+                const newHeight = offset
+                setHeight(`${newHeight}px`)
+            }, 200)
+        } catch (err) {
+            dispatch(changeLoader({ loading: false }))
+            err.response ? 
+                toasterRequest({ payloadType: "error", textString: err.response.data.message === "jwt expired" ? "Authentication expired" : "Authentication incorrect!"})
+            :
+                toasterRequest({ payloadType: "error", textString: err.message === "jwt expired" ? "Authentication expired" : "Authentication incorrect!"});
+            history({
+                pathname: `/`
+            })
         }
+    }
+    useEffect(() => {
         getData()
     // eslint-disable-next-line
     }, [])
@@ -263,6 +263,36 @@ const MedicalRecord = () => {
                         } 
                     />
                 </Card>
+                <Button 
+                    type="primary"
+                    style={{ marginTop: "15px" }}
+                    disabled={drawerData.request_change}
+                    onClick={() => {
+                        const approvePINChange = async () => {
+                            try {
+                                dispatch(changeLoader({ loading: true }));
+                                const postFormData = await axiosAPI.patch(`medical-record/private/update-record`, {
+                                    id: drawerData._id,
+                                    request_change: true,
+                                    type: "Public"
+                                })
+                                setDataList((prevData) => {
+                                    prevData[0].request_change = true;
+                                    return [...prevData];
+                                })
+                                toasterRequest({ payloadType: "success", textString: postFormData.data.message});
+                                dispatch(changeLoader({ loading: false }));
+                            } catch (err) {
+                                dispatch(changeLoader({ loading: false }))
+                                err.response ? 
+                                    toasterRequest({ payloadType: "error", textString: err.response.data.message})
+                                :
+                                    toasterRequest({ payloadType: "error", textString: err.message});
+                            }
+                        }
+                        approvePINChange()
+                    }}
+                >Request for Renewal of PIN</Button>
             </Drawer>
         </React.Fragment>
     );

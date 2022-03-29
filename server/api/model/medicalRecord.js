@@ -80,6 +80,9 @@ const { generatePin } = require("../util/numberHelper");
  *         pin_reset:
  *           type: boolean
  *           description: pin_reset 
+ *         request_change:
+ *           type: boolean
+ *           description: request_change 
  *         createdAt:
  *           type: string
  *           description: createdAt  
@@ -177,6 +180,10 @@ const medicalRecordSchema = new Schema(
         },
         disabledBy: {
             type: String
+        },
+        request_change: {
+            type: Boolean,
+            default: false
         }
     },
     {

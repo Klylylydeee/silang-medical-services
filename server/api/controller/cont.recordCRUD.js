@@ -36,7 +36,8 @@ exports.allBarangayMedicalRecord = async (req, res, next) => {
                     email: 1,
                     phone_number: 1,
                     disable: 1,
-                    disabledBy: 1
+                    disabledBy: 1,
+                    request_change: 1
                 }
             }
         ).sort({ createdAt: -1 })
@@ -56,7 +57,8 @@ exports.allBarangayMedicalRecord = async (req, res, next) => {
                     status: 1,
                     barangay: 1,
                     disable: 1,
-                    disabledBy: 1
+                    disabledBy: 1,
+                    request_change: 1
                 }
             }
         ).sort({ createdAt: -1 })
@@ -246,29 +248,29 @@ exports.updateMedicalRecord = async (req, res, next) => {
 
         validateRequest(req);
 
-        const medicalRecord = await MedicalRecord.findOneAndUpdate(
-            {
-                _id: req.body.id,
-                disable: false
-            },
-            {
-                $set: {
-                    ...req.body
+        if(req.body.type === "Public"){
+            const medicalRecord = await MedicalRecord.findOneAndUpdate(
+                {
+                    _id: req.body.id,
+                    disable: false
+                },
+                {
+                    $set: {
+                        ...req.body
+                    }
+                },
+                {
+                    new: true,
+                    timestamps: true,
+                    projection: {
+                        __v: 0,
+                        createdAt: 0,
+                    }
                 }
-            },
-            {
-                new: true,
-                timestamps: true,
-                projection: {
-                    __v: 0,
-                    createdAt: 0,
-                }
-            }
-        );
-
-        if(req.body.approvedBy){
+            );
+            
             const transporter = mailer.transport();
-
+    
             transporter.use(
                 "compile", 
                 hbs({
@@ -285,10 +287,10 @@ exports.updateMedicalRecord = async (req, res, next) => {
             try {
                 transporter.sendMail({
                     to: medicalRecord.email,
-                    subject: `Silang Medical Services - Medical Record Approval and Reviewed`,
+                    subject: `Silang Medical Services - Unique ID Renewal`,
                     template: "medical-record-approved",
                     context: {
-                        text: "Your medical record has been approved and reviewed by a Municipality Doctor. Please review your medical record via the website for more informations and details."
+                        text: "Your medical record unique id renewal has been sent. Please wait for it to be processed."
                     },
                     attachments: [
                         {
@@ -304,102 +306,252 @@ exports.updateMedicalRecord = async (req, res, next) => {
                     ]
                 })
                 await MessageLogs.create({
-                    subject: "Medical Record Approval and Reviewed",
-                    message: `Your medical record has been approved and reviewed by a Municipality Doctor. Please review your medical record via the website for more informations and details.`,
+                    subject: "Unique ID Renewal",
+                    message: `Your medical record unique id renewal has been sent. Please wait for it to be processed.`,
                     type: "Email",
                     status: true
                 });
             } catch (err) {
                 await MessageLogs.create({
-                    subject: "Medical Record Approval and Reviewed",
-                    message: `Your medical record has been approved and reviewed by a Municipality Doctor. Please review your medical record via the website for more informations and details.`,
+                    subject: "Unique ID Renewal",
+                    message: `Your medical record unique id renewal has been sent. Please wait for it to be processed.`,
                     type: "Email",
                     status: false
                 });
             }
 
             let smsPayload = await MessageLogs.create({
-                subject: "Medical Record Approval and Reviewed",
-                message: `Your medical record has been approved and reviewed by a Municipality Doctor. Please review your medical record via the website for more informations and details.`,
-                type: "Text",
-                status: false
-            });
-
-            await axios.get(`${process.env.VPS_SOCKET}/default?smsId=${smsPayload._id}&num=${medicalRecord.phone_number}&msg=Your medical record has been approved and reviewed by a Municipality Doctor.\n Silang Medical Services`, { headers: { Authorization: process.env.SECRET_CLIENT_KEY }});
-
-        } else {
-            const transporter = mailer.transport();
-
-            transporter.use(
-                "compile", 
-                hbs({
-                    viewEngine: {
-                        extName: ".handlebars",
-                        partialsDir: path.resolve(__dirname, "handlebar"),
-                        defaultLayout: false,
-                    },
-                    viewPath: path.resolve(__dirname, "handlebar"),
-                    extName: ".handlebars",
-                })
-            );
-
-            try {
-                transporter.sendMail({
-                    to: medicalRecord.email,
-                    subject: `Silang Medical Services - Medical Record Updated`,
-                    template: "medical-record-approved",
-                    context: {
-                        text: "Your medical record has been updated. Please review your medical record via the website for more informations and details."
-                    },
-                    attachments: [
-                        {
-                            filename: "app-logo.png",
-                            path: __dirname +'/handlebar/asset/app-logo.png',
-                            cid: 'app-logo'
-                        },
-                        {
-                            filename: "web-app-bg.png",
-                            path: __dirname +'/handlebar/asset/web-app-bg.png',
-                            cid: 'web-app-bg'
-                        },
-                    ]
-                })
-                await MessageLogs.create({
-                    subject: "Medical Record Updated",
-                    message: `Your medical record has been updated. Please review your medical record via the website for more informations and details.`,
-                    type: "Email",
-                    status: true
-                });
-            } catch (err) {
-                await MessageLogs.create({
-                    subject: "Medical Record Updated",
-                    message: `Your medical record has been upated. Please review your medical record via the website for more informations and details.`,
-                    type: "Email",
-                    status: false
-                });
-            }
-
-            let smsPayload = await MessageLogs.create({
-                subject: "Medical Record Updated",
-                message: `Your medical record has been updated. Please review your medical record via the website for more informations and details.`,
+                subject: "Unique ID Renewal",
+                message: `Your medical record unique id renewal has been sent. Please wait for it to be processed.`,
                 type: "Text",
                 status: false
             });
             
-            await axios.get(`${process.env.VPS_SOCKET}/default?smsId=${smsPayload._id}&num=${medicalRecord.phone_number}&msg=Your medical record has been updated.\n Silang Medical Services`, { headers: { Authorization: process.env.SECRET_CLIENT_KEY }});
+            await axios.get(`${process.env.VPS_SOCKET}/default?smsId=${smsPayload._id}&num=${medicalRecord.phone_number}&msg=Your medical record unique id renewal has been sent. Please wait for it to be processed.\n Silang Medical Services`, { headers: { Authorization: process.env.SECRET_CLIENT_KEY }});
 
+            res.status(200).send({
+                message: `Medical Record has been updated`,
+                payload: medicalRecord
+            });
+            
+        } else {
+            const medicalRecord = await MedicalRecord.findOneAndUpdate(
+                {
+                    _id: req.body.id,
+                    disable: false
+                },
+                {
+                    $set: {
+                        ...req.body
+                    }
+                },
+                {
+                    new: true,
+                    timestamps: true,
+                    projection: {
+                        __v: 0,
+                        createdAt: 0,
+                    }
+                }
+            );
+    
+            if (req.body.pin) {
+
+                const transporter = mailer.transport();
+    
+                transporter.use(
+                    "compile", 
+                    hbs({
+                        viewEngine: {
+                            extName: ".handlebars",
+                            partialsDir: path.resolve(__dirname, "handlebar"),
+                            defaultLayout: false,
+                        },
+                        viewPath: path.resolve(__dirname, "handlebar"),
+                        extName: ".handlebars",
+                    })
+                );
+    
+                try {
+                    transporter.sendMail({
+                        to: medicalRecord.email,
+                        subject: `Silang Medical Services - Unique ID Renewal Approved`,
+                        template: "medical-record-approved",
+                        context: {
+                            text: `Your medical record unique id renewal has been approved and reviewed. Here is your new Unique PIN: ${req.body.pin}.`
+                        },
+                        attachments: [
+                            {
+                                filename: "app-logo.png",
+                                path: __dirname +'/handlebar/asset/app-logo.png',
+                                cid: 'app-logo'
+                            },
+                            {
+                                filename: "web-app-bg.png",
+                                path: __dirname +'/handlebar/asset/web-app-bg.png',
+                                cid: 'web-app-bg'
+                            },
+                        ]
+                    })
+                    await MessageLogs.create({
+                        subject: "Unique ID Renewal Approved",
+                        message: `Your medical record unique id renewal has been approved and reviewed. Here is your new Unique PIN: ${req.body.pin}.`,
+                        type: "Email",
+                        status: true
+                    });
+                } catch (err) {
+                    await MessageLogs.create({
+                        subject: "Unique ID Renewal Approved",
+                        message: `Your medical record unique id renewal has been approved and reviewed. Here is your new Unique PIN: ${req.body.pin}.`,
+                        type: "Email",
+                        status: false
+                    });
+                }
+    
+                let smsPayload = await MessageLogs.create({
+                    subject: "Unique ID Renewal Approved",
+                    message: `Your medical record unique id renewal has been approved and reviewed. Here is your new Unique PIN: ${req.body.pin}.`,
+                    type: "Text",
+                    status: false
+                });
+    
+                await axios.get(`${process.env.VPS_SOCKET}/default?smsId=${smsPayload._id}&num=${medicalRecord.phone_number}&msg=Your medical record unique id renewal has been approved and reviewed. Here is your new Unique PIN: ${req.body.pin}.\n Silang Medical Services`, { headers: { Authorization: process.env.SECRET_CLIENT_KEY }});
+    
+            } else if(req.body.approvedBy){
+                const transporter = mailer.transport();
+    
+                transporter.use(
+                    "compile", 
+                    hbs({
+                        viewEngine: {
+                            extName: ".handlebars",
+                            partialsDir: path.resolve(__dirname, "handlebar"),
+                            defaultLayout: false,
+                        },
+                        viewPath: path.resolve(__dirname, "handlebar"),
+                        extName: ".handlebars",
+                    })
+                );
+    
+                try {
+                    transporter.sendMail({
+                        to: medicalRecord.email,
+                        subject: `Silang Medical Services - Medical Record Approval and Reviewed`,
+                        template: "medical-record-approved",
+                        context: {
+                            text: "Your medical record has been approved and reviewed by a Municipality Doctor. Please review your medical record via the website for more informations and details."
+                        },
+                        attachments: [
+                            {
+                                filename: "app-logo.png",
+                                path: __dirname +'/handlebar/asset/app-logo.png',
+                                cid: 'app-logo'
+                            },
+                            {
+                                filename: "web-app-bg.png",
+                                path: __dirname +'/handlebar/asset/web-app-bg.png',
+                                cid: 'web-app-bg'
+                            },
+                        ]
+                    })
+                    await MessageLogs.create({
+                        subject: "Medical Record Approval and Reviewed",
+                        message: `Your medical record has been approved and reviewed by a Municipality Doctor. Please review your medical record via the website for more informations and details.`,
+                        type: "Email",
+                        status: true
+                    });
+                } catch (err) {
+                    await MessageLogs.create({
+                        subject: "Medical Record Approval and Reviewed",
+                        message: `Your medical record has been approved and reviewed by a Municipality Doctor. Please review your medical record via the website for more informations and details.`,
+                        type: "Email",
+                        status: false
+                    });
+                }
+    
+                let smsPayload = await MessageLogs.create({
+                    subject: "Medical Record Approval and Reviewed",
+                    message: `Your medical record has been approved and reviewed by a Municipality Doctor. Please review your medical record via the website for more informations and details.`,
+                    type: "Text",
+                    status: false
+                });
+    
+                await axios.get(`${process.env.VPS_SOCKET}/default?smsId=${smsPayload._id}&num=${medicalRecord.phone_number}&msg=Your medical record has been approved and reviewed by a Municipality Doctor.\n Silang Medical Services`, { headers: { Authorization: process.env.SECRET_CLIENT_KEY }});
+    
+            } else {
+                const transporter = mailer.transport();
+    
+                transporter.use(
+                    "compile", 
+                    hbs({
+                        viewEngine: {
+                            extName: ".handlebars",
+                            partialsDir: path.resolve(__dirname, "handlebar"),
+                            defaultLayout: false,
+                        },
+                        viewPath: path.resolve(__dirname, "handlebar"),
+                        extName: ".handlebars",
+                    })
+                );
+    
+                try {
+                    transporter.sendMail({
+                        to: medicalRecord.email,
+                        subject: `Silang Medical Services - Medical Record Updated`,
+                        template: "medical-record-approved",
+                        context: {
+                            text: "Your medical record has been updated. Please review your medical record via the website for more informations and details."
+                        },
+                        attachments: [
+                            {
+                                filename: "app-logo.png",
+                                path: __dirname +'/handlebar/asset/app-logo.png',
+                                cid: 'app-logo'
+                            },
+                            {
+                                filename: "web-app-bg.png",
+                                path: __dirname +'/handlebar/asset/web-app-bg.png',
+                                cid: 'web-app-bg'
+                            },
+                        ]
+                    })
+                    await MessageLogs.create({
+                        subject: "Medical Record Updated",
+                        message: `Your medical record has been updated. Please review your medical record via the website for more informations and details.`,
+                        type: "Email",
+                        status: true
+                    });
+                } catch (err) {
+                    await MessageLogs.create({
+                        subject: "Medical Record Updated",
+                        message: `Your medical record has been upated. Please review your medical record via the website for more informations and details.`,
+                        type: "Email",
+                        status: false
+                    });
+                }
+    
+                let smsPayload = await MessageLogs.create({
+                    subject: "Medical Record Updated",
+                    message: `Your medical record has been updated. Please review your medical record via the website for more informations and details.`,
+                    type: "Text",
+                    status: false
+                });
+                
+                await axios.get(`${process.env.VPS_SOCKET}/default?smsId=${smsPayload._id}&num=${medicalRecord.phone_number}&msg=Your medical record has been updated.\n Silang Medical Services`, { headers: { Authorization: process.env.SECRET_CLIENT_KEY }});
+    
+            }
+    
+            if(medicalRecord === null){
+                let error = new Error("Medical Record does not exists.");
+                error.statusCode = 501;
+                throw error;
+            };
+    
+            res.status(200).send({
+                message: `Medical Record has been updated`,
+                payload: medicalRecord
+            });
         }
-
-        if(medicalRecord === null){
-            let error = new Error("Medical Record does not exists.");
-            error.statusCode = 501;
-            throw error;
-        };
-
-        res.status(200).send({
-            message: `Medical Record has been updated`,
-            payload: medicalRecord
-        });
 
     } catch(err) {
 

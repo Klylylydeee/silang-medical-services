@@ -11,7 +11,7 @@ import {
     Button,
     Tooltip
 } from 'antd';
-import { MedicineBoxOutlined, FileSyncOutlined, FileExcelOutlined } from '@ant-design/icons';
+import { MedicineBoxOutlined, FileSyncOutlined, FileExcelOutlined, IssuesCloseOutlined } from '@ant-design/icons';
 
 import toasterRequest from "src/app/util/toaster";
 import { axiosAPI } from "src/app/util/axios";
@@ -243,6 +243,42 @@ const MedicalList = () => {
                             </Button>
                         </Tooltip>
                     }
+                    {
+                        text.request_change === true &&
+                        <Tooltip title="PIN Renewal Approval" >
+                            <Button
+                                icon={<IssuesCloseOutlined />} 
+                                onClick={() => {
+                                    const approvePINChange = async () => {
+                                        try {
+                                            dispatch(changeLoader({ loading: true }));
+                                            const unique_identifier_string = text._id.toString().split("");
+                                            const randomSelect = () => Math.floor(Math.random() * unique_identifier_string.length);
+                                            const postFormData = await axiosAPI.patch(`medical-record/private/update-record`, {
+                                                id: text._id,
+                                                request_change: false,
+                                                pin: `${unique_identifier_string[randomSelect()]}${unique_identifier_string[randomSelect()]}${unique_identifier_string[randomSelect()]}${unique_identifier_string[randomSelect()]}${unique_identifier_string[randomSelect()]}${unique_identifier_string[randomSelect()]}`
+                                            })
+                                            dispatch(changeLoader({ loading: false }));
+                                            toasterRequest({ payloadType: "success", textString: postFormData.data.message});
+                                            getCellData()
+                                        } catch (err) {
+                                            dispatch(changeLoader({ loading: false }))
+                                            err.response ? 
+                                                toasterRequest({ payloadType: "error", textString: err.response.data.message})
+                                            :
+                                                toasterRequest({ payloadType: "error", textString: err.message});
+                                        }
+                                    }
+                                    approvePINChange()
+                                }}
+                                type="primary"
+                                style={{ background: "#abde95", borderColor: "white" }}
+                            >
+                            </Button>
+                        </Tooltip>
+
+                    }
                 </Space>
             ),
         },
@@ -318,7 +354,8 @@ const MedicalList = () => {
                     _id: record._id,
                     ...(designation === "Doctor") && { barangay: record.barangay},
                     disable: record.disable,
-                    disabledBy: record.disabledBy
+                    disabledBy: record.disabledBy,
+                    request_change: record.request_change
                 }
             });
             setTableData(filteredData)
