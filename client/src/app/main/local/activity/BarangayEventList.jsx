@@ -346,7 +346,7 @@ const BarangayEvent = () => {
                             {
                                 eventData.length !== 0 &&
                                 eventData.map(eventData => {
-                                    const basis = moment(new Date()).format("MMMM DD,YYYY") > moment(eventData.start_datetime).format("MMMM DD,YYYY");
+                                    const basis = moment(new Date()) > moment(eventData.start_datetime);
                                     const actionsTrue = [
                                         <Tooltip title="Attend Event" >
                                             <PlusCircleOutlined

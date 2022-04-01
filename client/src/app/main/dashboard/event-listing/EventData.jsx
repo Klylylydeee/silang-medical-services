@@ -70,7 +70,8 @@ const EventData = () => {
                     "Event is awaiting for approval.",
                 createdBy: eventData.data.payload.createdBy,
                 approvedBy: eventData.data.payload.approvedBy,
-                type: eventData.data.payload.type
+                type: eventData.data.payload.type,
+                status: eventData.data.payload.status
             })
             setData(eventData.data.payload.attendee)
             dispatch(changeLoader({ loading: false }));
@@ -273,18 +274,41 @@ const EventData = () => {
                     title="Event Listing" 
                     subTitle={dimension >= 4 ? `Contains all the data for the event ${params.id}` : ""}
                     style={{ padding: 0, backgroundColor: "#AD72B7" }}
-                    extra={[
-                        <Button icon={<CalendarOutlined />} key="3" onClick={() => {
-                            history({
-                                pathname: `/dashboard/event-listing/update/${params.id}`
-                            })
-                        }} style={{ color: "#AD72B7" }}>{dimension >= 4 ?  "Update Event Details" : dimension >= 1 ? "Update" : "" }</Button>,
-                        <Button icon={<UserOutlined />} key="3" onClick={() => {
-                            history({
-                                pathname: `/dashboard/event-listing/add-attendee/${params.id}`
-                            })
-                        }} style={{ color: "#AD72B7" }}>{dimension >= 4 ?  "Add Attendee" : dimension >= 1 ? "Add" : "" }</Button>
-                    ]}
+                    extra={
+                        moment(formData.end_datetime, "MMMM DD,YYYY h:mm A") < moment() ?
+                            formData.status === false ?
+                            [
+                                <Button icon={<CalendarOutlined />} key="3" onClick={() => {
+                                    history({
+                                        pathname: `/dashboard/event-listing/update/${params.id}`
+                                    })
+                                }} style={{ color: "#AD72B7" }}>{dimension >= 4 ?  "Update Event Details" : dimension >= 1 ? "Update" : "" }</Button>
+                            ]
+                            :
+                            []
+                        :
+                            formData.status === false ?
+                            [
+                                <Button icon={<CalendarOutlined />} key="3" onClick={() => {
+                                    history({
+                                        pathname: `/dashboard/event-listing/update/${params.id}`
+                                    })
+                                }} style={{ color: "#AD72B7" }}>{dimension >= 4 ?  "Update Event Details" : dimension >= 1 ? "Update" : "" }</Button>,
+                                <Button icon={<UserOutlined />} key="3" onClick={() => {
+                                    history({
+                                        pathname: `/dashboard/event-listing/add-attendee/${params.id}`
+                                    })
+                                }} style={{ color: "#AD72B7" }}>{dimension >= 4 ?  "Add Attendee" : dimension >= 1 ? "Add" : "" }</Button>
+                            ]
+                            :
+                            [
+                                <Button icon={<UserOutlined />} key="3" onClick={() => {
+                                    history({
+                                        pathname: `/dashboard/event-listing/add-attendee/${params.id}`
+                                    })
+                                }} style={{ color: "#AD72B7" }}>{dimension >= 4 ?  "Add Attendee" : dimension >= 1 ? "Add" : "" }</Button>
+                            ]
+                    }
                 />
             </Layout.Content>
             <Layout.Content style={{ backgroundColor: "white", padding: "10px 20px", marginBottom: "15px", borderRadius: "5px" }}>

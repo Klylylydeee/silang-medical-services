@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Layout, PageHeader, Button, Select, Form, Row, Col, Input, Divider, DatePicker } from 'antd';
+import { Layout, PageHeader, Button, Select, Form, Row, Col, Input, Divider, DatePicker, Alert } from 'antd';
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import toasterRequest from "src/app/util/toaster";
@@ -303,6 +303,7 @@ const EventUpdate = () => {
                             </Divider>
                             <Row gutter={[24, 0]} style={{ paddingTop: "10px" }}>
                                 <Col xs={{ span: 24 }} >
+                                    <Alert style={{ marginBottom: "15px" }} message="Once the event has been activated, event details data cannot be changed anymore." type="info" closeText="Close Now" />
                                     <Form.Item
                                         name="status"
                                         label="Status"

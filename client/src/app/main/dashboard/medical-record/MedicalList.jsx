@@ -12,7 +12,8 @@ import {
     Tooltip
 } from 'antd';
 import { MedicineBoxOutlined, FileSyncOutlined, FileExcelOutlined, IssuesCloseOutlined } from '@ant-design/icons';
-
+import ExcelJS from "exceljs/dist/es5/exceljs.browser";
+import saveAs from "file-saver";
 import toasterRequest from "src/app/util/toaster";
 import { axiosAPI } from "src/app/util/axios";
 import { changeLoader } from "src/app/store/web/webInformation";
@@ -244,7 +245,43 @@ const MedicalList = () => {
                         </Tooltip>
                     }
                     {
-                        text.request_change === true &&
+                        text.request_change === true && designation === "Doctor"  &&
+                        <Tooltip title="PIN Renewal Approval" >
+                            <Button
+                                icon={<IssuesCloseOutlined />} 
+                                onClick={() => {
+                                    const approvePINChange = async () => {
+                                        try {
+                                            dispatch(changeLoader({ loading: true }));
+                                            const unique_identifier_string = text._id.toString().split("");
+                                            const randomSelect = () => Math.floor(Math.random() * unique_identifier_string.length);
+                                            const postFormData = await axiosAPI.patch(`medical-record/private/update-record`, {
+                                                id: text._id,
+                                                request_change: false,
+                                                pin: `${unique_identifier_string[randomSelect()]}${unique_identifier_string[randomSelect()]}${unique_identifier_string[randomSelect()]}${unique_identifier_string[randomSelect()]}${unique_identifier_string[randomSelect()]}${unique_identifier_string[randomSelect()]}`
+                                            })
+                                            dispatch(changeLoader({ loading: false }));
+                                            toasterRequest({ payloadType: "success", textString: postFormData.data.message});
+                                            getCellData()
+                                        } catch (err) {
+                                            dispatch(changeLoader({ loading: false }))
+                                            err.response ? 
+                                                toasterRequest({ payloadType: "error", textString: err.response.data.message})
+                                            :
+                                                toasterRequest({ payloadType: "error", textString: err.message});
+                                        }
+                                    }
+                                    approvePINChange()
+                                }}
+                                type="primary"
+                                style={{ background: "#abde95", borderColor: "white" }}
+                            >
+                            </Button>
+                        </Tooltip>
+
+                    }
+                    {
+                        text.request_change === true && designation === "Nurse"  &&
                         <Tooltip title="PIN Renewal Approval" >
                             <Button
                                 icon={<IssuesCloseOutlined />} 
@@ -352,7 +389,7 @@ const MedicalList = () => {
                     createdAt: record.createdAt,
                     status: record.status,
                     _id: record._id,
-                    ...(designation === "Doctor") && { barangay: record.barangay},
+                    barangay: record.barangay,
                     disable: record.disable,
                     disabledBy: record.disabledBy,
                     request_change: record.request_change
@@ -393,9 +430,142 @@ const MedicalList = () => {
                                 history({
                                     pathname: `/dashboard/medical-records/create`
                                 })
-                            }} style={{ color: "#AD72B7" }}>Create Record</Button>
+                            }} style={{ color: "#AD72B7" }}>Create Record</Button>,
+
                         ]
                     : 
+                        designation === "Chairman" ?
+                        [
+                            <Button 
+                            icon={<MedicineBoxOutlined />}
+                            key="3" onClick={async () => {
+                                dispatch(changeLoader({ loading: true }));
+                                const postRecordData = await axiosAPI.post(`export/records-csv`, {
+                                    first_name,
+                                    last_name,
+                                    designation
+                                })
+                                const working = () => {
+                                    var ExcelJSWorkbook = new ExcelJS.Workbook();
+                                    ExcelJSWorkbook.company = "Silang Medical Services";
+                                    ExcelJSWorkbook.title = "Silang Medical Services - Medical Records Data";
+                                    ExcelJSWorkbook.category = "Health Information and Communication"
+                                    ExcelJSWorkbook.description = postRecordData.data.payload
+                                    ExcelJSWorkbook.creator = `Silang Medical Services - ${last_name}, ${first_name} (${barangay} - ${designation}) - `;
+                                    ExcelJSWorkbook.lastModifiedBy = `${last_name}, ${first_name} (${barangay} - ${designation})`;
+                                    ExcelJSWorkbook.created = new Date();
+                                    ExcelJSWorkbook.modified = new Date();
+                                    ExcelJSWorkbook.lastPrinted = new Date();
+                                    ExcelJSWorkbook.properties.date1904 = true;
+                                    var workbook = ExcelJSWorkbook.addWorksheet("Medical Records Active");
+                                    workbook.views = [
+                                        {
+                                            x: 0, y: 0, width: 10000, height: 20000,
+                                            firstSheet: 0, activeTab: 1, visibility: 'visible'
+                                        }
+                                    ];
+                                    workbook.columns = [
+                                        { header: 'System ID', key: 'id' },
+                                        { header: 'Barangay', key: 'barangay' },
+                                        { header: 'Name', key: 'name'},
+                                        { header: 'Phone Number', key: 'phone_number'},
+                                        { header: 'Email Address', key: 'email'},
+                                        { header: 'Diagnosis', key: 'diagnosis'},
+                                        { header: 'Diagnosis Report', key: 'report'},
+                                        { header: 'Severity (Scale 1 - 10)', key: 'severity'},
+                                        { header: 'Date of Creation', key: 'doc', type: 'date'},
+                                        { header: 'Status', key: 'status'}
+                                    ];
+                                    var workbookDisabled = ExcelJSWorkbook.addWorksheet("Medical Records Disabled");
+                                    workbookDisabled.views = [
+                                        {
+                                            x: 0, y: 0, width: 10000, height: 20000,
+                                            firstSheet: 0, activeTab: 1, visibility: 'visible'
+                                        }
+                                    ];
+                                    workbookDisabled.columns = [
+                                        { header: 'System ID', key: 'id' },
+                                        { header: 'Barangay', key: 'barangay' },
+                                        { header: 'Name', key: 'name'},
+                                        { header: 'Phone Number', key: 'phone_number'},
+                                        { header: 'Email Address', key: 'email'},
+                                        { header: 'Diagnosis', key: 'diagnosis'},
+                                        { header: 'Diagnosis Report', key: 'report'},
+                                        { header: 'Severity (Scale 1 - 10)', key: 'severity'},
+                                        { header: 'Date of Creation', key: 'doc', type: 'date'},
+                                        { header: 'Status', key: 'status'}
+                                    ];
+
+                                    tableData.map((recordData) => {
+                                        if(recordData.disabledBy === undefined){
+                                            workbook.addRow({ 
+                                                id: recordData._id,
+                                                barangay: recordData.barangay,
+                                                name: recordData.full_name,
+                                                phone_number: recordData.phone_number,
+                                                email: recordData.email,
+                                                diagnosis: recordData.diagnosis,
+                                                report: recordData.detailed_report,
+                                                severity: recordData.outlier,
+                                                doc: moment(recordData.createdAt).format("MMMM DD,YYYY"),
+                                                status: "true"
+                                            });
+                                        } else {
+                                            workbookDisabled.addRow({ 
+                                                id: recordData._id,
+                                                barangay: recordData.barangay,
+                                                name: recordData.full_name,
+                                                phone_number: recordData.phone_number,
+                                                email: recordData.email,
+                                                diagnosis: recordData.diagnosis,
+                                                report: recordData.detailed_report,
+                                                severity: recordData.outlier,
+                                                doc: moment(recordData.createdAt).format("MMMM DD,YYYY"),
+                                                status: `Disabled by ${recordData.disabledBy}`
+                                            });
+                                        }
+                                        return true;
+                                    });
+                                    workbook.protect(process.env.REACT_APP_JWT_BACKEND, {
+                                        formatCells: true,
+                                        formatColumns: true,
+                                        formatRows: true,
+                                        insertRows: true,
+                                        insertColumns: false,
+                                        insertHyperlinks: true,
+                                        deleteRows: true,
+                                        deleteColumns: false,
+                                        sort: true,
+                                        autoFilter: true
+                                    })
+                                    workbookDisabled.protect(process.env.REACT_APP_JWT_BACKEND, {
+                                        formatCells: true,
+                                        formatColumns: true,
+                                        formatRows: true,
+                                        insertRows: true,
+                                        insertColumns: false,
+                                        insertHyperlinks: true,
+                                        deleteRows: true,
+                                        deleteColumns: false,
+                                        sort: true,
+                                        autoFilter: true
+                                    })
+                                    dispatch(changeLoader({ loading: false }));
+                                    // https://github.com/exceljs/exceljs/issues/969
+                                    // https://codesandbox.io/s/yq7r1oror1?file=/App.js:603-618
+                                    ExcelJSWorkbook.xlsx.writeBuffer().then(function(buffer) {
+                                        saveAs(
+                                        new Blob([buffer], { type: "application/octet-stream" }),
+                                        `Silang Medical Services - Medical Records.xlsx`
+                                        );
+                                    });
+                                }
+                                setTimeout(()=>{
+                                    working();
+                                }, 200)
+                            }} style={{ color: "#AD72B7" }}>Export Medical Records</Button>,
+                        ]
+                        :
                         []
                     }
                 />
@@ -407,13 +577,19 @@ const MedicalList = () => {
                     dataSource={tableData}
                     scroll={{ x: 500 }} 
                     searchable={true}
-                    // exportableProps={{ 
-                    //     fields,
-                    //     showColumnPicker: true,
-                    //     btnProps: btnProps,
-                    //     fileName: "medical-record",
-                    //     disabled: tableData.length === 0 ? true : false
-                    // }}
+                    // {...(designation === "Chairman" ?
+                    //     {
+                    //         exportableProps: { 
+                    //             fields,
+                    //             showColumnPicker: true,
+                    //             btnProps: btnProps,
+                    //             fileName: "medical-record",
+                    //             disabled: tableData.length === 0 ? true : false
+                    //         }
+                    //     } 
+                    // : 
+                    //     {}
+                    // )}
                     searchableProps={{ fuzzySearch: true }}
                     />
             </Layout.Content>
