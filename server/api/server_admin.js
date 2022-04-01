@@ -29,7 +29,8 @@ const {
     RecordsResourceOptions,
     MessagesourceOptions,
     UserResourceOptions,
-    SubscribedsourceOptions
+    SubscribedsourceOptions,
+    ExportRecordResoureOption
 } = require("./config/adminResource");
 
 const Users = require("./model/userAccount");
@@ -59,7 +60,8 @@ process.env.SERVER_MODE === "admin" ?
             RecordsResourceOptions,
             MessagesourceOptions,
             UserResourceOptions,
-            SubscribedsourceOptions
+            SubscribedsourceOptions,
+            ExportRecordResoureOption
         ],
         branding: {
             companyName: 'Silang Medical Services',
@@ -163,5 +165,6 @@ app.use('/settings', require("./routes/route.userSetting"));
 app.use('/events', require("./routes/route.eventList"));
 app.use('/subscription', require("./routes/route.subscription"));
 app.use('/communication', require("./routes/route.communication"));
+app.use('/export', require("./routes/route.exportRecord"));
 app.use(require("./routes/errorHandler").notFoundHandler);
 app.use(require("./routes/errorHandler").catchHandler);

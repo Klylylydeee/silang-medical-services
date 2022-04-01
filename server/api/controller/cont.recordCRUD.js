@@ -56,6 +56,9 @@ exports.allBarangayMedicalRecord = async (req, res, next) => {
                     diagnosis: 1,
                     status: 1,
                     barangay: 1,
+                    detailed_report: 1,
+                    email: 1,
+                    phone_number: 1,
                     disable: 1,
                     disabledBy: 1,
                     request_change: 1

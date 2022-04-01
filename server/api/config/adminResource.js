@@ -8,6 +8,7 @@ const SubscribedCitizen = require("../model/subscribedCitizen");
 const MessageLogs = require("../model/messageLog");
 const AccessRecord = require("../model/publicAccess");
 const Activity = require("../model/activityLog");
+const RecordLog = require("../model/exportRecord");
 
 const UserResourceOptions = {
     resource: Users,
@@ -126,6 +127,18 @@ const ActivityOptions = {
     }
 };
 
+const ExportRecordResoureOption = {
+    resource: RecordLog,
+    options: {
+        listProperties: [
+            "first_name",
+            "last_name",
+            "designation",
+            "createdAt"
+        ]
+    }
+};
+
 module.exports = {
     UserResourceOptions,
     AnnouncementResourceOptions,
@@ -136,5 +149,6 @@ module.exports = {
     SubscribedsourceOptions,
     MessagesourceOptions,
     AccessRecordOptions,
-    ActivityOptions
+    ActivityOptions,
+    ExportRecordResoureOption
 }
