@@ -4,7 +4,8 @@ import { useSelector, useDispatch } from "react-redux";
 import toasterRequest from "src/app/util/toaster";
 import { axiosAPI } from "src/app/util/axios";
 import { changeLoader } from "src/app/store/web/webInformation";
-import { Pie } from '@ant-design/plots';
+// import { Pie } from '@ant-design/plots';
+import { Mix } from '@ant-design/plots';
 import { Comment, Form, Button, List, Input, Layout, PageHeader, Divider, Tooltip, Card, Row, Col, Statistic } from "antd";
 import { CloseSquareOutlined } from '@ant-design/icons';
 import { Helmet } from "react-helmet-async";
@@ -78,6 +79,8 @@ const AnalyticData = () => {
     const [pieData, setPieData] = useState([]);
     const [severity, setSeverity] = useState({ mild: 0, moderate: 0, severe: 0});
     const [severityList, setSeverityList] = useState({ mild: [], moderate: [], severe: []});
+    const [ageCategory, setAgeCategory] = useState([]);
+    const [genderCategory, setGenderCategory] = useState([]);
 
     const [state, setState] = useState({
         comments: [],
@@ -162,6 +165,8 @@ const AnalyticData = () => {
                     comments: eventData.data.comments
                 }
             })
+            setAgeCategory(eventData.data.ageCategory)
+            setGenderCategory(eventData.data.genderEvaluated)
             setSeverity(eventData.data.severityCount)
             setSeverityList(eventData.data.severityList)
             dispatch(changeLoader({ loading: false }));
@@ -179,6 +184,140 @@ const AnalyticData = () => {
     // eslint-disable-next-line
     }, []);
     
+    const config = {
+        tooltip: false,
+        plots: [
+            {
+                type: "bar",
+                region: {
+                    start: {
+                        x: 0,
+                        y: 0,
+                    },
+                    end: {
+                        x: dimension >= 4 ? 0.45 : 1,
+                        y: dimension >= 4 ? 0.45 : 0.25,
+                    },
+                },
+                options: {
+                    data: ageCategory,
+                    xField: "count",
+                    yField: "category",
+                    seriesField: "category",
+                    isStack: true,
+                    tooltip: {
+                        shared: true,
+                        showCrosshairs: false,
+                        showMarkers: false,
+                    },
+                    label: {},
+                    interactions: [
+                        {
+                            type: "active-region",
+                        },
+                    ],
+                },
+            },
+            {
+                type: "pie",
+                region: {
+                    start: {
+                        x: 0,
+                        y: 0.5,
+                    },
+                    end: {
+                        x: 1,
+                        y: .95,
+                    },
+                },
+                options: {
+                    data: pieData,
+                    tooltip: {
+                        showMarkers: true,
+                    },
+                    appendPadding: 0,
+                    angleField: "value",
+                    colorField: "type",
+                    radius: 0.8,
+                    label: {type: 'outer', content: '{name} {percentage}'},
+                    interactions: [
+                        {
+                            type: "element-active",
+                        },
+                        {
+                            type: 'pie-legend-active',
+                        },
+                        {
+                            type: 'association-tooltip',
+                            cfg: {
+                                start: [
+                                    {
+                                        trigger: 'element:mousemove',
+                                        action: 'association:showTooltip',
+                                        arg: {
+                                            dim: 'x',
+                                            linkField: 'area',
+                                        },
+                                    },
+                                ],
+                            },
+                        },
+                        {
+                            type: 'association-highlight',
+                            cfg: {
+                                start: [
+                                    {
+                                        trigger: 'element:mousemove',
+                                        action: 'association:highlight',
+                                        arg: {
+                                            linkField: 'area',
+                                        },
+                                    },
+                                ],
+                            },
+                        },
+                    ],
+                },
+            },
+            {
+                type: "column",
+                region: {
+                    start: {
+                        x: dimension >= 4 ? 0.5 : 0,
+                        y: dimension >= 4 ? 0 : 0.30,
+                    },
+                    end: {
+                        x: 1,
+                        y: dimension >= 4 ? 0.45 : 0.50,
+                    },
+                },
+                options: {
+                    data: genderCategory,
+                    xField: "category",
+                    yField: "count",
+                    seriesField: "category",
+                    line: {},
+                    point: {
+                        style: {
+                            r: 2.5,
+                        },
+                    },
+                    meta: {
+                        time: {
+                            range: [0, 1],
+                        },
+                    },
+                    smooth: true,
+                    tooltip: {
+                        showCrosshairs: true,
+                        shared: true,
+                    },
+                },
+            },
+        ],
+    };
+    
+
     return (
         <React.Fragment>
             <Helmet>
@@ -193,7 +332,7 @@ const AnalyticData = () => {
                 />
             </Layout.Content>
             <Layout.Content style={{ backgroundColor: "white", padding: "10px 20px", marginBottom: "15px", borderRadius: "5px" }}>
-                <Pie 
+                {/* <Pie 
                     appendPadding={10}
                     data={pieData}
                     angleField="value"
@@ -208,7 +347,8 @@ const AnalyticData = () => {
                             type: 'element-active',
                         },
                     ]}
-                />
+                /> */}
+                <Mix {...config} height={700}/>
             </Layout.Content>
             <Layout.Content style={{ backgroundColor: "white", padding: "10px 20px", marginBottom: "15px", borderRadius: "5px" }}>
                 <Card title="Severity Count" bordered={false} style={{ width: "100%" }}>

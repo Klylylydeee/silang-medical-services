@@ -1,7 +1,9 @@
+// Component Dependencies
 import { useEffect } from "react";
 import { useMediaQuery } from "react-responsive";
 import { useDispatch } from "react-redux";
 
+// Modular Dependencies
 import { changeDimension } from "src/app/store/web/webInformation";
 
 const UseWindowSize = () => {

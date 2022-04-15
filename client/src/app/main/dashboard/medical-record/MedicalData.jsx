@@ -26,7 +26,11 @@ const MedicalData = () => {
         approvedBy: "",
         createdAt: "",
         updatedAt: "",
-        pin: ""
+        pin: "",
+        age: "",
+        date_of_birth: "",
+        gender: "",
+        address: ""
     });
 
     useEffect(() => {
@@ -47,8 +51,12 @@ const MedicalData = () => {
                     approvedBy: medicalData.data.payload.approvedBy,
                     createdAt: medicalData.data.payload.createdAt,
                     updatedAt: medicalData.data.payload.updatedAt,
-                    pin: medicalData.data.payload.pin
-                })
+                    pin: medicalData.data.payload.pin,
+                    age: medicalData.data.payload.age,
+                    date_of_birth: medicalData.data.payload.date_of_birth,
+                    gender: medicalData.data.payload.gender,
+                    address: medicalData.data.payload.address
+                });
                 setPresciptionList(medicalData.data.payload.prescription.map((data) => {
                     return data.prescription !== undefined || data.presciption !== null ?
                         `${data.prescription} - ${data.dosage}`
@@ -99,6 +107,18 @@ const MedicalData = () => {
                             <Col xs={{ span: 24 }} lg={{ span: 12 }}>
                                 <p style={{ fontWeight: 500 }}>Email Address:</p>
                                 <p style={{ lineHeight: 0 }}>{medData.email}</p>
+                            </Col>
+                            <Col xs={{ span: 24 }} lg={{ span: 12 }}>
+                                <p style={{ fontWeight: 500 }}>Age | Date of Birth:</p>
+                                <p style={{ lineHeight: 0 }}>{medData.age} years old - {moment(medData.date_of_birth).format("MMMM DD,YYYY")}</p>
+                            </Col>
+                            <Col xs={{ span: 24 }} lg={{ span: 12 }}>
+                                <p style={{ fontWeight: 500 }}>Gender:</p>
+                                <p style={{ lineHeight: 0 }}>{medData.gender}</p>
+                            </Col>
+                            <Col xs={{ span: 24 }}>
+                                <p style={{ fontWeight: 500 }}>Complete Address:</p>
+                                <p style={{ lineHeight: 0 }}>{medData.address}</p>
                             </Col>
                             <Col xs={{ span: 24 }} lg={{ span: 12 }}>
                                 <p style={{ fontWeight: 500 }}>Diagnosis:</p>

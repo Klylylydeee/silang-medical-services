@@ -153,6 +153,9 @@ const EventData = () => {
                                         setSelectedVerificationDetails(!selectedVerificationDetails)
                                         setSelectedVerificationDetailsData({
                                             title: text.first_name + " " +text.last_name,
+                                            age: text.age,
+                                            date_of_birth: text.date_of_birth,
+                                            gender: text.gender,
                                             ...(text.vaccine_card) && { vaccine_card: text.vaccine_card },
                                             ...(text.any_id) && { any_id: text.any_id },
                                             ...(text.proof_of_billing) && { proof_of_billing: text.proof_of_billing },
@@ -363,7 +366,9 @@ const EventData = () => {
                 }}
             >
                 <Descriptions bordered layout="vertical">
-                        { selectedVerificationDetailsData.address && <Descriptions.Item label="Full Address" span={3}>{selectedVerificationDetailsData.address}</Descriptions.Item> }
+                        <Descriptions.Item label="Full Address" span={3}>{selectedVerificationDetailsData.address}</Descriptions.Item>
+                        <Descriptions.Item label="Gender" span={3}>{selectedVerificationDetailsData.gender}</Descriptions.Item>
+                        <Descriptions.Item label="Age | Date of Birth" span={3}>{selectedVerificationDetailsData.age} years old | {moment(selectedVerificationDetailsData.date_of_birth).format("MMMM DD,YYYY")}</Descriptions.Item>
                         { selectedVerificationDetailsData.facebook_url && <Descriptions.Item label="Facebook URL" span={3}>{selectedVerificationDetailsData.facebook_url}</Descriptions.Item> }
                         { selectedVerificationDetailsData.barangay_id_number && <Descriptions.Item label="Barangay ID Number" span={3}>{selectedVerificationDetailsData.barangay_id_number}</Descriptions.Item> } 
                         { selectedVerificationDetailsData.vaccine_card && <Descriptions.Item label="Vaccine Card" span={3}><img alt="example" style={{ width: '100%', height: "auto" }} src={selectedVerificationDetailsData.vaccine_card} galleryimg="no"/></Descriptions.Item> }

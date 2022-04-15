@@ -494,7 +494,7 @@ function SignIn() {
                         <div>
                             <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
                                 <h1 style={{ fontSize: "50px", color: "black", lineHeight: "5px"}}>
-                                    PIN Reset
+                                    Threshold Reset
                                 </h1>
                                 <p style={{ 
                                     fontSize: "12px",

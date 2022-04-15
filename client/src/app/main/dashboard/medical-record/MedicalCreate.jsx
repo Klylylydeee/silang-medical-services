@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Layout, PageHeader, Button, Select, Form, Row, Col, Input, Divider, Slider, Alert, Tooltip, AutoComplete } from 'antd';
+import { Layout, PageHeader, Button, Select, Form, Row, Col, Input, DatePicker, Divider, Slider, Alert, Tooltip, AutoComplete, Modal, Descriptions } from 'antd';
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import toasterRequest from "src/app/util/toaster";
 import { axiosAPI } from "src/app/util/axios";
 import { changeLoader } from "src/app/store/web/webInformation";
 import { Helmet } from "react-helmet-async";
+import moment from "moment";
 
 const MedicalCreate = () => {
 
@@ -19,11 +20,18 @@ const MedicalCreate = () => {
 
     const [prescriptionList, setPrescriptionList] = useState([]);
     const [autoComplete, setAutoComplete] = useState([]);
+    const [modalStatus, setModalStatus] = useState(false);
+    const [modalData, setModalData] = useState({});
 
     const onReset = () => {
         form.resetFields();
         setPrescriptionList([]);
     };
+
+    const disabledDate = (current) => {
+        // Can not select days before today and today
+        return current && current > moment().endOf('day');
+    }
 
     const submitForm = async ({ prefix, phone_number, ...formData }) => {
         try {
@@ -88,7 +96,10 @@ const MedicalCreate = () => {
             </Layout.Content>
             <Layout.Content style={{ backgroundColor: "white", padding: "10px 20px", marginBottom: "15px", borderRadius: "5px" }}>
                 <Form
-                    onFinish={submitForm}
+                    onFinish={(data) => {
+                        setModalStatus(true)
+                        setModalData(data)
+                    }}
                     layout="vertical"
                     form={form}
                 >
@@ -138,6 +149,42 @@ const MedicalCreate = () => {
                                 <Input />
                             </Form.Item>
                         </Col>
+                        <Col xs={{ span: 12 }} >
+                            <Form.Item
+                                name="gender"
+                                label="Gender"
+                                tooltip="Basis of user's sexual identity"
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: "Please fill out this field!",
+                                    },
+                                ]}
+                                required={true}
+                            >
+                                <Select>
+                                    <Select.Option value="Male">Male</Select.Option>
+                                    <Select.Option value="Female">Female</Select.Option>
+                                    <Select.Option value="Others">Others</Select.Option>
+                                </Select>
+                            </Form.Item>
+                        </Col>
+                        <Col xs={{ span: 24 }} lg={{ span: 12 }}>
+                            <Form.Item
+                                name="date_of_birth"
+                                label="Date of Birth"
+                                tooltip="Citizen's birth date"
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: "Please fill out this field!",
+                                    },
+                                ]}
+                                required={true}
+                            >
+                                <DatePicker disabledDate={disabledDate} format="YYYY-MM-DD" style={{ width: "100%" }} />
+                            </Form.Item>
+                        </Col>
                         <Col xs={{ span: 24 }} lg={{ span: 12 }}>
                             <Form.Item
                                 name="email"
@@ -184,12 +231,11 @@ const MedicalCreate = () => {
                                 )} />
                             </Form.Item>
                         </Col>
-                
                         <Col xs={{ span: 24 }} >
                             <Form.Item
                                 name="barangay"
                                 label="Barangay"
-                                tooltip="Basis whether the event is approved or not"
+                                tooltip="Basis on which barangay the user is living"
                                 rules={[
                                     {
                                         required: true,
@@ -203,6 +249,26 @@ const MedicalCreate = () => {
                                     <Select.Option value="Lumil">Lumil</Select.Option>
                                     <Select.Option value="Puting Kahoy">Puting Kahoy</Select.Option>
                                 </Select>
+                            </Form.Item>
+                        </Col>
+                        <Col xs={{ span: 24 }} >
+                            <Form.Item
+                                name="address"
+                                label="Complete Address"
+                                tooltip="Basis where the user is living"
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: "Please fill out this field!",
+                                    },
+                                    {
+                                        min: 5,
+                                        message: "Min length of 5 characters"
+                                    }
+                                ]}
+                                required={true}
+                            >
+                                <Input />
                             </Form.Item>
                         </Col>
                     </Row>
@@ -439,6 +505,22 @@ const MedicalCreate = () => {
                     </Form.Item>
                 </Form>
             </Layout.Content>
+            <Modal 
+                title="Medical Record Confirmation" 
+                visible={modalStatus}
+                onOk={() => {
+                    submitForm(modalData)
+                }} onCancel={() => {
+                    setModalStatus(false)
+                }}
+            >
+                <Descriptions bordered>
+                    <Descriptions.Item label="Name" span={3}>{modalData.first_name} {modalData.last_name}</Descriptions.Item>
+                    <Descriptions.Item label="Email" span={3}>{modalData.email}</Descriptions.Item>
+                    <Descriptions.Item label="Phone Number" span={3}>{modalData.prefix}{modalData.phone_number}</Descriptions.Item>
+                    <Descriptions.Item label="Address" span={3}>{modalData.address}</Descriptions.Item>
+                </Descriptions>
+            </Modal>
         </React.Fragment>
     );
 };

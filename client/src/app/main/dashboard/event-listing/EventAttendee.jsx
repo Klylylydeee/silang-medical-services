@@ -1,11 +1,12 @@
 import React from "react";
-import { Layout, PageHeader, Button, Select, Form, Row, Col, Input, Divider } from 'antd';
+import { Layout, PageHeader, Button, Select, Form, Row, Col, Input, Divider, DatePicker } from 'antd';
 import { useSelector, useDispatch } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import toasterRequest from "src/app/util/toaster";
 import { axiosAPI } from "src/app/util/axios";
 import { changeLoader } from "src/app/store/web/webInformation";
 import { Helmet } from "react-helmet-async";
+import moment from "moment";
 
 const EventAttendee = () => {
 
@@ -22,7 +23,7 @@ const EventAttendee = () => {
         form.resetFields()
     };
 
-    const submitForm = async ({ prefix, email, last_name, first_name, phone_number }) => {
+    const submitForm = async ({ prefix, email, last_name, first_name, phone_number, ...formData }) => {
         try {
             dispatch(changeLoader({ loading: true }))
             let userCreate = await axiosAPI.post(`events/update-listing-attendee?id=${params.id}&barangay=${barangay}`, {
@@ -30,7 +31,8 @@ const EventAttendee = () => {
                 last_name,
                 email,
                 phone_number: prefix + phone_number,
-                isApproved: true
+                isApproved: true,
+                ...formData
             });
             dispatch(changeLoader({ loading: false }));
             toasterRequest({ payloadType: "success", textString: userCreate.data.message});
@@ -103,6 +105,45 @@ const EventAttendee = () => {
                                         required={true}
                                     >
                                         <Input />
+                                    </Form.Item>
+                                </Col>
+                            </Row>
+                            
+                            <Row gutter={[24, 0]} style={{ paddingTop: "10px" }}>
+                                <Col xs={{ span: 12 }} >
+                                    <Form.Item
+                                        name="gender"
+                                        label="Gender"
+                                        tooltip="Basis of user's sexual identity"
+                                        rules={[
+                                            {
+                                                required: true,
+                                                message: "Please fill out this field!",
+                                            },
+                                        ]}
+                                        required={true}
+                                    >
+                                        <Select>
+                                            <Select.Option value="Male">Male</Select.Option>
+                                            <Select.Option value="Female">Female</Select.Option>
+                                            <Select.Option value="Others">Others</Select.Option>
+                                        </Select>
+                                    </Form.Item>
+                                </Col>
+                                <Col xs={{ span: 24 }} lg={{ span: 12 }}>
+                                    <Form.Item
+                                        name="date_of_birth"
+                                        label="Date of Birth"
+                                        tooltip="Citizen's birth date"
+                                        rules={[
+                                            {
+                                                required: true,
+                                                message: "Please fill out this field!",
+                                            },
+                                        ]}
+                                        required={true}
+                                    >
+                                        <DatePicker disabledDate={(current) => current && current > moment().endOf('day')} format="YYYY-MM-DD" style={{ width: "100%" }} />
                                     </Form.Item>
                                 </Col>
                             </Row>

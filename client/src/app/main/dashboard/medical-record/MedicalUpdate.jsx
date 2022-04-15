@@ -1,12 +1,13 @@
 import { useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
-import { Layout, PageHeader, Button, Select, Form, Row, Col, Input, Divider, Slider, Alert, Tooltip, AutoComplete } from 'antd';
+import { Layout, PageHeader, Button, Select, Form, Row, Col, Input, DatePicker, Divider, Slider, Alert, Tooltip, AutoComplete } from 'antd';
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import toasterRequest from "src/app/util/toaster";
 import { axiosAPI } from "src/app/util/axios";
 import { changeLoader } from "src/app/store/web/webInformation";
 import { Helmet } from "react-helmet-async";
+import moment from "moment";
 
 const MedicalUpdate = () => {
 
@@ -26,6 +27,11 @@ const MedicalUpdate = () => {
         form.resetFields();
         setPrescriptionList([]);
     };
+
+    const disabledDate = (current) => {
+        // Can not select days before today and today
+        return current && current > moment().endOf('day');
+    }
 
     const submitForm = async ({ prefix, phone_number, ...formData }) => {
         try {
@@ -75,7 +81,9 @@ const MedicalUpdate = () => {
                     outlier: postFormData.data.payload.outlier,
                     detailed_report: postFormData.data.payload.detailed_report,
                     createdBy: postFormData.data.payload.createdBy,
-                    approvedBy: postFormData.data.payload.approvedBy
+                    approvedBy: postFormData.data.payload.approvedBy,
+                    gender: postFormData.data.payload.gender,
+                    date_of_birth: moment(postFormData.data.payload.date_of_birth, "YYYY-MM-DD")
                 });
                 setAutoComplete(autCompleteForm.data.payload)
                 setPrescriptionList(postFormData.data.payload.prescription);
@@ -158,6 +166,42 @@ const MedicalUpdate = () => {
                                 required={true}
                             >
                                 <Input />
+                            </Form.Item>
+                        </Col>
+                        <Col xs={{ span: 12 }} >
+                            <Form.Item
+                                name="gender"
+                                label="Gender"
+                                tooltip="Basis of user's sexual identity"
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: "Please fill out this field!",
+                                    },
+                                ]}
+                                required={true}
+                            >
+                                <Select>
+                                    <Select.Option value="Male">Male</Select.Option>
+                                    <Select.Option value="Female">Female</Select.Option>
+                                    <Select.Option value="Others">Others</Select.Option>
+                                </Select>
+                            </Form.Item>
+                        </Col>
+                        <Col xs={{ span: 24 }} lg={{ span: 12 }}>
+                            <Form.Item
+                                name="date_of_birth"
+                                label="Date of Birth"
+                                tooltip="Citizen's birth date"
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: "Please fill out this field!",
+                                    },
+                                ]}
+                                required={true}
+                            >
+                                <DatePicker disabledDate={disabledDate} format="YYYY-MM-DD" style={{ width: "100%" }} />
                             </Form.Item>
                         </Col>
                         <Col xs={{ span: 24 }} lg={{ span: 12 }}>

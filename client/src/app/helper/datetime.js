@@ -1,3 +1,4 @@
+// NPM Dependencies
 import moment from "moment";
 
 // Returns the string value of a datetime value
@@ -10,6 +11,7 @@ export const monthDateYearFormat = ( dateTimeVariable ) => {
     return moment(dateTimeVariable).format("MMMM DD, YYYY");
 }
 
+// Returns a number value based on the js date from a string month
 export const textToNumberMonth = ( textMonth ) => {
     switch(textMonth) {
         case "January":

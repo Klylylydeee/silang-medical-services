@@ -234,6 +234,18 @@ const MedicalRecord = () => {
                             <p style={{ lineHeight: 0 }}>{drawerData.email}</p>
                         </Col>
                         <Col xs={{ span: 24 }} lg={{ span: 12 }}>
+                            <p style={{ fontWeight: 500 }}>Age | Date of Birth:</p>
+                            <p style={{ lineHeight: 0 }}>{drawerData.age} years old - {moment(drawerData.date_of_birth).format("MMMM DD,YYYY")}</p>
+                        </Col>
+                        <Col xs={{ span: 24 }} lg={{ span: 12 }}>
+                            <p style={{ fontWeight: 500 }}>Gender:</p>
+                            <p style={{ lineHeight: 0 }}>{drawerData.gender}</p>
+                        </Col>
+                        <Col xs={{ span: 24 }}>
+                            <p style={{ fontWeight: 500 }}>Complete Address:</p>
+                            <p style={{ lineHeight: 0 }}>{drawerData.address}</p>
+                        </Col>
+                        <Col xs={{ span: 24 }} lg={{ span: 12 }}>
                             <p style={{ fontWeight: 500 }}>Diagnosis:</p>
                             <p style={{ lineHeight: 0 }}>{drawerData.diagnosis}</p>
                         </Col>

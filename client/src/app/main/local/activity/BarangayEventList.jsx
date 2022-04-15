@@ -5,7 +5,7 @@ import { axiosAPI } from "src/app/util/axios";
 import { changeLoader } from "src/app/store/web/webInformation";
 import { useSelector, useDispatch } from "react-redux";
 import Header from "../medical-record/record-header.png";
-import { Avatar, Image, Divider, Empty, Row, Col, Card, Tooltip, Button, Drawer, Form, Input, Select, Descriptions, Badge, Alert, Switch, Upload, Modal } from 'antd';
+import { Avatar, Image, Divider, Empty, Row, Col, Card, Tooltip, Button, Drawer, Form, Input, Select, Descriptions, Badge, Alert, Switch, Upload, Modal, DatePicker } from 'antd';
 import ImgCrop from 'antd-img-crop';
 import { EllipsisOutlined, PlusCircleOutlined, MinusCircleOutlined } from '@ant-design/icons';
 import Navigation from "../../../test/landing/TestNav";
@@ -810,6 +810,44 @@ const BarangayEvent = () => {
                                             required={true}
                                         >
                                             <Input />
+                                        </Form.Item>
+                                    </Col>
+                                </Row>
+                                <Row gutter={[24, 0]} style={{ paddingTop: "10px" }}>
+                                    <Col xs={{ span: 12 }} >
+                                        <Form.Item
+                                            name="gender"
+                                            label="Gender"
+                                            tooltip="Basis of user's sexual identity"
+                                            rules={[
+                                                {
+                                                    required: true,
+                                                    message: "Please fill out this field!",
+                                                },
+                                            ]}
+                                            required={true}
+                                        >
+                                            <Select>
+                                                <Select.Option value="Male">Male</Select.Option>
+                                                <Select.Option value="Female">Female</Select.Option>
+                                                <Select.Option value="Others">Others</Select.Option>
+                                            </Select>
+                                        </Form.Item>
+                                    </Col>
+                                    <Col xs={{ span: 24 }} lg={{ span: 12 }}>
+                                        <Form.Item
+                                            name="date_of_birth"
+                                            label="Date of Birth"
+                                            tooltip="Citizen's birth date"
+                                            rules={[
+                                                {
+                                                    required: true,
+                                                    message: "Please fill out this field!",
+                                                },
+                                            ]}
+                                            required={true}
+                                        >
+                                            <DatePicker disabledDate={(current) => current && current > moment().endOf('day')} format="YYYY-MM-DD" style={{ width: "100%" }} />
                                         </Form.Item>
                                     </Col>
                                 </Row>
