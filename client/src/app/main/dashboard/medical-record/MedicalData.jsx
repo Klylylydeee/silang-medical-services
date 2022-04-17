@@ -110,7 +110,7 @@ const MedicalData = () => {
                             </Col>
                             <Col xs={{ span: 24 }} lg={{ span: 12 }}>
                                 <p style={{ fontWeight: 500 }}>Age | Date of Birth:</p>
-                                <p style={{ lineHeight: 0 }}>{medData.age} years old - {moment(medData.date_of_birth).format("MMMM DD,YYYY")}</p>
+                                <p style={{ lineHeight: 0 }}>{medData.age} {dimension >= 4 ? "years old." : "yrs"} - {dimension >= 4 ? moment(medData.date_of_birth).format("MMMM DD,YYYY") : moment(medData.date_of_birth).format("MM-DD-YYYY")}</p>
                             </Col>
                             <Col xs={{ span: 24 }} lg={{ span: 12 }}>
                                 <p style={{ fontWeight: 500 }}>Gender:</p>

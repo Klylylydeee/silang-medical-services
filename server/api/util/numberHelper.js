@@ -15,6 +15,7 @@ const generatePhoneNum = () => {
 }
 const generateOutlier = () => {
     return Math.floor(
+        // Max random is = 9 = 10
         Math.random() * (
             9 * (Math.pow(10, 0))
         )

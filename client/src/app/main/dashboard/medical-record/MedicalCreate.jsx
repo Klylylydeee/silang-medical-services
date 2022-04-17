@@ -91,9 +91,6 @@ const MedicalCreate = () => {
                     style={{ padding: 0, backgroundColor: "#AD72B7" }}
                 />
             </Layout.Content>
-            <Layout.Content style={{ marginBottom: "15px", borderRadius: "5px" }}>
-                <Alert message="By default, the current user is set as the requestor. If the current user is not the requestor please select the switch." type="info" closeText="Close Now" />
-            </Layout.Content>
             <Layout.Content style={{ backgroundColor: "white", padding: "10px 20px", marginBottom: "15px", borderRadius: "5px" }}>
                 <Form
                     onFinish={(data) => {

@@ -17,6 +17,8 @@ const { generatePin } = require("../util/numberHelper");
  *         - first_name
  *         - last_name
  *         - email
+ *         - date_of_birth
+ *         - gender
  *         - password
  *         - phone_number
  *         - barangay
@@ -34,10 +36,22 @@ const { generatePin } = require("../util/numberHelper");
  *         email:
  *           type: string
  *           description: email
+ *         age:
+ *           type: number
+ *           description: age
+ *         gender:
+ *           type: string
+ *           description: gender
+ *         date_of_birth:
+ *           type: date
+ *           description: date_of_birth
  *         phone_number:
  *           type: number
  *           pattern: '^(639)\d{9}$'
  *           description: number 
+ *         address:
+ *           type: string
+ *           description: address 
  *         barangay:
  *           type: string
  *           description: barangay 
@@ -117,6 +131,29 @@ const medicalRecordSchema = new Schema(
             match: /^(639)\d{9}$/,
             required: true
         },
+        gender: {
+            type: String,
+            enum: {
+                values: [
+                    "Male",
+                    "Female",
+                    "Others"
+                ],
+                message: "Gender type does not exists."
+            },
+            required: true
+        },
+        date_of_birth: {
+            type: Date,
+            required: true
+        },
+        age: {
+            type: Number
+        },
+        address: {
+            type: String,
+            required: true
+        },
         diagnosis: {
             type: String,
             required: true
@@ -189,7 +226,7 @@ const medicalRecordSchema = new Schema(
     {
         timestamps: { 
             currentTime: () => {
-                // return moment(momentRandom("2022-12-31", "2021-01-01")).utc("Asia/Singapore").format();
+                // return moment(momentRandom("2022-04-18", "2022-04-01")).utc("Asia/Singapore").format();
                 return moment().format();
             }
         }
@@ -201,7 +238,8 @@ medicalRecordSchema.pre(
     async function(next) {
         const unique_identifier_string = this._id.toString().split("");
         const randomSelect = () => Math.floor(Math.random() * unique_identifier_string.length);
-        this.pin = `${unique_identifier_string[randomSelect()]}${unique_identifier_string[randomSelect()]}${unique_identifier_string[randomSelect()]}${unique_identifier_string[randomSelect()]}${unique_identifier_string[randomSelect()]}${unique_identifier_string[randomSelect()]}`
+        this.pin = `${unique_identifier_string[randomSelect()]}${unique_identifier_string[randomSelect()]}${unique_identifier_string[randomSelect()]}${unique_identifier_string[randomSelect()]}${unique_identifier_string[randomSelect()]}${unique_identifier_string[randomSelect()]}`;
+        this.age = moment().diff(moment(this.date_of_birth).format("YYYY-MM-DD"), 'years', false);
         next();
     }
 ); 

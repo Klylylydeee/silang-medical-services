@@ -292,11 +292,15 @@ exports.updateBarangayEventAttendee  = async (req, res, next) => {
                             email: referenceAccount.email,
                             phone_number: referenceAccount.phone_number,
                             address: referenceAccount.address,
+                            date_of_birth: referenceAccount.date_of_birth,
+                            age: moment().diff(moment(referenceAccount.date_of_birth).format("YYYY-MM-DD"), 'years', false),
+                            gender: referenceAccount.gender,
                             isApproved: true
                         }
                     :
                         {
-                            ...req.body
+                            ...req.body,
+                            age: moment().diff(moment(req.body.date_of_birth).format("YYYY-MM-DD"), 'years', false)
                         }
                 }
             },

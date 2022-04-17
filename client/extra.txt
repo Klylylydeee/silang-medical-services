@@ -1,3 +1,0 @@
-Ant Design Upload Image Local
-https://stackoverflow.com/questions/54845951/react-antdesign-add-uploaded-images-to-formdata
-https://github.com/nanxiaobei/antd-img-crop/issues/123

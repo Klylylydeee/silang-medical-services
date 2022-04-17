@@ -287,12 +287,68 @@ exports.analyticsSpecificDate = async (req, res, next) => {
             }
         });
 
+        let genderEvaluated = [
+            {
+                category: "Male",
+                count: 0
+            },
+            {
+                category: "Female",
+                count: 0
+            },
+            {
+                category: "Others",
+                count: 0
+            }
+        ]
+
+        analyticsData.map((currentData) => {
+            currentData.gender === "Male" ?
+                genderEvaluated[0].count++
+            : currentData.gender === "Female" ?
+                genderEvaluated[1].count++
+            :
+                genderEvaluated[2].count++
+        });
+
+        let ageCategory = [
+            {
+                category: "Child (1 - 17 years old)",
+                count: 0
+            },
+            {
+                category: "Young Adult (18 - 35 years old)",
+                count: 0
+            },
+            {
+                category: "Middle Age (36 - 55 years old)",
+                count: 0
+            },
+            {
+                category: "senior  (56 years old onwards)",
+                count: 0
+            },
+        ]
+
+        analyticsData.map((currentData) => {
+            currentData.age >= 56 ?
+                ageCategory[3].count++
+            : currentData.age >= 36 ?
+                ageCategory[2].count++
+            : currentData.age >= 18 ?
+                ageCategory[1].count++
+            :
+                ageCategory[0].count++
+        });
+
         res.send({
             message: "Specific analytics data",
             payload: filteredData,
             comments: filteredComment,
             severityCount,
-            severityList
+            severityList,
+            genderEvaluated,
+            ageCategory
         });
 
     } catch(err) {

@@ -545,7 +545,7 @@ const BarangayEvent = () => {
                                     <Form.Item
                                         name="facebook_url"
                                         label="Facebook URL"
-                                        tooltip="Individual's given birth first name"
+                                        tooltip="Citizen's social media account"
                                         rules={[
                                             {
                                                 min: 5,
@@ -929,7 +929,7 @@ const BarangayEvent = () => {
                                         <Form.Item
                                             name="facebook_url"
                                             label="Facebook URL"
-                                            tooltip="Individual's given birth first name"
+                                            tooltip="Citizen's social media account"
                                             rules={[
                                                 {
                                                     min: 5,

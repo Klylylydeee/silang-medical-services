@@ -3,6 +3,7 @@ const AnalyticComments = require("../model/analyticComment");
 const EventListing = require("../model/eventListing");
 const MedicalRecords = require("../model/medicalRecord");
 const Users = require("../model/userAccount");
+const SubcribedCitizen = require("../model/subscribedCitizen");
 
 const { validateRequest } = require("../util/jsonValidate");
 
@@ -12,7 +13,7 @@ exports.mainDashboard = async (req, res, next) => {
 
         validateRequest(req);
         
-        const distictCitizenRegisteredForm = await MedicalRecords.find({ barangay: req.query.barangay, status: true }).distinct("email").count();
+        const distictCitizenRegisteredForm = await SubcribedCitizen.find({ barangay: req.query.barangay, status: true }).count();
         const totalBarangayMedicalRecord = await MedicalRecords.find({ barangay: req.query.barangay, status: true }).count();
         const totalBarangayUsers = await Users.find({ barangay: req.query.barangay, status: true }).count();
         const totalEventListing = await EventListing.find({ barangay: req.query.barangay, status: true }).count();
@@ -21,6 +22,7 @@ exports.mainDashboard = async (req, res, next) => {
         const latestEvent = await EventListing.find({ barangay: req.query.barangay, status: true }).sort({ _id: -1 }).limit(5);
         const latestAnnouncement = await Announcement.find({ barangay: req.query.barangay, status: true }).sort({ _id: -1 }).limit(5);
         const latestPatient = await MedicalRecords.find({ barangay: req.query.barangay, status: true}).sort({ _id: -1 }).limit(5);
+        const latestComments = await AnalyticComments.find({ barangay: req.query.barangay }).sort({ _id: -1 }).limit(5);
 
         res.status(200).send({
             message: "Default dashboard data.",
@@ -31,7 +33,7 @@ exports.mainDashboard = async (req, res, next) => {
                         count: totalBarangayUsers
                     },
                     {
-                        title: "Registered Citizens (Email)",
+                        title: "Subscribed Citizens",
                         count: distictCitizenRegisteredForm
                     },
                     {
@@ -53,7 +55,8 @@ exports.mainDashboard = async (req, res, next) => {
                 ],
                 events: latestEvent,
                 announcements: latestAnnouncement,
-                records: latestPatient
+                records: latestPatient,
+                latestComments: latestComments
             }
         });
 

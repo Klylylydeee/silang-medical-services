@@ -43,6 +43,9 @@ router.post(
         check("outlier").not().isEmpty(),
         check("createdBy").not().isEmpty(),
         check("barangay").not().isEmpty(),
+        check("gender").not().isEmpty(),
+        check("date_of_birth").not().isEmpty(),
+        check("address").not().isEmpty()
     ],
     activityLogger,
     medicalRecordController.createMedicalRecord

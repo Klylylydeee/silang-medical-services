@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
-import { Layout, PageHeader, Button, Select, Form, Row, Col, Input, DatePicker, Divider, Slider, Alert, Tooltip, AutoComplete } from 'antd';
+import { Layout, PageHeader, Button, Select, Form, Row, Col, Input, DatePicker, Divider, Slider, Tooltip, AutoComplete } from 'antd';
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import toasterRequest from "src/app/util/toaster";
@@ -112,9 +112,6 @@ const MedicalUpdate = () => {
                     subTitle={dimension >= 4 ? "Please fill-up everything before submitting." : ""}
                     style={{ padding: 0, backgroundColor: "#AD72B7" }}
                 />
-            </Layout.Content>
-            <Layout.Content style={{ marginBottom: "15px", borderRadius: "5px" }}>
-                <Alert message="By default, the current user is set as the requestor. If the current user is not the requestor please select the switch." type="info" closeText="Close Now" />
             </Layout.Content>
             <Layout.Content style={{ backgroundColor: "white", padding: "10px 20px", marginBottom: "15px", borderRadius: "5px" }}>
                 <Form

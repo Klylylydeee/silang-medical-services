@@ -17,6 +17,7 @@ const Default = () => {
     const [eventList, setEventList] = useState([]);
     const [announcementList, setAnnouncementList] = useState([]);
     const [patientList, setPatientList] = useState([]);
+    const [commentsList, setCommentList] = useState([]);
 
     const fetchData = async () => {
         try {
@@ -26,6 +27,7 @@ const Default = () => {
             setEventList(userCreate.data.payload.events);
             setAnnouncementList(userCreate.data.payload.announcements);
             setPatientList(userCreate.data.payload.records);
+            setCommentList(userCreate.data.payload.latestComments);
             dispatch(changeLoader({ loading: false }));
         } catch (err) {
             dispatch(changeLoader({ loading: false }))
@@ -113,6 +115,27 @@ const Default = () => {
                         {
                             announcementList.length === 0 &&
                             <Empty description="Currently no announcement listed."/>
+                        }
+                        <Divider orientation="left" style={{ fontSize: "18px", color: "black", fontWeight: 500 }}>Latest Analytics Comments</Divider>
+                        {
+                            commentsList.length !== 0 &&
+                            <Collapse className="default-collapse">
+                                {
+                                    commentsList.map((event, eKey) => {
+                                        return (
+                                            <Collapse.Panel header={event.author} style={{ backgroundColor: "#A76FB0" }} key={eKey}>
+                                                <p><span style={{ fontWeight: 500 }}>Message:</span></p>
+                                                <p className="display-linebreak">{event.comment}</p>
+                                                <p><span style={{ fontWeight: 500 }}>Record:</span> {event.year} - {event.month}</p>
+                                            </Collapse.Panel>
+                                        )
+                                    })
+                                }
+                            </Collapse>
+                        }
+                        {
+                            commentsList.length === 0 &&
+                            <Empty description="Currently no analytics comments listed."/>
                         }
                     </Col>
                     <Col xs={{ span: 24 }} lg={{ span: 12 }}>

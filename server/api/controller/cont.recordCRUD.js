@@ -345,7 +345,8 @@ exports.updateMedicalRecord = async (req, res, next) => {
                 },
                 {
                     $set: {
-                        ...req.body
+                        ...req.body,
+                        age: moment().diff(moment(req.body.date_of_birth).format("YYYY-MM-DD"), 'years', false)
                     }
                 },
                 {

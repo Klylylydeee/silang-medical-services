@@ -64,6 +64,15 @@ const validator = require("validator");
  *             phone_number:
  *               type: number
  *               description: phone_number
+ *             age:
+ *               type: number
+ *               description: age
+ *             date_of_birth:
+ *               type: date
+ *               description: date_of_birth
+ *             gender:
+ *               type: string
+ *               description: gender
  *           description: requestor 
  *         start_datetime:
  *           type: date
@@ -168,6 +177,25 @@ const eventListingSchema = new Schema(
                         "Failed"
                     ],
                     default: "Queued"
+                },
+                age: {
+                    type: Number
+                },
+                date_of_birth: {
+                    type: Date,
+                    required: true
+                },
+                gender: {
+                    type: String,
+                    enum: {
+                        values: [
+                            "Male",
+                            "Female",
+                            "Others"
+                        ],
+                        message: "Gender type does not exists."
+                    },
+                    required: true
                 },
                 address: {
                     type: String,

@@ -235,7 +235,7 @@ const MedicalRecord = () => {
                         </Col>
                         <Col xs={{ span: 24 }} lg={{ span: 12 }}>
                             <p style={{ fontWeight: 500 }}>Age | Date of Birth:</p>
-                            <p style={{ lineHeight: 0 }}>{drawerData.age} years old - {moment(drawerData.date_of_birth).format("MMMM DD,YYYY")}</p>
+                                <p style={{ lineHeight: 0 }}>{drawerData.age} {dimension >= 4 ? "years old." : "yrs"} - {dimension >= 4 ? moment(drawerData.date_of_birth).format("MMMM DD,YYYY") : moment(drawerData.date_of_birth).format("MM-DD-YYYY")}</p>
                         </Col>
                         <Col xs={{ span: 24 }} lg={{ span: 12 }}>
                             <p style={{ fontWeight: 500 }}>Gender:</p>
